@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { getPublishDate } from '@finsweet/ts-utils';
 
 /**
