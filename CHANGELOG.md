@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 1.0.0
+
+### Major Changes
+
+- 0bb677e: Logic added
+
 ## 0.1.0
 
 ### Minor Changes
