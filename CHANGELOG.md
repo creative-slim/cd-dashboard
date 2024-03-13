@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 1.0.1
+
+### Patch Changes
+
+- 974c5f2: basic fixes
+
 ## 1.0.0
 
 ### Major Changes
