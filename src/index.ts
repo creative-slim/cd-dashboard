@@ -51,7 +51,7 @@ window.Webflow.push(() => {
   const local = 'http://localhost:8787';
 
   //?change this to switch between local and server
-  const api = local;
+  const api = process.env.NODE_ENV === 'development' ? local : server;
 
   //! END API ENDPOINTS
 
