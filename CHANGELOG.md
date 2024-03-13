@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 1.0.2
+
+### Patch Changes
+
+- 2e8d146: made local and cdn ENV based
+
 ## 1.0.1
 
 ### Patch Changes
