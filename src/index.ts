@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // @ts-nocheck
 import axios from 'axios';
 import cookie from 'cookie';
@@ -7,6 +8,7 @@ import lightbox from 'lightbox2';
 import {
   checkUserFolder,
   downloadJsonData,
+  getOnMaterials,
   getOrderFilesPaths,
   getThumbnailData,
 } from '$utils/dataHandlers';
@@ -21,7 +23,9 @@ import {
 import { frontEndElementsJS } from '$utils/frontEndElements';
 import { greetUser } from '$utils/greet';
 import { generateInvoice } from '$utils/invoiceGenerator';
+import { initializePaypal } from '$utils/paypal.js';
 import { saveInputToLocalHost } from '$utils/placeholderFormContent';
+import transformData from '$utils/transformData';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -41,8 +45,6 @@ window.Webflow.push(() => {
 
   // Add the link element to the head section of the HTML document
   document.head.appendChild(scr);
-
-  greetUser('hellonnfrom local');
 
   //! API ENDPOINTS
   const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';
@@ -108,9 +110,9 @@ window.Webflow.push(() => {
     console.log('email ', email);
 
     // old form ID
-    // const form = document.getElementById("wf-form-render-submission");
+    const form = document.getElementById('wf-form-mainFormSubmission');
 
-    const form = document.querySelector("[data-app-target='main-form']");
+    //const form = document.querySelector("[data-app-target='main-form']");
 
     const imageInputField = document.getElementById('imgsupload');
     const output = document.getElementById('output');
@@ -373,35 +375,6 @@ window.Webflow.push(() => {
      * @returns string of materials
      */
 
-    function getOnMaterials(metadata) {
-      const onMaterials = [];
-
-      // Check each material property in the metadata
-      for (const key in metadata) {
-        if (metadata.hasOwnProperty(key) && metadata[key] === 'on' && key.startsWith('material')) {
-          // Extract the material name from the property name
-          const materialName = key.replace('material', '');
-          onMaterials.push(materialName);
-        }
-        if (
-          key.startsWith('comment') &&
-          metadata.hasOwnProperty(key) &&
-          metadata[key] != '' &&
-          !key.startsWith('commentToggle')
-        ) {
-          const commentName = metadata[key];
-          console.log('commentName', commentName);
-
-          onMaterials.push(commentName);
-        }
-      }
-
-      // Join the onMaterials array into a comma-separated string
-      const result = onMaterials.join(', ');
-
-      return result;
-    }
-
     /**
      * get user data structure from dropbox
      */
@@ -446,9 +419,7 @@ window.Webflow.push(() => {
       htmlImage.src = 'data:image/jpeg;base64,' + data;
     }
 
-    /**
-     * update access token
-     */
+    //! to be removed
     async function updateToken() {
       const config = {
         method: 'get',
@@ -463,70 +434,6 @@ window.Webflow.push(() => {
         .catch((error) => {
           console.log(error);
         });
-    }
-
-    function transformData(originalData) {
-      return {
-        order: {
-          type: originalData['furniture-type'] || '',
-          name: originalData['furniture-name'] || '',
-          payment: {
-            status: originalData.paymentStatus || 'false',
-            method: originalData.paymentMethod || '',
-          },
-          dimensions: {
-            width: originalData['furniture-dimension-w'] || '',
-            height: originalData['furniture-dimension-h'] || '',
-            length: originalData['furniture-dimension-l'] || '',
-          },
-          specialFunction: originalData['special-functions'] || '',
-          specialFunctionScene: false,
-          material: originalData['color-finish'] || '',
-          color: '',
-          images: [],
-          extras: {
-            viewangles: originalData['render-extra-viewangle'] || '',
-            lightPreferences: originalData['lighting-comment'] || '',
-            roomType: originalData['room-type'] || '',
-          },
-          renderPackage: originalData['package-select'] || '',
-          roomTypeDescription: originalData['dimensions-comment'] || '',
-          metadata: {
-            categoryComment: originalData['category-comment'] || '',
-            categoryWood: originalData['category-wood'] || '',
-            categoryMetal: originalData['category-metal'] || '',
-            categoryPlastic: originalData['category-plastic'] || '',
-            categoryStone: originalData['category-stone'] || '',
-            categoryGlass: originalData['category-glass'] || '',
-            commentMaterial: originalData['comment-material'] || '',
-            commentWood: originalData['Comment-Wood'] || '',
-            materialOak: originalData['material-oak'] || '',
-            materialWalnut: originalData['material-walnut'] || '',
-            materialBeech: originalData['material-beech'] || '',
-            materialWhiteOak: originalData['material-whiteoak'] || '',
-            materialSteel: originalData['material-steel'] || '',
-            materialAluminium: originalData['material-aluminium'] || '',
-            materialBrass: originalData['material-brass'] || '',
-            commentToggleMetal: originalData['comment-toggle-metal'] || '',
-            commentMetal: originalData['Comment-Metal'] || '',
-            materialAcrylic: originalData['material-acrylic'] || '',
-            materialPolyethylene: originalData['material-polyethylene'] || '',
-            materialPVC: originalData['material-pvc'] || '',
-            commentPlastic: originalData['Comment-Plastic'] || '',
-            materialMarble: originalData['material-marble'] || '',
-            materialGranite: originalData['material-granite'] || '',
-            materialQuartz: originalData['material-quartz'] || '',
-            commentStone: originalData['Comment-Stone'] || '',
-            materialTempredGlass: originalData['material-tempredglass'] || '',
-            materialFrostedGlass: originalData['material-frostedglass'] || '',
-            commentGlass: originalData['Comment-Glass'] || '',
-            lightingMorning: originalData['lighting-morning'] || '',
-            lightingNoon: originalData['lighting-noon'] || '',
-            lightingComment: originalData['lighting-comment'] || '',
-            functionShow: originalData['function-show'] || '',
-          },
-        },
-      };
     }
 
     async function addDataToUserData(serverData) {
@@ -551,9 +458,8 @@ window.Webflow.push(() => {
         resolve(userOrders);
       });
     }
-    /**
-     * get Order Entries With Full Link of the element/image/Entry
-     */
+
+    //! to be removed
     async function getOrderEntries(dataset) {
       return new Promise(async (resolve, reject) => {
         await Promise.all(
@@ -609,6 +515,7 @@ window.Webflow.push(() => {
     function displayImages() {
       let images = '';
       imagesArray.forEach((image, index) => {
+        console.log(' image array image : ', image.name, image.size, image.type);
         images += `<div class="upload-queue-images">
               <img src="${URL.createObjectURL(image)}" alt="image">
               <span onclick="deleteImage(${index})">&times;</span>
@@ -621,190 +528,12 @@ window.Webflow.push(() => {
       displayImages();
     }
 
-    function url_to_head(url) {
-      return new Promise(function (resolve, reject) {
-        console.log('inside url_to_head PayPal');
-
-        const script = document.createElement('script');
-        script.src = url;
-        script.onload = function () {
-          console.log('script loaded');
-          resolve();
-        };
-        script.onerror = function () {
-          reject('Error loading script.');
-        };
-        document.head.appendChild(script);
-      });
-    }
-    const handle_close = (event) => {
-      event.target.closest('.ms-alert').remove();
-    };
-    const handle_click = (event) => {
-      if (event.target.classList.contains('ms-close')) {
-        handle_close(event);
-      }
-    };
-    document.addEventListener('click', handle_click);
-    const paypal_sdk_url = 'https://www.paypal.com/sdk/js';
-    const client_id =
-      'AevfJAscX9MKaFWcK--S7rgLBotKliHnYIc94ShGUS3yNpc_Vt7z92LLmH4Tfwl49uRWpesdR6VBbtVx';
-    // "AVoZD4EtMXeCRZRcUYr2hfVEfQjZ64IC2HuWi7k9g3kVNegnVazLjJIToMUcnfO3PEjKPWLxaRxz8kkG";
-    const currency = 'EUR';
-    const intent = 'capture';
-
-    console.log('paypal_sdk_url', paypal_sdk_url);
-
-    // let alerts = document.getElementById("alerts");
-    let package = 'none';
-
-    // var packagesWrapper = document.querySelector(".package-select-wrapper")
-
-    //PayPal Code
-    //https://developer.paypal.com/sdk/js/configuration/#link-queryparameters
-
-    url_to_head(
-      paypal_sdk_url + '?client-id=' + client_id + '&currency=' + currency + '&intent=' + intent
-    )
-      .then(() => {
-        console.log('paypal sdk loaded');
-
-        const alerts = document.getElementById('post-payment-alerts'); //!change this to match the id of the div you want to display the alerts in
-        const paypal_buttons = paypal.Buttons({
-          // https://developer.paypal.com/sdk/js/reference
-          onClick: (data) => {
-            // https://developer.paypal.com/sdk/js/reference/#link-oninitonclick
-            // Custom JS here
-
-            const radioButtons = document.getElementsByName('package-select');
-            console.log('radioButtons', radioButtons);
-
-            for (let i = 0; i < radioButtons.length; i++) {
-              if (radioButtons[i].checked) {
-                package = radioButtons[i].id;
-              } else {
-                console.log('Please select a package');
-              }
-            }
-          },
-          style: {
-            //https://developer.paypal.com/sdk/js/reference/#link-style
-            shape: 'rect',
-            color: 'gold',
-            layout: 'vertical',
-            label: 'paypal',
-          },
-
-          createOrder: function (data, actions) {
-            //https://developer.paypal.com/docs/api/orders/v2/#orders_create
-
-            if (package === 'none') {
-              return;
-            }
-
-            return fetch(
-              'https://creative-directors-dropbox.sa-60b.workers.dev/api/paypal/create_order',
-              {
-                method: 'post',
-                headers: {
-                  'Content-Type': 'application/json; charset=utf-8',
-                },
-                body: JSON.stringify({ intent: intent, package: package }),
-              }
-            )
-              .then((response) => response.json())
-              .then((order) => {
-                return order.id;
-              });
-          },
-
-          onApprove: function (data, actions) {
-            if (package === 'none') {
-              return;
-            }
-            const order_id = data.orderID;
-            return (
-              fetch(
-                'https://creative-directors-dropbox.sa-60b.workers.dev/api/paypal/complete_order',
-                {
-                  method: 'post',
-                  headers: {
-                    'Content-Type': 'application/json; charset=utf-8',
-                  },
-                  body: JSON.stringify({
-                    intent: intent,
-                    order_id: order_id,
-                  }),
-                }
-              )
-                .then((response) => response.json())
-                .then((order_details) => {
-                  console.log(order_details); //https://developer.paypal.com/docs/api/orders/v2/#orders_capture!c=201&path=create_time&t=response
-
-                  paymentStatus.payed = true;
-                  paymentStatus.paymentMethod =
-                    order_details.purchase_units[0].payments.captures[0].payment_method_name ||
-                    'default : PayPal';
-                  console.log('paymentStatus', paymentStatus);
-
-                  const intent_object = intent === 'authorize' ? 'authorizations' : 'captures';
-                  //Custom Successful Message
-                  alerts.innerHTML =
-                    `<div class=\'ms-alert ms-action\'>Thank you ` +
-                    order_details.payer.name.given_name +
-                    ` ` +
-                    order_details.payer.name.surname +
-                    ` for your payment of ` +
-                    order_details.purchase_units[0].payments[intent_object][0].amount.value +
-                    ` ` +
-                    order_details.purchase_units[0].payments[intent_object][0].amount
-                      .currency_code +
-                    `!</div>`;
-
-                  //Close out the PayPal buttons that were rendered
-                  paypal_buttons.close();
-                })
-                //!invoice generation here
-                .then(() => {
-                  const invoiceData = {
-                    name: 'slim',
-                    type: 'bed',
-                    renderPackage: 'package1',
-                  };
-                  console.log('invoiceData', invoiceData);
-                  generateInvoice(invoiceData);
-
-                  // remove paylater button if payment is made
-                  const payLater = document.getElementById('paylater-btn');
-                  if (payLater) {
-                    payLater.style.display = 'none';
-                  }
-                })
-                .catch((error) => {
-                  console.log(error);
-                  alerts.innerHTML = `<div class="ms-alert ms-action2 ms-small"><span class="ms-close"></span><p>An Error Ocurred!</p>  </div>`;
-                })
-            );
-          },
-
-          onCancel: function (data) {
-            alerts.innerHTML = `<div class="ms-alert ms-action2 ms-small"><span class="ms-close"></span><p>Order cancelled!</p>  </div>`;
-          },
-
-          onError: function (err) {
-            console.log(err);
-          },
-        });
-        console.log('paypal buttons created');
-
-        paypal_buttons.render('#payment_options');
-      })
-      .then(() => {
-        console.log('paypal buttons rendered');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    initializePaypal(
+      '#payment_options',
+      '#post-payment-alerts',
+      '[order-submit="approved"]',
+      paymentStatus
+    );
 
     /**
      * pay later button
@@ -847,9 +576,7 @@ window.Webflow.push(() => {
         const formData = new FormData(form);
 
         formData.append('paymentMethod', paymentStatus.paymentMethod);
-
         formData.append('paymentStatus', paymentStatus.payed);
-
         formData.append('user', CurrentUserEmail);
         formData.append('dateID', DateID);
 
@@ -860,24 +587,6 @@ window.Webflow.push(() => {
           //! not yet used ( remove this when done )
           formDataObject[key] = value; //! not yet used ( remove this when done )
         }); //! not yet used ( remove this when done )
-
-        {
-          // FormData Elements
-          const furnitureName = formData.get('furniture-name');
-          const furnitureType = formData.get('furniture-type');
-          const furnitureDimensionW = formData.get('furniture-dimension-w');
-          const furnitureDimensionL = formData.get('furniture-dimension-l');
-          const furnitureDimensionH = formData.get('furniture-dimension-h');
-          const material = formData.get('material');
-          const colorFinish = formData.get('color-finish');
-          const specialFunctions = formData.get('special-functions');
-          const functionShow = formData.get('function-show');
-          const renderPackage = formData.get('render-package');
-          const renderExtraViewAngle = formData.get('render-extra-viewangle');
-          const renderLight = formData.get('Render-Light');
-          const roomType = formData.get('room-type');
-          const extraText = formData.get('extra-text');
-        }
 
         async function uploadmetadata(formdata, accesskey, subFolder) {
           return new Promise(async (resolve, reject) => {
@@ -939,20 +648,19 @@ window.Webflow.push(() => {
 
         // ------------
 
-        // Call the function with your array of images and other parameters
+        // the submit button
+        const submitLoading = document.querySelector("[order-submit='approved']");
 
+        // Call the function with your array of images and other parameters
         processImages(imagesArray, f_email, accessKey)
           .then(async () => {
             const subFolder = CurrentUserEmail + '/' + DateID;
-
+            submitLoading.style.opacity = '80%';
+            submitLoading.innerText = 'DONE';
+            submitLoading.style.pointerEvents = 'none';
             await uploadmetadata(formDataObject, accessKey, subFolder);
             console.log('All images processed.');
             // if payment mothed is other than "" then submit button will be enabled
-
-            // submitLoading.style.opacity = "80%";
-            // submitLoading.innerText = "DONE";
-            // //! change this back to NONE
-            // submitLoading.style.pointerEvents = "auto";
 
             // reroute to /order-confirmation
             window.location.href = '/order-confirmation';
@@ -967,6 +675,7 @@ window.Webflow.push(() => {
   }
 
   console.log('ENV ===> ', process.env.NODE_ENV);
+  console.log(process.env.NODE_ENV === 'development' ? '_____*_LOCALHOST_*____' : '***_CDN_***');
 
   init();
 
