@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 1.1.0
+
+### Minor Changes
+
+- f7acb03: paypalupdate
+
 ## 1.0.2
 
 ### Patch Changes
