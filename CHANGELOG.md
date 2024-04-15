@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 1.1.1
+
+### Patch Changes
+
+- 14bb77a: paypal endpoint fix
+
 ## 1.1.0
 
 ### Minor Changes
