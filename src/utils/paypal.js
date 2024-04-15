@@ -4,8 +4,14 @@ export function initializePaypal(
   ConfirmOrderButtonSelector,
   paymentStatus
 ) {
-  // const api = 'https://creative-directors-dropbox.sa-60b.workers.dev';
-  const api = 'http://127.0.0.1:8787';
+  let api;
+  if (process.env.NODE_ENV === 'development') {
+    api = 'http://127.0.0.1:8787'; // Use local endpoint for development
+    console.log('DEV___PAYPAL____###');
+  } else {
+    api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
+    console.log('CDN_PAYPAL_');
+  }
 
   const PAYPAL_SDK_URL = 'https://www.paypal.com/sdk/js';
   const CURRENCY = 'EUR';
