@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import axios from 'axios';
 import cookie from 'cookie';
@@ -22,10 +23,11 @@ import {
 } from '$utils/dropBoxFn';
 import { frontEndElementsJS } from '$utils/frontEndElements';
 import { greetUser } from '$utils/greet';
-import { generateInvoice } from '$utils/invoiceGenerator';
+import { generateInvoice, generateInvoiceItem } from '$utils/invoiceGenerator';
 import { initializePaypal } from '$utils/paypal.js';
 import { saveInputToLocalHost } from '$utils/placeholderFormContent';
 import transformData from '$utils/transformData';
+import { updateUserAddress } from '$utils/webflowScripts.js';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -200,12 +202,12 @@ window.Webflow.push(() => {
         // elem.setAttribute("data-attribute", e.payment.status ?  );
 
         //name
-        if (nameElement && e != undefined) {
+        if (nameElement && e !== undefined) {
           nameElement.innerText = e.name || 'NO_NAME';
         }
 
         //description
-        if (description && e != undefined) {
+        if (description && e !== undefined) {
           description.innerText =
             `${e.type} ${
               e.specialFunction ? ' with ' + e.specialFunction : ''
@@ -251,7 +253,7 @@ window.Webflow.push(() => {
               </a>`;
           });
           // if images is empty just put "no images " instead
-          if (images == '') {
+          if (images === '') {
             images = 'No Images';
           }
           thumbnails.innerHTML = images;
@@ -287,7 +289,7 @@ window.Webflow.push(() => {
 
         //main thumbnail
         const mainThumb = elem.querySelector("[data-order-item='ph-main-img']");
-        if (mainThumb && e.images[0] != undefined) {
+        if (mainThumb && e.images[0] !== undefined) {
           if (mainThumb.hasAttribute('srcset')) mainThumb.removeAttribute('srcset');
           mainThumb.src = e.images[0].thumbnail;
         }
@@ -441,7 +443,7 @@ window.Webflow.push(() => {
       return new Promise(async (resolve, reject) => {
         await Promise.all(
           serverData.thumbnails.entries.map(async (e) => {
-            if (e['.tag'] == 'success') {
+            if (e['.tag'] === 'success') {
               convertedOrder.order.images.push({
                 name: e.metadata.name,
                 path: e.metadata.path_display,
@@ -535,6 +537,15 @@ window.Webflow.push(() => {
       paymentStatus
     );
 
+    const updateOrderConfirmationID = (result) => {
+      const orderConfirmationID = document.querySelectorAll('[data-confirmation="order-id"]');
+      if (orderConfirmationID) {
+        orderConfirmationID.forEach((e) => {
+          e.innerHTML = result.data.fieldData['order-id'];
+        });
+      }
+    };
+
     /**
      * pay later button
      */
@@ -559,7 +570,11 @@ window.Webflow.push(() => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (paymentStatus.paymentMethod == '') {
+        document.querySelector("[order-submit='approved']").addEventListener('click', () => {
+          console.log('clicked', this);
+        });
+
+        if (paymentStatus.paymentMethod === '') {
           alert('Please select a payment method');
           return;
         }
@@ -598,17 +613,18 @@ window.Webflow.push(() => {
               redirect: 'follow',
             };
 
-            await fetch(api + '/api/uploadmetadata', requestOptions)
+            const uploadData = await fetch(api + '/api/uploadmetadata', requestOptions)
               .then((response) => response.json())
               .then(async (result) => {
                 console.log('result from uploadmetadata .: ', result);
                 const jsonString = JSON.stringify(result, null, 2);
                 const pathWithExtension = '/CD-uploads/' + uploadID + '/metadata.json';
                 //await uploadToDropbox(jsonString, pathWithExtension, accesskey);
+                return result;
               })
               .catch((error) => console.log('error', error));
 
-            resolve('metadata uploaded');
+            resolve(uploadData);
           });
         }
 
@@ -653,17 +669,28 @@ window.Webflow.push(() => {
 
         // Call the function with your array of images and other parameters
         processImages(imagesArray, f_email, accessKey)
-          .then(async () => {
+          .then(async (data) => {
             const subFolder = CurrentUserEmail + '/' + DateID;
             submitLoading.style.opacity = '80%';
             submitLoading.innerText = 'DONE';
-            submitLoading.style.pointerEvents = 'none';
-            await uploadmetadata(formDataObject, accessKey, subFolder);
+            //submitLoading.style.pointerEvents = 'none';
+            const Final = await uploadmetadata(formDataObject, accessKey, subFolder);
             console.log('All images processed.');
+            console.log('Final', Final);
+            return Final;
             // if payment mothed is other than "" then submit button will be enabled
 
             // reroute to /order-confirmation
-            window.location.href = '/order-confirmation';
+            //window.location.href = '/order-confirmation';
+          })
+          .then((result) => {
+            console.log('result from uploadmetadata .: ', result);
+            //!disabled for testing
+            generateInvoice(result.data.fieldData);
+            updateOrderConfirmationID(result);
+          })
+          .then(() => {
+            clickTab(3);
           })
           .catch((error) => {
             console.error('Error processing images:', error);
@@ -681,4 +708,62 @@ window.Webflow.push(() => {
 
   // saveInputToLocalHost();
   frontEndElementsJS();
+  //!use this after Final success
+  //!clickTab(3);
+
+  //***** webflow Elements Functions //
+
+  //update user address through the add/update user address form popout
+  updateUserAddress();
+  const returndata = {
+    result: 'success',
+    data: {
+      id: '6618c06b0275ed708da9d69e',
+      cmsLocaleId: null,
+      lastPublished: '2024-04-12T05:02:35.371Z',
+      lastUpdated: '2024-04-12T05:02:35.371Z',
+      createdOn: '2024-04-12T05:02:35.371Z',
+      isArchived: false,
+      isDraft: false,
+      fieldData: {
+        specialfunctionscene: true,
+        'file-link': 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
+        'furniture-dimension-h': 88,
+        'furniture-dimension-l': 77,
+        'furniture-dimension-w': 99,
+        'order-state': '3a8b108b469a23d52b620cb75b914d77',
+        payment: 'PayPal',
+        'furniture-name': 'slim order N51',
+        name: 'slim order N51',
+        specialfunction: 'this is comment Dimentions',
+        'furniture-type': 'slim order N51',
+        'color-finish': 'Oak',
+        'dimensions-comment': 'this is comment Dimentions',
+        'order-id': 'REND-20240412-0001',
+        'order-date': 'Fri Apr 12 2024 07:02:33 GMT+0200 (Central European Summer Time)',
+        'additional-images-data':
+          '[{"sceneKnockout":"Scene","woodType":"whiteoak","amount":"4","comment":"COMMENT BEECH"},{"sceneKnockout":"Select","woodType":"Select","amount":"1","comment":""},{"sceneKnockout":"Select","woodType":"Select","amount":"1","comment":""}]',
+        slug: 'slim_order_n51',
+        'test-image': {
+          fileId: '66165218cafe597f9bd457d1',
+          url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
+          alt: null,
+        },
+        'uploaded-images': [
+          {
+            fileId: '66165218cafe597f9bd457d1',
+            url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
+            alt: null,
+          },
+          {
+            fileId: '66165218cafe597f9bd457d5',
+            url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d5_12.jpeg',
+            alt: null,
+          },
+        ],
+        'user-id': '6617f9475a49a8be5bcf0aa9',
+      },
+    },
+  };
+  // generateInvoice(returndata.data.fieldData);
 });

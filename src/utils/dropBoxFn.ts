@@ -1,37 +1,33 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import axios from "axios";
+import axios from 'axios';
 
 export async function createFolderDropbox(name, accessToken) {
   return new Promise(async (resolve, reject) => {
     const config = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + accessToken,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        path: "/CD-uploads/" + name,
+        path: '/CD-uploads/' + name,
         autorename: false,
       }),
     };
 
     try {
-      const response = await fetch(
-        "https://api.dropboxapi.com/2/files/create_folder_v2",
-        config
-      );
+      const response = await fetch('https://api.dropboxapi.com/2/files/create_folder_v2', config);
 
       if (!response.ok) {
-        const error = new Error(
-          `Error creating folder: ${response.statusText}`
-        );
+        const error = new Error(`Error creating folder: ${response.statusText}`);
         reject(error);
       }
 
-      console.log("Folder created successfully!");
+      console.log('Folder created successfully!');
       resolve();
     } catch (error) {
-      console.error("Error creating folder:", error);
+      console.error('Error creating folder:', error);
       reject(error);
     }
   });
@@ -40,59 +36,47 @@ export async function createFolderDropbox(name, accessToken) {
 export async function checkFolderExistence(name, accessToken) {
   return new Promise(async (resolve, reject) => {
     const config = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + accessToken,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        path: "/CD-uploads/" + name,
+        path: '/CD-uploads/' + name,
       }),
     };
 
     try {
-      const response = await fetch(
-        "https://api.dropboxapi.com/2/files/get_metadata",
-        config
-      );
+      const response = await fetch('https://api.dropboxapi.com/2/files/get_metadata', config);
 
       if (!response.ok) {
         if (response.status === 409) {
-          console.log(
-            "Folder does not exist, creating...",
-            "/CD-uploads/" + name
-          );
+          console.log('Folder does not exist, creating...', '/CD-uploads/' + name);
           await createFolderDropbox(name, accessToken);
         } else {
-          const error = new Error(
-            `Error checking folder: ${response.statusText}`
-          );
+          const error = new Error(`Error checking folder: ${response.statusText}`);
           reject(error);
         }
       } else {
-        console.log("Folder already exists!", "/CD-uploads/" + name);
+        console.log('Folder already exists!', '/CD-uploads/' + name);
         resolve();
       }
     } catch (error) {
-      console.error("Error checking folder:", error);
+      console.error('Error checking folder:', error);
       reject(error);
     }
   });
 }
 
-export async function uploadToDropbox(
-  fileData: File,
-  fullPath: string,
-  accessToken: string
-) {
-  console.log(" $$$$$$ FN() uploadToDropbox Started ... ");
+export async function uploadToDropbox(fileData: File, fullPath: string, accessToken: string) {
+  console.log(' $$$$$$ FN() uploadToDropbox Started ... ');
   const config = {
     headers: {
-      Authorization: "Bearer " + accessToken,
-      "Content-Type": "application/octet-stream",
-      "Dropbox-API-Arg": JSON.stringify({
+      Authorization: 'Bearer ' + accessToken,
+      'Content-Type': 'application/octet-stream',
+      'Dropbox-API-Arg': JSON.stringify({
         path: fullPath,
-        mode: "add",
+        mode: 'add',
         autorename: true,
         mute: false,
         strict_conflict: false,
@@ -102,14 +86,14 @@ export async function uploadToDropbox(
 
   try {
     const response = await axios.post(
-      "https://content.dropboxapi.com/2/files/upload",
+      'https://content.dropboxapi.com/2/files/upload',
       fileData,
       config
     );
-    console.log("File uploaded successfully to Dropbox:", response.data);
+    console.log('File uploaded successfully to Dropbox:', response.data);
     return response.data;
   } catch (error) {
-    console.error("Error uploading to Dropbox:", error);
+    console.error('Error uploading to Dropbox:', error);
     throw error;
   }
 }
@@ -126,37 +110,37 @@ export const uploader = async (
     const user = userEmail;
     const uploadID = subFolder; //..userEmail/dateID..
 
-    const pathWithExtension = "/CD-uploads/" + uploadID + "/" + file.name;
+    const pathWithExtension = '/CD-uploads/' + uploadID + '/' + file.name;
 
     await checkFolderExistence(user, accessToken);
     await uploadToDropbox(file, pathWithExtension, accessToken);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "File uploaded successfully!" }),
+      body: JSON.stringify({ message: 'File uploaded successfully!' }),
     };
   } catch (error) {
-    console.error("Error uploading file:", error);
+    console.error('Error uploading file:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: "Error uploading file" }),
+      body: JSON.stringify({ message: 'Error uploading file' }),
     };
   }
 };
 
 export async function getFolderList(path: string, accessToken: string) {
   return new Promise((resolve, reject) => {
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       path: path,
     });
 
-    let config = {
-      method: "post",
+    const config = {
+      method: 'post',
       maxBodyLength: Infinity,
-      url: "https://api.dropboxapi.com/2/files/list_folder",
+      url: 'https://api.dropboxapi.com/2/files/list_folder',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + accessToken,
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + accessToken,
       },
       data: data,
     };
@@ -173,35 +157,32 @@ export async function getFolderList(path: string, accessToken: string) {
   });
 }
 
-export async function getBatchThumbnails(
-  entriesPathList: string[],
-  accessToken: string
-) {
+export async function getBatchThumbnails(entriesPathList: string[], accessToken: string) {
   return new Promise(async (resolve, reject) => {
-    let PathListWithSize = [];
+    const PathListWithSize = [];
     await Promise.all(
       entriesPathList.map((path) => {
         PathListWithSize.push({
           path: path.path,
           //THIS IS THE SIZE OF THE THUMBNAIL
           size: {
-            ".tag": "w256h256",
+            '.tag': 'w256h256',
           },
         });
       })
     );
 
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       entries: PathListWithSize,
     });
 
-    let config = {
-      method: "post",
+    const config = {
+      method: 'post',
       maxBodyLength: Infinity,
-      url: "https://content.dropboxapi.com/2/files/get_thumbnail_batch",
+      url: 'https://content.dropboxapi.com/2/files/get_thumbnail_batch',
       headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + accessToken,
+        'Content-Type': 'application/json',
       },
       data: data,
     };
@@ -220,17 +201,17 @@ export async function getBatchThumbnails(
 
 export async function getPreviewLink(path: string, accessToken: string) {
   return new Promise((resolve, reject) => {
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       path: path,
     });
 
-    let config = {
-      method: "post",
+    const config = {
+      method: 'post',
       maxBodyLength: Infinity,
-      url: "https://api.dropboxapi.com/2/files/get_temporary_link",
+      url: 'https://api.dropboxapi.com/2/files/get_temporary_link',
       headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + accessToken,
+        'Content-Type': 'application/json',
       },
       data: data,
     };
@@ -248,16 +229,16 @@ export async function getPreviewLink(path: string, accessToken: string) {
 
 export async function downloadDropboxItem(path, accessKey) {
   return new Promise((resolve, reject) => {
-    console.log("path", path);
+    console.log('path', path);
 
-    let config = {
-      method: "post",
+    const config = {
+      method: 'post',
       maxBodyLength: Infinity,
-      url: "https://content.dropboxapi.com/2/files/download",
+      url: 'https://content.dropboxapi.com/2/files/download',
       headers: {
-        Authorization: "Bearer " + accessKey,
+        Authorization: 'Bearer ' + accessKey,
         //'{"path":"/CD-uploads/sa@creative-directors.com/5-8-2023--16:28:40/structure.json"}'
-        "Dropbox-API-Arg": `{"path":"${path}"}`,
+        'Dropbox-API-Arg': `{"path":"${path}"}`,
       },
     };
 
@@ -277,8 +258,8 @@ export async function downloadDropboxItem(path, accessKey) {
 export async function saveUrlToDropbox(filePath, fileUrl, accessToken) {
   const config = {
     headers: {
-      Authorization: "Bearer " + accessToken,
-      "Content-Type": "application/json",
+      Authorization: 'Bearer ' + accessToken,
+      'Content-Type': 'application/json',
     },
   };
 
@@ -288,15 +269,11 @@ export async function saveUrlToDropbox(filePath, fileUrl, accessToken) {
   };
 
   try {
-    const response = await axios.post(
-      "https://api.dropboxapi.com/2/files/save_url",
-      data,
-      config
-    );
-    console.log("URL saved to Dropbox successfully:", response.data);
+    const response = await axios.post('https://api.dropboxapi.com/2/files/save_url', data, config);
+    console.log('URL saved to Dropbox successfully:', response.data);
     return response.data;
   } catch (error) {
-    console.error("Error saving URL to Dropbox:", error);
+    console.error('Error saving URL to Dropbox:', error);
     throw error;
   }
 }

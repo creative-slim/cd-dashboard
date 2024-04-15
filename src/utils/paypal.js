@@ -4,12 +4,17 @@ export function initializePaypal(
   ConfirmOrderButtonSelector,
   paymentStatus
 ) {
-  const api = 'https://creative-directors-dropbox.sa-60b.workers.dev';
+  // const api = 'https://creative-directors-dropbox.sa-60b.workers.dev';
+  const api = 'http://127.0.0.1:8787';
 
   const PAYPAL_SDK_URL = 'https://www.paypal.com/sdk/js';
   const CURRENCY = 'EUR';
   const INTENT = 'capture';
   let selectedPackage = 'none';
+  let orderDetails = {
+    selectedPackage: 'none',
+    extraImages: [],
+  };
   const PAYPAL_CLIENT_ID =
     'AevfJAscX9MKaFWcK--S7rgLBotKliHnYIc94ShGUS3yNpc_Vt7z92LLmH4Tfwl49uRWpesdR6VBbtVx';
 
@@ -49,6 +54,29 @@ export function initializePaypal(
     }
   }
 
+  function getFormDataFromLocalStorage() {
+    const keys = Object.keys(localStorage);
+    // Filter keys that start with "form_data"
+    const formDataKeys = keys.filter((key) => key.startsWith('form_data'));
+    // Retrieve values corresponding to those keys
+    const formDataValues = formDataKeys.map((key) => localStorage.getItem(key));
+
+    return JSON.parse(formDataValues);
+  }
+
+  function filterObjectsByNames(formData) {
+    const desiredNames = ['woodtype', 'package-select', 'special-function-toggle'];
+    const filteredData = {};
+
+    formData.forEach((item) => {
+      if (desiredNames.includes(item.name)) {
+        filteredData[item.name] = item;
+      }
+    });
+
+    return filteredData;
+  }
+
   document.addEventListener('click', handleClick);
 
   loadScript(
@@ -56,15 +84,30 @@ export function initializePaypal(
   )
     .then(() => {
       const alerts = document.querySelector(alertsSelector);
-
+      if (paymentStatus.paymentMethod.toUpperCase() === 'payLater'.toUpperCase()) {
+        console.log('Pay Later');
+        return;
+      }
+      let paymentDetails;
       const paypalButtons = paypal.Buttons({
         onClick: (data) => {
           const radioButtons = document.getElementsByName('package-select');
           for (let i = 0; i < radioButtons.length; i++) {
             if (radioButtons[i].checked) {
-              selectedPackage = radioButtons[i].id;
+              orderDetails.selectedPackage = radioButtons[i].id;
             }
           }
+          const extraImages = localStorage.getItem('extraImgs');
+          if (extraImages) {
+            console.log('Extra images:', JSON.parse(extraImages));
+            orderDetails.extraImages = JSON.parse(extraImages);
+          }
+          const packageData = filterObjectsByNames(getFormDataFromLocalStorage());
+          if (packageData.length === 0) {
+            console.error('No package data found!');
+            return;
+          }
+          orderDetails.packageData = packageData;
         },
         style: {
           shape: 'rect',
@@ -72,40 +115,68 @@ export function initializePaypal(
           layout: 'vertical',
           label: 'paypal',
         },
-        createOrder: function (data, actions) {
-          if (selectedPackage === 'none') {
-            console.error('Please select a package');
+        createOrder: async function (data, actions) {
+          if (orderDetails.selectedPackage === 'none') {
+            console.error('Please select a package : order creation failed!');
             return;
           }
-          return fetch(`${api}/api/paypal/create_order`, {
+          console.log('Creating payment order...FETCHING NOW', {
+            intent: INTENT,
+            package: orderDetails.selectedPackage,
+          });
+          const request = await fetch(`${api}/api/paypal/create_order`, {
             method: 'post',
             headers: {
               'Content-Type': 'application/json; charset=utf-8',
             },
-            body: JSON.stringify({ intent: INTENT, package: selectedPackage }),
+            //! Send the additional data
+            body: JSON.stringify({ intent: INTENT, package: orderDetails }),
           })
             .then((response) => response.json())
-            .then((order) => order.id);
+            .then((order) => {
+              console.log('Payment order CREATED', order);
+              localStorage.setItem(
+                'paymentDetails',
+                JSON.stringify({
+                  additionalImagesArray: order.additionalImagesArray,
+                  totalAmount: order.totalAmount,
+                })
+              );
+              return order.data.id;
+            });
+          console.log('Payment order REQUEST', await request);
+          return request;
         },
-        onApprove: function (data, actions) {
-          if (selectedPackage === 'none') {
+        onApprove: async function (data, actions) {
+          if (orderDetails.selectedPackage === 'none') {
+            console.error('Please select a package : approval failed!');
             return;
           }
+          console.log('Approving payment order...++++++', data);
           const orderId = data.orderID;
           paymentStatus.payed = true;
           paymentStatus.paymentMethod = 'PayPal';
           return document
             .querySelector("[order-submit='approved']")
-            .addEventListener('click', () => {
+            .addEventListener('click', async () => {
               fetch(`${api}/api/paypal/complete_order`, {
                 method: 'post',
                 headers: {
                   'Content-Type': 'application/json; charset=utf-8',
                 },
                 body: JSON.stringify({ intent: INTENT, order_id: orderId }),
-              });
+              })
+                .then((response) => {
+                  console.log('Response:', response);
+
+                  return response.json();
+                })
+                .then((orderDetails) => {
+                  console.log('Order details:', orderDetails);
+                  paymentDetails = orderDetails.data.purchase_units[0].payments.captures[0].amount;
+                  paypalButtons.close();
+                });
             });
-          // .then(() => console.log('Payment approved!'));
           // .then((orderDetails) => {
           //   const intentObject = INTENT === 'authorize' ? 'authorizations' : 'captures';
           //   alerts.innerHTML = `<div class=\'ms-alert ms-action\'>Thank you ${orderDetails.payer.name.given_name} ${orderDetails.payer.name.surname} for your payment of ${orderDetails.purchase_units[0].payments[intentObject][0].amount.value} ${orderDetails.purchase_units[0].payments[intentObject][0].amount.currency_code}!</div>`;
