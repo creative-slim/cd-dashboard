@@ -3,7 +3,7 @@
 
 import html2pdf from 'html2pdf.js';
 
-export function generateInvoice(finalData) {
+export async function generateInvoice(finalData) {
   const invoice = document.querySelector<HTMLElement>('#pdf-wrapper');
   // const pdfwrapper = invoice.cloneNode(true);
   const pdfwrapper = invoice;
@@ -36,15 +36,19 @@ export function generateInvoice(finalData) {
 
   document.querySelector("[data-invoice='download']").addEventListener('click', async () => {
     // await generatePDF(pdfwrapper);
-    getInvoicePDF(pdfwrapper).then((pdf) => {
+    getInvoicePDF(pdfwrapper, finalData['order-id']).then((pdf) => {
       // const blob = new Blob([pdf], { type: 'application/pdf' });
       const url = URL.createObjectURL(pdf);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'invoice.pdf';
+      a.download = `Invoice ${finalData['order-id']}.pdf`;
       a.click();
     });
   });
+
+  const pdfFile = await getInvoicePDF(pdfwrapper, finalData['order-id']);
+
+  return pdfFile;
 }
 
 async function generatePDF(pdfwrapper) {
@@ -65,7 +69,7 @@ async function generatePDF(pdfwrapper) {
   return worker;
 }
 
-async function getInvoicePDF(pdfwrapper) {
+async function getInvoicePDF(pdfwrapper, invoiceID) {
   const opt = {
     // margin: 0,
     filename: 'invoice.pdf',
@@ -87,8 +91,9 @@ async function getInvoicePDF(pdfwrapper) {
       return pdf;
     });
 
-  console.log('worker', worker);
-  return worker;
+  const invoicePDFfile = new File([worker], `Invoice_${invoiceID}`, { type: worker.type });
+
+  return invoicePDFfile;
 }
 
 function getInvoiceData(FinalData) {
@@ -192,7 +197,7 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
     <br><small>order n°:  ${data['order-id']}</small>
     <br><small>dimensions : H. ${data['furniture-dimension-h']}mm  W.${data['furniture-dimension-w']}mm  L.${data['furniture-dimension-l']}mm</small>
     <br><small>Matetial : ${data['color-finish']}</small> <br><small>${data['dimensions-comment']}</small>
-    <br><small>${data['specialfunction']}</small>`;
+    <br><small>${data['specialfunction'] || ''}</small>`;
 
   // setup quantity
   item.querySelector("[invoice-item-template='quantity']").innerHTML = '1';

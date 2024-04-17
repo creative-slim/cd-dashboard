@@ -27,10 +27,11 @@ import { generateInvoice, generateInvoiceItem } from '$utils/invoiceGenerator';
 import { initializePaypal } from '$utils/paypal.js';
 import { saveInputToLocalHost } from '$utils/placeholderFormContent';
 import transformData from '$utils/transformData';
-import { updateUserAddress } from '$utils/webflowScripts.js';
+import { checkRequiredFields, sendInvoice, uploadInvoice } from '$utils/utilsFn.js';
+import { dataChecker, updateUserAddress } from '$utils/webflowScripts.js';
 
 window.Webflow ||= [];
-window.Webflow.push(() => {
+window.Webflow.push(async () => {
   lightbox.option({
     resizeDuration: 200,
     wrapAround: true,
@@ -683,36 +684,40 @@ window.Webflow.push(() => {
         // Call the function with your array of images and other parameters
         processImages(imagesArray, f_email, accessKey)
           .then(async (data) => {
+            disableAllButtons();
             const subFolder = CurrentUserEmail + '/' + DateID;
             initLoading();
             //submitLoading.style.pointerEvents = 'none';
             const Final = await uploadmetadata(formDataObject, accessKey, subFolder);
             console.log('All images processed.');
-            console.log('Final', Final);
             return Final;
             // if payment mothed is other than "" then submit button will be enabled
 
             // reroute to /order-confirmation
             //window.location.href = '/order-confirmation';
           })
-          .then((result) => {
-            console.log('result from uploadmetadata .: ', result);
+          .then(async (result) => {
+            console.log('Final', result);
             //!disabled for testing
-            generateInvoice(result.data.fieldData);
+            const pdfFile = await generateInvoice(result.data.fieldData);
+            //! upload pdf to dropbox
+            uploadInvoice(pdfFile);
+            const pdfLink = await uploadInvoice(pdfFile, result.fullPath);
+            const userEmail = document.querySelector("[data-user='email']").innerText;
+            const send = await sendInvoice(pdfLink.linkarray, userEmail);
+            console.log({ pdfFile, pdfLink, send });
+
             updateOrderConfirmationID(result);
           })
           .then(() => {
+            enableAllButtons();
             clickTab(3);
             doneLoading();
+            clearLocalStorage('upload_urls', 'FormInputHolder', 'paymentDetails', 'extraImgs');
           })
           .catch((error) => {
             console.error('Error processing images:', error);
           });
-
-        localStorage.removeItem('upload_urls');
-        window.localStorage.removeItem('FormInputHolder');
-        // clear all local storage
-        // localStorage.clear();
       });
   }
 
@@ -720,6 +725,32 @@ window.Webflow.push(() => {
   console.log(process.env.NODE_ENV === 'development' ? '_____*_LOCALHOST_*____' : '***_CDN_***');
 
   init();
+  // checkRequiredFields();
+
+  // function that disables all buttons and links on the page
+  function disableAllButtons() {
+    const buttons = document.querySelectorAll('button, a');
+    buttons.forEach((button) => {
+      button.disabled = true;
+    });
+  }
+  // function that enables all buttons and links on the page
+  function enableAllButtons() {
+    const buttons = document.querySelectorAll('button, a');
+    buttons.forEach((button) => {
+      button.disabled = false;
+    });
+  }
+
+  // function that clears the passed names from local storage
+  function clearLocalStorage(...names) {
+    // names.forEach((name) => {
+    //   localStorage.removeItem(name);
+    // });
+    const keeper = localStorage.getItem('tabStates');
+    localStorage.clear();
+    localStorage.setItem('tabStates', keeper);
+  }
 
   // saveInputToLocalHost();
   frontEndElementsJS();
@@ -730,6 +761,7 @@ window.Webflow.push(() => {
 
   //update user address through the add/update user address form popout
   updateUserAddress();
+  dataChecker();
   const returndata = {
     result: 'success',
     data: {
@@ -774,5 +806,14 @@ window.Webflow.push(() => {
       },
     },
   };
-  generateInvoice(returndata.data.fieldData);
+
+  const fullPath = '/CD-uploads/d1f1f37422a24359982cfe07d39c69b9/17-3-2024--11:4:58';
+
+  // const pdfFile = await generateInvoice(returndata.data.fieldData);
+
+  // const pdfLink = await uploadInvoice(pdfFile, fullPath);
+  // const userEmail = document.querySelector("[data-user='email']").innerText;
+  // const send = await sendInvoice(pdfLink.linkarray, userEmail);
+
+  // console.log({ pdfFile, pdfLink, send });
 });
