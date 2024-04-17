@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 1.3.0
+
+### Minor Changes
+
+- ab69b5c: invoice mailing
+
 ## 1.2.0
 
 ### Minor Changes
