@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 1.2.0
+
+### Minor Changes
+
+- 1ebf7cb: invoice generation update
+
 ## 1.1.1
 
 ### Patch Changes
