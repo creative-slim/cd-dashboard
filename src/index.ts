@@ -209,11 +209,8 @@ window.Webflow.push(() => {
         //description
         if (description && e !== undefined) {
           description.innerText =
-            `${e.type} ${
-              e.specialFunction ? ' with ' + e.specialFunction : ''
-            } - ${e.material} - ${e.dimensions.width}mm x ${
-              e.dimensions.height
-            }mm x ${e.dimensions.length}mm : ${e.renderPackage}` || 'NO_DESCRIPTION';
+            `${e.type} ${e.specialFunction ? ' with ' + e.specialFunction : ''} - ${e.material} - ${e.dimensions.width}mm x ${e.dimensions.height}mm x ${e.dimensions.length}mm : ${e.renderPackage}` ||
+            'NO_DESCRIPTION';
         }
 
         //thumbnails
@@ -246,9 +243,7 @@ window.Webflow.push(() => {
             //   <img src="${i.thumbnail}" alt="image">
             // </div>`;
             //!trying to Fix lightbox issue
-            images += `<a href="${
-              i.imagePreview
-            }" data-lightbox="${sliceStringAtNthSlash(i.path, 4)}" alt="image">
+            images += `<a href="${i.imagePreview}" data-lightbox="${sliceStringAtNthSlash(i.path, 4)}" alt="image">
             <img src="${i.thumbnail}" alt="image">
               </a>`;
           });
@@ -665,14 +660,31 @@ window.Webflow.push(() => {
         // ------------
 
         // the submit button
-        const submitLoading = document.querySelector("[order-submit='approved']");
+        const submitLoading = form.querySelector("[order-submit='approved']");
+        const loadingSVG = form.querySelector('[data-form="loading"]');
+        console.log('**********************+');
+        console.log({ submitLoading, loadingSVG });
+        console.log('**********************+');
+
+        function initLoading() {
+          submitLoading.style.opacity = '80%';
+          submitLoading.value = '';
+          submitLoading.style.pointerEvents = 'none';
+          loadingSVG.style.display = 'block';
+        }
+
+        function doneLoading() {
+          submitLoading.style.opacity = '100%';
+          submitLoading.value = 'DONE';
+          submitLoading.style.pointerEvents = 'none';
+          loadingSVG.style.display = 'none';
+        }
 
         // Call the function with your array of images and other parameters
         processImages(imagesArray, f_email, accessKey)
           .then(async (data) => {
             const subFolder = CurrentUserEmail + '/' + DateID;
-            submitLoading.style.opacity = '80%';
-            submitLoading.innerText = 'DONE';
+            initLoading();
             //submitLoading.style.pointerEvents = 'none';
             const Final = await uploadmetadata(formDataObject, accessKey, subFolder);
             console.log('All images processed.');
@@ -691,6 +703,7 @@ window.Webflow.push(() => {
           })
           .then(() => {
             clickTab(3);
+            doneLoading();
           })
           .catch((error) => {
             console.error('Error processing images:', error);
@@ -698,6 +711,8 @@ window.Webflow.push(() => {
 
         localStorage.removeItem('upload_urls');
         window.localStorage.removeItem('FormInputHolder');
+        // clear all local storage
+        // localStorage.clear();
       });
   }
 
@@ -718,52 +733,46 @@ window.Webflow.push(() => {
   const returndata = {
     result: 'success',
     data: {
-      id: '6618c06b0275ed708da9d69e',
+      id: '661e834ccbc2eba3caf47129',
       cmsLocaleId: null,
-      lastPublished: '2024-04-12T05:02:35.371Z',
-      lastUpdated: '2024-04-12T05:02:35.371Z',
-      createdOn: '2024-04-12T05:02:35.371Z',
+      lastPublished: '2024-04-16T13:55:24.048Z',
+      lastUpdated: '2024-04-16T13:55:24.048Z',
+      createdOn: '2024-04-16T13:55:24.048Z',
       isArchived: false,
       isDraft: false,
       fieldData: {
-        specialfunctionscene: true,
+        specialfunctionscene: false,
         'file-link': 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
-        'furniture-dimension-h': 88,
-        'furniture-dimension-l': 77,
-        'furniture-dimension-w': 99,
+        'furniture-dimension-h': 54,
+        'furniture-dimension-l': 54,
+        'furniture-dimension-w': 12,
         'order-state': '3a8b108b469a23d52b620cb75b914d77',
         payment: 'PayPal',
-        'furniture-name': 'slim order N51',
-        name: 'slim order N51',
-        specialfunction: 'this is comment Dimentions',
-        'furniture-type': 'slim order N51',
-        'color-finish': 'Oak',
-        'dimensions-comment': 'this is comment Dimentions',
-        'order-id': 'REND-20240412-0001',
-        'order-date': 'Fri Apr 12 2024 07:02:33 GMT+0200 (Central European Summer Time)',
+        'furniture-name': 'XYZ',
+        name: 'XYZ',
+        specialfunction: '',
+        'color-finish': 'Walnut',
+        'dimensions-comment': 'this is a comment',
+        'order-id': 'REND-20240416-0010',
+        'order-date': 'Tue Apr 16 2024 15:55:22 GMT+0200 (Central European Summer Time)',
         'additional-images-data':
-          '[{"sceneKnockout":"Scene","woodType":"whiteoak","amount":"4","comment":"COMMENT BEECH"},{"sceneKnockout":"Select","woodType":"Select","amount":"1","comment":""},{"sceneKnockout":"Select","woodType":"Select","amount":"1","comment":""}]',
-        slug: 'slim_order_n51',
-        'test-image': {
-          fileId: '66165218cafe597f9bd457d1',
-          url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
-          alt: null,
-        },
+          '[{"sceneKnockout":"Knockout","woodType":"oak","amount":"6","comment":""},{"sceneKnockout":"Scene","woodType":"walnut","amount":"2","comment":""},{"sceneKnockout":"Scene","woodType":"whiteoak","amount":"4","comment":""}]',
+        slug: 'xyz-3f5bc',
         'uploaded-images': [
           {
             fileId: '66165218cafe597f9bd457d1',
             url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
             alt: null,
           },
-          {
-            fileId: '66165218cafe597f9bd457d5',
-            url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d5_12.jpeg',
-            alt: null,
-          },
         ],
+        'test-image': {
+          fileId: '66165218cafe597f9bd457d1',
+          url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
+          alt: null,
+        },
         'user-id': '6617f9475a49a8be5bcf0aa9',
       },
     },
   };
-  // generateInvoice(returndata.data.fieldData);
+  generateInvoice(returndata.data.fieldData);
 });

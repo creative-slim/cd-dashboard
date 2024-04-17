@@ -34,22 +34,61 @@ export function generateInvoice(finalData) {
 
   fillInvoiceData(paymentDetails, itemTemplate, pdfwrapper, finalData, table);
 
+  document.querySelector("[data-invoice='download']").addEventListener('click', async () => {
+    // await generatePDF(pdfwrapper);
+    getInvoicePDF(pdfwrapper).then((pdf) => {
+      // const blob = new Blob([pdf], { type: 'application/pdf' });
+      const url = URL.createObjectURL(pdf);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'invoice.pdf';
+      a.click();
+    });
+  });
+}
+
+async function generatePDF(pdfwrapper) {
   const opt = {
     // margin: 0,
     filename: 'invoice.pdf',
-    // image: { type: "jpeg", quality: 0.98 },
+    // image: { type: 'jpeg', quality: 0.98 },
     html2canvas: {
-      //   dpi: 192,
-      //   letterRendering: true,
-      width: 1050,
+      width: 1050, //1050
       useCORS: true,
+      scale: 2,
     },
 
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
   };
-  const final = html2pdf().set(opt).from(pdfwrapper);
-  // final.save();
-  console.log('🚀 ~ generateInvoice ~ final', final);
+
+  const worker = html2pdf().set(opt).from(pdfwrapper).save();
+  return worker;
+}
+
+async function getInvoicePDF(pdfwrapper) {
+  const opt = {
+    // margin: 0,
+    filename: 'invoice.pdf',
+    // image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      width: 1050, //1050
+      useCORS: true,
+      scale: 2,
+    },
+
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+  };
+
+  const worker = await html2pdf()
+    .set(opt)
+    .from(pdfwrapper)
+    .outputPdf('blob')
+    .then((pdf) => {
+      return pdf;
+    });
+
+  console.log('worker', worker);
+  return worker;
 }
 
 function getInvoiceData(FinalData) {
@@ -114,6 +153,10 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
     customerReference.forEach((e) => {
       e.innerHTML = data['customer-reference'];
     });
+    const contactPerson = wrapperElement.querySelectorAll('[data-invoice=contact-person]');
+    contactPerson.forEach((e) => {
+      e.innerHTML = data['contact-person'];
+    });
 
     // order-delivery-date
     const orderDeliveryDate = wrapperElement.querySelectorAll('[data-invoice=order-delivery-date]');
@@ -144,11 +187,12 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
   item.removeAttribute('data-invoice');
   item.style.display = 'grid';
 
-  console.log('🚀 ~ generateInvoiceItem ~ data', data);
-
   // setup title
-  item.querySelector("[invoice-item-template='title']").innerHTML =
-    `${data['furniture-name']}<br><small>${data['furniture-dimension-h']}-${data['furniture-dimension-w']}-${data['furniture-dimension-l']}</small><br><small>Matetial : ${data['color-finish']}</small> <br><small>${data['specialfunction']}</small><br><small>${data['dimensions-comment']}</small>`;
+  item.querySelector("[invoice-item-template='title']").innerHTML = `${data['furniture-name']}
+    <br><small>order n°:  ${data['order-id']}</small>
+    <br><small>dimensions : H. ${data['furniture-dimension-h']}mm  W.${data['furniture-dimension-w']}mm  L.${data['furniture-dimension-l']}mm</small>
+    <br><small>Matetial : ${data['color-finish']}</small> <br><small>${data['dimensions-comment']}</small>
+    <br><small>${data['specialfunction']}</small>`;
 
   // setup quantity
   item.querySelector("[invoice-item-template='quantity']").innerHTML = '1';
@@ -158,29 +202,29 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
 
   // setup total
   item.querySelector("[invoice-item-template='total']").innerHTML =
-    '€ ' + paymentDetails.totalAmount;
+    '€ ' + paymentDetails.packagePrice.unit_amount.value;
 
-  console.log('🚀 ~ generateInvoiceItem ~ item', wrapper, item);
   wrapper.appendChild(item);
   generateAdditionalImages(data, paymentDetails, itemTemplate, item);
 }
 
 function generateAdditionalImages(data, paymentDetails, itemTemplate, siblingElement) {
   const additionalImageData = JSON.parse(data['additional-images-data']);
-  paymentDetails.additionalImagesArray.forEach((imageData) => {
+  paymentDetails.additionalImagesArray.forEach((imageData, index) => {
     const { renderType, material, quantity, price, unit_price } = imageData;
     const item = itemTemplate.cloneNode(true);
 
-    console.log('inside generateAdditionalImages', { paymentDetails });
     item.querySelector("[invoice-item-template='title']").innerHTML =
-      `${quantity} x ${renderType} - ${material} `;
+      `${renderType} - ${material} `;
     item.querySelector("[invoice-item-template='quantity']").innerHTML = `${quantity}`;
     //! price
     item.querySelector("[invoice-item-template='price']").innerHTML = `€ ${unit_price}`;
     //! total
     item.querySelector("[invoice-item-template='total']").innerHTML = `€ ${price}`;
     item.style.display = 'grid';
-    console.log(siblingElement.parentNode);
+
+    //invoice-item-template="index"
+    item.querySelector("[invoice-item-template='index']").innerHTML = index + 2;
 
     siblingElement.parentNode.appendChild(item);
   });

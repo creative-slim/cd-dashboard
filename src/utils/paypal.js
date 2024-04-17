@@ -85,6 +85,28 @@ export function initializePaypal(
 
   document.addEventListener('click', handleClick);
 
+  // get elemt by attribute data-payment=paypal-elements-wrapper
+  const paymentOptionsWrapper = document.querySelector("[data-payment='paypal-elements-wrapper']");
+  if (!paymentOptionsWrapper) {
+    console.error('PayPal elements wrapper not found!');
+    return;
+  }
+  const paymentMethodeConfirmationUIelement = document.querySelector(
+    "[data-payment='payment-methode-confirmation']"
+  );
+  if (!paymentMethodeConfirmationUIelement) {
+    console.error('Payment methode confirmation UI element not found!');
+    return;
+  }
+
+  function paypalOrderConfirmationUI(orderDetails) {
+    const alerts = document.querySelector(alertsSelector);
+    alerts.innerHTML = `<div class='ms-alert ms-action'>
+      <p> ORDER CREATED </p>
+    </div>`;
+    paymentMethodeConfirmationUIelement.style.display = 'block';
+  }
+
   loadScript(
     `${PAYPAL_SDK_URL}?client-id=${PAYPAL_CLIENT_ID}&currency=${CURRENCY}&intent=${INTENT}`
   )
@@ -146,8 +168,10 @@ export function initializePaypal(
                 JSON.stringify({
                   additionalImagesArray: order.additionalImagesArray,
                   totalAmount: order.totalAmount,
+                  packagePrice: order.finalPackagePrice,
                 })
               );
+
               return order.data.id;
             });
           console.log('Payment order REQUEST', await request);
@@ -159,6 +183,8 @@ export function initializePaypal(
             return;
           }
           console.log('Approving payment order...++++++', data);
+          paypalOrderConfirmationUI(data);
+          paypalButtons.close();
           const orderId = data.orderID;
           paymentStatus.payed = true;
           paymentStatus.paymentMethod = 'PayPal';
