@@ -1,5 +1,12 @@
 # @creative-directors/client-dashboard
 
+## 1.3.1
+
+### Patch Changes
+
+- 20cf486: input fields check is fixed
+- bae010a: submit logger
+
 ## 1.3.0
 
 ### Minor Changes
