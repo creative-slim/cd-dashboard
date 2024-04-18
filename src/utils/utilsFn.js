@@ -70,16 +70,17 @@ export const checkRequiredFields = () => {
     if (requiredFields.length === 0) {
       return;
     }
-
-    requiredFields.forEach((field) => {
-      field.addEventListener('input', () => {
-        const filledFields = Array.from(requiredFields).filter((field) => field.value !== '');
-        if (requiredFields.length === filledFields.length) {
-          nextButton.removeAttribute('disabled');
-        } else {
-          nextButton.setAttribute('disabled', true);
-        }
-      });
-    });
+    const filledFields = Array.from(requiredFields).filter((field) => field.value !== '');
+    if (requiredFields.length === filledFields.length) {
+      nextButton.removeAttribute('disabled');
+    } else {
+      nextButton.setAttribute('disabled', true);
+    }
   });
+};
+
+// function that takes in a string and animate a div to show that string inside it
+export const submitLogger = (msg, color = 'black') => {
+  const log = document.querySelector('[data-submit="logger"]');
+  log.innerHTML += `<p style="color:${color}">${msg}</p>`;
 };

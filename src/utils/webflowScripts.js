@@ -99,9 +99,11 @@ export function dataChecker() {
       if (requiredFields.length === filledFields.length) {
         return true;
       }
+
       //highlight the fields that are not filled
       requiredFields.forEach((field) => {
         if (field.value === '') {
+          console.log('field is required', field.name, field);
           field.style.border = '1px solid red';
         }
       });

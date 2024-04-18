@@ -27,7 +27,7 @@ import { generateInvoice, generateInvoiceItem } from '$utils/invoiceGenerator';
 import { initializePaypal } from '$utils/paypal.js';
 import { saveInputToLocalHost } from '$utils/placeholderFormContent';
 import transformData from '$utils/transformData';
-import { checkRequiredFields, sendInvoice, uploadInvoice } from '$utils/utilsFn.js';
+import { checkRequiredFields, sendInvoice, submitLogger, uploadInvoice } from '$utils/utilsFn.js';
 import { dataChecker, updateUserAddress } from '$utils/webflowScripts.js';
 
 window.Webflow ||= [];
@@ -682,13 +682,17 @@ window.Webflow.push(async () => {
         }
 
         // Call the function with your array of images and other parameters
+
+        submitLogger('- initiating image processing...');
         processImages(imagesArray, f_email, accessKey)
           .then(async (data) => {
+            submitLogger('- uploading data to database...');
             disableAllButtons();
             const subFolder = CurrentUserEmail + '/' + DateID;
             initLoading();
             //submitLoading.style.pointerEvents = 'none';
             const Final = await uploadmetadata(formDataObject, accessKey, subFolder);
+            submitLogger('- data uploaded to database successfully.', 'green');
             console.log('All images processed.');
             return Final;
             // if payment mothed is other than "" then submit button will be enabled
@@ -700,16 +704,23 @@ window.Webflow.push(async () => {
             console.log('Final', result);
             //!disabled for testing
             const pdfFile = await generateInvoice(result.data.fieldData);
+            submitLogger('- generating invoice...');
             //! upload pdf to dropbox
             uploadInvoice(pdfFile);
             const pdfLink = await uploadInvoice(pdfFile, result.fullPath);
+            submitLogger('- invoice generated successfully.', 'green');
             const userEmail = document.querySelector("[data-user='email']").innerText;
+            submitLogger('- sending invoice to user...');
             const send = await sendInvoice(pdfLink.linkarray, userEmail);
+            submitLogger('- invoice sent successfully.', 'green');
             console.log({ pdfFile, pdfLink, send });
 
             updateOrderConfirmationID(result);
+            submitLogger('- updating order confirmation ID...');
           })
           .then(() => {
+            submitLogger('- Submission is Successful', 'green');
+
             enableAllButtons();
             clickTab(3);
             doneLoading();
@@ -761,53 +772,54 @@ window.Webflow.push(async () => {
 
   //update user address through the add/update user address form popout
   updateUserAddress();
-  dataChecker();
-  const returndata = {
-    result: 'success',
-    data: {
-      id: '661e834ccbc2eba3caf47129',
-      cmsLocaleId: null,
-      lastPublished: '2024-04-16T13:55:24.048Z',
-      lastUpdated: '2024-04-16T13:55:24.048Z',
-      createdOn: '2024-04-16T13:55:24.048Z',
-      isArchived: false,
-      isDraft: false,
-      fieldData: {
-        specialfunctionscene: false,
-        'file-link': 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
-        'furniture-dimension-h': 54,
-        'furniture-dimension-l': 54,
-        'furniture-dimension-w': 12,
-        'order-state': '3a8b108b469a23d52b620cb75b914d77',
-        payment: 'PayPal',
-        'furniture-name': 'XYZ',
-        name: 'XYZ',
-        specialfunction: '',
-        'color-finish': 'Walnut',
-        'dimensions-comment': 'this is a comment',
-        'order-id': 'REND-20240416-0010',
-        'order-date': 'Tue Apr 16 2024 15:55:22 GMT+0200 (Central European Summer Time)',
-        'additional-images-data':
-          '[{"sceneKnockout":"Knockout","woodType":"oak","amount":"6","comment":""},{"sceneKnockout":"Scene","woodType":"walnut","amount":"2","comment":""},{"sceneKnockout":"Scene","woodType":"whiteoak","amount":"4","comment":""}]',
-        slug: 'xyz-3f5bc',
-        'uploaded-images': [
-          {
-            fileId: '66165218cafe597f9bd457d1',
-            url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
-            alt: null,
-          },
-        ],
-        'test-image': {
-          fileId: '66165218cafe597f9bd457d1',
-          url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
-          alt: null,
-        },
-        'user-id': '6617f9475a49a8be5bcf0aa9',
-      },
-    },
-  };
+  // dataChecker();
 
-  const fullPath = '/CD-uploads/d1f1f37422a24359982cfe07d39c69b9/17-3-2024--11:4:58';
+  // const returndata = {
+  //   result: 'success',
+  //   data: {
+  //     id: '661e834ccbc2eba3caf47129',
+  //     cmsLocaleId: null,
+  //     lastPublished: '2024-04-16T13:55:24.048Z',
+  //     lastUpdated: '2024-04-16T13:55:24.048Z',
+  //     createdOn: '2024-04-16T13:55:24.048Z',
+  //     isArchived: false,
+  //     isDraft: false,
+  //     fieldData: {
+  //       specialfunctionscene: false,
+  //       'file-link': 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
+  //       'furniture-dimension-h': 54,
+  //       'furniture-dimension-l': 54,
+  //       'furniture-dimension-w': 12,
+  //       'order-state': '3a8b108b469a23d52b620cb75b914d77',
+  //       payment: 'PayPal',
+  //       'furniture-name': 'XYZ',
+  //       name: 'XYZ',
+  //       specialfunction: '',
+  //       'color-finish': 'Walnut',
+  //       'dimensions-comment': 'this is a comment',
+  //       'order-id': 'REND-20240416-0010',
+  //       'order-date': 'Tue Apr 16 2024 15:55:22 GMT+0200 (Central European Summer Time)',
+  //       'additional-images-data':
+  //         '[{"sceneKnockout":"Knockout","woodType":"oak","amount":"6","comment":""},{"sceneKnockout":"Scene","woodType":"walnut","amount":"2","comment":""},{"sceneKnockout":"Scene","woodType":"whiteoak","amount":"4","comment":""}]',
+  //       slug: 'xyz-3f5bc',
+  //       'uploaded-images': [
+  //         {
+  //           fileId: '66165218cafe597f9bd457d1',
+  //           url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
+  //           alt: null,
+  //         },
+  //       ],
+  //       'test-image': {
+  //         fileId: '66165218cafe597f9bd457d1',
+  //         url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
+  //         alt: null,
+  //       },
+  //       'user-id': '6617f9475a49a8be5bcf0aa9',
+  //     },
+  //   },
+  // };
+
+  // const fullPath = '/CD-uploads/d1f1f37422a24359982cfe07d39c69b9/17-3-2024--11:4:58';
 
   // const pdfFile = await generateInvoice(returndata.data.fieldData);
 
