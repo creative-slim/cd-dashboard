@@ -99,6 +99,19 @@ export function dataChecker() {
       if (requiredFields.length === filledFields.length) {
         return true;
       }
+      //highlight the fields that are not filled
+      requiredFields.forEach((field) => {
+        if (field.value === '') {
+          field.style.border = '1px solid red';
+        }
+      });
+      //remove the red border after 2 seconds
+      setTimeout(() => {
+        requiredFields.forEach((field) => {
+          field.style.border = '1px solid #777';
+        });
+      }, 2000);
+
       return false;
     };
   });
