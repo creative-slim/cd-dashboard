@@ -12,27 +12,31 @@ export default class FileUploader {
 
   constructor(
     drop,
-    output,
+    // output,
     name,
-    namesArray,
-    eventOrMember,
-    submitprevention,
-    preventionClassName,
-    errorPopup
+    // namesArray,
+    eventOrMember
+    // errorPopup
   ) {
     this.dropZone = document.getElementById(drop);
-    this.output = document.getElementById(output);
-    this.submitprevention = document.getElementById(submitprevention);
+    // this.output = document.getElementById(output);
+    this.output = this.dropZone.parentElement.querySelector('[uploader-element="output"]');
+
+    this.submitprevention = document.getElementById('order-submit-button');
     this.uploaderID = this.dropZone.dataset.uploaderId || null;
     this.fileInput = this.dropZone.querySelector('input[type="file"]') || null;
+    this.fileInput.id = ` uploader-file-input-${this.uploaderID}`;
+    this.fileInput.nextElementSibling.setAttribute('for', this.fileInput.id);
     this.loading = this.dropZone.querySelector('[uploader-status="loading"]') || null;
     this.doneLoading = this.dropZone.querySelector('[uploader-status="done"]');
     this.defaultView = this.dropZone.querySelector('[uploader-status="default"]');
-    this.loadingError = document.getElementById(errorPopup);
+    // this.loadingError = document.getElementById(errorPopup);
+    this.loadingError = this.dropZone.parentElement.querySelector('[uploader-status="error"]');
+
     this.fileType = eventOrMember;
     this.activeError = false;
     this.errorTimeout = (this.loadingError && this.loadingError.dataset.timeout) ?? 3000;
-    this.preventionClassName = preventionClassName ?? 'prevent-submit';
+    this.preventionClassName = 'button-off';
 
     this.number_of_files = this.dropZone ?? this.dropZone.dataset.filesLimit ?? 1;
     this.files_size_limit = this.dropZone ?? this.dropZone.dataset.filesSizeLimit ?? 1000000;
@@ -45,10 +49,14 @@ export default class FileUploader {
     this.doneLoading.style.transform = 'scale(0)';
     this.loadingError.style.display = 'none';
 
-    this.name = name;
-    this.namesArray = namesArray;
+    this.namesArray = this.dropZone.parentElement.parentElement.querySelector(
+      '[uploader-output="string"]'
+    );
 
-    //console.log(this);
+    this.name = name;
+    // this.namesArray = namesArray;
+
+    console.log('this : ', this);
     this.dropZone.addEventListener('dragover', this.dragOverHandler.bind(this));
     this.dropZone.addEventListener('drop', this.dropHandler.bind(this));
     this.fileInput.addEventListener('change', this.fileInputChangeHandler.bind(this));
@@ -133,7 +141,7 @@ export default class FileUploader {
           image.name
         }</p><p class="filesize">${(image.size * 0.000001).toFixed(
           2
-        )} MB</p><span class="delete-icon" onclick="${
+        )} MB</p><span class="delete-icon" onclick="window.${
           this.name
         }.deleteImage(${index},'${image.name}')">&times;</span></div>`;
       } else {
@@ -141,7 +149,7 @@ export default class FileUploader {
 
         images += `<div class="upload-queue-images">
 <img src="${URL.createObjectURL(image)}" alt="image">
-<span class="delete-icon" onclick="${this.name}.deleteImage(${index},'${
+<span class="delete-icon" onclick="window.${this.name}.deleteImage(${index},'${
           image.name
         }')">&times;</span>
 </div>`;
@@ -169,7 +177,7 @@ export default class FileUploader {
     const linksString = this.generateLinksArray(this.images_data.map((x) => x.name));
     console.log('############', linksString);
     this.removeFileFromArray(linksString, nameToDelete);
-    document.getElementById(this.namesArray).value = linksString;
+    this.namesArray.value = linksString;
   }
   insertIntoLocalStorage(objectToInsert) {
     // Determine the appropriate array name based on the file extension
@@ -264,9 +272,9 @@ export default class FileUploader {
       }
 
       const fullLink = this.generateLinksArray(this.image_names);
-      document.getElementById(this.namesArray).value = fullLink;
+      this.namesArray.value = fullLink;
       this.insertIntoLocalStorage({ id: this.uploaderID, array: fullLink });
-      Cookies.set('images', fullLink, { expires: 1 });
+      console.log(' storage ID : ', this.uploaderID);
       this.displayImages(this.images_data);
       resolve('done');
     });

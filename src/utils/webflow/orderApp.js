@@ -1,6 +1,8 @@
+import FileUploader from '../../extras/uploaderClass';
+
 function orderAppFunctions() {
   const card = document.querySelector('[main-render-item="main"]');
-
+  localStorage.setItem('orders-pieces', 1);
   setupAddCardButton(card);
   addNewRequestItem(card);
 }
@@ -27,12 +29,50 @@ function setupAddCardButton(card) {
   const addCardButton = document.querySelector('[render-app="add-new-item"]');
   addCardButton.addEventListener('click', () => {
     let newCard = duplicateCard(card);
+    incrementLocalStorageItem('orders-pieces');
     setupNewCard(newCard);
   });
 }
 
+//? IMPORTANT FUNCTION ..............................
 function setupNewCard(card) {
   addNewRequestItem(card);
+  updateUploadersIDs(card);
+}
+
+function updateUploadersIDs(card) {
+  const uploaders = card.querySelectorAll('.dropzone');
+  const currentItem = localStorage.getItem('orders-pieces');
+  let localCurrentItem = currentItem;
+  uploaders.forEach((uploader) => {
+    const id = `drop_zone_${localCurrentItem}`;
+    uploader.id = id;
+    uploader.setAttribute('data-uploader-id', currentItem);
+    // initialize the uploader
+    const fileUploader = new FileUploader(id, `fileUploader${localCurrentItem}`, 'photo');
+    console.log(fileUploader);
+    window[`fileUploader${localCurrentItem}`] = fileUploader;
+
+    localCurrentItem++;
+  });
+}
+
+function incrementLocalStorageItem(itemName) {
+  // Retrieve the current value from localStorage
+  let currentValue = localStorage.getItem(itemName);
+
+  // Check if the value is null or not a number
+  if (currentValue === null || isNaN(currentValue)) {
+    currentValue = 0;
+  } else {
+    currentValue = parseInt(currentValue, 10);
+  }
+
+  // Increment the value by 2
+  currentValue += 2;
+
+  // Save the updated value back to localStorage
+  localStorage.setItem(itemName, currentValue);
 }
 
 // ! RENDER
