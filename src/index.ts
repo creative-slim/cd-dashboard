@@ -38,6 +38,7 @@ import {
   uploadInvoice,
   uploadInvoiceToCMS,
 } from '$utils/utilsFn.js';
+import orderAppFunctions from '$utils/webflow/orderApp.js';
 import {
   checkUserAddressData,
   clearLocalStorageOnLogout,
@@ -67,6 +68,7 @@ window.Webflow.push(async () => {
 
   // init instances
   initInstances();
+  orderAppFunctions();
 
   //! API ENDPOINTS
   const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';
@@ -802,8 +804,6 @@ window.Webflow.push(async () => {
   //!clickTab(3);
 
   //***** webflow Elements Functions //
-
-  renderSetupParams();
 
   //update user address through the add/update user address form popout
   updateUserAddress();
