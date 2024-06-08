@@ -57,6 +57,30 @@ export const sendInvoice = async (linkarray, reciever) => {
   }
 };
 
+export const uploadInvoiceToCMS = async (pdfFileLink, cmsItemID) => {
+  const prod = 'https://creative-directors-dropbox.sa-60b.workers.dev';
+  const dev = 'http://127.0.0.1:8787';
+
+  const endpoint = `/api/webflow/cms/invoice`;
+  const data = {
+    itemID: cmsItemID,
+    invoiceLink: pdfFileLink,
+  };
+  try {
+    const response = await fetch(prod + endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
 // function that checks if the fields that has data attribute 'required' are filled
 export const checkRequiredFields = () => {
   const form = document.querySelector('#wf-form-mainFormSubmission');
@@ -83,4 +107,56 @@ export const checkRequiredFields = () => {
 export const submitLogger = (msg, color = 'black') => {
   const log = document.querySelector('[data-submit="logger"]');
   log.innerHTML += `<p style="color:${color}">${msg}</p>`;
+};
+
+export const loggerUpdate = (state) => {
+  const states = {
+    1: 'state-1',
+    2: 'state-2',
+    3: 'state-3',
+    4: 'state-4',
+  };
+  const current = document.querySelector(`[submit-logger="${states[state]}"]`);
+  if (current) {
+    const loaderLottie = current.querySelector('[submit-logger="loading"]');
+    loaderLottie.style.display = 'block';
+  }
+
+  const prev = document.querySelector(`[submit-logger="${states[state - 1]}"]`);
+  if (!prev) return;
+  const children = Array.from(prev.children);
+  if (children.length === 0) {
+    return;
+  }
+  const prevloaderLottie = prev.querySelector('[submit-logger="loading"]');
+
+  prevloaderLottie.style.display = 'none';
+
+  children.forEach((child) => {
+    child.classList.add('done');
+  });
+};
+
+export const showSubmitLogger = () => {
+  const submitLogger = document.querySelector('[data-submit="logger"]');
+  if (submitLogger) {
+    submitLogger.style.display = 'block';
+  }
+};
+
+// hide the submit logger
+export const hideSubmitLogger = () => {
+  const submitLogger = document.querySelector('[data-submit="logger"]');
+  if (submitLogger) {
+    submitLogger.style.display = 'none';
+  }
+};
+
+// function that makes every clickable element in the DOM reload the webpage
+export const reloadPage = () => {
+  document.querySelectorAll('a', 'button').forEach((element) => {
+    element.addEventListener('click', () => {
+      location.reload();
+    });
+  });
 };

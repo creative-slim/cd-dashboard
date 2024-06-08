@@ -118,3 +118,102 @@ export function dataChecker() {
     };
   });
 }
+
+// clear local storage when user logs out from webflow
+export function clearLocalStorageOnLogout() {
+  const logoutButtons = document.querySelectorAll('[data-wf-user-logout]');
+
+  // Check if any logout buttons exist
+  if (logoutButtons.length === 0) {
+    return;
+  }
+
+  logoutButtons.forEach((button) => {
+    // Check if the button's text contains "log out" (case insensitive)
+    if (button.innerText.toLowerCase().includes('log out')) {
+      console.log('Logout button found');
+    } else {
+      return; // Skip this button if it doesn't contain "log out"
+    }
+
+    // Add click event listener to clear local storage
+    button.addEventListener('click', () => {
+      localStorage.clear();
+      console.log('Local storage cleared');
+    });
+  });
+}
+
+export function checkUserAddressData() {
+  const elementsWithDataUser = document.querySelectorAll('[data-user]');
+
+  let allDataPresent = true;
+
+  elementsWithDataUser.forEach((element) => {
+    const { attributes } = element;
+    let dataUserPresent = true;
+    for (let i = 0; i < attributes.length; i++) {
+      const attributeName = attributes[i].nodeName;
+      if (attributeName.startsWith('data-user')) {
+        if (attributes[i].nodeValue) {
+          console.log('User data present', element, attributes[i].nodeValue);
+        } else {
+          console.log('User data missing', element, attributes[i].nodeValue);
+          dataUserPresent = false;
+        }
+
+        console.log(`${attributeName}: ${attributes[i].nodeValue}`);
+      }
+    }
+    if (!dataUserPresent) {
+      allDataPresent = false;
+    }
+  });
+
+  return allDataPresent;
+}
+
+// export function renderSetupParams(){
+//   const renderPickersWrapper = document.querySelector('#order-render-pickers');
+//   if (!renderPickersWrapper) {
+//     return;
+//   }
+//   const renderPickers = renderPickersWrapper.querySelectorAll('[order-render-picker]');
+// }
+
+export function renderSetupParams() {
+  // dorpdownsSetup();
+  addNewRequestItem();
+}
+
+function dorpdownsSetup() {
+  const dropdowns = document.querySelectorAll('[picker-dropdown="container"]');
+  dropdowns.forEach((dropdown) => {
+    const dropdownToggle = dropdown.querySelector('[picker-dropdown="trigger"]');
+    const dropdownMenu = dropdown.querySelector('[picker-dropdown="target"]');
+    dropdownToggle.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('show');
+    });
+  });
+}
+
+function addNewRequestItem() {
+  const itemTemplate = document.querySelector('[render-template="request"]');
+  const addItemBtn = document.querySelector('[render-action="new-item"]');
+  const mainWrapper = document.querySelector('[data-render="main-wrapper"]');
+
+  addItemBtn.addEventListener('click', () => {
+    const newItem = itemTemplate.cloneNode(true);
+    // add id to the new item
+    newItem.id = `request-${Date.now()}`;
+    itemTemplate.parentNode.appendChild(newItem);
+    addDeleteFunctionality(newItem);
+  });
+}
+
+function addDeleteFunctionality(item) {
+  const deleteBtn = item.querySelector('[render-item="delete"]');
+  deleteBtn.addEventListener('click', () => {
+    item.remove();
+  });
+}

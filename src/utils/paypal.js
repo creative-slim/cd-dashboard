@@ -104,7 +104,7 @@ export function initializePaypal(
     alerts.innerHTML = `<div class='ms-alert ms-action'>
       <p> ORDER CREATED </p>
     </div>`;
-    paymentMethodeConfirmationUIelement.style.display = 'block';
+    paymentMethodeConfirmationUIelement.style.display = 'flex';
   }
 
   loadScript(

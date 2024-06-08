@@ -5,8 +5,8 @@ import html2pdf from 'html2pdf.js';
 
 export async function generateInvoice(finalData) {
   const invoice = document.querySelector<HTMLElement>('#pdf-wrapper');
-  // const pdfwrapper = invoice.cloneNode(true);
-  const pdfwrapper = invoice;
+  const pdfwrapper = invoice.cloneNode(true);
+  // const pdfwrapper = invoice;
   pdfwrapper.style.display = 'block';
   const itemTemplate = pdfwrapper.querySelector('[data-invoice=invoice-item-template]');
   itemTemplate.style.display = 'none';
@@ -24,8 +24,6 @@ export async function generateInvoice(finalData) {
   };
 
   const paymentDetails = getPaymentDetails();
-
-  const clientElement = document.getElementById('user-data');
 
   // load invoice data
   // getInvoiceData().then((invoiceData) => {
@@ -96,6 +94,7 @@ async function getInvoicePDF(pdfwrapper, invoiceID) {
   return invoicePDFfile;
 }
 
+//! Deprecated
 function getInvoiceData(FinalData) {
   return new Promise((resolve, reject) => {
     try {
@@ -153,11 +152,11 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
     invoiceSubtotal.forEach((e) => {
       e.innerHTML = '€ ' + (paymentDetails.totalAmount * 0.81).toFixed(2);
     });
-    // customer-reference
-    const customerReference = wrapperElement.querySelectorAll('[data-invoice=client-refrence]');
-    customerReference.forEach((e) => {
-      e.innerHTML = data['customer-reference'];
-    });
+    // customer-reference //!already done in webflow
+    // const customerReference = wrapperElement.querySelectorAll('[data-invoice=client-refrence]');
+    // customerReference.forEach((e) => {
+    //   e.innerHTML = data['customer-reference'];
+    // });
     const contactPerson = wrapperElement.querySelectorAll('[data-invoice=contact-person]');
     contactPerson.forEach((e) => {
       e.innerHTML = data['contact-person'];
@@ -196,7 +195,7 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
   item.querySelector("[invoice-item-template='title']").innerHTML = `${data['furniture-name']}
     <br><small>order n°:  ${data['order-id']}</small>
     <br><small>dimensions : H. ${data['furniture-dimension-h']}mm  W.${data['furniture-dimension-w']}mm  L.${data['furniture-dimension-l']}mm</small>
-    <br><small>Matetial : ${data['color-finish']}</small> <br><small>${data['dimensions-comment']}</small>
+    <br><small>Matetial : ${data['color-finish'] || ''}</small> <br><small>${data['comment'] || ''} </small>
     <br><small>${data['specialfunction'] || ''}</small>`;
 
   // setup quantity

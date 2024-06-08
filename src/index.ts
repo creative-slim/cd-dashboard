@@ -27,8 +27,23 @@ import { generateInvoice, generateInvoiceItem } from '$utils/invoiceGenerator';
 import { initializePaypal } from '$utils/paypal.js';
 import { saveInputToLocalHost } from '$utils/placeholderFormContent';
 import transformData from '$utils/transformData';
-import { checkRequiredFields, sendInvoice, submitLogger, uploadInvoice } from '$utils/utilsFn.js';
-import { dataChecker, updateUserAddress } from '$utils/webflowScripts.js';
+import {
+  checkRequiredFields,
+  hideSubmitLogger,
+  loggerUpdate,
+  reloadPage,
+  sendInvoice,
+  showSubmitLogger,
+  uploadInvoice,
+  uploadInvoiceToCMS,
+} from '$utils/utilsFn.js';
+import {
+  checkUserAddressData,
+  clearLocalStorageOnLogout,
+  dataChecker,
+  renderSetupParams,
+  updateUserAddress,
+} from '$utils/webflowScripts.js';
 
 window.Webflow ||= [];
 window.Webflow.push(async () => {
@@ -566,6 +581,20 @@ window.Webflow.push(async () => {
         e.preventDefault();
         e.stopPropagation();
 
+        // checkUserAddressData
+
+        console.log('form submitted', checkUserAddressData());
+        if (!checkUserAddressData()) {
+          console.log('Please fill in your address details');
+          // create a tag and add this attribute to it : <a mirror-click="address-modal-bg" href="#">Edit</a>
+          // then click on it to open the address modal
+          const editAddress = document.querySelector('[mirror-click="address-modal-bg"]');
+
+          editAddress.click();
+
+          return;
+        }
+
         document.querySelector("[order-submit='approved']").addEventListener('click', () => {
           console.log('clicked', this);
         });
@@ -682,17 +711,15 @@ window.Webflow.push(async () => {
         }
 
         // Call the function with your array of images and other parameters
-
-        submitLogger('- initiating image processing...');
+        showSubmitLogger();
+        loggerUpdate(1);
         processImages(imagesArray, f_email, accessKey)
           .then(async (data) => {
-            submitLogger('- uploading data to database...');
             disableAllButtons();
             const subFolder = CurrentUserEmail + '/' + DateID;
             initLoading();
             //submitLoading.style.pointerEvents = 'none';
             const Final = await uploadmetadata(formDataObject, accessKey, subFolder);
-            submitLogger('- data uploaded to database successfully.', 'green');
             console.log('All images processed.');
             return Final;
             // if payment mothed is other than "" then submit button will be enabled
@@ -701,30 +728,32 @@ window.Webflow.push(async () => {
             //window.location.href = '/order-confirmation';
           })
           .then(async (result) => {
+            loggerUpdate(2);
             console.log('Final', result);
             //!disabled for testing
             const pdfFile = await generateInvoice(result.data.fieldData);
-            submitLogger('- generating invoice...');
             //! upload pdf to dropbox
             uploadInvoice(pdfFile);
             const pdfLink = await uploadInvoice(pdfFile, result.fullPath);
-            submitLogger('- invoice generated successfully.', 'green');
-            const userEmail = document.querySelector("[data-user='email']").innerText;
-            submitLogger('- sending invoice to user...');
+            const userEmail = document.querySelector('[data-user-email]').innerText;
+            loggerUpdate(3);
             const send = await sendInvoice(pdfLink.linkarray, userEmail);
-            submitLogger('- invoice sent successfully.', 'green');
+            await uploadInvoiceToCMS(pdfLink.linkarray, result.data.id);
             console.log({ pdfFile, pdfLink, send });
-
+            loggerUpdate(4);
             updateOrderConfirmationID(result);
-            submitLogger('- updating order confirmation ID...');
+            loggerUpdate(5);
           })
           .then(() => {
-            submitLogger('- Submission is Successful', 'green');
+            setTimeout(() => {
+              hideSubmitLogger();
+            }, 2000);
 
             enableAllButtons();
             clickTab(3);
             doneLoading();
             clearLocalStorage('upload_urls', 'FormInputHolder', 'paymentDetails', 'extraImgs');
+            //! reloadPage();
           })
           .catch((error) => {
             console.error('Error processing images:', error);
@@ -770,8 +799,12 @@ window.Webflow.push(async () => {
 
   //***** webflow Elements Functions //
 
+  renderSetupParams();
+
   //update user address through the add/update user address form popout
   updateUserAddress();
+  clearLocalStorageOnLogout();
+
   // dataChecker();
 
   // const returndata = {
