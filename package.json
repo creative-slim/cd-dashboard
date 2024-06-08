@@ -63,7 +63,8 @@
     "isomorphic-fetch": "^3.0.0",
     "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
-    "lightbox2": "^2.11.4"
+    "lightbox2": "^2.11.4",
+    "pnpm": "^9.2.0"
   },
   "engines": {
     "pnpm": ">=8"

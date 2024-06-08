@@ -6,6 +6,7 @@ import cookie from 'cookie';
 import jsPDF from 'jspdf';
 import lightbox from 'lightbox2';
 
+import { initInstances } from '$extras/uploaderInstances.js';
 import {
   checkUserFolder,
   downloadJsonData,
@@ -63,6 +64,9 @@ window.Webflow.push(async () => {
 
   // Add the link element to the head section of the HTML document
   document.head.appendChild(scr);
+
+  // init instances
+  initInstances();
 
   //! API ENDPOINTS
   const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';
