@@ -139,7 +139,7 @@ export default class FileUploader {
     imageslist.forEach((image, index) => {
       //console.log("+++++++", image.name);
 
-      if (image.type === 'application/zip') {
+      if (this.isFileTypeAllowed(image) && this.fileType === '3D') {
         //console.log("is zip");
         images += `<div class="upload-queue-files"><p class="filename">${
           image.name
@@ -152,11 +152,9 @@ export default class FileUploader {
         //console.log("is img");
 
         images += `<div class="upload-queue-images">
-<img src="${URL.createObjectURL(image)}" alt="image">
-<span class="delete-icon" onclick="window.${this.name}.deleteImage(${index},'${
-          image.name
-        }')">&times;</span>
-</div>`;
+        <img src="${URL.createObjectURL(image)}" alt="image">
+        <span class="delete-icon" onclick="window.${this.name}.deleteImage(${index},'${image.name}')">&times;</span>
+        </div>`;
       }
     });
     this.output.innerHTML = images;
@@ -176,17 +174,23 @@ export default class FileUploader {
   }
 
   deleteImage(index, nameToDelete) {
+    debugger;
     this.images_data.splice(index, 1);
     this.displayImages(this.images_data);
     const linksString = this.generateLinksArray(this.images_data.map((x) => x.name));
     console.log('############', linksString);
     this.removeFileFromArray(linksString, nameToDelete);
     this.namesArray.value = linksString;
+    this.insertIntoLocalStorage({ id: this.cardID, array: linksString, name: nameToDelete });
   }
+
   insertIntoLocalStorage(objectToInsert) {
     // Determine the appropriate array name based on the file extension
     let filenames = objectToInsert.array.split(',').map((item) => item.trim());
     let arrayName = filenames.some((item) => item.endsWith('.zip')) ? 'files' : 'images';
+    if (objectToInsert.name) {
+      arrayName = objectToInsert.name.endsWith('.zip') ? 'files' : 'images';
+    }
 
     // Retrieve the current 'orderFiles' object from local storage
     let orderFiles = JSON.parse(localStorage.getItem('orderFiles')) || {
