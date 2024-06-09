@@ -2,8 +2,11 @@ import FileUploader from '../../extras/uploaderClass';
 
 function orderAppFunctions() {
   const card = document.querySelector('[main-render-item="main"]');
+  const duplicateCard = card.cloneNode(true);
+
   localStorage.setItem('orders-pieces', 1);
-  setupAddCardButton(card);
+  localStorage.removeItem('orderFiles');
+  setupAddCardButton(duplicateCard);
   addNewRequestItem(card);
 }
 
@@ -45,13 +48,16 @@ function updateUploadersIDs(card) {
   const currentItem = localStorage.getItem('orders-pieces');
   let localCurrentItem = currentItem;
   uploaders.forEach((uploader) => {
-    const id = `drop_zone_${localCurrentItem}`;
+    const uuid =
+      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const id = `drop_zone_${uuid}`;
     uploader.id = id;
-    uploader.setAttribute('data-uploader-id', currentItem);
+    uploader.setAttribute('data-upload-card', currentItem);
     // initialize the uploader
-    const fileUploader = new FileUploader(id, `fileUploader${localCurrentItem}`, 'photo');
+
+    const fileUploader = new FileUploader(id, `fileUploader${uuid}`);
     console.log(fileUploader);
-    window[`fileUploader${localCurrentItem}`] = fileUploader;
+    window[`fileUploader${uuid}`] = fileUploader;
 
     localCurrentItem++;
   });
@@ -68,8 +74,8 @@ function incrementLocalStorageItem(itemName) {
     currentValue = parseInt(currentValue, 10);
   }
 
-  // Increment the value by 2
-  currentValue += 2;
+  // Increment the value by 1
+  currentValue += 1;
 
   // Save the updated value back to localStorage
   localStorage.setItem(itemName, currentValue);

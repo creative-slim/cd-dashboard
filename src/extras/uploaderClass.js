@@ -13,9 +13,9 @@ export default class FileUploader {
   constructor(
     drop,
     // output,
-    name,
+    name
     // namesArray,
-    eventOrMember
+    // eventOrMember
     // errorPopup
   ) {
     this.dropZone = document.getElementById(drop);
@@ -25,7 +25,8 @@ export default class FileUploader {
     this.submitprevention = document.getElementById('order-submit-button');
     this.uploaderID = this.dropZone.dataset.uploaderId || null;
     this.fileInput = this.dropZone.querySelector('input[type="file"]') || null;
-    this.fileInput.id = ` uploader-file-input-${this.uploaderID}`;
+    this.cardID = this.dropZone.dataset.uploadCard || null;
+    this.fileInput.id = `uploader-file-input-${Math.random().toString(36)}`;
     this.fileInput.nextElementSibling.setAttribute('for', this.fileInput.id);
     this.loading = this.dropZone.querySelector('[uploader-status="loading"]') || null;
     this.doneLoading = this.dropZone.querySelector('[uploader-status="done"]');
@@ -33,7 +34,9 @@ export default class FileUploader {
     // this.loadingError = document.getElementById(errorPopup);
     this.loadingError = this.dropZone.parentElement.querySelector('[uploader-status="error"]');
 
-    this.fileType = eventOrMember;
+    // this.fileType = eventOrMember;
+
+    this.fileType = this.dropZone.dataset.type || 'image';
     this.activeError = false;
     this.errorTimeout = (this.loadingError && this.loadingError.dataset.timeout) ?? 3000;
     this.preventionClassName = 'button-off';
@@ -42,7 +45,8 @@ export default class FileUploader {
     this.files_size_limit = this.dropZone ?? this.dropZone.dataset.filesSizeLimit ?? 1000000;
     this.drop_zone_id = this.dropZone ?? this.dropZone.dataset.dropZoneId ?? 'multi';
 
-    this.eventOrMember = eventOrMember;
+    this.eventOrMember = this.fileType;
+    console.log('this.fileType : ', this.fileType);
     this.image_names = [];
     this.images_data = [];
     this.loading.style.transform = 'scale(0)';
@@ -273,8 +277,8 @@ export default class FileUploader {
 
       const fullLink = this.generateLinksArray(this.image_names);
       this.namesArray.value = fullLink;
-      this.insertIntoLocalStorage({ id: this.uploaderID, array: fullLink });
-      console.log(' storage ID : ', this.uploaderID);
+      this.insertIntoLocalStorage({ id: this.cardID, array: fullLink });
+      console.log(' cardID ID : ', this.cardID);
       this.displayImages(this.images_data);
       resolve('done');
     });
