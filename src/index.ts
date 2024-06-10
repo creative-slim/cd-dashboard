@@ -38,6 +38,7 @@ import {
   uploadInvoice,
   uploadInvoiceToCMS,
 } from '$utils/utilsFn.js';
+import initWebflowFunctions from '$utils/webflow/initFn.js';
 import orderAppFunctions from '$utils/webflow/orderApp.js';
 import {
   checkUserAddressData,
@@ -69,6 +70,7 @@ window.Webflow.push(async () => {
   // init instances
   initInstances();
   orderAppFunctions();
+  initWebflowFunctions();
 
   //! API ENDPOINTS
   const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';

@@ -133,7 +133,7 @@ function addNewRequestItem(card) {
     function updateElementIds(element, suffix) {
       const elementsWithId = element.querySelectorAll('[id]');
       elementsWithId.forEach((el) => {
-        el.id = `${el.id}-${suffix}`;
+        el.id = `${el.id}_${suffix}`;
       });
       saveData(newItem, card.closest('[main-render-item="main"]'));
     }
