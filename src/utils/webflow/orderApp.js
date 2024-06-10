@@ -1,13 +1,17 @@
 import FileUploader from '../../extras/uploaderClass';
+import { saveData } from './saveInput';
 
 function orderAppFunctions() {
   const card = document.querySelector('[main-render-item="main"]');
+  saveData(card, card.closest('[main-render-item="main"]'));
+  setupNewCard(card);
   const duplicateCard = card.cloneNode(true);
 
   localStorage.setItem('orders-pieces', 1);
   localStorage.removeItem('orderFiles');
+  localStorage.removeItem('orderData');
   setupAddCardButton(duplicateCard);
-  addNewRequestItem(card);
+  addNewRequestItem(duplicateCard);
 }
 
 // ! ITEM
@@ -32,13 +36,26 @@ function setupAddCardButton(card) {
   const addCardButton = document.querySelector('[render-app="add-new-item"]');
   addCardButton.addEventListener('click', () => {
     let newCard = duplicateCard(card);
-    incrementLocalStorageItem('orders-pieces');
     setupNewCard(newCard);
+    incrementLocalStorageItem('orders-pieces');
   });
 }
 
 //? IMPORTANT FUNCTION ..............................
 function setupNewCard(card) {
+  card.id = `card-${Date.now()}`;
+  card.setAttribute('data-big-card-id', getTotalNumberOfCards());
+  card.querySelectorAll('*').forEach((elem) => {
+    if (!elem.dataset.excludeIdSwap) {
+      if (elem.id) {
+        elem.id = `${elem.id}-${Date.now()}`;
+      }
+    }
+
+    elem.addEventListener('change', () => {
+      saveData(card, card.closest('[main-render-item="main"]'));
+    });
+  });
   addNewRequestItem(card);
   updateUploadersIDs(card);
 }
@@ -53,6 +70,7 @@ function updateUploadersIDs(card) {
     const id = `drop_zone_${uuid}`;
     uploader.id = id;
     uploader.setAttribute('data-upload-card', currentItem);
+
     // initialize the uploader
 
     const fileUploader = new FileUploader(id, `fileUploader${uuid}`);
@@ -100,9 +118,28 @@ function addNewRequestItem(card) {
 
   addItemBtn.addEventListener('click', () => {
     const newItem = itemTemplate.cloneNode(true);
+    const uniqueSuffix = Date.now();
+    const renderNumber = card
+      .closest('[main-render-item]')
+      .querySelectorAll('[render-item="container"]').length;
+    console.log('this render number is : ', { renderNumber }, card.closest('[main-render-item]'));
+
     // add id to the new item
     newItem.id = `request-${Date.now()}`;
     newItem.setAttribute('data-template', 'duplicate');
+    newItem.setAttribute('render-number', renderNumber + 1);
+
+    // Function to update IDs of child elements to be unique
+    function updateElementIds(element, suffix) {
+      const elementsWithId = element.querySelectorAll('[id]');
+      elementsWithId.forEach((el) => {
+        el.id = `${el.id}-${suffix}`;
+      });
+      saveData(newItem, card.closest('[main-render-item="main"]'));
+    }
+
+    // Call the function to update IDs for the new item
+    updateElementIds(newItem, uniqueSuffix);
     itemTemplate.parentNode.appendChild(newItem);
     addDeleteFunctionality(newItem);
   });
@@ -113,6 +150,11 @@ function addDeleteFunctionality(item) {
   deleteBtn.addEventListener('click', () => {
     item.remove();
   });
+}
+
+function getTotalNumberOfCards() {
+  const allCards = document.querySelectorAll('[main-render-item="main"]');
+  return allCards.length;
 }
 
 export default orderAppFunctions;
