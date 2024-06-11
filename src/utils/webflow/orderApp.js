@@ -28,10 +28,6 @@ function duplicateCard(card) {
   return newCard;
 }
 
-function removeCard(card) {
-  card.remove();
-}
-
 function setupAddCardButton(card) {
   const addCardButton = document.querySelector('[render-app="add-new-item"]');
   addCardButton.addEventListener('click', () => {
@@ -48,7 +44,7 @@ function setupNewCard(card) {
   card.querySelectorAll('*').forEach((elem) => {
     if (!elem.dataset.excludeIdSwap) {
       if (elem.id) {
-        elem.id = `${elem.id}-${Date.now()}`;
+        elem.id = `${elem.id}__${Date.now()}`;
       }
     }
 

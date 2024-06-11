@@ -14,6 +14,7 @@ import {
   getOrderFilesPaths,
   getThumbnailData,
 } from '$utils/dataHandlers';
+import combineArrays from '$utils/dataPriceCombiner.js';
 import {
   checkFolderExistence,
   downloadDropboxItem,
@@ -27,6 +28,7 @@ import { greetUser } from '$utils/greet';
 import { generateInvoice, generateInvoiceItem } from '$utils/invoiceGenerator';
 import { initializePaypal } from '$utils/paypal.js';
 import { saveInputToLocalHost } from '$utils/placeholderFormContent';
+import cleanData from '$utils/renderDataCleaner.js';
 import transformData from '$utils/transformData';
 import {
   checkRequiredFields,
@@ -569,6 +571,7 @@ window.Webflow.push(async () => {
      * pay later button
      */
     const payLater = document.getElementById('paylater-btn');
+
     if (payLater) {
       payLater.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -580,10 +583,124 @@ window.Webflow.push(async () => {
         console.log('paymentStatus', paymentStatus);
       });
     }
-
+    //!
+    //! //! ///! paas through paypal
+    //! //! //! MUST DELETE THIS
+    //! //! //! MUST DELETE THIS
+    //! //! //! MUST DELETE THIS
+    //! //! //! MUST DELETE THIS
+    paymentStatus.payed = false;
+    paymentStatus.paymentMethod = 'PayLater';
+    //! //! //! MUST DELETE THIS
+    //! //! //! MUST DELETE THIS
+    //! //! //! MUST DELETE THIS
+    //! //! //! MUST DELETE THIS
     /**
      * form submit handler
      */
+
+    //!!!! TEST AREA
+
+    const object2 = {
+      images: [
+        {
+          id: '1',
+          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg'],
+        },
+        {
+          id: '2',
+          array: [
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/13.jpg',
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/14.jpg',
+          ],
+        },
+        {
+          id: '3',
+          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/10.jpg'],
+        },
+      ],
+      files: [
+        {
+          id: '2',
+          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip'],
+        },
+        {
+          id: '1',
+          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip'],
+        },
+      ],
+    };
+    const array1 = [
+      {
+        id: '1',
+        data: [
+          {
+            render: {
+              'item-name__1718096350938': 'slim',
+              'item-width__1718096350938': '11',
+              'item-height__1718096350938': '99',
+              'item-length__1718096350938': '88',
+              'item-details__1718096350938': 'big bro',
+              photos_output_string__1718096350938: '',
+              'uploader-file-input-0.4xuv6gxgkc5': '',
+              'provided-3D-model__1718096350964': 'false',
+              threed_output_string__1718096350964: '',
+              'uploader-file-input-0.k045gajjjbo': '',
+            },
+          },
+          {
+            render: {
+              'render-type__1718096350964': 'knockout',
+              woodtype__1718096350964: 'oak',
+              'render-count__1718096350964': '5',
+              upholstery__1718096350964: 'true',
+              'other-material__1718096350964': 'silk',
+              square__1718096350964: 'true',
+              portrait__1718096350964: 'true',
+              Landscape__1718096350964: 'false',
+              'request-comment__1718096350964': 'smooooll',
+            },
+          },
+        ],
+      },
+      {
+        id: '2',
+        data: [
+          {
+            render: {
+              'item-name__1718096350938__1718096355989': 'NIKO',
+              'item-width__1718096350938__1718096355989': '11',
+              'item-height__1718096350938__1718096355989': '4',
+              'item-length__1718096350938__1718096355989': '7',
+              'item-details__1718096350938__1718096355989': 'big details',
+              photos_output_string__1718096350938__1718096355989: '',
+              'uploader-file-input-0.7jdomimkacn': '',
+              'provided-3D-model__1718096350964__1718096355989': 'false',
+              threed_output_string__1718096350964__1718096355989: '',
+              'uploader-file-input-0.fw6sn1mb6m9': '',
+            },
+          },
+          {
+            render: {
+              'render-type__1718096350964__1718096355989': 'scene',
+              woodtype__1718096350964__1718096355989: 'oak',
+              'render-count__1718096350964__1718096355989': '22',
+              upholstery__1718096350964__1718096355989: 'true',
+              'other-material__1718096350964__1718096355989': 'lether',
+              square__1718096350964__1718096355989: 'true',
+              portrait__1718096350964__1718096355989: 'true',
+              Landscape__1718096350964__1718096355989: 'false',
+              'request-comment__1718096350964__1718096355989': 'mini details',
+            },
+          },
+        ],
+      },
+    ];
+
+    console.log('combined files  ::::::: ', combineArrays(array1, object2));
+
+    //!!!! END TEST AREA
+
     if (form)
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -617,6 +734,28 @@ window.Webflow.push(async () => {
         //   requestNext.style.opacity = "0";
         //   requestNext.style.pointerEvents = "none";
         // }
+        debugger;
+        function fetchDataFromLocalStorage() {
+          const renderData = localStorage.getItem('orderData');
+          const cleanArray = cleanData(JSON.parse(renderData));
+          return cleanArray;
+        }
+
+        console.log('clean DATA ::::::: ', fetchDataFromLocalStorage());
+
+        function fetchFilesFromLocalStorage() {
+          const extraImgs = localStorage.getItem('orderFiles');
+          const cleanArray = JSON.parse(extraImgs);
+          return cleanArray;
+        }
+
+        const localstorageData = fetchDataFromLocalStorage();
+        const localstorageFiles = fetchFilesFromLocalStorage();
+
+        combineArrays(localstorageData, localstorageFiles);
+        console.log('combined files  ::::::: ', combineArrays());
+
+        return;
 
         const d = new Date();
         const DateID = `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}--${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;

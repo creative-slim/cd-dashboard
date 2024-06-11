@@ -26,6 +26,8 @@ export default class FileUploader {
     this.uploaderID = this.dropZone.dataset.uploaderId || null;
     this.fileInput = this.dropZone.querySelector('input[type="file"]') || null;
     this.cardID = this.dropZone.dataset.uploadCard || null;
+    this.containerID =
+      this.dropZone.closest('[data-big-card-id]').getAttribute('data-big-card-id') || null;
     this.fileInput.id = `uploader-file-input-${Math.random().toString(36)}`;
     this.fileInput.nextElementSibling.setAttribute('for', this.fileInput.id);
     this.loading = this.dropZone.querySelector('[uploader-status="loading"]') || null;
@@ -174,7 +176,6 @@ export default class FileUploader {
   }
 
   deleteImage(index, nameToDelete) {
-    debugger;
     this.images_data.splice(index, 1);
     this.displayImages(this.images_data);
     const linksString = this.generateLinksArray(this.images_data.map((x) => x.name));
@@ -205,13 +206,15 @@ export default class FileUploader {
 
     if (existingObjectIndex !== -1) {
       // Merge the arrays if the object with the same ID exists
-      //   let existingFilenames = orderFiles[arrayName][existingObjectIndex].array
-      //     .split(',')
-      //     .map((item) => item.trim());
-      //let mergedFilenames = existingFilenames.concat(filenames).join(', ');
-      orderFiles[arrayName][existingObjectIndex].array = filenames;
+      let existingFilenames = orderFiles[arrayName][existingObjectIndex].array;
+      if (!Array.isArray(existingFilenames)) {
+        existingFilenames = existingFilenames.split(',').map((item) => item.trim());
+      }
+      let mergedFilenames = [...new Set(existingFilenames.concat(filenames))];
+      orderFiles[arrayName][existingObjectIndex].array = mergedFilenames;
     } else {
       // Insert the new object if it doesn't exist
+      objectToInsert.array = filenames;
       orderFiles[arrayName].push(objectToInsert);
     }
 
@@ -281,8 +284,8 @@ export default class FileUploader {
 
       const fullLink = this.generateLinksArray(this.image_names);
       this.namesArray.value = fullLink;
-      this.insertIntoLocalStorage({ id: this.cardID, array: fullLink });
-      console.log(' cardID ID : ', this.cardID);
+      this.insertIntoLocalStorage({ id: this.containerID, array: fullLink });
+      console.log({ containerID: this.containerID, cardID: this.cardID, 'full link': fullLink });
       this.displayImages(this.images_data);
       resolve('done');
     });

@@ -1,66 +1,58 @@
+// Constants
+const ORDER_DATA_KEY = 'orderData';
+const DATA_BIG_CARD_ID = 'data-big-card-id';
+const RENDER_NUMBER = 'render-number';
+
+// Helper functions
+const getRenderNumber = (element) =>
+  parseInt(element.closest(`[${RENDER_NUMBER}]`)?.getAttribute(RENDER_NUMBER), 10) || 0;
+
+const extractData = (inputElements) => {
+  const data = [];
+  inputElements.forEach((input) => {
+    const number = getRenderNumber(input);
+    if (!data[number]) {
+      data[number] = { render: {} };
+    }
+    if (input.type === 'checkbox') {
+      data[number].render[input.id] = input.checked ? 'true' : 'false';
+    } else {
+      data[number].render[input.id] = input.value;
+    }
+  });
+  return data;
+};
+
+// Main function
 export function saveData(currentCard, container) {
-  // Log function start
   console.log('------- save Data -------');
-  // Get all the input elements
+
   const inputs = currentCard.querySelectorAll('input, textarea, select');
   console.log('current Card', currentCard);
 
-  // Retrieve the data from local storage or initialize to an empty array if not present
-  const storedLocalData = JSON.parse(localStorage.getItem('orderData')) || [];
+  let storedLocalData;
+  try {
+    storedLocalData = JSON.parse(localStorage.getItem(ORDER_DATA_KEY)) || [];
+  } catch (error) {
+    storedLocalData = [];
+  }
 
   console.log('container', container);
-
-  // Find the existing card data by its ID
-  //?   const cardId = currentCard.closest('[data-big-card-id]')?.getAttribute('data-big-card-id');
-  const cardId = container.closest('[data-big-card-id]')?.getAttribute('data-big-card-id');
-
-  const checkIfRender = (element) => {
-    const render = element.closest('[render-number]')?.getAttribute('render-number') || 0;
-    return render > 0 ? render : null;
-  };
-
-  console.log('################################checkIfRender', checkIfRender(currentCard));
+  const cardId = container.closest(`[${DATA_BIG_CARD_ID}]`)?.getAttribute(DATA_BIG_CARD_ID);
+  console.log('################################checkIfRender', getRenderNumber(currentCard));
 
   const found = storedLocalData.find((element) => element.id === cardId);
-
-  const renderNumber = (element) => {
-    const number = element.closest('[render-number]')?.getAttribute('render-number') || 0;
-    return number;
-  };
-
-  // Function to extract data from inputs and store them in an object
-  const extractData = (inputElements) => {
-    const data = {};
-    inputElements.forEach((input) => {
-      const number = renderNumber(input);
-      console.log('renderNumber', number, input);
-      //   if (number > 0) {
-      if (!data[number]) {
-        data[number] = { render: {} };
-      }
-      if (input.type === 'checkbox') {
-        data[number].render[input.id] = input.checked ? 'true' : 'false';
-      } else {
-        data[number].render[input.id] = input.value;
-      }
-      //   }
-    });
-    return data;
-  };
-
   const extractedData = extractData(inputs);
 
   if (found) {
-    // Update the existing data
-    Object.keys(extractedData).forEach((key) => {
-      if (found.data[key]) {
-        found.data[key].render = { ...found.data[key].render, ...extractedData[key].render };
+    extractedData.forEach((extractedItem, index) => {
+      if (found.data[index]) {
+        found.data[index].render = { ...found.data[index].render, ...extractedItem.render };
       } else {
-        found.data[key] = extractedData[key];
+        found.data[index] = extractedItem;
       }
     });
   } else {
-    // Create a new entry if not found
     const inputData = {
       id: cardId,
       data: extractedData,
@@ -68,9 +60,6 @@ export function saveData(currentCard, container) {
     storedLocalData.push(inputData);
   }
 
-  // Log the stored data
   console.log('storedLocalData', storedLocalData);
-
-  // Save the updated data back to local storage
-  localStorage.setItem('orderData', JSON.stringify(storedLocalData));
+  localStorage.setItem(ORDER_DATA_KEY, JSON.stringify(storedLocalData));
 }
