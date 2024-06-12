@@ -1,6 +1,5 @@
 export default function combineArrays(array1, object2) {
   let combinedArray = [];
-  debugger;
   console.log('array1', array1);
   console.log('object2', object2);
 

@@ -605,25 +605,23 @@ window.Webflow.push(async () => {
       images: [
         {
           id: '1',
-          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg'],
+          array: [
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.jpg',
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.jpg',
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg',
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg',
+          ],
         },
         {
           id: '2',
           array: [
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/13.jpg',
             'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/14.jpg',
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/15.jpg',
+            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/16.jpg',
           ],
-        },
-        {
-          id: '3',
-          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/10.jpg'],
         },
       ],
       files: [
-        {
-          id: '2',
-          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip'],
-        },
         {
           id: '1',
           array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip'],
@@ -636,29 +634,44 @@ window.Webflow.push(async () => {
         data: [
           {
             render: {
-              'item-name__1718096350938': 'slim',
-              'item-width__1718096350938': '11',
-              'item-height__1718096350938': '99',
-              'item-length__1718096350938': '88',
-              'item-details__1718096350938': 'big bro',
-              photos_output_string__1718096350938: '',
-              'uploader-file-input-0.4xuv6gxgkc5': '',
-              'provided-3D-model__1718096350964': 'false',
-              threed_output_string__1718096350964: '',
-              'uploader-file-input-0.k045gajjjbo': '',
+              'item-name': 'slim',
+              'item-width': '21',
+              'item-height': '21',
+              'item-length': '12',
+              'item-details': 'data',
+              photos_output_string:
+                'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.jpg,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.jpg,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg',
+              'uploader-file-input-0.ru7uidnx9lf': 'C:\\fakepath\\1.jpg',
+              'provided-3D-model': 'false',
+              threed_output_string:
+                'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
+              'uploader-file-input-0.xaomdy8mk6g': 'C:\\fakepath\\Archive.zip',
             },
           },
           {
             render: {
-              'render-type__1718096350964': 'knockout',
-              woodtype__1718096350964: 'oak',
-              'render-count__1718096350964': '5',
-              upholstery__1718096350964: 'true',
-              'other-material__1718096350964': 'silk',
-              square__1718096350964: 'true',
-              portrait__1718096350964: 'true',
-              Landscape__1718096350964: 'false',
-              'request-comment__1718096350964': 'smooooll',
+              'render-type': 'scene',
+              woodtype: 'beech',
+              'render-count': '2',
+              upholstery: 'false',
+              'other-material': '',
+              square: 'false',
+              portrait: 'true',
+              Landscape: 'false',
+              'request-comment': '',
+            },
+          },
+          {
+            render: {
+              'render-type': 'knockout',
+              woodtype: 'oak',
+              'render-count': '2',
+              upholstery: 'true',
+              'other-material': '1',
+              square: 'true',
+              portrait: 'true',
+              Landscape: 'false',
+              'request-comment': '',
             },
           },
         ],
@@ -668,29 +681,42 @@ window.Webflow.push(async () => {
         data: [
           {
             render: {
-              'item-name__1718096350938__1718096355989': 'NIKO',
-              'item-width__1718096350938__1718096355989': '11',
-              'item-height__1718096350938__1718096355989': '4',
-              'item-length__1718096350938__1718096355989': '7',
-              'item-details__1718096350938__1718096355989': 'big details',
-              photos_output_string__1718096350938__1718096355989: '',
-              'uploader-file-input-0.7jdomimkacn': '',
-              'provided-3D-model__1718096350964__1718096355989': 'false',
-              threed_output_string__1718096350964__1718096355989: '',
-              'uploader-file-input-0.fw6sn1mb6m9': '',
+              'item-name': 'niko',
+              'item-width': '33',
+              'item-height': '22',
+              'item-length': '11',
+              'item-details': 'mekh',
+              photos_output_string: '',
+              'uploader-file-input-0.zsfpdd9wp1': 'C:\\fakepath\\14.jpg',
+              'provided-3D-model': 'false',
+              threed_output_string: '',
+              'uploader-file-input-0.9je7tx73607': '',
             },
           },
           {
             render: {
-              'render-type__1718096350964__1718096355989': 'scene',
-              woodtype__1718096350964__1718096355989: 'oak',
-              'render-count__1718096350964__1718096355989': '22',
-              upholstery__1718096350964__1718096355989: 'true',
-              'other-material__1718096350964__1718096355989': 'lether',
-              square__1718096350964__1718096355989: 'true',
-              portrait__1718096350964__1718096355989: 'true',
-              Landscape__1718096350964__1718096355989: 'false',
-              'request-comment__1718096350964__1718096355989': 'mini details',
+              'render-type': 'scene',
+              woodtype: 'beech',
+              'render-count': '55',
+              upholstery: 'true',
+              'other-material': 'lether',
+              square: 'true',
+              portrait: 'false',
+              Landscape: 'false',
+              'request-comment': 'be',
+            },
+          },
+          {
+            render: {
+              'render-type': 'knockout',
+              woodtype: 'oak',
+              'render-count': '5',
+              upholstery: 'true',
+              'other-material': 'silk',
+              square: 'true',
+              portrait: 'true',
+              Landscape: 'false',
+              'request-comment': 'no data',
             },
           },
         ],
@@ -734,38 +760,42 @@ window.Webflow.push(async () => {
         //   requestNext.style.opacity = "0";
         //   requestNext.style.pointerEvents = "none";
         // }
-        debugger;
         function fetchDataFromLocalStorage() {
           const renderData = localStorage.getItem('orderData');
           const cleanArray = cleanData(JSON.parse(renderData));
           return cleanArray;
         }
-
-        console.log('clean DATA ::::::: ', fetchDataFromLocalStorage());
+        console.log('clean DATA ::##:: ', fetchDataFromLocalStorage());
 
         function fetchFilesFromLocalStorage() {
           const extraImgs = localStorage.getItem('orderFiles');
           const cleanArray = JSON.parse(extraImgs);
           return cleanArray;
         }
+        console.log('clean FILES ::##:: ', fetchFilesFromLocalStorage());
 
         const localstorageData = fetchDataFromLocalStorage();
         const localstorageFiles = fetchFilesFromLocalStorage();
 
-        combineArrays(localstorageData, localstorageFiles);
-        console.log('combined files  ::::::: ', combineArrays());
-
-        return;
+        const combinedArrays = combineArrays(localstorageData, localstorageFiles);
+        console.log('combined files  :::--:: ', combinedArrays);
 
         const d = new Date();
         const DateID = `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}--${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 
-        const formData = new FormData(form);
+        // const formData = new FormData(form);
 
-        formData.append('paymentMethod', paymentStatus.paymentMethod);
-        formData.append('paymentStatus', paymentStatus.payed);
-        formData.append('user', CurrentUserEmail);
-        formData.append('dateID', DateID);
+        // formData.append('paymentMethod', paymentStatus.paymentMethod);
+        // formData.append('paymentStatus', paymentStatus.payed);
+        // formData.append('user', CurrentUserEmail);
+        // formData.append('dateID', DateID);
+
+        // formData.append('paymentMethod', paymentStatus.paymentMethod);
+        // formData.append('paymentStatus', paymentStatus.payed);
+        formData.push({ user: CurrentUserEmail });
+        formData.push({ dateID: DateID });
+
+        return;
 
         // Convert FormData to Object
 
