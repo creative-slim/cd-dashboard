@@ -1,3 +1,5 @@
+import cleanData from '$utils/renderDataCleaner.js';
+
 export function initializePaypal(
   paymentOptionsSelector,
   alertsSelector,
@@ -16,11 +18,7 @@ export function initializePaypal(
   const PAYPAL_SDK_URL = 'https://www.paypal.com/sdk/js';
   const CURRENCY = 'EUR';
   const INTENT = 'capture';
-  let selectedPackage = 'none';
-  let orderDetails = {
-    selectedPackage: 'none',
-    extraImages: [],
-  };
+  let orderDetails = [];
   const PAYPAL_CLIENT_ID =
     'AevfJAscX9MKaFWcK--S7rgLBotKliHnYIc94ShGUS3yNpc_Vt7z92LLmH4Tfwl49uRWpesdR6VBbtVx';
 
@@ -60,27 +58,10 @@ export function initializePaypal(
     }
   }
 
-  function getFormDataFromLocalStorage() {
-    const keys = Object.keys(localStorage);
-    // Filter keys that start with "form_data"
-    const formDataKeys = keys.filter((key) => key.startsWith('form_data'));
-    // Retrieve values corresponding to those keys
-    const formDataValues = formDataKeys.map((key) => localStorage.getItem(key));
-
-    return JSON.parse(formDataValues);
-  }
-
-  function filterObjectsByNames(formData) {
-    const desiredNames = ['woodtype', 'package-select', 'special-function-toggle'];
-    const filteredData = {};
-
-    formData.forEach((item) => {
-      if (desiredNames.includes(item.name)) {
-        filteredData[item.name] = item;
-      }
-    });
-
-    return filteredData;
+  function fetchDataFromLocalStorage() {
+    const renderData = localStorage.getItem('orderData');
+    const cleanArray = cleanData(JSON.parse(renderData));
+    return cleanArray;
   }
 
   document.addEventListener('click', handleClick);
@@ -119,23 +100,7 @@ export function initializePaypal(
       let paymentDetails;
       const paypalButtons = paypal.Buttons({
         onClick: (data) => {
-          const radioButtons = document.getElementsByName('package-select');
-          for (let i = 0; i < radioButtons.length; i++) {
-            if (radioButtons[i].checked) {
-              orderDetails.selectedPackage = radioButtons[i].id;
-            }
-          }
-          const extraImages = localStorage.getItem('extraImgs');
-          if (extraImages) {
-            console.log('Extra images:', JSON.parse(extraImages));
-            orderDetails.extraImages = JSON.parse(extraImages);
-          }
-          const packageData = filterObjectsByNames(getFormDataFromLocalStorage());
-          if (packageData.length === 0) {
-            console.error('No package data found!');
-            return;
-          }
-          orderDetails.packageData = packageData;
+          orderDetails = fetchDataFromLocalStorage();
         },
         style: {
           shape: 'rect',
@@ -144,13 +109,13 @@ export function initializePaypal(
           label: 'paypal',
         },
         createOrder: async function (data, actions) {
-          if (orderDetails.selectedPackage === 'none') {
+          if (!orderDetails || orderDetails.length === 0) {
             console.error('Please select a package : order creation failed!');
             return;
           }
           console.log('Creating payment order...FETCHING NOW', {
             intent: INTENT,
-            package: orderDetails.selectedPackage,
+            package: orderDetails,
           });
           const request = await fetch(`${api}/api/paypal/create_order`, {
             method: 'post',
@@ -158,19 +123,19 @@ export function initializePaypal(
               'Content-Type': 'application/json; charset=utf-8',
             },
             //! Send the additional data
-            body: JSON.stringify({ intent: INTENT, package: orderDetails }),
+            body: JSON.stringify({ intent: INTENT, orderDetails }),
           })
             .then((response) => response.json())
             .then((order) => {
               console.log('Payment order CREATED', order);
-              localStorage.setItem(
-                'paymentDetails',
-                JSON.stringify({
-                  additionalImagesArray: order.additionalImagesArray,
-                  totalAmount: order.totalAmount,
-                  packagePrice: order.finalPackagePrice,
-                })
-              );
+              // localStorage.setItem(
+              //   'paymentDetails',
+              //   JSON.stringify({
+              //     additionalImagesArray: order.additionalImagesArray,
+              //     totalAmount: order.totalAmount,
+              //     packagePrice: order.finalPackagePrice,
+              //   })
+              // );
 
               return order.data.id;
             });
@@ -178,8 +143,8 @@ export function initializePaypal(
           return request;
         },
         onApprove: async function (data, actions) {
-          if (orderDetails.selectedPackage === 'none') {
-            console.error('Please select a package : approval failed!');
+          if (!orderDetails || orderDetails.length === 0) {
+            console.error('Please select a package : order creation failed!');
             return;
           }
           console.log('Approving payment order...++++++', data);

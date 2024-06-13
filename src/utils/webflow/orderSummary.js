@@ -103,7 +103,7 @@ function displayContent(element) {
 export default function initOrderSummary(orderSummaryAttribute) {
   setInterval(() => {
     displayContent(orderSummaryAttribute);
-  }, 1000);
+  }, 300);
 }
 
 // Initialize the order summary

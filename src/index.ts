@@ -599,134 +599,6 @@ window.Webflow.push(async () => {
      * form submit handler
      */
 
-    //!!!! TEST AREA
-
-    const object2 = {
-      images: [
-        {
-          id: '1',
-          array: [
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.jpg',
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.jpg',
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg',
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg',
-          ],
-        },
-        {
-          id: '2',
-          array: [
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/14.jpg',
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/15.jpg',
-            'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/16.jpg',
-          ],
-        },
-      ],
-      files: [
-        {
-          id: '1',
-          array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip'],
-        },
-      ],
-    };
-    const array1 = [
-      {
-        id: '1',
-        data: [
-          {
-            render: {
-              'item-name': 'slim',
-              'item-width': '21',
-              'item-height': '21',
-              'item-length': '12',
-              'item-details': 'data',
-              photos_output_string:
-                'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.jpg,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.jpg,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg',
-              'uploader-file-input-0.ru7uidnx9lf': 'C:\\fakepath\\1.jpg',
-              'provided-3D-model': 'false',
-              threed_output_string:
-                'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
-              'uploader-file-input-0.xaomdy8mk6g': 'C:\\fakepath\\Archive.zip',
-            },
-          },
-          {
-            render: {
-              'render-type': 'scene',
-              woodtype: 'beech',
-              'render-count': '2',
-              upholstery: 'false',
-              'other-material': '',
-              square: 'false',
-              portrait: 'true',
-              Landscape: 'false',
-              'request-comment': '',
-            },
-          },
-          {
-            render: {
-              'render-type': 'knockout',
-              woodtype: 'oak',
-              'render-count': '2',
-              upholstery: 'true',
-              'other-material': '1',
-              square: 'true',
-              portrait: 'true',
-              Landscape: 'false',
-              'request-comment': '',
-            },
-          },
-        ],
-      },
-      {
-        id: '2',
-        data: [
-          {
-            render: {
-              'item-name': 'niko',
-              'item-width': '33',
-              'item-height': '22',
-              'item-length': '11',
-              'item-details': 'mekh',
-              photos_output_string: '',
-              'uploader-file-input-0.zsfpdd9wp1': 'C:\\fakepath\\14.jpg',
-              'provided-3D-model': 'false',
-              threed_output_string: '',
-              'uploader-file-input-0.9je7tx73607': '',
-            },
-          },
-          {
-            render: {
-              'render-type': 'scene',
-              woodtype: 'beech',
-              'render-count': '55',
-              upholstery: 'true',
-              'other-material': 'lether',
-              square: 'true',
-              portrait: 'false',
-              Landscape: 'false',
-              'request-comment': 'be',
-            },
-          },
-          {
-            render: {
-              'render-type': 'knockout',
-              woodtype: 'oak',
-              'render-count': '5',
-              upholstery: 'true',
-              'other-material': 'silk',
-              square: 'true',
-              portrait: 'true',
-              Landscape: 'false',
-              'request-comment': 'no data',
-            },
-          },
-        ],
-      },
-    ];
-
-    console.log('combined files  ::::::: ', combineArrays(array1, object2));
-
-    //!!!! END TEST AREA
-
     if (form)
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -783,35 +655,17 @@ window.Webflow.push(async () => {
         const d = new Date();
         const DateID = `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}--${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 
-        // const formData = new FormData(form);
+        combinedArrays.push({ user: CurrentUserEmail });
+        combinedArrays.push({ dateID: DateID });
 
-        // formData.append('paymentMethod', paymentStatus.paymentMethod);
-        // formData.append('paymentStatus', paymentStatus.payed);
-        // formData.append('user', CurrentUserEmail);
-        // formData.append('dateID', DateID);
+        console.log('Final combinedArrays', combinedArrays);
+        localStorage.setItem('combinedArrays', JSON.stringify(combinedArrays));
 
-        // formData.append('paymentMethod', paymentStatus.paymentMethod);
-        // formData.append('paymentStatus', paymentStatus.payed);
-        formData.push({ user: CurrentUserEmail });
-        formData.push({ dateID: DateID });
-
-        return;
-
-        // Convert FormData to Object
-
-        const formDataObject = {}; //! not yet used ( remove this when done )
-        formData.forEach(function (value, key) {
-          //! not yet used ( remove this when done )
-          formDataObject[key] = value; //! not yet used ( remove this when done )
-        }); //! not yet used ( remove this when done )
-
-        async function uploadmetadata(formdata, accesskey, subFolder) {
+        async function uploadmetadata(combinedArrays, accesskey, subFolder) {
           return new Promise(async (resolve, reject) => {
-            const uploadID = subFolder; //..userEmail/dateID..
-
             const requestOptions = {
               method: 'POST',
-              body: JSON.stringify(formdata),
+              body: JSON.stringify(combinedArrays),
               redirect: 'follow',
             };
 
@@ -819,8 +673,6 @@ window.Webflow.push(async () => {
               .then((response) => response.json())
               .then(async (result) => {
                 console.log('result from uploadmetadata .: ', result);
-                const jsonString = JSON.stringify(result, null, 2);
-                const pathWithExtension = '/CD-uploads/' + uploadID + '/metadata.json';
                 //await uploadToDropbox(jsonString, pathWithExtension, accesskey);
                 return result;
               })
@@ -829,42 +681,9 @@ window.Webflow.push(async () => {
             resolve(uploadData);
           });
         }
-
         // !needs to be changed
 
         const f_email = CurrentUserEmail;
-
-        async function processImages(imagesArray: Array<File>, f_email, accessKey: string) {
-          const subFolder = f_email + '/' + DateID;
-
-          //! disabled for Cloudflare transfer
-          // await checkFolderExistence(f_email, accessKey);
-          // await checkFolderExistence(subFolder, accessKey);
-
-          // Add images URL from the output string
-
-          // -- threed_output_string / photos_output_string
-
-          // Upload the images
-          //!disabling images upload due to alternative method through Cloudfare worker
-          /*
-          for (let index = 0; index < imagesArray.length; index++) {
-            await uploader(f_email, subFolder, imagesArray[index], accessKey);
-          }
-          */
-
-          //? adding new call to cloudflare worker to upload images
-
-          const images_url_string = document.getElementById('photos_output_string');
-
-          const images_url_array = images_url_string.value.split(',').map((item) => {
-            return item.trim();
-          });
-
-          console.log('this is the array : ', images_url_array);
-        }
-
-        // ------------
 
         // the submit button
         const submitLoading = form.querySelector("[order-submit='approved']");
@@ -890,38 +709,37 @@ window.Webflow.push(async () => {
         // Call the function with your array of images and other parameters
         showSubmitLogger();
         loggerUpdate(1);
-        processImages(imagesArray, f_email, accessKey)
-          .then(async (data) => {
+        async function process() {
+          try {
             disableAllButtons();
             const subFolder = CurrentUserEmail + '/' + DateID;
             initLoading();
-            //submitLoading.style.pointerEvents = 'none';
-            const Final = await uploadmetadata(formDataObject, accessKey, subFolder);
-            console.log('All images processed.');
-            return Final;
-            // if payment mothed is other than "" then submit button will be enabled
 
-            // reroute to /order-confirmation
-            //window.location.href = '/order-confirmation';
-          })
-          .then(async (result) => {
+            // Uncomment if needed
+            // submitLoading.style.pointerEvents = 'none';
+
+            const Final = await uploadmetadata(combinedArrays, accessKey, subFolder);
+            console.log('All images processed.');
+
             loggerUpdate(2);
-            console.log('Final', result);
-            //!disabled for testing
-            const pdfFile = await generateInvoice(result.data.fieldData);
-            //! upload pdf to dropbox
-            uploadInvoice(pdfFile);
-            const pdfLink = await uploadInvoice(pdfFile, result.fullPath);
-            const userEmail = document.querySelector('[data-user-email]').innerText;
+            console.log('Final', Final);
+
+            // Uncomment if needed
+            // const pdfFile = await generateInvoice(Final.data.fieldData);
+            // const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
+            // const userEmail = document.querySelector('[data-user-email]').innerText;
+            // const send = await sendInvoice(pdfLink.linkarray, userEmail);
+            // await uploadInvoiceToCMS(pdfLink.linkarray, Final.data.id);
+            // console.log({ pdfFile, pdfLink, send });
+
+            // Example function call, comment out if not needed
+            // uploadInvoice();
+
             loggerUpdate(3);
-            const send = await sendInvoice(pdfLink.linkarray, userEmail);
-            await uploadInvoiceToCMS(pdfLink.linkarray, result.data.id);
-            console.log({ pdfFile, pdfLink, send });
             loggerUpdate(4);
-            updateOrderConfirmationID(result);
+            // updateOrderConfirmationID(Final);
             loggerUpdate(5);
-          })
-          .then(() => {
+
             setTimeout(() => {
               hideSubmitLogger();
             }, 2000);
@@ -930,11 +748,18 @@ window.Webflow.push(async () => {
             clickTab(3);
             doneLoading();
             clearLocalStorage('upload_urls', 'FormInputHolder', 'paymentDetails', 'extraImgs');
-            //! reloadPage();
-          })
-          .catch((error) => {
+
+            // Uncomment if needed
+            // reloadPage();
+
+            return Final;
+          } catch (error) {
             console.error('Error processing images:', error);
-          });
+          }
+        }
+
+        // Call the process function
+        await process();
       });
   }
 

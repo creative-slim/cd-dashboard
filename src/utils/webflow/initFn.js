@@ -1,7 +1,11 @@
+import makeCollapsible from './collapser';
 import initOrderSummary from './orderSummary';
 
 export default function initWebflowFunctions() {
   // checkUserAddressData();
   // renderSetupParams();
   initOrderSummary('[data-order-summary-wrapper]');
+  document.querySelectorAll('[data-collapse="toggle"]').forEach((button) => {
+    makeCollapsible(button, 'data-collapse="wrapper"');
+  });
 }
