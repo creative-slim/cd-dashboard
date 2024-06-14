@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 2.0.0
+
+### Major Changes
+
+- 5ec48fb: multi upload supported
+
 ## 1.3.1
 
 ### Patch Changes
