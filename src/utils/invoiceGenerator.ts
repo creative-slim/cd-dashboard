@@ -2,10 +2,13 @@
 // @ts-nocheck
 
 import html2pdf from 'html2pdf.js';
+const PRESPECTIVE_PRICE_CONSTANT = 85;
 
 export async function generateInvoice(finalData) {
   const invoice = document.querySelector<HTMLElement>('#pdf-wrapper');
   const pdfwrapper = invoice.cloneNode(true);
+  console.log('------------- inside generateInvoice ------------- ');
+  console.log({ finalData });
   // const pdfwrapper = invoice;
   pdfwrapper.style.display = 'block';
   const itemTemplate = pdfwrapper.querySelector('[data-invoice=invoice-item-template]');
@@ -14,37 +17,51 @@ export async function generateInvoice(finalData) {
 
   const client = {};
 
-  const getPaymentDetails = () => {
-    const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
-    if (!paymentDetails) {
-      console.error('Payment details not found');
-      return {};
-    }
-    return paymentDetails;
+  // find payment details inside finalData
+  const payment = finalData.finalData.combinedArrays.find(
+    (item) => item.paymentDetails
+  ).paymentDetails; //finalData.finalData.combinedArrays[4]
+  console.log({ payment });
+  const paymentDetails = {
+    totalAmount: payment.order.total,
+  };
+  const { orderItems } = payment.order;
+
+  const orderData = {
+    'order-id': finalData.finalData.finalCMSresponse.response[0].fieldData['order-id'], //finalData.finalData.finalCMSresponse.response[0].fieldData["order-id"]
   };
 
-  const paymentDetails = getPaymentDetails();
+  console.log({ payment, paymentDetails, orderItems, orderData });
+
+  // still need order ID
 
   // load invoice data
   // getInvoiceData().then((invoiceData) => {
   //   fillInvoiceData(pdfwrapper, invoiceData);
   // });
 
-  fillInvoiceData(paymentDetails, itemTemplate, pdfwrapper, finalData, table);
+  fillInvoiceData(
+    paymentDetails,
+    itemTemplate,
+    pdfwrapper,
+    { payment, paymentDetails, orderItems, orderData },
+    table
+  );
 
-  document.querySelector("[data-invoice='download']").addEventListener('click', async () => {
+  // document.querySelector("[data-invoice='download']").addEventListener('click', async () => {
+  document.querySelector('#invoice-download-btn').addEventListener('click', async () => {
     // await generatePDF(pdfwrapper);
-    getInvoicePDF(pdfwrapper, finalData['order-id']).then((pdf) => {
+    getInvoicePDF(pdfwrapper, orderData['order-id']).then((pdf) => {
       // const blob = new Blob([pdf], { type: 'application/pdf' });
       const url = URL.createObjectURL(pdf);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Invoice ${finalData['order-id']}.pdf`;
+      a.download = `Invoice ${orderData['order-id']}.pdf`;
       a.click();
     });
   });
 
-  const pdfFile = await getInvoicePDF(pdfwrapper, finalData['order-id']);
+  const pdfFile = await getInvoicePDF(pdfwrapper, orderData['order-id']);
 
   return pdfFile;
 }
@@ -94,31 +111,6 @@ async function getInvoicePDF(pdfwrapper, invoiceID) {
   return invoicePDFfile;
 }
 
-//! Deprecated
-function getInvoiceData(FinalData) {
-  return new Promise((resolve, reject) => {
-    try {
-      const invoiceData = {};
-      const invoiceElement = document.getElementById('user-data');
-
-      if (!invoiceElement) {
-        console.error('Invoice element not found');
-        resolve(invoiceData); // Resolve with empty data to proceed with the next part
-        return;
-      }
-
-      invoiceElement.querySelectorAll('[data-invoice]').forEach((e) => {
-        invoiceData[e.getAttribute('data-invoice')] = e.innerHTML;
-      });
-
-      resolve(invoiceData);
-    } catch (error) {
-      console.error('Error in getInvoiceData:', error);
-      resolve({}); // Resolve with empty data to proceed with the next part
-    }
-  });
-}
-
 function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, table) {
   try {
     const currentDate = new Date();
@@ -140,7 +132,7 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
 
     const invoiceElement = wrapperElement.querySelectorAll('[data-invoice=invoice-number]');
     invoiceElement.forEach((e) => {
-      e.innerHTML = data['order-id'];
+      e.innerHTML = data.orderData['order-id'];
     });
 
     const invoiceTax = wrapperElement.querySelectorAll('[data-invoice=total-tax]');
@@ -152,15 +144,6 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
     invoiceSubtotal.forEach((e) => {
       e.innerHTML = '€ ' + (paymentDetails.totalAmount * 0.81).toFixed(2);
     });
-    // customer-reference //!already done in webflow
-    // const customerReference = wrapperElement.querySelectorAll('[data-invoice=client-refrence]');
-    // customerReference.forEach((e) => {
-    //   e.innerHTML = data['customer-reference'];
-    // });
-    const contactPerson = wrapperElement.querySelectorAll('[data-invoice=contact-person]');
-    contactPerson.forEach((e) => {
-      e.innerHTML = data['contact-person'];
-    });
 
     // order-delivery-date
     const orderDeliveryDate = wrapperElement.querySelectorAll('[data-invoice=order-delivery-date]');
@@ -168,17 +151,11 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
       e.innerHTML = `${formatDate(currentDate)}-${formatDate(addDays(currentDate, 7))}`;
     });
 
-    if (data.payment === 'PayPal') {
-      const paymentMethod = wrapperElement.querySelectorAll('[data-invoice=payment-date]');
-      paymentMethod.forEach((e) => {
-        e.innerHTML = formatDate(currentDate);
-      });
-    } else {
-      const paymentMethod = wrapperElement.querySelectorAll('[data-invoice=payment-date]');
-      paymentMethod.forEach((e) => {
-        e.innerHTML = 'NOT PAID';
-      });
-    }
+    // if (data.payment === 'PayPal') {
+    const paymentMethod = wrapperElement.querySelectorAll('[data-invoice=payment-date]');
+    paymentMethod.forEach((e) => {
+      e.innerHTML = formatDate(currentDate);
+    });
   } catch (error) {
     console.error('Error in fillInvoiceData:', error);
     // Log the error but proceed to the next part
@@ -187,48 +164,58 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
 
 // wrapper is data-invoice=invoice-item-template
 export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper) {
-  const item = itemTemplate.cloneNode(true);
-  item.removeAttribute('data-invoice');
-  item.style.display = 'grid';
+  // const item = itemTemplate.cloneNode(true);
+  // item.removeAttribute('data-invoice');
+  // item.style.display = 'grid';
+  const { orderItems } = data;
+  console.log('orderItems ::: ', orderItems);
+  orderItems.forEach((orderItem, index) => {
+    const item = itemTemplate.cloneNode(true);
+    item.removeAttribute('data-invoice');
+    item.style.display = 'grid';
+    item.style.fontWeight = 'bold';
 
-  // setup title
-  item.querySelector("[invoice-item-template='title']").innerHTML = `${data['furniture-name']}
-    <br><small>order n°:  ${data['order-id']}</small>
-    <br><small>dimensions : H. ${data['furniture-dimension-h']}mm  W.${data['furniture-dimension-w']}mm  L.${data['furniture-dimension-l']}mm</small>
-    <br><small>Matetial : ${data['color-finish'] || ''}</small> <br><small>${data['comment'] || ''} </small>
-    <br><small>${data['specialfunction'] || ''}</small>`;
-
-  // setup quantity
-  item.querySelector("[invoice-item-template='quantity']").innerHTML = '1';
-
-  // setup price
-  item.querySelector("[invoice-item-template='price']").innerHTML = 'package';
-
-  // setup total
-  item.querySelector("[invoice-item-template='total']").innerHTML =
-    '€ ' + paymentDetails.packagePrice.unit_amount.value;
-
-  wrapper.appendChild(item);
-  generateAdditionalImages(data, paymentDetails, itemTemplate, item);
+    item.querySelector("[invoice-item-template='index']").innerHTML = index + 1;
+    item.querySelector("[invoice-item-template='title']").innerHTML = orderItem.name;
+    item.querySelector("[invoice-item-template='quantity']").innerHTML = orderItem.quantity;
+    item.querySelector("[invoice-item-template='price']").innerHTML =
+      '€ ' + orderItem.unit_amount.value;
+    item.querySelector("[invoice-item-template='total']").innerHTML =
+      '€ ' + orderItem.unit_amount.value;
+    wrapper.appendChild(item);
+    if (orderItem.allRenderPricing) {
+      generateAdditionalImages(orderItem.allRenderPricing, paymentDetails, itemTemplate, item);
+    }
+  });
 }
 
 function generateAdditionalImages(data, paymentDetails, itemTemplate, siblingElement) {
-  const additionalImageData = JSON.parse(data['additional-images-data']);
-  paymentDetails.additionalImagesArray.forEach((imageData, index) => {
-    const { renderType, material, quantity, price, unit_price } = imageData;
+  console.log('inside generateAdditionalImages ::: ', data);
+  data.forEach((imageData, index) => {
     const item = itemTemplate.cloneNode(true);
 
+    console.log(imageData);
+    const thisItemTotalPrice = Object.values(imageData).reduce((acc, cur) => acc + cur, 0);
+
+    const displayIndex = index + 1;
+
     item.querySelector("[invoice-item-template='title']").innerHTML =
-      `${renderType} - ${material} `;
-    item.querySelector("[invoice-item-template='quantity']").innerHTML = `${quantity}`;
-    //! price
-    item.querySelector("[invoice-item-template='price']").innerHTML = `€ ${unit_price}`;
-    //! total
-    item.querySelector("[invoice-item-template='total']").innerHTML = `€ ${price}`;
+      `${imageData.render === 400 ? displayIndex + ' - Scene' : displayIndex + ' - knockout'} `;
+    item.querySelector("[invoice-item-template='quantity']").innerHTML =
+      `${imageData.prespectives / PRESPECTIVE_PRICE_CONSTANT}`;
+    item.querySelector("[invoice-item-template='price']").innerHTML =
+      `€ ${(thisItemTotalPrice / (imageData.prespectives / PRESPECTIVE_PRICE_CONSTANT)).toFixed(2)}`;
+    // item.querySelector("[invoice-item-template='total']").innerHTML = `€ ${thisItemTotalPrice}`;
+    item.querySelector("[invoice-item-template='total']").innerHTML = ``;
+
     item.style.display = 'grid';
+    item.style.fontSize = '12px'; // reduce item font size
+    item.style.marginBottom = '5px'; // reduce space between items
+    item.style.paddingTop = '2px'; // reduce padding
+    item.style.paddingBottom = '2px'; // reduce padding
 
     //invoice-item-template="index"
-    item.querySelector("[invoice-item-template='index']").innerHTML = index + 2;
+    item.querySelector("[invoice-item-template='index']").innerHTML = '';
 
     siblingElement.parentNode.appendChild(item);
   });

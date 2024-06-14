@@ -23,6 +23,9 @@ dependencies:
   find-config:
     specifier: ^1.0.0
     version: 1.0.0
+  gsap:
+    specifier: ^3.12.5
+    version: 3.12.5
   html2pdf.js:
     specifier: 0.9.0
     version: 0.9.0
@@ -41,6 +44,9 @@ dependencies:
   lightbox2:
     specifier: ^2.11.4
     version: 2.11.4
+  pnpm:
+    specifier: ^9.2.0
+    version: 9.2.0
 
 devDependencies:
   '@changesets/changelog-git':
@@ -1990,6 +1996,10 @@ packages:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
     dev: true
 
+  /gsap@3.12.5:
+    resolution: {integrity: sha512-srBfnk4n+Oe/ZnMIOXt3gT605BX9x5+rh/prT2F1SsNJsU1XuMiP0E2aptW481OnonOGACZWBqseH5Z7csHxhQ==}
+    dev: false
+
   /har-schema@2.0.0:
     resolution: {integrity: sha512-Oqluz6zhGX8cyRaTQlFMPw80bSJVG2x/cFb8ZPhUILGgHka9SsokCCOQgpveePerqidZOrT14ipqfJb7ILcW5Q==}
     engines: {node: '>=4'}
@@ -2827,6 +2837,12 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /pnpm@9.2.0:
+    resolution: {integrity: sha512-mKgP0RwucJZ0d2IwQQZDKz3cZ9z1S1qMAck/aKLNXgXmghhJUioG+3YoTUGiZg1eM08u47vykYO/LnObHa+ncQ==}
+    engines: {node: '>=18.12'}
+    hasBin: true
+    dev: false
 
   /possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}

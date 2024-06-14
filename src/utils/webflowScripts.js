@@ -34,6 +34,8 @@ export function updateUserAddress() {
   });
 }
 
+//! DEMO DESABLED
+/*
 export function dataChecker() {
   let currentTabIndex = 0; // Start with the first tab
   let currentClick;
@@ -118,6 +120,7 @@ export function dataChecker() {
     };
   });
 }
+*/
 
 // clear local storage when user logs out from webflow
 export function clearLocalStorageOnLogout() {
@@ -146,6 +149,8 @@ export function clearLocalStorageOnLogout() {
 
 export function checkUserAddressData() {
   const elementsWithDataUser = document.querySelectorAll('[data-user]');
+
+  // remove elements that have class name class="w-dyn-bind-empty"
 
   let allDataPresent = true;
 
