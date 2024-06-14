@@ -1,4 +1,5 @@
 import FileUploader from '../../extras/uploaderClass';
+import { makeCheckBoxCollapsable, makeSmallCardCollapsable } from './collapser';
 import { saveData } from './saveInput';
 
 function orderAppFunctions() {
@@ -46,6 +47,11 @@ function setupNewCard(card) {
       if (elem.id) {
         elem.id = `${elem.id}__${Date.now()}`;
       }
+    }
+    // makeCheckBoxCollapsable
+    if (elem.dataset.collapseCheckbox === 'toggle') {
+      console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
+      makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"');
     }
 
     elem.addEventListener('change', () => {
@@ -138,6 +144,14 @@ function addNewRequestItem(card) {
     updateElementIds(newItem, uniqueSuffix);
     itemTemplate.parentNode.appendChild(newItem);
     addDeleteFunctionality(newItem);
+    const collapseBtn = newItem.querySelector('[data-collapse="toggle"]');
+    // const collapseWrapper = newItem.closest('[data-collapse="wrapper"]');
+
+    makeSmallCardCollapsable(collapseBtn, 'data-collapse="wrapper"');
+    makeCheckBoxCollapsable(
+      newItem.querySelector('[data-collapse-checkbox="toggle"]'),
+      'data-collapse-checkbox="wrapper"'
+    );
   });
 }
 
@@ -145,6 +159,8 @@ function addDeleteFunctionality(item) {
   const deleteBtn = item.querySelector('[render-item="delete"]');
   deleteBtn.addEventListener('click', () => {
     item.remove();
+    //!TOOD : remove item from local storge
+    removeRequestItem(item);
   });
 }
 

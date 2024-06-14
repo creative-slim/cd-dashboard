@@ -1,9 +1,23 @@
 function getDataFromLocalStorage(key) {
+  if (!key) {
+    console.error('Key is not provided.');
+    return [];
+  }
   const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : [];
+  try {
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error('Error parsing local storage data:', error);
+    return [];
+  }
 }
 
 function createItemHTML(item) {
+  if (!item || !item.render) {
+    console.error('Item or item.render is not provided.');
+    return document.createElement('div'); // Return an empty div to prevent errors
+  }
+
   const container = document.createElement('div');
   container.classList.add('container-898989');
 
@@ -28,10 +42,10 @@ function createItemHTML(item) {
 
   if (width || height || length) {
     dimensions.innerHTML = `
-                ${width ? `<div>Width: ${width}</div>` : ''}
-                ${height ? `<div>Height: ${height}</div>` : ''}
-                ${length ? `<div>Length: ${length}</div>` : ''}
-            `;
+      ${width ? `<div>Width: ${width}</div>` : ''}
+      ${height ? `<div>Height: ${height}</div>` : ''}
+      ${length ? `<div>Length: ${length}</div>` : ''}
+    `;
     container.appendChild(dimensions);
   }
 
@@ -67,16 +81,16 @@ function createItemHTML(item) {
   const comment = item.render[commentKey];
 
   const renderDetailsHTML = `
-            ${renderType ? `<div>Render Type: ${renderType}</div>` : ''}
-            ${woodType ? `<div>Wood Type: ${woodType}</div>` : ''}
-            ${count ? `<div>Count: ${count}</div>` : ''}
-            ${upholstery ? `<div>Upholstery: ${upholstery}</div>` : ''}
-            ${otherMaterial ? `<div>Other Material: ${otherMaterial}</div>` : ''}
-            ${square ? `<div>Square: ${square}</div>` : ''}
-            ${portrait ? `<div>Portrait: ${portrait}</div>` : ''}
-            ${landscape ? `<div>Landscape: ${landscape}</div>` : ''}
-            ${comment ? `<div>Comment: ${comment}</div>` : ''}
-        `;
+    ${renderType ? `<div>Render : ${renderType}</div>` : ''}
+    ${woodType ? `<div>Wood Type : ${woodType}</div>` : ''}
+    ${count ? `<div>Prespectives : ${count}</div>` : ''}
+    ${upholstery ? `<div>Upholstery: ${upholstery === 'true' ? ' yes ' : 'no'}</div>` : ''}
+    ${otherMaterial ? `<div>Other Material: ${otherMaterial}</div>` : ''}
+    ${square ? `<div>Square: ${square === 'true' ? ' yes ' : 'no'}</div>` : ''}
+    ${portrait ? `<div>Portrait: ${portrait === 'true' ? ' yes ' : 'no'}</div>` : ''}
+    ${landscape ? `<div>Landscape: ${landscape === 'true' ? ' yes ' : 'no'}</div>` : ''}
+    ${comment ? `<div>Comment: ${comment}</div>` : ''}
+  `;
 
   if (renderDetailsHTML.trim()) {
     renderDetails.innerHTML = renderDetailsHTML;
@@ -87,11 +101,22 @@ function createItemHTML(item) {
 }
 
 function displayContent(element) {
+  if (!element) {
+    console.error('Element selector is not provided.');
+    return;
+  }
+
   const data = getDataFromLocalStorage('orderData');
   const content = document.querySelector(element);
+  if (!content) {
+    console.error('Content element not found.');
+    return;
+  }
+
   content.innerHTML = ''; // Clear existing content
 
   data.forEach((entry) => {
+    if (!entry.data) return;
     entry.data.forEach((subEntry) => {
       const itemHTML = createItemHTML(subEntry);
       content.appendChild(itemHTML);
@@ -101,10 +126,12 @@ function displayContent(element) {
 
 // Assuming the localStorage is already populated with the key 'orderData'
 export default function initOrderSummary(orderSummaryAttribute) {
+  if (!orderSummaryAttribute) {
+    console.error('Order summary attribute is not provided.');
+    return;
+  }
+
   setInterval(() => {
     displayContent(orderSummaryAttribute);
   }, 300);
 }
-
-// Initialize the order summary
-// initOrderSummary('#order-summary');

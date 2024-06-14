@@ -1,4 +1,4 @@
-import makeCollapsible from './collapser';
+import { makeSmallCardCollapsable } from './collapser';
 import initOrderSummary from './orderSummary';
 
 export default function initWebflowFunctions() {
@@ -6,6 +6,6 @@ export default function initWebflowFunctions() {
   // renderSetupParams();
   initOrderSummary('[data-order-summary-wrapper]');
   document.querySelectorAll('[data-collapse="toggle"]').forEach((button) => {
-    makeCollapsible(button, 'data-collapse="wrapper"');
+    makeSmallCardCollapsable(button, 'data-collapse="wrapper"');
   });
 }

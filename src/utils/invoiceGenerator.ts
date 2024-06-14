@@ -197,8 +197,10 @@ function generateAdditionalImages(data, paymentDetails, itemTemplate, siblingEle
     console.log(imageData);
     const thisItemTotalPrice = Object.values(imageData).reduce((acc, cur) => acc + cur, 0);
 
+    const displayIndex = index + 1;
+
     item.querySelector("[invoice-item-template='title']").innerHTML =
-      `${imageData.render === 400 ? '&nbsp;Scene' : '&nbsp;knockout'} `;
+      `${imageData.render === 400 ? displayIndex + ' - Scene' : displayIndex + ' - knockout'} `;
     item.querySelector("[invoice-item-template='quantity']").innerHTML =
       `${imageData.prespectives / PRESPECTIVE_PRICE_CONSTANT}`;
     item.querySelector("[invoice-item-template='price']").innerHTML =
@@ -213,7 +215,7 @@ function generateAdditionalImages(data, paymentDetails, itemTemplate, siblingEle
     item.style.paddingBottom = '2px'; // reduce padding
 
     //invoice-item-template="index"
-    item.querySelector("[invoice-item-template='index']").innerHTML = index + 1;
+    item.querySelector("[invoice-item-template='index']").innerHTML = '';
 
     siblingElement.parentNode.appendChild(item);
   });

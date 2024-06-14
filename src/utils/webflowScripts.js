@@ -150,6 +150,8 @@ export function clearLocalStorageOnLogout() {
 export function checkUserAddressData() {
   const elementsWithDataUser = document.querySelectorAll('[data-user]');
 
+  // remove elements that have class name class="w-dyn-bind-empty"
+
   let allDataPresent = true;
 
   elementsWithDataUser.forEach((element) => {

@@ -599,24 +599,30 @@ window.Webflow.push(async () => {
      * form submit handler
      */
 
-    if (form)
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    function checkUserData() {
+      const placeOrderBtn = document.querySelector('[mirror-click="tab-place-order"]');
 
-        // checkUserAddressData
-
+      placeOrderBtn.addEventListener('click', async () => {
         console.log('form submitted', checkUserAddressData());
         if (!checkUserAddressData()) {
           console.log('Please fill in your address details');
           // create a tag and add this attribute to it : <a mirror-click="address-modal-bg" href="#">Edit</a>
           // then click on it to open the address modal
           const editAddress = document.querySelector('[mirror-click="address-modal-bg"]');
-
           editAddress.click();
-
           return;
         }
+      });
+    }
+
+    checkUserData();
+
+    if (form)
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // checkUserAddressData
 
         document.querySelector("[order-submit='approved']").addEventListener('click', () => {
           console.log('clicked', this);
@@ -1723,10 +1729,10 @@ window.Webflow.push(async () => {
         'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Invoice_REND-20240614-0010';
 
       // Uncomment if needed
-      // const pdfFile = await generateInvoice(paymentDetails2);
-      const TEST_invoiceToCms = uploadInvoiceToCMS(pdfLink, cmsOutput);
+      const pdfFile = await generateInvoice(paymentDetails2);
+      // const TEST_invoiceToCms = uploadInvoiceToCMS(pdfLink, cmsOutput);
 
-      console.log({ TEST_invoiceToCms });
+      console.log({ pdfFile });
     });
   }
 
