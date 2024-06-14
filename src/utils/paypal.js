@@ -128,14 +128,7 @@ export function initializePaypal(
             .then((response) => response.json())
             .then((order) => {
               console.log('Payment order CREATED', order);
-              // localStorage.setItem(
-              //   'paymentDetails',
-              //   JSON.stringify({
-              //     additionalImagesArray: order.additionalImagesArray,
-              //     totalAmount: order.totalAmount,
-              //     packagePrice: order.finalPackagePrice,
-              //   })
-              // );
+              localStorage.setItem('paymentDetails', JSON.stringify({ order }));
 
               return order.data.id;
             });

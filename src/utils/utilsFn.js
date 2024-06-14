@@ -57,27 +57,30 @@ export const sendInvoice = async (linkarray, reciever) => {
   }
 };
 
-export const uploadInvoiceToCMS = async (pdfFileLink, cmsItemID) => {
+export const uploadInvoiceToCMS = async (pdfFileLink, cmsItemsArray) => {
   const prod = 'https://creative-directors-dropbox.sa-60b.workers.dev';
   const dev = 'http://127.0.0.1:8787';
 
   const endpoint = `/api/webflow/cms/invoice`;
-  const data = {
-    itemID: cmsItemID,
-    invoiceLink: pdfFileLink,
-  };
-  try {
-    const response = await fetch(prod + endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    return await response.json();
-  } catch (err) {
-    console.error(err);
-    return null;
+  for (const item of cmsItemsArray) {
+    const data = {
+      itemID: item.id,
+      invoiceLink: pdfFileLink,
+    };
+    try {
+      const response = await fetch(prod + endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log('Response:', result);
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 
