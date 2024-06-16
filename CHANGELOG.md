@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 2.0.1
+
+### Patch Changes
+
+- 1fa6b31: redirect to orders history after submission
+
 ## 2.0.0
 
 ### Major Changes
