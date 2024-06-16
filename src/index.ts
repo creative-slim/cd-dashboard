@@ -779,7 +779,29 @@ window.Webflow.push(async () => {
 
         // Call the process function
         await process();
+        goToHistory();
+        checkGoToHistory();
       });
+  }
+
+  function goToHistory() {
+    // Set a flag in local storage
+    localStorage.setItem('goToHistory', 'true');
+    // Reload the page
+    window.location.reload();
+  }
+
+  // This function should be called on page load to check for the flag and click the tab if needed
+  function checkGoToHistory() {
+    const goToHistory = localStorage.getItem('goToHistory');
+    if (goToHistory) {
+      const tab = document.querySelector('[mirror-click="tab-history"]');
+      if (tab) {
+        tab.click();
+      }
+      // Remove the flag from local storage
+      localStorage.removeItem('goToHistory');
+    }
   }
 
   console.log('ENV ===> ', process.env.NODE_ENV);
