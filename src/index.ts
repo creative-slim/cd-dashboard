@@ -6,6 +6,7 @@ import cookie from 'cookie';
 import jsPDF from 'jspdf';
 import lightbox from 'lightbox2';
 
+import { areRequiredFieldsPopulated, errorModal } from '$extras/inputsChecker.js';
 import { initInstances } from '$extras/uploaderInstances.js';
 import {
   checkUserFolder,
