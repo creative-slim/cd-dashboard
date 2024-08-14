@@ -19,8 +19,14 @@ export default class FileUploader {
     // errorPopup
   ) {
     this.dropZone = document.getElementById(drop);
+    if (!this.dropZone) {
+      console.error('Drop zone not found');
+      console.error('dropzone Uploader Disabled');
+
+      return;
+    }
     // this.output = document.getElementById(output);
-    this.output = this.dropZone.parentElement.querySelector('[uploader-element="output"]');
+    this.output = this.dropZone.parentElement.querySelector('[uploader-element="output"]') || null;
 
     this.submitprevention = document.getElementById('order-submit-button');
     this.uploaderID = this.dropZone.dataset.uploaderId || null;

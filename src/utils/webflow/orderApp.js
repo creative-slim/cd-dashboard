@@ -4,6 +4,11 @@ import { saveData } from './saveInput';
 
 function orderAppFunctions() {
   const card = document.querySelector('[main-render-item="main"]');
+  if (!card) {
+    console.log('No card found');
+
+    return;
+  }
   saveData(card, card.closest('[main-render-item="main"]'));
   setupNewCard(card);
   const duplicateCard = card.cloneNode(true);

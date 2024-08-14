@@ -49,7 +49,7 @@ export async function generateInvoice(finalData) {
   );
 
   // document.querySelector("[data-invoice='download']").addEventListener('click', async () => {
-  document.querySelector('#invoice-download-btn').addEventListener('click', async () => {
+  document.querySelector('#invoice-download-btn')?.addEventListener('click', async () => {
     // await generatePDF(pdfwrapper);
     getInvoicePDF(pdfwrapper, orderData['order-id']).then((pdf) => {
       // const blob = new Blob([pdf], { type: 'application/pdf' });
