@@ -20,9 +20,7 @@ export default class FileUploader {
   ) {
     this.dropZone = document.getElementById(drop);
     if (!this.dropZone) {
-      console.error('Drop zone not found');
-      console.error('dropzone Uploader Disabled');
-
+      console.error(' 🙈 Drop zone not found , dropzone Uploader Disabled');
       return;
     }
     // this.output = document.getElementById(output);
