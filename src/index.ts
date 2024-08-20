@@ -242,21 +242,20 @@ window.Webflow.push(async () => {
 
             loggerUpdate(2);
             console.log('Final', Final);
-            debugger;
 
             // Uncomment if needed
-            const pdfFile = await generateInvoice({
-              finalData: {
-                combinedArrays,
-                finalCMSresponse: Final,
-              },
-            });
+            // const pdfFile = await generateInvoice({
+            //   finalData: {
+            //     combinedArrays,
+            //     finalCMSresponse: Final,
+            //   },
+            // });
 
-            const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
-            const userEmail = document.querySelector('[data-user-email]')?.innerText;
-            const send = await sendInvoice(pdfLink.linkarray, userEmail);
-            await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
-            console.log({ pdfFile });
+            // const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
+            // const userEmail = document.querySelector('[data-user-email]')?.innerText;
+            // const send = await sendInvoice(pdfLink.linkarray, userEmail);
+            // await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
+            // console.log({ pdfFile });
 
             // Example function call, comment out if not needed
             // uploadInvoice();
