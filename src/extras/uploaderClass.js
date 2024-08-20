@@ -52,7 +52,7 @@ export default class FileUploader {
     this.drop_zone_id = this.dropZone ?? this.dropZone.dataset.dropZoneId ?? 'multi';
 
     this.eventOrMember = this.fileType;
-    console.log('this.fileType : ', this.fileType);
+    // console.log('this.fileType : ', this.fileType);
     this.image_names = [];
     this.images_data = [];
     this.loading.style.transform = 'scale(0)';
@@ -66,7 +66,7 @@ export default class FileUploader {
     this.name = name;
     // this.namesArray = namesArray;
 
-    console.log('this : ', this);
+    // console.log('this : ', this);
     this.dropZone.addEventListener('dragover', this.dragOverHandler.bind(this));
     this.dropZone.addEventListener('drop', this.dropHandler.bind(this));
     this.fileInput.addEventListener('change', this.fileInputChangeHandler.bind(this));
@@ -183,7 +183,7 @@ export default class FileUploader {
     this.images_data.splice(index, 1);
     this.displayImages(this.images_data);
     const linksString = this.generateLinksArray(this.images_data.map((x) => x.name));
-    console.log('############', linksString);
+    // console.log('############', linksString);
     this.removeFileFromArray(linksString, nameToDelete);
     this.namesArray.value = linksString;
     this.insertIntoLocalStorage({ id: this.cardID, array: linksString, name: nameToDelete });
@@ -283,13 +283,13 @@ export default class FileUploader {
         this.image_names.push(file.name.split(' ').join('_'));
         this.images_data.push(file);
         const response = await this.uploadFile(file);
-        console.log(`... file[${i}].name = ${file.name}`);
+        // console.log(`... file[${i}].name = ${file.name}`);
       }
 
       const fullLink = this.generateLinksArray(this.image_names);
       this.namesArray.value = fullLink;
       this.insertIntoLocalStorage({ id: this.containerID, array: fullLink });
-      console.log({ containerID: this.containerID, cardID: this.cardID, 'full link': fullLink });
+      // console.log({ containerID: this.containerID, cardID: this.cardID, 'full link': fullLink });
       this.displayImages(this.images_data);
       resolve('done');
     });

@@ -60,9 +60,14 @@ export function initializePaypal(
   }
 
   function fetchDataFromLocalStorage() {
-    const renderData = localStorage.getItem('orderData');
-    const cleanArray = cleanData(JSON.parse(renderData));
-    return cleanArray;
+    try {
+      const renderData = localStorage.getItem('orderData');
+      const cleanArray = cleanData(JSON.parse(renderData));
+      return cleanArray;
+    } catch (error) {
+      console.error('An error occurred while fetching data from local storage:', error);
+      return [];
+    }
   }
 
   document.addEventListener('click', handleClick);
@@ -117,65 +122,80 @@ export function initializePaypal(
         },
         createOrder: async function (data, actions) {
           // Check if all fields are filled
-
-          if (!orderDetails || orderDetails.length === 0) {
-            console.error('Please select a package : order creation failed!');
-            return;
-          }
-          console.log('Creating payment order...FETCHING NOW', {
-            intent: INTENT,
-            package: orderDetails,
-          });
-          const request = await fetch(`${api}/api/paypal/create_order`, {
-            method: 'post',
-            headers: {
-              'Content-Type': 'application/json; charset=utf-8',
-            },
-            //! Send the additional data
-            body: JSON.stringify({ intent: INTENT, orderDetails }),
-          })
-            .then((response) => response.json())
-            .then((order) => {
-              console.log('Payment order CREATED', order);
-              localStorage.setItem('paymentDetails', JSON.stringify({ order }));
-
-              return order.data.id;
+          try {
+            if (!orderDetails || orderDetails.length === 0) {
+              console.error('Please select a package : order creation failed!');
+              return;
+            }
+            console.log('Creating payment order...FETCHING NOW', {
+              intent: INTENT,
+              package: orderDetails,
             });
-          console.log('Payment order REQUEST', await request);
-          return request;
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+              console.error('paypal : User token not found!');
+              return;
+            }
+            const request = await fetch(`${api}/api/paypal/create_order`, {
+              method: 'post',
+              headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                Authorization: `Bearer ${token}`,
+              },
+              //! Send the additional data
+              body: JSON.stringify({ intent: INTENT, orderDetails }),
+            })
+              .then((response) => response.json())
+              .then((order) => {
+                console.log('Payment order CREATED', order);
+                localStorage.setItem('paymentDetails', JSON.stringify({ order }));
+
+                return order.data.id;
+              })
+              .catch((error) => {
+                console.error('Error creating PayPal payment order:', error);
+              });
+            console.log('Payment order REQUEST', await request);
+            return request;
+          } catch (error) {
+            console.error('An error occurred while creating the payment order:', error);
+          }
         },
         onApprove: async function (data, actions) {
-          if (!orderDetails || orderDetails.length === 0) {
-            console.error('Please select a package : order creation failed!');
-            return;
-          }
-          console.log('Approving payment order...++++++', data);
-          paypalOrderConfirmationUI(data);
-          paypalButtons.close();
-          const orderId = data.orderID;
-          paymentStatus.payed = true;
-          paymentStatus.paymentMethod = 'PayPal';
-          return document
-            .querySelector("[order-submit='approved']")
-            .addEventListener('click', async () => {
-              fetch(`${api}/api/paypal/complete_order`, {
-                method: 'post',
-                headers: {
-                  'Content-Type': 'application/json; charset=utf-8',
-                },
-                body: JSON.stringify({ intent: INTENT, order_id: orderId }),
-              })
-                .then((response) => {
+          try {
+            if (!orderDetails || orderDetails.length === 0) {
+              console.error('Please select a package : order creation failed!');
+              return;
+            }
+            console.log('Approving payment order...++++++', data);
+            paypalOrderConfirmationUI(data);
+            paypalButtons.close();
+            const orderId = data.orderID;
+            paymentStatus.payed = true;
+            paymentStatus.paymentMethod = 'PayPal';
+            return document
+              .querySelector("[order-submit='approved']")
+              .addEventListener('click', async () => {
+                try {
+                  const response = await fetch(`${api}/api/paypal/complete_order`, {
+                    method: 'post',
+                    headers: {
+                      'Content-Type': 'application/json; charset=utf-8',
+                    },
+                    body: JSON.stringify({ intent: INTENT, order_id: orderId }),
+                  });
                   console.log('Response:', response);
-
-                  return response.json();
-                })
-                .then((orderDetails) => {
+                  const orderDetails = await response.json();
                   console.log('Order details:', orderDetails);
                   paymentDetails = orderDetails.data.purchase_units[0].payments.captures[0].amount;
                   paypalButtons.close();
-                });
-            });
+                } catch (error) {
+                  console.error('Error completing PayPal order:', error);
+                }
+              });
+          } catch (error) {
+            console.error('An error occurred while approving the payment order:', error);
+          }
           // .then((orderDetails) => {
           //   const intentObject = INTENT === 'authorize' ? 'authorizations' : 'captures';
           //   alerts.innerHTML = `<div class=\'ms-alert ms-action\'>Thank you ${orderDetails.payer.name.given_name} ${orderDetails.payer.name.surname} for your payment of ${orderDetails.purchase_units[0].payments[intentObject][0].amount.value} ${orderDetails.purchase_units[0].payments[intentObject][0].amount.currency_code}!</div>`;

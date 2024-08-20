@@ -25,7 +25,7 @@ const extractData = (inputElements) => {
 
 // Main function
 export function saveData(currentCard, container) {
-  console.log('------- save Data -------');
+  // console.log('------- save Data -------');
 
   if (!currentCard || !container) {
     console.error('Current card or container is not provided.');
@@ -33,7 +33,7 @@ export function saveData(currentCard, container) {
   }
 
   const inputs = currentCard.querySelectorAll('input, textarea, select');
-  console.log('current Card', currentCard);
+  // console.log('current Card', currentCard);
 
   let storedLocalData;
   try {
@@ -43,7 +43,7 @@ export function saveData(currentCard, container) {
     storedLocalData = [];
   }
 
-  console.log('container', container);
+  // console.log('container', container);
   const cardContainer = container.closest(`[${DATA_BIG_CARD_ID}]`);
   if (!cardContainer) {
     console.error('Card container with specified DATA_BIG_CARD_ID not found.');
@@ -56,7 +56,7 @@ export function saveData(currentCard, container) {
     return;
   }
 
-  console.log('################################checkIfRender', getRenderNumber(currentCard));
+  // console.log('################################checkIfRender', getRenderNumber(currentCard));
 
   const found = storedLocalData.find((element) => element.id === cardId);
   const extractedData = extractData(inputs);

@@ -23,7 +23,7 @@ export async function initAuth() {
     return;
   }
 
-  console.log('loginElement', loginElement);
+  // console.log('loginElement', loginElement);
   loginElement.addEventListener('click', async () => {
     await client.loginWithRedirect();
   });
@@ -61,7 +61,7 @@ export async function initAuth() {
     localStorage.setItem('userToken', userToken);
 
     console.log('User is already logged in:', userData);
-    console.log('User token:', userToken);
+    // console.log('User token:', userToken);
 
     // Change UI based on user data
     afterLoginUiSetup(userData);

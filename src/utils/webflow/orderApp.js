@@ -5,7 +5,7 @@ import { saveData } from './saveInput';
 function orderAppFunctions() {
   const card = document.querySelector('[main-render-item="main"]');
   if (!card) {
-    console.log('No card found');
+    console.error('No card found');
 
     return;
   }
@@ -55,7 +55,7 @@ function setupNewCard(card) {
     }
     // makeCheckBoxCollapsable
     if (elem.dataset.collapseCheckbox === 'toggle') {
-      console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
+      // console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
       makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"');
     }
 
@@ -81,7 +81,7 @@ function updateUploadersIDs(card) {
     // initialize the uploader
 
     const fileUploader = new FileUploader(id, `fileUploader${uuid}`);
-    console.log(fileUploader);
+    // console.log(fileUploader);
     window[`fileUploader${uuid}`] = fileUploader;
 
     localCurrentItem++;
@@ -129,7 +129,7 @@ function addNewRequestItem(card) {
     const renderNumber = card
       .closest('[main-render-item]')
       .querySelectorAll('[render-item="container"]').length;
-    console.log('this render number is : ', { renderNumber }, card.closest('[main-render-item]'));
+    // console.log('this render number is : ', { renderNumber }, card.closest('[main-render-item]'));
 
     // add id to the new item
     newItem.id = `request-${Date.now()}`;

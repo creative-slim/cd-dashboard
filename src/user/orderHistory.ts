@@ -36,6 +36,10 @@ function generateOrderHistoryUI(data) {
     return;
   }
   removeLoader();
+  if (data.length === 0) {
+    console.error('No orders found');
+    return;
+  }
   data.forEach((order) => {
     const itemDomElement = orderItemTemplate?.cloneNode(true);
     itemDomElement.classList.remove('template');

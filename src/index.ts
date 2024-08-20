@@ -55,6 +55,10 @@ window.Webflow.push(async () => {
   const GetCurrentUserEmail = () => {
     //get user data from localstorage
     const userData = localStorage.getItem('userData');
+    if (!userData) {
+      console.error('!! No user data found in local storage');
+      return;
+    }
     const user = JSON.parse(userData);
     if (!user.email) {
       console.error('!! No user email found');
@@ -176,11 +180,20 @@ window.Webflow.push(async () => {
         localStorage.setItem('combinedArrays', JSON.stringify(combinedArrays));
 
         async function uploadmetadata(combinedArrays) {
+          const token = localStorage.getItem('userToken');
+          if (!token) {
+            console.error('No token found in local storage');
+            return;
+          }
           return new Promise(async (resolve) => {
             const requestOptions = {
               method: 'POST',
               body: JSON.stringify(combinedArrays),
               redirect: 'follow',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
             };
 
             const uploadData = await fetch(api + '/api/uploadmetadata', requestOptions)
@@ -190,7 +203,7 @@ window.Webflow.push(async () => {
                 //await uploadToDropbox(jsonString, pathWithExtension, accesskey);
                 return result;
               })
-              .catch((error) => console.log('error', error));
+              .catch((error) => console.error('error', error));
 
             resolve(uploadData);
           });
@@ -1305,59 +1318,4 @@ window.Webflow.push(async () => {
   clearLocalStorageOnLogout();
 
   // dataChecker();
-
-  // const returndata = {
-  //   result: 'success',
-  //   data: {
-  //     id: '661e834ccbc2eba3caf47129',
-  //     cmsLocaleId: null,
-  //     lastPublished: '2024-04-16T13:55:24.048Z',
-  //     lastUpdated: '2024-04-16T13:55:24.048Z',
-  //     createdOn: '2024-04-16T13:55:24.048Z',
-  //     isArchived: false,
-  //     isDraft: false,
-  //     fieldData: {
-  //       specialfunctionscene: false,
-  //       'file-link': 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
-  //       'furniture-dimension-h': 54,
-  //       'furniture-dimension-l': 54,
-  //       'furniture-dimension-w': 12,
-  //       'order-state': '3a8b108b469a23d52b620cb75b914d77',
-  //       payment: 'PayPal',
-  //       'furniture-name': 'XYZ',
-  //       name: 'XYZ',
-  //       specialfunction: '',
-  //       'color-finish': 'Walnut',
-  //       'dimensions-comment': 'this is a comment',
-  //       'order-id': 'REND-20240416-0010',
-  //       'order-date': 'Tue Apr 16 2024 15:55:22 GMT+0200 (Central European Summer Time)',
-  //       'additional-images-data':
-  //         '[{"sceneKnockout":"Knockout","woodType":"oak","amount":"6","comment":""},{"sceneKnockout":"Scene","woodType":"walnut","amount":"2","comment":""},{"sceneKnockout":"Scene","woodType":"whiteoak","amount":"4","comment":""}]',
-  //       slug: 'xyz-3f5bc',
-  //       'uploaded-images': [
-  //         {
-  //           fileId: '66165218cafe597f9bd457d1',
-  //           url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
-  //           alt: null,
-  //         },
-  //       ],
-  //       'test-image': {
-  //         fileId: '66165218cafe597f9bd457d1',
-  //         url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
-  //         alt: null,
-  //       },
-  //       'user-id': '6617f9475a49a8be5bcf0aa9',
-  //     },
-  //   },
-  // };
-
-  // const fullPath = '/CD-uploads/d1f1f37422a24359982cfe07d39c69b9/17-3-2024--11:4:58';
-
-  // const pdfFile = await generateInvoice(returndata.data.fieldData);
-
-  // const pdfLink = await uploadInvoice(pdfFile, fullPath);
-  // const userEmail = document.querySelector("[data-user='email']").innerText;
-  // const send = await sendInvoice(pdfLink.linkarray, userEmail);
-
-  // console.log({ pdfFile, pdfLink, send });
 });

@@ -131,7 +131,8 @@ export default function initOrderSummary(orderSummaryAttribute) {
     return;
   }
 
-  setInterval(() => {
-    displayContent(orderSummaryAttribute);
-  }, 300);
+  //! turn back on after testing is done ........................20/08/2024
+  // setInterval(() => {
+  //   displayContent(orderSummaryAttribute);
+  // }, 333);
 }
