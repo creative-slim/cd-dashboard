@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.0.1
+
+### Patch Changes
+
+- 1161fca: fixed user email
+
 ## 3.0.0
 
 ### Major Changes
