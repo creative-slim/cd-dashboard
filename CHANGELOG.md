@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.0.2
+
+### Patch Changes
+
+- d066691: fixed server adaptation
+
 ## 3.0.1
 
 ### Patch Changes
