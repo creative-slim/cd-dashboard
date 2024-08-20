@@ -1,3 +1,4 @@
+import { areRequiredFieldsPopulated, errorModal } from '$extras/inputsChecker.js';
 import cleanData from '$utils/renderDataCleaner.js';
 
 export function initializePaypal(
@@ -99,7 +100,13 @@ export function initializePaypal(
       }
       let paymentDetails;
       const paypalButtons = paypal.Buttons({
-        onClick: (data) => {
+        onClick: (data, actions) => {
+          // check if all fields are filled
+          if (!areRequiredFieldsPopulated()) {
+            errorModal('Please fill in all required fields');
+            // alert('Please fill in all required fields');
+            return actions.reject();
+          }
           orderDetails = fetchDataFromLocalStorage();
         },
         style: {
@@ -109,6 +116,8 @@ export function initializePaypal(
           label: 'paypal',
         },
         createOrder: async function (data, actions) {
+          // Check if all fields are filled
+
           if (!orderDetails || orderDetails.length === 0) {
             console.error('Please select a package : order creation failed!');
             return;
