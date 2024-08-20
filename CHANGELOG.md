@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.0.0
+
+### Major Changes
+
+- 5e6bbcc: moved to external website
+
 ## 2.0.1
 
 ### Patch Changes
