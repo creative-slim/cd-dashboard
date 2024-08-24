@@ -22,6 +22,7 @@ import {
 
 import { initAuth } from './auth/userAuth';
 import { initOrderHistory } from './user/orderHistory';
+import initUserRelatedFunctions from './user/userMainExport';
 
 window.Webflow ||= [];
 window.Webflow.push(async () => {
@@ -30,12 +31,13 @@ window.Webflow.push(async () => {
   initInstances();
   orderAppFunctions();
   initWebflowFunctions();
+  initUserRelatedFunctions();
 
   if (window.location.pathname === '/user/order-history') {
     console.log('order history page');
 
     const info = await initOrderHistory();
-    console.log('info', info);
+    console.log('initOrderHistory results : ', info);
   }
 
   //! API ENDPOINTS
