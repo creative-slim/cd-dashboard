@@ -55,7 +55,7 @@ function setupNewCard(card) {
     }
     // makeCheckBoxCollapsable
     if (elem.dataset.collapseCheckbox === 'toggle') {
-      console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
+      // console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
       makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"');
     }
 
@@ -81,7 +81,7 @@ function updateUploadersIDs(card) {
     // initialize the uploader
 
     const fileUploader = new FileUploader(id, `fileUploader${uuid}`);
-    console.log(fileUploader);
+    // console.log(fileUploader);
     window[`fileUploader${uuid}`] = fileUploader;
 
     localCurrentItem++;

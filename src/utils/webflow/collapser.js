@@ -1,5 +1,5 @@
 export function makeSmallCardCollapsable(button, targetAttribute) {
-  console.log('collapser', button, targetAttribute);
+  // console.log('collapser', button, targetAttribute);
   const targetElement = button.closest(`[${targetAttribute}]`);
   const content = targetElement.querySelector('[data-collapse="target"]');
 
@@ -32,7 +32,7 @@ export function makeSmallCardCollapsable(button, targetAttribute) {
 }
 
 export function makeCheckBoxCollapsable(checkbox, targetAttribute) {
-  console.log('collapser', checkbox, targetAttribute);
+  // console.log('collapser', checkbox, targetAttribute);
   const targetElement = checkbox.closest(`[${targetAttribute}]`);
   const content = targetElement.querySelector('[data-collapse-checkbox="target"]');
 

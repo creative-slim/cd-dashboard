@@ -52,7 +52,7 @@ export default class FileUploader {
     this.drop_zone_id = this.dropZone ?? this.dropZone.dataset.dropZoneId ?? 'multi';
 
     this.eventOrMember = this.fileType;
-    console.log('this.fileType : ', this.fileType);
+    // console.log('this.fileType : ', this.fileType);
     this.image_names = [];
     this.images_data = [];
     this.loading.style.transform = 'scale(0)';
@@ -66,7 +66,7 @@ export default class FileUploader {
     this.name = name;
     // this.namesArray = namesArray;
 
-    console.log('this : ', this);
+    // console.log('this : ', this);
     this.dropZone.addEventListener('dragover', this.dragOverHandler.bind(this));
     this.dropZone.addEventListener('drop', this.dropHandler.bind(this));
     this.fileInput.addEventListener('change', this.fileInputChangeHandler.bind(this));

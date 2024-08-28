@@ -74,7 +74,6 @@ function removeLoader() {
 function showContent() {
   const content = document.querySelector('[data-load="hidden"]');
   if (content) {
-    //switch the attribute to show the content
     content.setAttribute('data-load', 'visible');
   }
 }

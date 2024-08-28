@@ -38,12 +38,33 @@ function createItemHTML(item) {
 
   console.log('item.render', item);
 
-  calculateTotal(item);
+  const cleanItem = cleanObject(item);
+  calculateTotal(cleanItem);
+  item = cleanItem;
+
+  console.log('ITEM :::::: ', item['sub-total']);
+
+  let item_TOTAL = 0;
+  const totalElement = document.querySelector('[data-order-cart="total"]');
+  if (totalElement) {
+    item_TOTAL = parseInt(totalElement.textContent);
+  }
+  if (isNaN(item_TOTAL)) {
+    item_TOTAL = 0;
+  }
+
+  //read the value and convert it to a number then add the item sub total to it
+  const total = item_TOTAL + item['sub-total'];
+  console.log('total ', total);
+  //set the total value to the total element
+  if (totalElement) {
+    totalElement.textContent = total;
+  }
 
   // Update elements inside the clone
   Object.keys(item).forEach((key) => {
     const strippedKey = stripSuffix(key);
-    const element = clone.querySelector(`[data-order-cart="${strippedKey}"]`);
+    const element = clone.querySelector(`[data-order-cart="${key}"]`);
     // console.log('🥹🥹🥹🥹🥹 ', element);
 
     if (element) {
@@ -60,6 +81,7 @@ function createItemHTML(item) {
   });
 
   const cloneItem = clone.querySelector('[data-order-cart="render"]');
+  const rendersList = clone.querySelector('[data-order-cart="list"]');
   if (cloneItem) {
     item.renders.forEach((render) => {
       const renderClone = cloneItem.cloneNode(true);
@@ -68,7 +90,7 @@ function createItemHTML(item) {
 
       Object.keys(render).forEach((key) => {
         const strippedKey = stripSuffix(key);
-        const element = renderClone.querySelector(`[data-order-cart="${strippedKey}"]`);
+        const element = renderClone.querySelector(`[data-order-cart="${key}"]`);
 
         if (element) {
           const value = render[key];
@@ -83,7 +105,7 @@ function createItemHTML(item) {
         }
       });
 
-      clone.appendChild(renderClone);
+      rendersList.appendChild(renderClone);
     });
 
     cloneItem.remove();
@@ -111,54 +133,59 @@ type prices = {
 };
 
 function calculateTotal(data) {
+  debugger;
   const Prices = JSON.parse(localStorage.getItem('prices')) as prices;
-  const provided3DModel = data['provided-3D-model'];
+  console.log('data ', data);
+  const provided3DModeltext = data['Provided-3D-Model'];
   const woodtypePrice = Prices.woodtype.generic;
   let totalPrice = Prices.base.render;
-  let renderPrice = 0;
-
   const arrayOfUsedWoodTypes = [];
+
+  const provided3DModel = provided3DModeltext === 'true' ? true : false;
 
   if (!provided3DModel) {
     totalPrice = totalPrice + 850;
   }
+  data['price'] = totalPrice;
 
   data.renders.forEach((render) => {
     const quantity = parseInt(render['render-count']);
+    console.log('render ', render);
+    let renderPrice = 0;
 
-    if (render['wood-type']) {
-      if (!arrayOfUsedWoodTypes.includes(render['wood-type'])) {
-        arrayOfUsedWoodTypes.push(render['wood-type']);
+    if (render['woodtype']) {
+      console.log('arrayOfUsedWoodTypes ', arrayOfUsedWoodTypes);
+      if (!arrayOfUsedWoodTypes.includes(render['woodtype'])) {
+        console.log('render[woodtype] ', render['woodtype']);
+        arrayOfUsedWoodTypes.push(render['woodtype']);
         renderPrice = renderPrice + woodtypePrice;
       } else {
         renderPrice = renderPrice + 0;
       }
+      console.log('renderPrice woodtype', renderPrice);
     }
-    if (render['scene']) {
-      if (provided3DModel) {
-        renderPrice = renderPrice + parseInt(Prices.scene.render) * (quantity - 1);
-      } else {
-        renderPrice =
-          renderPrice +
-          parseInt(Prices.scene.build) +
-          parseInt(Prices.scene.render) * (quantity - 1);
-      }
+    if (render['render-type'] === 'scene') {
+      renderPrice = renderPrice + Prices.scene.build + Prices.scene.render * (quantity - 1);
+      console.log('renderPrice scene', renderPrice);
     }
-    if (render['knockout']) {
-      if (provided3DModel) {
-        renderPrice = renderPrice + parseInt(Prices.knockout.render) * quantity - 1;
-      } else {
-        renderPrice =
-          renderPrice +
-          parseInt(Prices.knockout.build) +
-          parseInt(Prices.knockout.render) * (quantity - 1);
-      }
+    if (render['render-type'] === 'knockout') {
+      renderPrice = renderPrice + Prices.knockout.build + Prices.knockout.render * (quantity - 1);
+
+      console.log('renderPrice knock', renderPrice);
     }
+
+    console.log({ totalPrice, renderPrice, quantity, provided3DModel });
 
     totalPrice = totalPrice + renderPrice;
 
+    render['price'] = renderPrice;
+
     console.log({ totalPrice, renderPrice });
   });
+
+  data['sub-total'] = totalPrice;
+
+  console.log('data ', data);
 }
 
 function displayContent(element) {
@@ -179,6 +206,10 @@ function displayContent(element) {
   }
 
   content.innerHTML = ''; // Clear existing content
+  const totalElement = document.querySelector('[data-order-cart="total"]');
+  if (totalElement) {
+    totalElement.textContent = 0;
+  }
 
   structuredData.forEach((entry) => {
     if (!entry.data) return;
@@ -210,6 +241,36 @@ function restructureData(input) {
       data: structuredData,
     };
   });
+}
+
+function cleanObject(data) {
+  // Helper function to clean key names
+  const cleanKey = (key) => key.split('__')[0];
+
+  // Recursive function to clean the object
+  const cleanData = (obj) => {
+    // Check if it's an array
+    if (Array.isArray(obj)) {
+      return obj.map((item) => cleanData(item));
+    }
+
+    // Check if it's an object
+    if (typeof obj === 'object' && obj !== null) {
+      return Object.entries(obj).reduce((acc, [key, value]) => {
+        // Clean the key
+        const newKey = cleanKey(key);
+        // Recursively clean the value
+        acc[newKey] = cleanData(value);
+        return acc;
+      }, {});
+    }
+
+    // Return the value if it's not an object or array
+    return obj;
+  };
+
+  // Start cleaning the root object
+  return cleanData(data);
 }
 
 // Assuming the localStorage is already populated with the key 'orderData'
