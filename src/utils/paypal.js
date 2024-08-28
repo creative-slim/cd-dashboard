@@ -19,6 +19,7 @@ export function initializePaypal(
   const PAYPAL_SDK_URL = 'https://www.paypal.com/sdk/js';
   const CURRENCY = 'EUR';
   const INTENT = 'capture';
+  const accessToken = localStorage.getItem('userToken');
   let orderDetails = [];
   const PAYPAL_CLIENT_ID =
     'AevfJAscX9MKaFWcK--S7rgLBotKliHnYIc94ShGUS3yNpc_Vt7z92LLmH4Tfwl49uRWpesdR6VBbtVx';
@@ -61,6 +62,7 @@ export function initializePaypal(
 
   function fetchDataFromLocalStorage() {
     const renderData = localStorage.getItem('orderData');
+
     const cleanArray = cleanData(JSON.parse(renderData));
     return cleanArray;
   }
@@ -130,6 +132,7 @@ export function initializePaypal(
             method: 'post',
             headers: {
               'Content-Type': 'application/json; charset=utf-8',
+              authorization: `Bearer ${accessToken}`,
             },
             //! Send the additional data
             body: JSON.stringify({ intent: INTENT, orderDetails }),

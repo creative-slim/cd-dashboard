@@ -83,3 +83,20 @@ export async function getUserData(token) {
 
   return data;
 }
+
+export async function updatePricesInLocalStorage(token) {
+  if (!token) return;
+
+  const resp = await fetch(`${api}/api/paypal/get-prices`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const prices = await resp.json();
+  if (!prices) return;
+
+  localStorage.setItem('prices', JSON.stringify(prices));
+}

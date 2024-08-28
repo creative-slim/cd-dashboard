@@ -58,7 +58,7 @@ window.Webflow.push(async () => {
     //get user data from localstorage
     const userData = localStorage.getItem('userData');
     const user = JSON.parse(userData);
-    if (!user.email) {
+    if (!userData && !user.email) {
       console.error('!! No user email found');
       return;
     }
@@ -178,14 +178,19 @@ window.Webflow.push(async () => {
         localStorage.setItem('combinedArrays', JSON.stringify(combinedArrays));
 
         async function uploadmetadata(combinedArrays) {
+          const token = localStorage.getItem('userToken');
           return new Promise(async (resolve) => {
             const requestOptions = {
               method: 'POST',
               body: JSON.stringify(combinedArrays),
               redirect: 'follow',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
             };
 
-            const uploadData = await fetch(api + '/api/uploadmetadata', requestOptions)
+            const uploadData = await fetch(api + '/api/submit-order', requestOptions)
               .then((response) => response.json())
               .then(async (result) => {
                 console.log('result from uploadmetadata .: ', result);
@@ -244,9 +249,11 @@ window.Webflow.push(async () => {
 
             loggerUpdate(2);
             console.log('Final', Final);
-            debugger;
 
             // Uncomment if needed
+
+            /*
+            debugger;
             const pdfFile = await generateInvoice({
               finalData: {
                 combinedArrays,
@@ -262,7 +269,7 @@ window.Webflow.push(async () => {
 
             // Example function call, comment out if not needed
             // uploadInvoice();
-
+*/
             loggerUpdate(3);
             loggerUpdate(4);
             // updateOrderConfirmationID(Final);
@@ -1269,6 +1276,7 @@ window.Webflow.push(async () => {
 
   // testInvoice();
   init();
+  showContent();
   // checkRequiredFields();
 
   // function that disables all buttons and links on the page
@@ -1294,6 +1302,18 @@ window.Webflow.push(async () => {
     const keeper = localStorage.getItem('tabStates');
     localStorage.clear();
     localStorage.setItem('tabStates', keeper);
+  }
+
+  function showContent() {
+    const loader = document.querySelector('[data-history="loader"]');
+    const content = document.querySelector('[data-load="hidden"]');
+    if (content) {
+      content.setAttribute('data-load', 'visible');
+    }
+    if (loader) {
+      //set style to none
+      loader.style.display = 'none';
+    }
   }
 
   // saveInputToLocalHost();

@@ -1,7 +1,12 @@
 import { createAuth0Client } from '@auth0/auth0-spa-js';
 import Cookie from 'js-cookie';
 
-import { afterLoginUiSetup, getUserData, syncUsersDB } from './AuthHandlers';
+import {
+  afterLoginUiSetup,
+  getUserData,
+  syncUsersDB,
+  updatePricesInLocalStorage,
+} from './AuthHandlers';
 
 export async function initAuth() {
   console.log('****************  initAuth ****************');
@@ -63,6 +68,8 @@ export async function initAuth() {
     localStorage.setItem('userToken', userToken);
     // Get user data from cookies or fetch from the API
     await getUserData(userToken);
+    await updatePricesInLocalStorage(userToken);
+
     console.log('User is already logged in:', userData);
     console.log('User token:', userToken);
 
@@ -83,6 +90,7 @@ export async function initAuth() {
 
     // Get user data from cookies or fetch from the API
     await getUserData(userToken);
+    await updatePricesInLocalStorage(userToken);
 
     // check if the user exists in the DB or add the user to the database
     const userExists = await syncUsersDB(userData, userToken);

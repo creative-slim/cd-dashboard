@@ -1,27 +1,32 @@
 import OrderItem from './orderHistoryItem';
 
 export const initOrderHistory = async () => {
-  let api;
-  if (process.env.NODE_ENV === 'development') {
-    api = 'http://127.0.0.1:8787'; // Use local endpoint for development
-  } else {
-    api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
+  try {
+    let api;
+    if (process.env.NODE_ENV === 'development') {
+      api = 'http://127.0.0.1:8787'; // Use local endpoint for development
+    } else {
+      api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
+    }
+
+    const token = localStorage.getItem('userToken');
+
+    const userOrders = await fetch(`${api}/api/orders/order-history`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await userOrders.json();
+
+    generateOrderHistoryUI(data);
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching order history:', error);
+    // Handle the error here
   }
-
-  const token = localStorage.getItem('userToken');
-
-  const userOrders = await fetch(`${api}/api/orders/orderhistory`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await userOrders.json();
-
-  generateOrderHistoryUI(data);
-
-  return data;
 };
 
 function generateOrderHistoryUI(data) {
@@ -36,6 +41,17 @@ function generateOrderHistoryUI(data) {
     return;
   }
   removeLoader();
+  showContent();
+
+  // if data is empty then show the element with attribute data-orders="empty"
+  if (data.length === 0) {
+    const emptyElement = document.querySelector('[data-orders="empty"]');
+    if (emptyElement) {
+      emptyElement.style.display = 'flex';
+    }
+    return;
+  }
+
   data.forEach((order) => {
     const itemDomElement = orderItemTemplate?.cloneNode(true);
     itemDomElement.classList.remove('template');
@@ -52,6 +68,14 @@ function removeLoader() {
   const loader = document.querySelector('[data-history="loader"]');
   if (loader) {
     loader.remove();
+  }
+}
+
+function showContent() {
+  const content = document.querySelector('[data-load="hidden"]');
+  if (content) {
+    //switch the attribute to show the content
+    content.setAttribute('data-load', 'visible');
   }
 }
 
