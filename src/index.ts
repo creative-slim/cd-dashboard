@@ -261,7 +261,6 @@ window.Webflow.push(async () => {
 
             // Uncomment if needed
 
-            /*
             debugger;
             const pdfFile = await generateInvoice({
               finalData: {
@@ -270,15 +269,15 @@ window.Webflow.push(async () => {
               },
             });
 
-            // const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
+            const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
             // const userEmail = document.querySelector('[data-user-email]')?.innerText;
-            // const send = await sendInvoice(pdfLink.linkarray, userEmail);
-            // await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
-            // console.log({ pdfFile });
+            const send = await sendInvoice(pdfLink.linkarray, 'sa@creative-directors.com');
+            await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
+            console.log({ pdfFile });
 
             // Example function call, comment out if not needed
-            // uploadInvoice();
-*/
+            uploadInvoice();
+
             loggerUpdate(3);
             loggerUpdate(4);
             // updateOrderConfirmationID(Final);
