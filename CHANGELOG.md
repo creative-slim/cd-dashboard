@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.1.0
+
+### Minor Changes
+
+- 3bb1634: backend stuff
+
 ## 3.0.2
 
 ### Patch Changes
