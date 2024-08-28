@@ -36,25 +36,25 @@
   },
   "devDependencies": {
     "@changesets/changelog-git": "^0.2.0",
-    "@changesets/cli": "^2.27.1",
+    "@changesets/cli": "^2.27.7",
     "@finsweet/eslint-config": "^2.0.7",
     "@finsweet/tsconfig": "^1.3.4",
-    "@playwright/test": "^1.42.1",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@playwright/test": "^1.46.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "cross-env": "^7.0.3",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-simple-import-sort": "^12.0.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^2.1.3",
     "@finsweet/ts-utils": "^0.40.0",
-    "axios": "^1.5.0",
+    "axios": "^1.7.4",
     "cookie": "^0.5.0",
     "dotenv": "^16.4.5",
     "dropbox": "^10.34.0",
@@ -64,9 +64,10 @@
     "install": "^0.13.0",
     "isomorphic-fetch": "^3.0.0",
     "jquery": "^3.7.1",
+    "js-cookie": "^3.0.5",
     "jspdf": "^2.5.1",
     "lightbox2": "^2.11.4",
-    "pnpm": "^9.2.0"
+    "pnpm": "^9.7.1"
   },
   "engines": {
     "pnpm": ">=8"

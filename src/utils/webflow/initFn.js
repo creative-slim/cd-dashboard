@@ -4,7 +4,7 @@ import initOrderSummary from './orderSummary';
 export default function initWebflowFunctions() {
   // checkUserAddressData();
   // renderSetupParams();
-  initOrderSummary('[data-order-summary-wrapper]');
+  initOrderSummary('[data-render-list="cart"]');
   document.querySelectorAll('[data-collapse="toggle"]').forEach((button) => {
     makeSmallCardCollapsable(button, 'data-collapse="wrapper"');
   });

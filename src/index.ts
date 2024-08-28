@@ -22,6 +22,7 @@ import {
 
 import { initAuth } from './auth/userAuth';
 import { initOrderHistory } from './user/orderHistory';
+import initUserRelatedFunctions from './user/userMainExport';
 
 window.Webflow ||= [];
 window.Webflow.push(async () => {
@@ -30,12 +31,13 @@ window.Webflow.push(async () => {
   initInstances();
   orderAppFunctions();
   initWebflowFunctions();
+  initUserRelatedFunctions();
 
   if (window.location.pathname === '/user/order-history') {
     console.log('order history page');
 
     const info = await initOrderHistory();
-    console.log('info', info);
+    console.log('initOrderHistory results : ', info);
   }
 
   //! API ENDPOINTS
@@ -55,12 +57,8 @@ window.Webflow.push(async () => {
   const GetCurrentUserEmail = () => {
     //get user data from localstorage
     const userData = localStorage.getItem('userData');
-    if (!userData) {
-      console.error('!! No user data found in local storage');
-      return;
-    }
     const user = JSON.parse(userData);
-    if (!user.email) {
+    if (!userData && !user.email) {
       console.error('!! No user email found');
       return;
     }
@@ -181,10 +179,6 @@ window.Webflow.push(async () => {
 
         async function uploadmetadata(combinedArrays) {
           const token = localStorage.getItem('userToken');
-          if (!token) {
-            console.error('No token found in local storage');
-            return;
-          }
           return new Promise(async (resolve) => {
             const requestOptions = {
               method: 'POST',
@@ -196,14 +190,14 @@ window.Webflow.push(async () => {
               },
             };
 
-            const uploadData = await fetch(api + '/api/uploadmetadata', requestOptions)
+            const uploadData = await fetch(api + '/api/submit-order', requestOptions)
               .then((response) => response.json())
               .then(async (result) => {
                 console.log('result from uploadmetadata .: ', result);
                 //await uploadToDropbox(jsonString, pathWithExtension, accesskey);
                 return result;
               })
-              .catch((error) => console.error('error', error));
+              .catch((error) => console.log('error', error));
 
             resolve(uploadData);
           });
@@ -257,22 +251,25 @@ window.Webflow.push(async () => {
             console.log('Final', Final);
 
             // Uncomment if needed
-            // const pdfFile = await generateInvoice({
-            //   finalData: {
-            //     combinedArrays,
-            //     finalCMSresponse: Final,
-            //   },
-            // });
 
-            // const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
-            // const userEmail = document.querySelector('[data-user-email]')?.innerText;
-            // const send = await sendInvoice(pdfLink.linkarray, userEmail);
-            // await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
-            // console.log({ pdfFile });
+            /*
+            debugger;
+            const pdfFile = await generateInvoice({
+              finalData: {
+                combinedArrays,
+                finalCMSresponse: Final,
+              },
+            });
+
+            const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
+            const userEmail = document.querySelector('[data-user-email]')?.innerText;
+            const send = await sendInvoice(pdfLink.linkarray, userEmail);
+            await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
+            console.log({ pdfFile });
 
             // Example function call, comment out if not needed
             // uploadInvoice();
-
+*/
             loggerUpdate(3);
             loggerUpdate(4);
             // updateOrderConfirmationID(Final);
@@ -1279,6 +1276,7 @@ window.Webflow.push(async () => {
 
   // testInvoice();
   init();
+  showContent();
   // checkRequiredFields();
 
   // function that disables all buttons and links on the page
@@ -1306,6 +1304,18 @@ window.Webflow.push(async () => {
     localStorage.setItem('tabStates', keeper);
   }
 
+  function showContent() {
+    const loader = document.querySelector('[data-history="loader"]');
+    const content = document.querySelector('[data-load="hidden"]');
+    if (content) {
+      content.setAttribute('data-load', 'visible');
+    }
+    if (loader) {
+      //set style to none
+      loader.style.display = 'none';
+    }
+  }
+
   // saveInputToLocalHost();
   frontEndElementsJS();
   //!use this after Final success
@@ -1318,4 +1328,59 @@ window.Webflow.push(async () => {
   clearLocalStorageOnLogout();
 
   // dataChecker();
+
+  // const returndata = {
+  //   result: 'success',
+  //   data: {
+  //     id: '661e834ccbc2eba3caf47129',
+  //     cmsLocaleId: null,
+  //     lastPublished: '2024-04-16T13:55:24.048Z',
+  //     lastUpdated: '2024-04-16T13:55:24.048Z',
+  //     createdOn: '2024-04-16T13:55:24.048Z',
+  //     isArchived: false,
+  //     isDraft: false,
+  //     fieldData: {
+  //       specialfunctionscene: false,
+  //       'file-link': 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Archive.zip',
+  //       'furniture-dimension-h': 54,
+  //       'furniture-dimension-l': 54,
+  //       'furniture-dimension-w': 12,
+  //       'order-state': '3a8b108b469a23d52b620cb75b914d77',
+  //       payment: 'PayPal',
+  //       'furniture-name': 'XYZ',
+  //       name: 'XYZ',
+  //       specialfunction: '',
+  //       'color-finish': 'Walnut',
+  //       'dimensions-comment': 'this is a comment',
+  //       'order-id': 'REND-20240416-0010',
+  //       'order-date': 'Tue Apr 16 2024 15:55:22 GMT+0200 (Central European Summer Time)',
+  //       'additional-images-data':
+  //         '[{"sceneKnockout":"Knockout","woodType":"oak","amount":"6","comment":""},{"sceneKnockout":"Scene","woodType":"walnut","amount":"2","comment":""},{"sceneKnockout":"Scene","woodType":"whiteoak","amount":"4","comment":""}]',
+  //       slug: 'xyz-3f5bc',
+  //       'uploaded-images': [
+  //         {
+  //           fileId: '66165218cafe597f9bd457d1',
+  //           url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
+  //           alt: null,
+  //         },
+  //       ],
+  //       'test-image': {
+  //         fileId: '66165218cafe597f9bd457d1',
+  //         url: 'https://uploads-ssl.webflow.com/6344812d665184745e70e72c/66165218cafe597f9bd457d1_11.jpeg',
+  //         alt: null,
+  //       },
+  //       'user-id': '6617f9475a49a8be5bcf0aa9',
+  //     },
+  //   },
+  // };
+
+  // const fullPath = '/CD-uploads/d1f1f37422a24359982cfe07d39c69b9/17-3-2024--11:4:58';
+
+  // const pdfFile = await generateInvoice(returndata.data.fieldData);
+
+  // const pdfLink = await uploadInvoice(pdfFile, fullPath);
+  // const userEmail = document.querySelector("[data-user='email']").innerText;
+  // const send = await sendInvoice(pdfLink.linkarray, userEmail);
+
+  // console.log({ pdfFile, pdfLink, send });
 });

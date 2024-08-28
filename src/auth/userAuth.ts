@@ -1,6 +1,12 @@
 import { createAuth0Client } from '@auth0/auth0-spa-js';
+import Cookie from 'js-cookie';
 
-import { afterLoginUiSetup, syncUsersDB } from './AuthHandlers';
+import {
+  afterLoginUiSetup,
+  getUserData,
+  syncUsersDB,
+  updatePricesInLocalStorage,
+} from './AuthHandlers';
 
 export async function initAuth() {
   console.log('****************  initAuth ****************');
@@ -33,6 +39,7 @@ export async function initAuth() {
     // Clear user data from localStorage on logout
     localStorage.removeItem('userData');
     localStorage.removeItem('userToken');
+    Cookie.remove('user');
 
     // Optional: You can also trigger any UI updates needed after logout
     // afterLogoutUiSetup();
@@ -59,6 +66,9 @@ export async function initAuth() {
     // Save fresh user data and token in localStorage
     localStorage.setItem('userData', JSON.stringify(userData));
     localStorage.setItem('userToken', userToken);
+    // Get user data from cookies or fetch from the API
+    await getUserData(userToken);
+    await updatePricesInLocalStorage(userToken);
 
     console.log('User is already logged in:', userData);
     // console.log('User token:', userToken);
@@ -78,6 +88,10 @@ export async function initAuth() {
     const userData = await client.getUser();
     const userToken = await client.getTokenSilently();
 
+    // Get user data from cookies or fetch from the API
+    await getUserData(userToken);
+    await updatePricesInLocalStorage(userToken);
+
     // check if the user exists in the DB or add the user to the database
     const userExists = await syncUsersDB(userData, userToken);
     console.log('syncing user :::: ', userExists);
@@ -92,6 +106,7 @@ export async function initAuth() {
     // Update UI
     afterLoginUiSetup(userData);
 
+    //! might be problematic , investigate
     window.location.href = window.location.origin;
     return;
   }
