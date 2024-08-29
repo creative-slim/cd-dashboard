@@ -947,43 +947,42 @@ export default function testInvoice() {
             data: [
               {
                 render: {
-                  'item-name': 'model_1',
-                  'item-width': '43',
-                  'item-height': '16',
-                  'item-length': '23',
-                  'item-details': 'This is a test detail for model 92wv5',
-                  photos_output_string:
-                    'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/9.jpeg',
-                  'uploader-file-input-0.yflrwhkj59': 'C:\\fakepath\\9.jpeg',
+                  'item-name': 'model_z4w8xa',
+                  'item-width': '72',
+                  'item-height': '79',
+                  'item-length': '71',
+                  'item-details': 'This is a test detail for model nzje6',
+                  photos_output_string: '',
+                  'uploader-file-input-0.g538w7g7zoj': 'C:\\fakepath\\4.jpg',
                   'Provided-3D-Model': 'false',
                   threed_output_string: '',
-                  'uploader-file-input-0.hmi5bfg8dqh': '',
+                  'uploader-file-input-0.tpis5z8asvo': '',
                 },
               },
               {
                 render: {
-                  'render-type': 'scene',
+                  'render-type': 'knockout',
                   woodtype: 'beech',
-                  'render-count': '30',
+                  'render-count': '1',
                   upholstery: 'false',
                   'other-material': '',
                   square: 'false',
                   portrait: 'false',
                   Landscape: 'false',
-                  'request-comment': 'Some details about the item ep3jw',
+                  'request-comment': 'Some details about the item 4eyrfa',
                 },
               },
               {
                 render: {
                   'render-type': 'knockout',
                   woodtype: 'walnut',
-                  'render-count': '12',
+                  'render-count': '1',
                   upholstery: 'false',
                   'other-material': '',
                   square: 'false',
                   portrait: 'false',
                   Landscape: 'false',
-                  'request-comment': 'Some details about the item 4fxoiv',
+                  'request-comment': 'Some details about the item ggkzg',
                 },
               },
             ],
@@ -991,7 +990,7 @@ export default function testInvoice() {
               images: [
                 {
                   id: '1',
-                  array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/9.jpeg'],
+                  array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg'],
                 },
               ],
               files: [],
@@ -1002,56 +1001,29 @@ export default function testInvoice() {
             data: [
               {
                 render: {
-                  'item-name': 'model_2',
-                  'item-width': '85',
-                  'item-height': '95',
-                  'item-length': '44',
-                  'item-details': 'This is a test detail for model vnjrb8',
-                  photos_output_string:
-                    'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/11.jpg',
-                  'uploader-file-input-0.2qm932kgaap': 'C:\\fakepath\\11.jpg',
+                  'item-name': 'model_peb5',
+                  'item-width': '49',
+                  'item-height': '27',
+                  'item-length': '31',
+                  'item-details': 'This is a test detail for model 1n42qp',
+                  photos_output_string: '',
+                  'uploader-file-input-0.47sxn5ipdj4': 'C:\\fakepath\\3.jpg',
                   'Provided-3D-Model': 'false',
                   threed_output_string: '',
-                  'uploader-file-input-0.gxp7tx7z39m': '',
+                  'uploader-file-input-0.l5chur4scaq': '',
                 },
               },
               {
                 render: {
                   'render-type': 'knockout',
                   woodtype: 'beech',
-                  'render-count': '36',
+                  'render-count': '5',
                   upholstery: 'false',
                   'other-material': '',
                   square: 'false',
                   portrait: 'false',
                   Landscape: 'false',
-                  'request-comment': 'Some details about the item 9swps7',
-                },
-              },
-              {
-                render: {
-                  'render-type': 'scene',
-                  woodtype: 'beech',
-                  'render-count': '32',
-                  upholstery: 'false',
-                  'other-material': '',
-                  square: 'false',
-                  portrait: 'false',
-                  Landscape: 'false',
-                  'request-comment': 'Some details about the item jeja5s',
-                },
-              },
-              {
-                render: {
-                  'render-type': 'scene',
-                  woodtype: 'beech',
-                  'render-count': '75',
-                  upholstery: 'false',
-                  'other-material': '',
-                  square: 'false',
-                  portrait: 'false',
-                  Landscape: 'false',
-                  'request-comment': 'Some details about the item fb6vs9',
+                  'request-comment': 'Some details about the item z6vjpl',
                 },
               },
             ],
@@ -1059,7 +1031,7 @@ export default function testInvoice() {
               images: [
                 {
                   id: '2',
-                  array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/11.jpg'],
+                  array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg'],
                 },
               ],
               files: [],
@@ -1069,33 +1041,33 @@ export default function testInvoice() {
             user: 'slim.abbadi@gmail.com',
           },
           {
-            dateID: '28-7-2024--21:48:38',
+            dateID: '29-7-2024--13:41:45',
           },
           {
             paymentDetails: {
               order: {
                 result: 'success',
                 data: {
-                  id: '54H5536706748135N',
+                  id: '18E671709L6562422',
                   status: 'CREATED',
                   links: [
                     {
-                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/54H5536706748135N',
+                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
                       rel: 'self',
                       method: 'GET',
                     },
                     {
-                      href: 'https://www.sandbox.paypal.com/checkoutnow?token=54H5536706748135N',
+                      href: 'https://www.sandbox.paypal.com/checkoutnow?token=18E671709L6562422',
                       rel: 'approve',
                       method: 'GET',
                     },
                     {
-                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/54H5536706748135N',
+                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
                       rel: 'update',
                       method: 'PATCH',
                     },
                     {
-                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/54H5536706748135N/capture',
+                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422/capture',
                       rel: 'capture',
                       method: 'POST',
                     },
@@ -1107,88 +1079,68 @@ export default function testInvoice() {
                     {
                       amount: {
                         currency_code: 'EUR',
-                        value: '18425',
+                        value: '3990',
                         breakdown: {
                           item_total: {
                             currency_code: 'EUR',
-                            value: '18425',
+                            value: '3990',
                           },
                         },
                       },
                       items: [
                         {
-                          name: 'processing Fee',
+                          name: 'model_z4w8xa',
                           quantity: '1',
-                          description: 'service',
-                          category: 'DIGITAL_GOODS',
-                          unit_amount: {
-                            currency_code: 'EUR',
-                            value: 300,
-                            breakdown: {
-                              item_total: {
-                                currency_code: 'EUR',
-                                value: 300,
-                              },
-                            },
-                          },
-                        },
-                        {
-                          name: 'model_1',
-                          quantity: '1',
-                          description: 'model_1',
+                          description: 'model_z4w8xa',
                           category: 'DIGITAL_GOODS',
                           allRenderPricing: [
                             {
-                              render: 400,
-                              prespectives: 2550,
+                              initialFee: 1150,
+                            },
+                            {
+                              render: 150,
+                              prespectives: 0,
                               woodtype: 300,
                             },
                             {
                               render: 150,
-                              prespectives: 1020,
+                              prespectives: 0,
                               woodtype: 300,
                             },
                           ],
                           unit_amount: {
                             currency_code: 'EUR',
-                            value: '4720',
+                            value: '2050',
                             breakdown: {
                               item_total: {
                                 currency_code: 'EUR',
-                                value: '4720',
+                                value: '2050',
                               },
                             },
                           },
                         },
                         {
-                          name: 'model_2',
+                          name: 'model_peb5',
                           quantity: '1',
-                          description: 'model_2',
+                          description: 'model_peb5',
                           category: 'DIGITAL_GOODS',
                           allRenderPricing: [
                             {
+                              initialFee: 1150,
+                            },
+                            {
                               render: 150,
-                              prespectives: 3060,
+                              prespectives: 340,
                               woodtype: 300,
-                            },
-                            {
-                              render: 400,
-                              prespectives: 2720,
-                              woodtype: 0,
-                            },
-                            {
-                              render: 400,
-                              prespectives: 6375,
-                              woodtype: 0,
                             },
                           ],
                           unit_amount: {
                             currency_code: 'EUR',
-                            value: '13405',
+                            value: '1940',
                             breakdown: {
                               item_total: {
                                 currency_code: 'EUR',
-                                value: '13405',
+                                value: '1940',
                               },
                             },
                           },
@@ -1197,81 +1149,61 @@ export default function testInvoice() {
                     },
                   ],
                 },
-                total: 18425,
+                total: 3990,
                 orderItems: [
                   {
-                    name: 'processing Fee',
+                    name: 'model_z4w8xa',
                     quantity: '1',
-                    description: 'service',
-                    category: 'DIGITAL_GOODS',
-                    unit_amount: {
-                      currency_code: 'EUR',
-                      value: 300,
-                      breakdown: {
-                        item_total: {
-                          currency_code: 'EUR',
-                          value: 300,
-                        },
-                      },
-                    },
-                  },
-                  {
-                    name: 'model_1',
-                    quantity: '1',
-                    description: 'model_1',
+                    description: 'model_z4w8xa',
                     category: 'DIGITAL_GOODS',
                     allRenderPricing: [
                       {
-                        render: 400,
-                        prespectives: 2550,
+                        initialFee: 1150,
+                      },
+                      {
+                        render: 150,
+                        prespectives: 0,
                         woodtype: 300,
                       },
                       {
                         render: 150,
-                        prespectives: 1020,
+                        prespectives: 0,
                         woodtype: 300,
                       },
                     ],
                     unit_amount: {
                       currency_code: 'EUR',
-                      value: '4720',
+                      value: '2050',
                       breakdown: {
                         item_total: {
                           currency_code: 'EUR',
-                          value: '4720',
+                          value: '2050',
                         },
                       },
                     },
                   },
                   {
-                    name: 'model_2',
+                    name: 'model_peb5',
                     quantity: '1',
-                    description: 'model_2',
+                    description: 'model_peb5',
                     category: 'DIGITAL_GOODS',
                     allRenderPricing: [
                       {
+                        initialFee: 1150,
+                      },
+                      {
                         render: 150,
-                        prespectives: 3060,
+                        prespectives: 340,
                         woodtype: 300,
-                      },
-                      {
-                        render: 400,
-                        prespectives: 2720,
-                        woodtype: 0,
-                      },
-                      {
-                        render: 400,
-                        prespectives: 6375,
-                        woodtype: 0,
                       },
                     ],
                     unit_amount: {
                       currency_code: 'EUR',
-                      value: '13405',
+                      value: '1940',
                       breakdown: {
                         item_total: {
                           currency_code: 'EUR',
-                          value: '13405',
+                          value: '1940',
                         },
                       },
                     },
@@ -1285,73 +1217,77 @@ export default function testInvoice() {
           result: 'success',
           response: [
             {
-              id: '66cf7f2375226b2937879bd5',
+              id: '66d05e850d7887c406ad6920',
               cmsLocaleId: '66b48864d6ba7c12593a041d',
-              lastPublished: '2024-08-28T19:48:51.872Z',
-              lastUpdated: '2024-08-28T19:48:51.872Z',
-              createdOn: '2024-08-28T19:48:51.872Z',
+              lastPublished: '2024-08-29T11:41:57.617Z',
+              lastUpdated: '2024-08-29T11:41:57.617Z',
+              createdOn: '2024-08-29T11:41:57.617Z',
               isArchived: false,
               isDraft: false,
               fieldData: {
                 'special-function': false,
-                'furniture-dimension-h': 16,
-                'furniture-dimension-l': 23,
-                'furniture-dimension-w': 43,
+                'furniture-dimension-h': 79,
+                'furniture-dimension-l': 71,
+                'furniture-dimension-w': 72,
                 payment: 'PayPal Services',
                 'order-status': 'Paid',
-                'furniture-name': 'model_1',
-                name: 'model_1',
+                'furniture-name': 'model_z4w8xa',
+                name: 'model_z4w8xa',
                 woodtype: 'beech / walnut',
-                'dimensions-comment': 'This is a test detail for model 92wv5',
-                comment: 'This is a test detail for model 92wv5',
+                'dimensions-comment': 'This is a test detail for model nzje6',
+                comment: 'This is a test detail for model nzje6',
                 'user-mail': 'slim.abbadi@gmail.com',
-                'order-id': 'REND-20240828-0001',
-                'order-date': 'Wed Aug 28 2024 19:48:50 GMT+0000 (Coordinated Universal Time)',
+                'order-id': 'REND-20240829-0009',
+                'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
                 'additional-images-data':
-                  '[{"render":{"item-name":"model_1","item-width":"43","item-height":"16","item-length":"23","item-details":"This is a test detail for model 92wv5","photos_output_string":"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/9.jpeg","uploader-file-input-0.yflrwhkj59":"C:\\\\fakepath\\\\9.jpeg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.hmi5bfg8dqh":""}},{"render":{"render-type":"scene","woodtype":"beech","render-count":"30","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ep3jw"}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"12","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4fxoiv"}}]',
+                  '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
+                'render-list':
+                  '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
                 'uploaded-images': [
                   {
-                    fileId: '66b5ccbc9760ecc2a854c4ec',
-                    url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66b5ccbc9760ecc2a854c4ec_668f8c075599c577a08fae80_9.jpeg',
+                    fileId: '66b5ccba92ffc8dbb064ccf3',
+                    url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66b5ccba92ffc8dbb064ccf3_667ad6bfc986465f627a72b7_4_copy.jpeg',
                     alt: null,
                   },
                 ],
-                slug: 'model_1',
+                slug: 'model_z4w8xa',
               },
             },
             {
-              id: '66cf7f24a7c3605de6c61a94',
+              id: '66d05e86723c4fab62eb59fa',
               cmsLocaleId: '66b48864d6ba7c12593a041d',
-              lastPublished: '2024-08-28T19:48:52.093Z',
-              lastUpdated: '2024-08-28T19:48:52.093Z',
-              createdOn: '2024-08-28T19:48:52.093Z',
+              lastPublished: '2024-08-29T11:41:58.185Z',
+              lastUpdated: '2024-08-29T11:41:58.185Z',
+              createdOn: '2024-08-29T11:41:58.185Z',
               isArchived: false,
               isDraft: false,
               fieldData: {
                 'special-function': false,
-                'furniture-dimension-h': 95,
-                'furniture-dimension-l': 44,
-                'furniture-dimension-w': 85,
+                'furniture-dimension-h': 27,
+                'furniture-dimension-l': 31,
+                'furniture-dimension-w': 49,
                 payment: 'PayPal Services',
                 'order-status': 'Paid',
-                'furniture-name': 'model_2',
-                name: 'model_2',
-                woodtype: 'beech / beech / beech',
-                'dimensions-comment': 'This is a test detail for model vnjrb8',
-                comment: 'This is a test detail for model vnjrb8',
+                'furniture-name': 'model_peb5',
+                name: 'model_peb5',
+                woodtype: 'beech',
+                'dimensions-comment': 'This is a test detail for model 1n42qp',
+                comment: 'This is a test detail for model 1n42qp',
                 'user-mail': 'slim.abbadi@gmail.com',
-                'order-id': 'REND-20240828-0001',
-                'order-date': 'Wed Aug 28 2024 19:48:50 GMT+0000 (Coordinated Universal Time)',
+                'order-id': 'REND-20240829-0009',
+                'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
                 'additional-images-data':
-                  '[{"render":{"item-name":"model_2","item-width":"85","item-height":"95","item-length":"44","item-details":"This is a test detail for model vnjrb8","photos_output_string":"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/11.jpg","uploader-file-input-0.2qm932kgaap":"C:\\\\fakepath\\\\11.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.gxp7tx7z39m":""}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"36","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 9swps7"}},{"render":{"render-type":"scene","woodtype":"beech","render-count":"32","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item jeja5s"}},{"render":{"render-type":"scene","woodtype":"beech","render-count":"75","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item fb6vs9"}}]',
+                  '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
+                'render-list':
+                  '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
                 'uploaded-images': [
                   {
-                    fileId: '66b5ccbab0fd522c1419384c',
-                    url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66b5ccbab0fd522c1419384c_667ad6bfc986465f627a7330_11_copy.jpeg',
+                    fileId: '66cd891469d39109e2a6ee25',
+                    url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66cd891469d39109e2a6ee25_3.jpeg',
                     alt: null,
                   },
                 ],
-                slug: 'model_2',
+                slug: 'model_peb5',
               },
             },
           ],
@@ -1359,6 +1295,368 @@ export default function testInvoice() {
       },
     };
 
+    const paymentDetails4 = {
+      finalData: {
+        finalData: {
+          combinedArrays: [
+            {
+              id: '1',
+              data: [
+                {
+                  render: {
+                    'item-name': 'model_z4w8xa',
+                    'item-width': '72',
+                    'item-height': '79',
+                    'item-length': '71',
+                    'item-details': 'This is a test detail for model nzje6',
+                    photos_output_string: '',
+                    'uploader-file-input-0.g538w7g7zoj': 'C:\\fakepath\\4.jpg',
+                    'Provided-3D-Model': 'false',
+                    threed_output_string: '',
+                    'uploader-file-input-0.tpis5z8asvo': '',
+                    price: 1150,
+                  },
+                },
+                {
+                  render: {
+                    'render-type': 'knockout',
+                    woodtype: 'beech',
+                    'render-count': '1',
+                    upholstery: 'false',
+                    'other-material': '',
+                    square: 'false',
+                    portrait: 'false',
+                    Landscape: 'false',
+                    'request-comment': 'Some details about the item 4eyrfa',
+                    price: 450,
+                  },
+                },
+                {
+                  render: {
+                    'render-type': 'knockout',
+                    woodtype: 'walnut',
+                    'render-count': '1',
+                    upholstery: 'false',
+                    'other-material': '',
+                    square: 'false',
+                    portrait: 'false',
+                    Landscape: 'false',
+                    'request-comment': 'Some details about the item ggkzg',
+                    price: 450,
+                  },
+                },
+              ],
+              files: {
+                images: [
+                  {
+                    id: '1',
+                    array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg'],
+                  },
+                ],
+                files: [],
+              },
+            },
+            {
+              id: '2',
+              data: [
+                {
+                  render: {
+                    'item-name': 'model_peb5',
+                    'item-width': '49',
+                    'item-height': '27',
+                    'item-length': '31',
+                    'item-details': 'This is a test detail for model 1n42qp',
+                    photos_output_string: '',
+                    'uploader-file-input-0.47sxn5ipdj4': 'C:\\fakepath\\3.jpg',
+                    'Provided-3D-Model': 'false',
+                    threed_output_string: '',
+                    'uploader-file-input-0.l5chur4scaq': '',
+                    price: 1150,
+                  },
+                },
+                {
+                  render: {
+                    'render-type': 'knockout',
+                    woodtype: 'beech',
+                    'render-count': '5',
+                    upholstery: 'false',
+                    'other-material': '',
+                    square: 'false',
+                    portrait: 'false',
+                    Landscape: 'false',
+                    'request-comment': 'Some details about the item z6vjpl',
+                    price: 790,
+                  },
+                },
+              ],
+              files: {
+                images: [
+                  {
+                    id: '2',
+                    array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg'],
+                  },
+                ],
+                files: [],
+              },
+            },
+            {
+              user: 'slim.abbadi@gmail.com',
+            },
+            {
+              dateID: '29-7-2024--13:41:45',
+            },
+            {
+              paymentDetails: {
+                order: {
+                  result: 'success',
+                  data: {
+                    id: '18E671709L6562422',
+                    status: 'CREATED',
+                    links: [
+                      {
+                        href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
+                        rel: 'self',
+                        method: 'GET',
+                      },
+                      {
+                        href: 'https://www.sandbox.paypal.com/checkoutnow?token=18E671709L6562422',
+                        rel: 'approve',
+                        method: 'GET',
+                      },
+                      {
+                        href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
+                        rel: 'update',
+                        method: 'PATCH',
+                      },
+                      {
+                        href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422/capture',
+                        rel: 'capture',
+                        method: 'POST',
+                      },
+                    ],
+                  },
+                  order_data_json: {
+                    intent: 'CAPTURE',
+                    purchase_units: [
+                      {
+                        amount: {
+                          currency_code: 'EUR',
+                          value: '3990',
+                          breakdown: {
+                            item_total: {
+                              currency_code: 'EUR',
+                              value: '3990',
+                            },
+                          },
+                        },
+                        items: [
+                          {
+                            name: 'model_z4w8xa',
+                            quantity: '1',
+                            description: 'model_z4w8xa',
+                            category: 'DIGITAL_GOODS',
+                            allRenderPricing: [
+                              {
+                                initialFee: 1150,
+                              },
+                              {
+                                render: 150,
+                                prespectives: 0,
+                                woodtype: 300,
+                              },
+                              {
+                                render: 150,
+                                prespectives: 0,
+                                woodtype: 300,
+                              },
+                            ],
+                            unit_amount: {
+                              currency_code: 'EUR',
+                              value: '2050',
+                              breakdown: {
+                                item_total: {
+                                  currency_code: 'EUR',
+                                  value: '2050',
+                                },
+                              },
+                            },
+                          },
+                          {
+                            name: 'model_peb5',
+                            quantity: '1',
+                            description: 'model_peb5',
+                            category: 'DIGITAL_GOODS',
+                            allRenderPricing: [
+                              {
+                                initialFee: 1150,
+                              },
+                              {
+                                render: 150,
+                                prespectives: 340,
+                                woodtype: 300,
+                              },
+                            ],
+                            unit_amount: {
+                              currency_code: 'EUR',
+                              value: '1940',
+                              breakdown: {
+                                item_total: {
+                                  currency_code: 'EUR',
+                                  value: '1940',
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  total: 3990,
+                  orderItems: [
+                    {
+                      name: 'model_z4w8xa',
+                      quantity: '1',
+                      description: 'model_z4w8xa',
+                      category: 'DIGITAL_GOODS',
+                      allRenderPricing: [
+                        {
+                          initialFee: 1150,
+                        },
+                        {
+                          render: 150,
+                          prespectives: 0,
+                          woodtype: 300,
+                        },
+                        {
+                          render: 150,
+                          prespectives: 0,
+                          woodtype: 300,
+                        },
+                      ],
+                      unit_amount: {
+                        currency_code: 'EUR',
+                        value: '2050',
+                        breakdown: {
+                          item_total: {
+                            currency_code: 'EUR',
+                            value: '2050',
+                          },
+                        },
+                      },
+                    },
+                    {
+                      name: 'model_peb5',
+                      quantity: '1',
+                      description: 'model_peb5',
+                      category: 'DIGITAL_GOODS',
+                      allRenderPricing: [
+                        {
+                          initialFee: 1150,
+                        },
+                        {
+                          render: 150,
+                          prespectives: 340,
+                          woodtype: 300,
+                        },
+                      ],
+                      unit_amount: {
+                        currency_code: 'EUR',
+                        value: '1940',
+                        breakdown: {
+                          item_total: {
+                            currency_code: 'EUR',
+                            value: '1940',
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+          finalCMSresponse: {
+            result: 'success',
+            response: [
+              {
+                id: '66d05e850d7887c406ad6920',
+                cmsLocaleId: '66b48864d6ba7c12593a041d',
+                lastPublished: '2024-08-29T11:41:57.617Z',
+                lastUpdated: '2024-08-29T11:41:57.617Z',
+                createdOn: '2024-08-29T11:41:57.617Z',
+                isArchived: false,
+                isDraft: false,
+                fieldData: {
+                  'special-function': false,
+                  'furniture-dimension-h': 79,
+                  'furniture-dimension-l': 71,
+                  'furniture-dimension-w': 72,
+                  payment: 'PayPal Services',
+                  'order-status': 'Paid',
+                  'furniture-name': 'model_z4w8xa',
+                  name: 'model_z4w8xa',
+                  woodtype: 'beech / walnut',
+                  'dimensions-comment': 'This is a test detail for model nzje6',
+                  comment: 'This is a test detail for model nzje6',
+                  'user-mail': 'slim.abbadi@gmail.com',
+                  'order-id': 'REND-20240829-0009',
+                  'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
+                  'additional-images-data':
+                    '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
+                  'render-list':
+                    '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
+                  'uploaded-images': [
+                    {
+                      fileId: '66b5ccba92ffc8dbb064ccf3',
+                      url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66b5ccba92ffc8dbb064ccf3_667ad6bfc986465f627a72b7_4_copy.jpeg',
+                      alt: null,
+                    },
+                  ],
+                  slug: 'model_z4w8xa',
+                },
+              },
+              {
+                id: '66d05e86723c4fab62eb59fa',
+                cmsLocaleId: '66b48864d6ba7c12593a041d',
+                lastPublished: '2024-08-29T11:41:58.185Z',
+                lastUpdated: '2024-08-29T11:41:58.185Z',
+                createdOn: '2024-08-29T11:41:58.185Z',
+                isArchived: false,
+                isDraft: false,
+                fieldData: {
+                  'special-function': false,
+                  'furniture-dimension-h': 27,
+                  'furniture-dimension-l': 31,
+                  'furniture-dimension-w': 49,
+                  payment: 'PayPal Services',
+                  'order-status': 'Paid',
+                  'furniture-name': 'model_peb5',
+                  name: 'model_peb5',
+                  woodtype: 'beech',
+                  'dimensions-comment': 'This is a test detail for model 1n42qp',
+                  comment: 'This is a test detail for model 1n42qp',
+                  'user-mail': 'slim.abbadi@gmail.com',
+                  'order-id': 'REND-20240829-0009',
+                  'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
+                  'additional-images-data':
+                    '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
+                  'render-list':
+                    '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
+                  'uploaded-images': [
+                    {
+                      fileId: '66cd891469d39109e2a6ee25',
+                      url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66cd891469d39109e2a6ee25_3.jpeg',
+                      alt: null,
+                    },
+                  ],
+                  slug: 'model_peb5',
+                },
+              },
+            ],
+          },
+        },
+      },
+    };
     const pdfLink =
       'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Invoice_REND-20240614-0010';
 

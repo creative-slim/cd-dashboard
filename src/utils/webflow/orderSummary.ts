@@ -133,7 +133,7 @@ type prices = {
 };
 
 function calculateTotal(data) {
-  debugger;
+  // debugger;
   const Prices = JSON.parse(localStorage.getItem('prices')) as prices;
   console.log('data ', data);
   const provided3DModeltext = data['Provided-3D-Model'];

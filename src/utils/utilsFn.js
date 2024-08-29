@@ -107,7 +107,7 @@ export const checkRequiredFields = () => {
 };
 
 // function that takes in a string and animate a div to show that string inside it
-export const submitLogger = (msg, color = 'black') => {
+export const submitLogger = (msg, color = 'white') => {
   const log = document.querySelector('[data-submit="logger"]');
   log.innerHTML += `<p style="color:${color}">${msg}</p>`;
 };

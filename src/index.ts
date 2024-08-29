@@ -261,7 +261,7 @@ window.Webflow.push(async () => {
 
             // Uncomment if needed
 
-            debugger;
+            // debugger;
             const pdfFile = await generateInvoice({
               finalData: {
                 combinedArrays,
@@ -270,10 +270,10 @@ window.Webflow.push(async () => {
             });
 
             const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
-            // const userEmail = document.querySelector('[data-user-email]')?.innerText;
-            const send = await sendInvoice(pdfLink.linkarray, 'sa@creative-directors.com');
+            const userEmail = GetCurrentUserEmail();
+            const send = await sendInvoice(pdfLink.linkarray, userEmail);
             await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
-            console.log({ pdfFile });
+            // console.log({ pdfFile });
 
             // Example function call, comment out if not needed
             uploadInvoice();

@@ -3,6 +3,8 @@
 
 import html2pdf from 'html2pdf.js';
 import Cookie from 'js-cookie';
+
+import { mergePaymentDetails } from '../extras/paymentToData';
 const PRESPECTIVE_PRICE_CONSTANT = 85;
 
 export async function generateInvoice(finalData) {
@@ -10,6 +12,11 @@ export async function generateInvoice(finalData) {
   const pdfwrapper = invoice.cloneNode(true);
   console.log('------------- inside generateInvoice ------------- ');
   console.log({ finalData });
+  const newCombinedArray = mergePaymentDetails(finalData.finalData.combinedArrays);
+  finalData.finalData.combinedArrays = newCombinedArray;
+
+  console.log({ finalData });
+
   // const pdfwrapper = invoice;
   pdfwrapper.style.display = 'block';
   const itemTemplate = pdfwrapper.querySelector('[data-invoice=invoice-item-template]');
@@ -32,6 +39,8 @@ export async function generateInvoice(finalData) {
     'order-id': finalData.finalData.finalCMSresponse.response[0].fieldData['order-id'], //finalData.finalData.finalCMSresponse.response[0].fieldData["order-id"]
   };
 
+  const ordersItemsDetails = finalData.finalData.combinedArrays.filter((item) => item.id);
+
   console.log({ payment, paymentDetails, orderItems, orderData });
 
   // still need order ID
@@ -45,7 +54,7 @@ export async function generateInvoice(finalData) {
     paymentDetails,
     itemTemplate,
     pdfwrapper,
-    { payment, paymentDetails, orderItems, orderData },
+    { payment, paymentDetails, orderItems, orderData, ordersItemsDetails },
     table
   );
 
@@ -234,31 +243,45 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
   // const item = itemTemplate.cloneNode(true);
   // item.removeAttribute('data-invoice');
   // item.style.display = 'grid';
-  const { orderItems } = data;
-  console.log('orderItems ::: ', orderItems);
-  orderItems.forEach((orderItem, index) => {
+  const { orderItems, ordersItemsDetails } = data;
+  // console.log('orderItems ::: ', orderItems);
+  console.log('new orderItems ::: ', ordersItemsDetails);
+  ordersItemsDetails.forEach((orderItem, index) => {
     const item = itemTemplate.cloneNode(true);
     item.removeAttribute('data-invoice');
     item.style.display = 'grid';
     item.style.fontWeight = 'bold';
 
     item.querySelector("[invoice-item-template='index']").innerHTML = index + 1;
-    item.querySelector("[invoice-item-template='title']").innerHTML = orderItem.name;
-    item.querySelector("[invoice-item-template='quantity']").innerHTML = orderItem.quantity;
+    item.querySelector("[invoice-item-template='title']").innerHTML =
+      `${orderItem.data[0].render['item-name']} `;
+    item.querySelector("[invoice-item-template='details']").style.fontSize = '10px !important';
+
+    item.querySelector("[invoice-item-template='details']").innerHTML =
+      `WxHxL :  ${orderItem.data[0].render['item-width']}mm x ${orderItem.data[0].render['item-height']}mm x 
+      ${orderItem.data[0].render['item-length']}mm <br>
+      Details : ${orderItem.data[0].render['item-details']} <br>
+      ${orderItem.data[0].render['Provided-3D-Model'] === 'true' ? 'Provided 3D Model' : 'No 3D Model Provided'}
+      <br>
+      `;
+
+    item.querySelector("[invoice-item-template='quantity']").innerHTML = 1;
     item.querySelector("[invoice-item-template='price']").innerHTML =
-      '€ ' + orderItem.unit_amount.value;
+      '€ ' + orderItem.data[0].render['price'];
     item.querySelector("[invoice-item-template='total']").innerHTML =
-      '€ ' + orderItem.unit_amount.value;
+      '€ ' + orderItem.data[0].render['price'];
     wrapper.appendChild(item);
-    if (orderItem.allRenderPricing) {
-      generateAdditionalImages(orderItem.allRenderPricing, paymentDetails, itemTemplate, item);
-    }
+
+    generateAdditionalImages(orderItem, paymentDetails, itemTemplate, item);
   });
 }
 
-function generateAdditionalImages(data, paymentDetails, itemTemplate, siblingElement) {
-  console.log('inside generateAdditionalImages ::: ', data);
-  data.forEach((imageData, index) => {
+function generateAdditionalImages(itemDetails, paymentDetails, itemTemplate, siblingElement) {
+  console.log('inside generateAdditionalImages ::: ', itemDetails);
+  itemDetails.data.forEach((imageData, index) => {
+    if (!imageData.render['render-type']) {
+      return;
+    }
     const item = itemTemplate.cloneNode(true);
 
     console.log(imageData);
@@ -267,13 +290,20 @@ function generateAdditionalImages(data, paymentDetails, itemTemplate, siblingEle
     const displayIndex = index + 1;
 
     item.querySelector("[invoice-item-template='title']").innerHTML =
-      `${imageData.render === 400 ? displayIndex + ' - Scene' : displayIndex + ' - knockout'} `;
+      `${displayIndex - 1}  -  ${imageData.render['render-type']}  -  ${imageData.render['woodtype']}`;
     item.querySelector("[invoice-item-template='quantity']").innerHTML =
-      `${imageData.prespectives / PRESPECTIVE_PRICE_CONSTANT}`;
+      imageData.render['render-count'];
     item.querySelector("[invoice-item-template='price']").innerHTML =
-      `€ ${(thisItemTotalPrice / (imageData.prespectives / PRESPECTIVE_PRICE_CONSTANT)).toFixed(2)}`;
+      `€ ${imageData.render['price']}`;
     // item.querySelector("[invoice-item-template='total']").innerHTML = `€ ${thisItemTotalPrice}`;
     item.querySelector("[invoice-item-template='total']").innerHTML = ``;
+    item.querySelector("[invoice-item-template='details']").style.fontSize = '10px !important';
+
+    item.querySelector("[invoice-item-template='details']").innerHTML =
+      `${imageData.render['square'] === 'true' ? ' square ' : ''}  ${imageData.render[' portrait '] === 'true' ? 'portrait' : ''}  ${imageData.render['Landscape'] === 'true' ? ' Landscape ' : ''} <br>
+      ${imageData.render['upholstery'] === 'true' ? ' Upholstery' : 'No Upholstery'} <br>
+      ${imageData.render['request-comment']}
+      `;
 
     item.style.display = 'grid';
     item.style.fontSize = '12px'; // reduce item font size
