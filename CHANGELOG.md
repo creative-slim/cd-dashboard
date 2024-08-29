@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.3.0
+
+### Minor Changes
+
+- f8d5068: invoice finished
+
 ## 3.2.0
 
 ### Minor Changes
