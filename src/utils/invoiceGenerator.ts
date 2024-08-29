@@ -2,6 +2,7 @@
 // @ts-nocheck
 
 import html2pdf from 'html2pdf.js';
+import Cookie from 'js-cookie';
 const PRESPECTIVE_PRICE_CONSTANT = 85;
 
 export async function generateInvoice(finalData) {
@@ -58,10 +59,19 @@ export async function generateInvoice(finalData) {
       a.href = url;
       a.download = `Invoice ${orderData['order-id']}.pdf`;
       a.click();
+      console.log('PDF downloaded');
     });
   });
 
   const pdfFile = await getInvoicePDF(pdfwrapper, orderData['order-id']);
+
+  //!testing
+  const url = URL.createObjectURL(pdfFile);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Invoice ${orderData['order-id']}.pdf`;
+  a.click();
+  //!testing
 
   return pdfFile;
 }
@@ -119,6 +129,63 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
       return; // Skip to the next part without throwing an error
     }
     generateInvoiceItem(paymentDetails, itemTemplate, data, table);
+
+    const user = Cookie.get('user');
+    const userData = user ? JSON.parse(user) : null;
+    if (!userData) {
+      console.error('User data not found');
+    }
+
+    const userName = wrapperElement.querySelectorAll('[data-invoice=first-name]');
+    userName.forEach((e) => {
+      e.innerHTML = userData.first_name;
+    });
+    const company = wrapperElement.querySelectorAll('[data-invoice=company]');
+    company.forEach((e) => {
+      e.innerHTML = userData.company;
+    });
+
+    const userLastName = wrapperElement.querySelectorAll('[data-invoice=last-name]');
+    userLastName.forEach((e) => {
+      e.innerHTML = userData.last_name;
+    });
+
+    const city = wrapperElement.querySelectorAll('[data-invoice=city]');
+    city.forEach((e) => {
+      e.innerHTML = userData.city;
+    });
+
+    const street = wrapperElement.querySelectorAll('[data-invoice=street]');
+    street.forEach((e) => {
+      e.innerHTML = userData.street;
+    });
+
+    const housenumber = wrapperElement.querySelectorAll('[data-invoice=house-number]');
+    housenumber.forEach((e) => {
+      e.innerHTML = userData.house_number;
+    });
+
+    const zip = wrapperElement.querySelectorAll('[data-invoice=zip]');
+    zip.forEach((e) => {
+      e.innerHTML = userData.zip;
+    });
+
+    const ust_idnr = wrapperElement.querySelectorAll('[data-invoice=idnr]');
+    ust_idnr.forEach((e) => {
+      e.innerHTML = userData.ust_idnr;
+    });
+
+    const ref = wrapperElement.querySelectorAll('[data-invoice=ref]');
+    ref.forEach((e) => {
+      e.innerHTML = userData.id;
+    });
+
+    const country = wrapperElement.querySelectorAll('[data-invoice=country]');
+    country.forEach((e) => {
+      e.innerHTML = userData.country;
+    });
+
+    //---------------------
 
     const totalElement = wrapperElement.querySelectorAll('[data-invoice=total]');
     totalElement.forEach((e) => {
