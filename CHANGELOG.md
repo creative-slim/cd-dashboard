@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.2.0
+
+### Minor Changes
+
+- e4c6aca: invoice, payment details
+
 ## 3.1.0
 
 ### Minor Changes
