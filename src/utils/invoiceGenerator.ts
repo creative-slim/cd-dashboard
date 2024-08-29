@@ -300,7 +300,7 @@ function generateAdditionalImages(itemDetails, paymentDetails, itemTemplate, sib
     item.querySelector("[invoice-item-template='details']").style.fontSize = '10px !important';
 
     item.querySelector("[invoice-item-template='details']").innerHTML =
-      `${imageData.render['square'] === 'true' ? ' square ' : ''}  ${imageData.render[' portrait '] === 'true' ? 'portrait' : ''}  ${imageData.render['Landscape'] === 'true' ? ' Landscape ' : ''} <br>
+      `${imageData.render['square'] === 'true' ? ' square ' : ''}  ${imageData.render[' portrait '] === 'true' ? 'portrait' : ''}  ${imageData.render['Landscape'] === 'true' ? ' Landscape ' : ''} <br> 
       ${imageData.render['upholstery'] === 'true' ? ' Upholstery' : 'No Upholstery'} <br>
       ${imageData.render['request-comment']}
       `;
