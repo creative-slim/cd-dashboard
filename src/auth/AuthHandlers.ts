@@ -5,6 +5,12 @@ export function afterLoginUiSetup(data) {
   const username = document.querySelector('[data-login="username"]');
   const loginElement = document.querySelector('[data-login="login"]');
 
+  const hiddenElements = document.querySelectorAll('[data-user="false"]');
+  hiddenElements.forEach((element) => {
+    //change data-user="false" to data-user="true"
+    element.setAttribute('data-user', 'true');
+  });
+
   if (!user_img || !username || !loginElement) return;
 
   loginElement.style.display = 'none';
