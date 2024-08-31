@@ -1,8 +1,20 @@
 export function makeSmallCardCollapsable(button, targetAttribute) {
   // console.log('collapser', button, targetAttribute);
+  if (!button) {
+    return;
+  }
+  if (!targetAttribute) {
+    return;
+  }
   const targetElement = button.closest(`[${targetAttribute}]`);
+  if (!targetElement) {
+    return;
+  }
   const content = targetElement.querySelector('[data-collapse="target"]');
 
+  if (!content) {
+    return;
+  }
   let isOpen;
   if (content.clientHeight <= 70) {
     isOpen = false;
@@ -33,9 +45,20 @@ export function makeSmallCardCollapsable(button, targetAttribute) {
 
 export function makeCheckBoxCollapsable(checkbox, targetAttribute) {
   // console.log('collapser', checkbox, targetAttribute);
+  if (!checkbox) {
+    return;
+  }
+  if (!targetAttribute) {
+    return;
+  }
   const targetElement = checkbox.closest(`[${targetAttribute}]`);
+  if (!targetElement) {
+    return;
+  }
   const content = targetElement.querySelector('[data-collapse-checkbox="target"]');
-
+  if (!content) {
+    return;
+  }
   let isOpen;
   if (content.clientHeight <= 10) {
     isOpen = false;

@@ -1,7 +1,7 @@
 export function errorModal(Msg) {
   const modal = document.querySelector('[data-modal="error"]');
   const modalContent = modal.querySelector('p');
-  const modalClose = modal.querySelector('a');
+  const modalClose = modal.querySelector('.modal-close');
   modalContent.innerHTML = Msg;
   modal.classList.add('show');
   modalClose.addEventListener('click', () => {

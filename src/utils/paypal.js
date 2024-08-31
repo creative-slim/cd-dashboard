@@ -105,6 +105,7 @@ export function initializePaypal(
         onClick: (data, actions) => {
           // check if all fields are filled
           if (!areRequiredFieldsPopulated()) {
+            actions.reject();
             errorModal('Please fill in all required fields');
             // alert('Please fill in all required fields');
             return actions.reject();

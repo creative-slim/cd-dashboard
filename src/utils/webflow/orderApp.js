@@ -1,6 +1,6 @@
 import FileUploader from '../../extras/uploaderClass';
 import { makeCheckBoxCollapsable, makeSmallCardCollapsable } from './collapser';
-import { saveData } from './saveInput';
+import { removeObjectByElementIdFromLocalStorage, saveAllData, saveData } from './saveInput';
 
 function orderAppFunctions() {
   const card = document.querySelector('[main-render-item="main"]');
@@ -18,6 +18,8 @@ function orderAppFunctions() {
   localStorage.removeItem('orderData');
   setupAddCardButton(duplicateCard);
   addNewRequestItem(duplicateCard);
+  saveAllData();
+  // saveData(duplicateCard, duplicateCard.closest('[main-render-item="main"]'));
 }
 
 // ! ITEM
@@ -65,6 +67,8 @@ function setupNewCard(card) {
   });
   addNewRequestItem(card);
   updateUploadersIDs(card);
+  addDeleteFunctionalityToBigCard(card);
+  saveAllData();
 }
 
 function updateUploadersIDs(card) {
@@ -123,8 +127,11 @@ function addNewRequestItem(card) {
   const addItemBtn = card.querySelector('[render-action="new-item"]');
   const mainWrapper = card.querySelector('[data-render="main-wrapper"]');
 
+  // addDeleteFunctionality(itemTemplate); //!Experimental
+
   addItemBtn.addEventListener('click', () => {
     const newItem = itemTemplate.cloneNode(true);
+
     const uniqueSuffix = Date.now();
     const renderNumber = card
       .closest('[main-render-item]')
@@ -147,8 +154,9 @@ function addNewRequestItem(card) {
 
     // Call the function to update IDs for the new item
     updateElementIds(newItem, uniqueSuffix);
-    itemTemplate.parentNode.appendChild(newItem);
+    mainWrapper.appendChild(newItem);
     addDeleteFunctionality(newItem);
+
     const collapseBtn = newItem.querySelector('[data-collapse="toggle"]');
     // const collapseWrapper = newItem.closest('[data-collapse="wrapper"]');
 
@@ -157,6 +165,8 @@ function addNewRequestItem(card) {
       newItem.querySelector('[data-collapse-checkbox="toggle"]'),
       'data-collapse-checkbox="wrapper"'
     );
+
+    saveAllData();
   });
 }
 
@@ -165,7 +175,20 @@ function addDeleteFunctionality(item) {
   deleteBtn.addEventListener('click', () => {
     item.remove();
     //!TOOD : remove item from local storge
-    removeRequestItem(item);
+    removeObjectByElementIdFromLocalStorage(item);
+    saveAllData();
+    // saveData(item.closest('[main-render-item="main"]'), item.closest('[main-render-item="main"]'));
+  });
+}
+
+function addDeleteFunctionalityToBigCard(item) {
+  const deleteBtn = item.querySelector('[data-furniture="remove"]');
+  deleteBtn.addEventListener('click', () => {
+    item.remove();
+    //!TOOD : remove item from local storge
+    removeObjectByElementIdFromLocalStorage(item);
+    saveAllData();
+    // saveData(item.closest('[main-render-item="main"]'), item.closest('[main-render-item="main"]'));
   });
 }
 

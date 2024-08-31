@@ -269,7 +269,11 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
     item.querySelector("[invoice-item-template='price']").innerHTML =
       '€ ' + orderItem.data[0].render['price'];
     item.querySelector("[invoice-item-template='total']").innerHTML =
-      '€ ' + orderItem.data[0].render['price'];
+      // reduce all prices in the array to get the total price
+      '€ ' +
+      orderItem.data.reduce((acc, cur) => {
+        return acc + cur.render['price'];
+      }, 0);
     wrapper.appendChild(item);
 
     generateAdditionalImages(orderItem, paymentDetails, itemTemplate, item);
