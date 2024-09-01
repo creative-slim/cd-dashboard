@@ -280,27 +280,14 @@ export default function initOrderSummary(orderSummaryAttribute) {
     return;
   }
 
-  const btn = document.querySelector('[data-order-cart="toggle-btn"]');
-  if (!btn) {
-    console.error('Button not found.');
+  const appElements = document.querySelectorAll('[data-big-card-id]');
+  if (!appElements) {
+    console.error('App elements not found.');
     return;
   }
-
-  btn.addEventListener('click', () => {
-    const content = document.querySelector(orderSummaryAttribute);
-    if (!content) {
-      console.error('Content element not found.');
-      return;
-    }
-    displayContent(orderSummaryAttribute);
-  });
-  btn.addEventListener('hover', () => {
-    const content = document.querySelector(orderSummaryAttribute);
-    if (!content) {
-      console.error('Content element not found.');
-      return;
-    }
-
-    displayContent(orderSummaryAttribute);
+  appElements.forEach((element) => {
+    element.addEventListener('change', () => {
+      displayContent(orderSummaryAttribute);
+    });
   });
 }

@@ -269,7 +269,11 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
     item.querySelector("[invoice-item-template='price']").innerHTML =
       '€ ' + orderItem.data[0].render['price'];
     item.querySelector("[invoice-item-template='total']").innerHTML =
-      '€ ' + orderItem.data[0].render['price'];
+      // reduce all prices in the array to get the total price
+      '€ ' +
+      orderItem.data.reduce((acc, cur) => {
+        return acc + cur.render['price'];
+      }, 0);
     wrapper.appendChild(item);
 
     generateAdditionalImages(orderItem, paymentDetails, itemTemplate, item);
@@ -300,7 +304,7 @@ function generateAdditionalImages(itemDetails, paymentDetails, itemTemplate, sib
     item.querySelector("[invoice-item-template='details']").style.fontSize = '10px !important';
 
     item.querySelector("[invoice-item-template='details']").innerHTML =
-      `${imageData.render['square'] === 'true' ? ' square ' : ''}  ${imageData.render[' portrait '] === 'true' ? 'portrait' : ''}  ${imageData.render['Landscape'] === 'true' ? ' Landscape ' : ''} <br>
+      `${imageData.render['square'] === 'true' ? ' square ' : ''}  ${imageData.render[' portrait '] === 'true' ? 'portrait' : ''}  ${imageData.render['Landscape'] === 'true' ? ' Landscape ' : ''} <br> 
       ${imageData.render['upholstery'] === 'true' ? ' Upholstery' : 'No Upholstery'} <br>
       ${imageData.render['request-comment']}
       `;

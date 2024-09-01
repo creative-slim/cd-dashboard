@@ -143,7 +143,7 @@ export const loggerUpdate = (state) => {
 export const showSubmitLogger = () => {
   const submitLogger = document.querySelector('[data-submit="logger"]');
   if (submitLogger) {
-    submitLogger.style.display = 'block';
+    submitLogger.style.display = 'flex';
   }
 };
 

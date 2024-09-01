@@ -1,33 +1,48 @@
 import Cookie from 'js-cookie';
+import { displayRecentOrders } from 'src/dashboard/recentOrders';
 
 export function afterLoginUiSetup(data) {
-  const user_img = document.querySelector('[data-login="avatar"]');
-  const username = document.querySelector('[data-login="username"]');
-  const loginElement = document.querySelector('[data-login="login"]');
+  displayRecentOrders();
+  const user_imgs = document.querySelectorAll('[data-login="avatar"]');
+  const usernames = document.querySelectorAll('[data-login="username"]');
+  const loginElements = document.querySelectorAll('[data-login="login"]');
 
   const hiddenElements = document.querySelectorAll('[data-user="false"]');
   hiddenElements.forEach((element) => {
     //change data-user="false" to data-user="true"
     element.setAttribute('data-user', 'true');
   });
+  console.log('🥹🥹🥹🥹🥹 ', user_imgs, usernames, loginElements);
 
-  if (!user_img || !username || !loginElement) return;
+  user_imgs.forEach((user_img) => {
+    user_img.src = data.picture;
+  });
 
-  loginElement.style.display = 'none';
-  user_img.src = data.picture;
-  username.textContent = data.name;
+  usernames.forEach((username) => {
+    username.textContent = data.name;
+  });
+
+  loginElements.forEach((loginElement) => {
+    loginElement.style.display = 'none';
+  });
 }
 
 export function afterLogoutUiSetup() {
-  const user_img = document.querySelector('[data-login="avatar"]');
-  const username = document.querySelector('[data-login="username"]');
-  const loginElement = document.querySelector('[data-login="login"]');
+  const user_imgs = document.querySelectorAll('[data-login="avatar"]');
+  const usernames = document.querySelectorAll('[data-login="username"]');
+  const loginElements = document.querySelectorAll('[data-login="login"]');
 
-  if (!user_img || !username || !loginElement) return;
+  user_imgs.forEach((user_img) => {
+    user_img.src = '';
+  });
 
-  loginElement.style.display = 'block';
-  user_img.src = '';
-  username.textContent = '';
+  usernames.forEach((username) => {
+    username.textContent = '';
+  });
+
+  loginElements.forEach((loginElement) => {
+    loginElement.style.display = 'block';
+  });
 }
 
 let api;

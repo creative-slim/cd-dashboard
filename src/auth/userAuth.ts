@@ -53,6 +53,7 @@ export async function initAuth() {
       redirect_uri: 'https://render-studio-24.webflow.io/',
       audience: 'https://www.bestrenders24.com/api',
     },
+    prompt: 'login',
   });
 
   // Check if the user is already authenticated
@@ -62,6 +63,7 @@ export async function initAuth() {
     // User is already logged in, fetch fresh data
     const userData = await client.getUser();
     const userToken = await client.getTokenSilently();
+    // console.log(token expiratoire date)
 
     // Save fresh user data and token in localStorage
     localStorage.setItem('userData', JSON.stringify(userData));
@@ -69,7 +71,6 @@ export async function initAuth() {
     // Get user data from cookies or fetch from the API
     await getUserData(userToken);
     await updatePricesInLocalStorage(userToken);
-
     console.log('User is already logged in:', userData);
     // console.log('User token:', userToken);
 

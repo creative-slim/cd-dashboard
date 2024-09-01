@@ -8,24 +8,31 @@ const getRenderNumber = (element) =>
   parseInt(element.closest(`[${RENDER_NUMBER}]`)?.getAttribute(RENDER_NUMBER), 10) || 0;
 
 const extractData = (inputElements) => {
-  const data = [];
-  inputElements.forEach((input) => {
-    const number = getRenderNumber(input);
-    if (!data[number]) {
-      data[number] = { render: {} };
-    }
-    if (input.type === 'checkbox') {
-      data[number].render[input.id] = input.checked ? 'true' : 'false';
-    } else {
-      data[number].render[input.id] = input.value;
-    }
-  });
-  return data;
+  try {
+    const data = [];
+    inputElements.forEach((input) => {
+      const number = getRenderNumber(input);
+      if (!data[number]) {
+        data[number] = { render: {} };
+      }
+      if (input.type === 'checkbox') {
+        data[number].render[input.id] = input.checked ? 'true' : 'false';
+      } else {
+        data[number].render[input.id] = input.value;
+      }
+    });
+    return data;
+  } catch (error) {
+    console.error('Error extracting data:', error);
+    return [];
+  }
 };
 
 // Main function
 export function saveData(currentCard, container) {
-  // console.log('------- save Data -------');
+  console.log('------- save Data -------');
+  console.log('currentCard', currentCard, 'container', container);
+  // debugger;
 
   if (!currentCard || !container) {
     console.error('Current card or container is not provided.');
@@ -35,13 +42,15 @@ export function saveData(currentCard, container) {
   const inputs = currentCard.querySelectorAll('input, textarea, select');
   // console.log('current Card', currentCard);
 
-  let storedLocalData;
+  let storedLocalDataRaw;
   try {
-    storedLocalData = JSON.parse(localStorage.getItem(ORDER_DATA_KEY)) || [];
+    storedLocalDataRaw = JSON.parse(localStorage.getItem(ORDER_DATA_KEY)) || [];
   } catch (error) {
     console.error('Error parsing local storage data:', error);
-    storedLocalData = [];
+    storedLocalDataRaw = [];
   }
+
+  const storedLocalData = filterArrayByItemName(storedLocalDataRaw);
 
   // console.log('container', container);
   const cardContainer = container.closest(`[${DATA_BIG_CARD_ID}]`);
@@ -79,4 +88,65 @@ export function saveData(currentCard, container) {
 
   console.log('storedLocalData', storedLocalData);
   localStorage.setItem(ORDER_DATA_KEY, JSON.stringify(storedLocalData));
+}
+function filterArrayByItemName(array) {
+  // Filter the main array to keep only objects where at least one data item has "item-name" in render keys
+  return array.filter((item) => {
+    if (item.data) {
+      // Check if any of the data items have a render key that starts with "item-name"
+      return item.data.some((subItem) =>
+        Object.keys(subItem.render || {}).some((key) => key.startsWith('item-name'))
+      );
+    }
+    return false; // Exclude items without data
+  });
+}
+
+export function removeObjectByElementIdFromLocalStorage(element) {
+  // Step 1: Read the object from local storage
+  const orderData = JSON.parse(localStorage.getItem('orderData'));
+
+  if (!orderData) {
+    console.error('No orderData found in local storage');
+    return;
+  }
+
+  // Step 2: Extract the unique number from the element's ID
+  const elementId = element.id; // Example: 'request-1725004461177'
+  const uniqueNumber = elementId.match(/\d+$/)[0]; // Extract the number at the end
+
+  // Step 3: Modify the orderData object by removing the related object
+  orderData.forEach((item, index) => {
+    if (item.data) {
+      item.data = item.data.filter((subItem) => {
+        // Check if the subItem has the render object and if it matches the unique number
+
+        //! do not return if it's null
+        return !Object.keys(subItem.render || {}).some((key) => key.includes(uniqueNumber));
+      });
+
+      // If the filtered data array is empty, remove the entire item
+      if (item.data.length === 0) {
+        orderData.splice(index, 1);
+        console.log('Item removed from orderData:', item);
+      }
+    }
+  });
+
+  // Step 4: Save the modified object back to local storage
+
+  localStorage.setItem('orderData', JSON.stringify(orderData));
+
+  // Optional: Return the updated data (for debugging or further use)
+  return orderData;
+}
+
+export function saveAllData() {
+  const cards = document.querySelectorAll(`[${DATA_BIG_CARD_ID}]`);
+  cards.forEach((card) => {
+    const container = card.closest(`[${DATA_BIG_CARD_ID}]`);
+    saveData(card, container);
+  });
+
+  console.log('All data saved.');
 }
