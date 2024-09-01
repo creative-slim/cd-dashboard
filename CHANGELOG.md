@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.4.0
+
+### Minor Changes
+
+- af3fbe2: lot of fixes
+
 ## 3.3.0
 
 ### Minor Changes
