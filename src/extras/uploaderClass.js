@@ -333,7 +333,7 @@ export default class FileUploader {
   }
 
   fileInputChangeHandler(ev) {
-    debugger;
+    // debugger;
     const { files } = ev.target;
     //console.log(files, this.images_data);
 
