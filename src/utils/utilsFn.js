@@ -113,18 +113,13 @@ export const submitLogger = (msg, color = 'white') => {
 };
 
 export const loggerUpdate = (state) => {
-  debugger;
   const states = {
     1: 'state-1',
     2: 'state-2',
     3: 'state-3',
     4: 'state-4',
   };
-  const allLoaders = document.querySelectorAll('[submit-logger]');
-  allLoaders.forEach((loader) => {
-    loader.classList.remove('logger-load');
-    loader.classList.remove('logger-done');
-  });
+
   const current = document.querySelector(`[submit-logger="${states[state]}"]`);
 
   if (current) {
