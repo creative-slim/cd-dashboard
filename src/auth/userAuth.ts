@@ -60,7 +60,7 @@ export async function initAuth() {
     domain: 'best-renders.us.auth0.com',
     clientId: 'KcqCRysHkhaeEb4wQAUkqsRTOAEJneVW',
     authorizationParams: {
-      redirect_uri: 'https://render-studio-24.webflow.io/',
+      redirect_uri: 'https://preview.renderstudio24.de/',
       audience: 'https://www.bestrenders24.com/api',
     },
   });

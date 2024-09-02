@@ -109,11 +109,13 @@ async function getUserDataFromDB(token) {
 
 export async function getUserData(token) {
   console.log('getUserData from cookie');
-  const userData = Cookie.get('user');
 
-  if (userData) {
-    return JSON.parse(userData);
-  }
+  //!disabled for now
+  // const userData = Cookie.get('user');
+
+  // if (userData) {
+  //   return JSON.parse(userData);
+  // }
 
   console.log('getUserData from DB');
   const data = await getUserDataFromDB(token);
