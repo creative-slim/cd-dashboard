@@ -52,6 +52,8 @@ function generateOrderHistoryUI(data) {
     return;
   }
 
+  orderHistoryContainer.style.display = 'flex';
+
   data.forEach((order) => {
     const itemDomElement = orderItemTemplate?.cloneNode(true);
     itemDomElement.classList.remove('template');

@@ -147,7 +147,7 @@ export default class FileUploader {
 
       if (this.isFileTypeAllowed(image) && this.fileType === '3D') {
         //console.log("is zip");
-        images += `<div class="upload-queue-files"><p class="filename">${
+        images += `<div class="upload-queue-files" style="display:flex;"><p class="filename">${
           image.name
         }</p><p class="filesize">${(image.size * 0.000001).toFixed(
           2
@@ -333,6 +333,7 @@ export default class FileUploader {
   }
 
   fileInputChangeHandler(ev) {
+    debugger;
     const { files } = ev.target;
     //console.log(files, this.images_data);
 
