@@ -21,8 +21,10 @@ export function initializePaypal(
   const INTENT = 'capture';
   const accessToken = localStorage.getItem('userToken');
   let orderDetails = [];
+  // const PAYPAL_CLIENT_ID =
+  //   'AevfJAscX9MKaFWcK--S7rgLBotKliHnYIc94ShGUS3yNpc_Vt7z92LLmH4Tfwl49uRWpesdR6VBbtVx';
   const PAYPAL_CLIENT_ID =
-    'AevfJAscX9MKaFWcK--S7rgLBotKliHnYIc94ShGUS3yNpc_Vt7z92LLmH4Tfwl49uRWpesdR6VBbtVx';
+    'AWAxiue-z2L3vnEGgR5TM72wYvA38X_Y3yf5pggqld2MyM0IXekXvqfIKC7H1VPGq7pCs_WJ-hWIJE96';
 
   if (!PAYPAL_CLIENT_ID) {
     console.error('PayPal client ID is missing. Make sure to add it to your .env file.');

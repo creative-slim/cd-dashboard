@@ -256,6 +256,8 @@ window.Webflow.push(async () => {
             const Final = await uploadmetadata(combinedArrays);
             console.log('All images processed.');
 
+            cleanLoggerUI();
+
             loggerUpdate(2);
             console.log('Final', Final);
 
@@ -325,6 +327,14 @@ window.Webflow.push(async () => {
     window.location.reload();
   }
 
+  function cleanLoggerUI() {
+    const allLoaders = document.querySelectorAll('[submit-logger]');
+    allLoaders.forEach((loader) => {
+      loader.classList.remove('logger-load');
+      loader.classList.remove('logger-done');
+    });
+  }
+
   function goToConfirmationPage() {
     const confirmation = document.querySelector('[data-order="confirmation-tab"]');
     const order = document.querySelector('[data-order="order-tab"]');
@@ -335,6 +345,12 @@ window.Webflow.push(async () => {
       console.log('goin to confirmation page');
       order.classList.remove('w--tab-active');
       confirmation.classList.add('w--tab-active');
+    }
+
+    const email = GetCurrentUserEmail();
+    const emailSpot = document.querySelector('[data-confirmation="mail"]');
+    if (emailSpot) {
+      emailSpot.textContent = email;
     }
   }
 

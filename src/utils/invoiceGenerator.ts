@@ -75,11 +75,11 @@ export async function generateInvoice(finalData) {
   const pdfFile = await getInvoicePDF(pdfwrapper, orderData['order-id']);
 
   //!testing
-  const url = URL.createObjectURL(pdfFile);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Invoice ${orderData['order-id']}.pdf`;
-  a.click();
+  // const url = URL.createObjectURL(pdfFile);
+  // const a = document.createElement('a');
+  // a.href = url;
+  // a.download = `Invoice ${orderData['order-id']}.pdf`;
+  // a.click();
   //!testing
 
   return pdfFile;
