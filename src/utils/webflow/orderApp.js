@@ -157,16 +157,35 @@ function addNewRequestItem(card) {
     mainWrapper.appendChild(newItem);
     addDeleteFunctionality(newItem);
 
-    const collapseBtn = newItem.querySelector('[data-collapse="toggle"]');
-    // const collapseWrapper = newItem.closest('[data-collapse="wrapper"]');
+    clearInputFields(newItem);
 
+    //!Disabled for now
+    // const collapseBtn = newItem.querySelector('[data-collapse="toggle"]');
+    // const collapseWrapper = newItem.closest('[data-collapse="wrapper"]');
+    /*
     makeSmallCardCollapsable(collapseBtn, 'data-collapse="wrapper"');
     makeCheckBoxCollapsable(
       newItem.querySelector('[data-collapse-checkbox="toggle"]'),
       'data-collapse-checkbox="wrapper"'
     );
+*/
+    //!Disabled for now
 
     saveAllData();
+  });
+}
+
+// Function to clear all input fields in the cloned item
+function clearInputFields(element) {
+  const inputs = element.querySelectorAll('input, textarea, select');
+  inputs.forEach((input) => {
+    if (input.type === 'checkbox' || input.type === 'radio') {
+      input.checked = false; // Clear checkboxes and radio buttons
+    } else if (input.type === 'select-one' || input.type === 'select-multiple') {
+      input.selectedIndex = 0; // Reset selects
+    } else {
+      input.value = ''; // Clear other input types
+    }
   });
 }
 
@@ -174,7 +193,6 @@ function addDeleteFunctionality(item) {
   const deleteBtn = item.querySelector('[render-item="delete"]');
   deleteBtn.addEventListener('click', () => {
     item.remove();
-    //!TOOD : remove item from local storge
     removeObjectByElementIdFromLocalStorage(item);
     saveAllData();
     // saveData(item.closest('[main-render-item="main"]'), item.closest('[main-render-item="main"]'));
@@ -185,7 +203,6 @@ function addDeleteFunctionalityToBigCard(item) {
   const deleteBtn = item.querySelector('[data-furniture="remove"]');
   deleteBtn.addEventListener('click', () => {
     item.remove();
-    //!TOOD : remove item from local storge
     removeObjectByElementIdFromLocalStorage(item);
     saveAllData();
     // saveData(item.closest('[main-render-item="main"]'), item.closest('[main-render-item="main"]'));

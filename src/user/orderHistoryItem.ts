@@ -39,16 +39,28 @@ class OrderItem {
         menuButton.parentElement.style.zIndex === '9999' ? '1' : '9999';
       menuNav.classList.toggle('w--open');
     });
+
+    // click outside the dropdown to close it
+    document.addEventListener('click', (event) => {
+      if (menuNav.classList.contains('w--open') && !menuButton.contains(event.target as Node)) {
+        menuButton.classList.remove('w--open');
+        menuNav.classList.remove('w--open');
+        menuButton.parentElement.style.zIndex = '1';
+      }
+    });
   }
 
   private goToOrderDetails(): void {
-    const orderDetailsButton = this.itemDomElement.querySelector(
+    const orderDetailsButton = this.itemDomElement.querySelectorAll(
       '[data-order-item="ph-order-details"]'
     );
 
     const orderID = '07abe1fd-4015-4890-8299-1da02fa50c4f';
-    orderDetailsButton.addEventListener('click', () => {
-      window.location = window.location.origin + `/${orderID}/${this.orderDetails.fieldData.slug}`;
+    orderDetailsButton.forEach((button) => {
+      button.addEventListener('click', () => {
+        window.location =
+          window.location.origin + `/${orderID}/${this.orderDetails.fieldData.slug}`;
+      });
     });
   }
 
