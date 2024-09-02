@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.5.3
+
+### Patch Changes
+
+- e414f87: url change
+
 ## 3.5.2
 
 ### Patch Changes
