@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.5.1
+
+### Patch Changes
+
+- 3f27e3e: y
+
 ## 3.5.0
 
 ### Minor Changes
