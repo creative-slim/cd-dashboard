@@ -34,7 +34,7 @@ window.Webflow.push(async () => {
   initWebflowFunctions();
   initUserRelatedFunctions();
 
-  if (window.location.pathname === '/user/order-history') {
+  if (window.location.pathname.includes('/user/order-history')) {
     console.log('order history page');
 
     const info = await initOrderHistory();
