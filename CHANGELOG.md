@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.5.4
+
+### Patch Changes
+
+- 5448109: change auth
+
 ## 3.5.3
 
 ### Patch Changes
