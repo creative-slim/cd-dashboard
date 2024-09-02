@@ -290,7 +290,17 @@ window.Webflow.push(async () => {
             enableAllButtons();
             // clickTab(3);
             doneLoading();
-            clearLocalStorage('upload_urls', 'FormInputHolder', 'paymentDetails', 'extraImgs');
+
+            goToConfirmationPage();
+
+            clearLocalStorage(
+              'upload_urls',
+              'FormInputHolder',
+              'paymentDetails',
+              'extraImgs',
+              'orderData',
+              'orderFiles'
+            );
 
             // Uncomment if needed
             // reloadPage();
@@ -313,6 +323,19 @@ window.Webflow.push(async () => {
     localStorage.setItem('goToHistory', 'true');
     // Reload the page
     window.location.reload();
+  }
+
+  function goToConfirmationPage() {
+    const confirmation = document.querySelector('[data-order="confirmation-tab"]');
+    const order = document.querySelector('[data-order="order-tab"]');
+
+    console.log('confirmation', confirmation);
+    console.log('order', order);
+    if (confirmation && order) {
+      console.log('goin to confirmation page');
+      order.classList.remove('w--tab-active');
+      confirmation.classList.add('w--tab-active');
+    }
   }
 
   // This function should be called on page load to check for the flag and click the tab if needed
@@ -353,12 +376,12 @@ window.Webflow.push(async () => {
 
   // function that clears the passed names from local storage
   function clearLocalStorage(...names) {
-    // names.forEach((name) => {
-    //   localStorage.removeItem(name);
-    // });
-    const keeper = localStorage.getItem('tabStates');
-    localStorage.clear();
-    localStorage.setItem('tabStates', keeper);
+    names.forEach((name) => {
+      localStorage.removeItem(name);
+    });
+    // const keeper = localStorage.getItem('userToken');
+    // localStorage.clear();
+    // localStorage.setItem('userToken', keeper);
   }
 
   function showContent() {

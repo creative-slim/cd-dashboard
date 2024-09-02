@@ -6,6 +6,10 @@ export function afterLoginUiSetup(data) {
   const user_imgs = document.querySelectorAll('[data-login="avatar"]');
   const usernames = document.querySelectorAll('[data-login="username"]');
   const loginElements = document.querySelectorAll('[data-login="login"]');
+  const userDropdown = document.querySelector('[data-login="dropdown"]');
+  if (userDropdown) {
+    userDropdown.classList.add('show');
+  }
 
   const hiddenElements = document.querySelectorAll('[data-user="false"]');
   hiddenElements.forEach((element) => {
@@ -31,6 +35,16 @@ export function afterLogoutUiSetup() {
   const user_imgs = document.querySelectorAll('[data-login="avatar"]');
   const usernames = document.querySelectorAll('[data-login="username"]');
   const loginElements = document.querySelectorAll('[data-login="login"]');
+  const userDropdown = document.querySelector('[data-login="dropdown"]');
+  if (userDropdown) {
+    userDropdown.classList.remove('show');
+  }
+
+  const hiddenElements = document.querySelectorAll('[data-user="true"]');
+  hiddenElements.forEach((element) => {
+    //change data-user="false" to data-user="true"
+    element.setAttribute('data-user', 'false');
+  });
 
   user_imgs.forEach((user_img) => {
     user_img.src = '';
@@ -94,12 +108,16 @@ async function getUserDataFromDB(token) {
 }
 
 export async function getUserData(token) {
+  console.log('getUserData from cookie');
   const userData = Cookie.get('user');
+
   if (userData) {
     return JSON.parse(userData);
   }
 
+  console.log('getUserData from DB');
   const data = await getUserDataFromDB(token);
+  console.log('getUserData from DB', data);
   updateUserStoredData(data);
 
   return data;

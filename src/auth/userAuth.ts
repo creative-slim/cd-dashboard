@@ -3,6 +3,7 @@ import Cookie from 'js-cookie';
 
 import {
   afterLoginUiSetup,
+  afterLogoutUiSetup,
   getUserData,
   syncUsersDB,
   updatePricesInLocalStorage,
@@ -10,16 +11,25 @@ import {
 
 export async function initAuth() {
   console.log('****************  initAuth ****************');
-
+  // debugger;
   // Check if user data exists in localStorage
   const storedUserData = localStorage.getItem('userData');
   const storedUserToken = localStorage.getItem('userToken');
 
-  if (storedUserData && storedUserToken) {
-    // If data exists in localStorage, use it
-    console.log('Using stored user data:', JSON.parse(storedUserData));
-    afterLoginUiSetup(JSON.parse(storedUserData));
+  // if the location has /user in it, then we are in the user page
+  if (window.location.pathname.includes('/user')) {
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      console.log('no token');
+      window.location.href = '/';
+    }
   }
+
+  // if (storedUserData && storedUserToken) {
+  //   // If data exists in localStorage, use it
+  //   console.log('Using stored user data:', JSON.parse(storedUserData));
+  //   afterLoginUiSetup(JSON.parse(storedUserData));
+  // }
 
   const loginElement = document.querySelector('[data-login="login"]');
   const logoutElement = document.querySelector('[data-login="logout"]');
@@ -53,16 +63,23 @@ export async function initAuth() {
       redirect_uri: 'https://render-studio-24.webflow.io/',
       audience: 'https://www.bestrenders24.com/api',
     },
-    prompt: 'login',
   });
 
   // Check if the user is already authenticated
   const isAuthenticated = await client.isAuthenticated();
 
+  if (!isAuthenticated && window.location.pathname.includes('/user')) {
+    client.logout();
+    window.location.href = '/';
+    afterLogoutUiSetup();
+  }
+
   if (isAuthenticated) {
     // User is already logged in, fetch fresh data
     const userData = await client.getUser();
     const userToken = await client.getTokenSilently();
+    console.log('user data', userData);
+    console.log('user token', userToken);
     // console.log(token expiratoire date)
 
     // Save fresh user data and token in localStorage
@@ -108,7 +125,7 @@ export async function initAuth() {
     afterLoginUiSetup(userData);
 
     //! might be problematic , investigate
-    window.location.href = window.location.origin;
+    // window.location.href = window.location.origin;
     return;
   }
 }

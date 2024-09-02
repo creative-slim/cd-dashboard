@@ -157,8 +157,8 @@ export default class FileUploader {
       } else {
         //console.log("is img");
 
-        images += `<div class="upload-queue-images">
-        <img src="${URL.createObjectURL(image)}" alt="image">
+        images += `<div class="upload-queue-item" style="display:flex;">
+        <img class="upload-queue-image" src="${URL.createObjectURL(image)}" alt="image">
         <span class="delete-icon" onclick="window.${this.name}.deleteImage(${index},'${image.name}')">&times;</span>
         </div>`;
       }

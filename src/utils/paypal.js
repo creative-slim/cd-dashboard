@@ -159,27 +159,33 @@ export function initializePaypal(
           const orderId = data.orderID;
           paymentStatus.payed = true;
           paymentStatus.paymentMethod = 'PayPal';
-          return document
-            .querySelector("[order-submit='approved']")
-            .addEventListener('click', async () => {
-              fetch(`${api}/api/paypal/complete_order`, {
-                method: 'post',
-                headers: {
-                  'Content-Type': 'application/json; charset=utf-8',
-                },
-                body: JSON.stringify({ intent: INTENT, order_id: orderId }),
-              })
-                .then((response) => {
-                  console.log('Response:', response);
+          const submitBtn = document.querySelector("[order-submit='approved']");
+          submitBtn.addEventListener('click', async () => {
+            fetch(`${api}/api/paypal/complete_order`, {
+              method: 'post',
+              headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+              },
+              body: JSON.stringify({ intent: INTENT, order_id: orderId }),
+            })
+              .then((response) => {
+                console.log('Response:', response);
 
-                  return response.json();
-                })
-                .then((orderDetails) => {
-                  console.log('Order details:', orderDetails);
-                  paymentDetails = orderDetails.data.purchase_units[0].payments.captures[0].amount;
-                  paypalButtons.close();
-                });
-            });
+                return response.json();
+              })
+              .then((orderDetails) => {
+                console.log('Order details:', orderDetails);
+                paymentDetails = orderDetails.data.purchase_units[0].payments.captures[0].amount;
+                paypalButtons.close();
+              })
+              // then click on the submit button
+              .catch((error) => {
+                console.error('Error processing PayPal payment:', error);
+              });
+          });
+
+          submitBtn.click();
+
           // .then((orderDetails) => {
           //   const intentObject = INTENT === 'authorize' ? 'authorizations' : 'captures';
           //   alerts.innerHTML = `<div class=\'ms-alert ms-action\'>Thank you ${orderDetails.payer.name.given_name} ${orderDetails.payer.name.surname} for your payment of ${orderDetails.purchase_units[0].payments[intentObject][0].amount.value} ${orderDetails.purchase_units[0].payments[intentObject][0].amount.currency_code}!</div>`;

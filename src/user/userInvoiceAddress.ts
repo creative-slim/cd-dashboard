@@ -23,7 +23,18 @@ function fillInvoiceAddress() {
     const email = document.querySelectorAll("[data-order='mail']");
 
     const userData = Cookies.get('user');
+
+    if (!userData) {
+      console.error('User data not available');
+      return;
+    }
+
     const user = JSON.parse(userData);
+
+    if (!user) {
+      console.error('User data not available');
+      return;
+    }
 
     firstName.forEach((e) => {
       e.innerHTML = user.first_name || 'No available';

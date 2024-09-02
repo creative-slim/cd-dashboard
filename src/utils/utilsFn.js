@@ -113,16 +113,22 @@ export const submitLogger = (msg, color = 'white') => {
 };
 
 export const loggerUpdate = (state) => {
+  debugger;
   const states = {
     1: 'state-1',
     2: 'state-2',
     3: 'state-3',
     4: 'state-4',
   };
+  const allLoaders = document.querySelectorAll('[submit-logger]');
+  allLoaders.forEach((loader) => {
+    loader.classList.remove('logger-load');
+    loader.classList.remove('logger-done');
+  });
   const current = document.querySelector(`[submit-logger="${states[state]}"]`);
+
   if (current) {
-    const loaderLottie = current.querySelector('[submit-logger="loading"]');
-    loaderLottie.style.display = 'block';
+    current.classList.add('logger-load');
   }
 
   const prev = document.querySelector(`[submit-logger="${states[state - 1]}"]`);
@@ -131,13 +137,13 @@ export const loggerUpdate = (state) => {
   if (children.length === 0) {
     return;
   }
-  const prevloaderLottie = prev.querySelector('[submit-logger="loading"]');
 
-  prevloaderLottie.style.display = 'none';
+  prev.classList.remove('logger-load');
+  prev.classList.add('logger-done');
 
-  children.forEach((child) => {
-    child.classList.add('done');
-  });
+  // children.forEach((child) => {
+  //   child.classList.add('done');
+  // });
 };
 
 export const showSubmitLogger = () => {

@@ -57,7 +57,12 @@ async function userPreferForm() {
 // get user data from Cookies under user and fill the form
 export function fillUserInformationInPreferencesUI() {
   console.log(' -- fillUserInformationInPreferencesUI ');
-  const user = JSON.parse(Cookie.get('user'));
+  const storedData = Cookie.get('user');
+  if (!storedData) {
+    console.log('+++++++++ -- storedData not found ');
+    return;
+  }
+  const user = JSON.parse(storedData);
 
   if (!user) {
     console.log('+++++++++ -- user not found ');
@@ -71,13 +76,15 @@ export function fillUserInformationInPreferencesUI() {
   }
 
   const adaptedData = mapUserData(user);
+  console.log('+++++++++++ -- adaptedData ', adaptedData);
+  console.log('+++++++++++ -- user ', user);
 
   const formData = new FormData(form);
   formData.forEach((value, key) => {
-    // console.log('+++++++++++ -- key ', key, adaptedData[key]);
+    console.log('+++++++++++ -- key ', key, adaptedData[key]);
     if (adaptedData[key]) {
       form.querySelector(`[name="${key}"]`).value = adaptedData[key];
-      console.log('+++++++++++ -- key ', key, adaptedData[key]);
+      // console.log('+++++++++++ -- key ', key, adaptedData[key]);
     }
   });
   return;
@@ -101,6 +108,10 @@ function mapUserData(user) {
     USTIDNR: user.ust_idnr,
     company: user.company,
     contact_option: '', // The original object does not contain a contact_option property
+    feature_update_alerts: user.feature_update_alerts,
+    promotion_alerts: user.promotion_alerts,
+    support_alerts: user.support_alerts,
+    order_updates: user.order_updates,
   };
 }
 
@@ -120,5 +131,9 @@ function reverseMapUserData(original) {
     auth0_id: original.customer_ref,
     ust_idnr: original.USTIDNR,
     company: original.company,
+    feature_update_alerts: original.feature_update_alerts,
+    promotion_alerts: original.promotion_alerts,
+    support_alerts: original.support_alerts,
+    order_updates: original.order_updates,
   };
 }
