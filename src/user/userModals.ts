@@ -12,6 +12,7 @@ const api = process.env.NODE_ENV === 'development' ? local : server;
 
 export async function userAddressModal() {
   const modal = document.querySelector('[data-modal="address"]');
+  if (!modal) return;
   console.log('🙉  -- modal ', modal);
   // modal?.removeAttribute('style');
   modal?.classList.add('show');

@@ -12,6 +12,16 @@ import {
 export async function initAuth() {
   console.log('****************  initAuth ****************');
   // debugger;
+  // Create the Auth0 client
+  const client = await createAuth0Client({
+    domain: 'best-renders.us.auth0.com',
+    clientId: 'KcqCRysHkhaeEb4wQAUkqsRTOAEJneVW',
+    authorizationParams: {
+      redirect_uri: 'https://preview.renderstudio24.de/',
+      audience: 'https://www.bestrenders24.com/api',
+    },
+  });
+
   // Check if user data exists in localStorage
   const storedUserData = localStorage.getItem('userData');
   const storedUserToken = localStorage.getItem('userToken');
@@ -55,23 +65,13 @@ export async function initAuth() {
     // afterLogoutUiSetup();
   });
 
-  // Create the Auth0 client
-  const client = await createAuth0Client({
-    domain: 'best-renders.us.auth0.com',
-    clientId: 'KcqCRysHkhaeEb4wQAUkqsRTOAEJneVW',
-    authorizationParams: {
-      redirect_uri: 'https://preview.renderstudio24.de/',
-      audience: 'https://www.bestrenders24.com/api',
-    },
-  });
-
   // Check if the user is already authenticated
   const isAuthenticated = await client.isAuthenticated();
 
   if (!isAuthenticated && window.location.pathname.includes('/user')) {
     client.logout();
-    window.location.href = '/';
     afterLogoutUiSetup();
+    await client.loginWithRedirect();
   }
 
   if (isAuthenticated) {

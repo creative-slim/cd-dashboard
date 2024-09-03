@@ -23,7 +23,15 @@ export function afterLoginUiSetup(data) {
   });
 
   usernames.forEach((username) => {
-    username.textContent = data.name;
+    // check if given_name is available
+    if (data.given_name) {
+      username.textContent = data.given_name;
+      return;
+    }
+    if (data.name) {
+      username.textContent = data.name;
+      return;
+    }
   });
 
   loginElements.forEach((loginElement) => {
