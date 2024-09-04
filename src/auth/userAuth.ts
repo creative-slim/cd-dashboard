@@ -9,123 +9,154 @@ import {
   updatePricesInLocalStorage,
 } from './AuthHandlers';
 
+// Constants for localStorage keys
+const USER_DATA_KEY = 'userData';
+const USER_TOKEN_KEY = 'userToken';
+const POST_LOGIN_REDIRECT_URL_KEY = 'postLoginRedirectUrl';
+
+async function createAuthClient() {
+  try {
+    return await createAuth0Client({
+      // domain: 'best-renders.us.auth0.com',
+      domain: 'renderstudio24.eu.auth0.com',
+      // clientId: 'KcqCRysHkhaeEb4wQAUkqsRTOAEJneVW',
+      clientId: 'HtRGeGXBxMx53TBVTX7GhHbDZfhfHRX6',
+      authorizationParams: {
+        // redirect_uri: 'https://preview.renderstudio24.de/',
+        redirect_uri: 'https://preview.renderstudio24.de/',
+        // audience: 'https://www.bestrenders24.com/api',
+        audience: 'https://auth0api.renderstudio24.de',
+      },
+    });
+  } catch (error) {
+    console.error('Failed to create Auth0 client:', error);
+    throw error;
+  }
+}
+
+function saveRedirectUrl() {
+  localStorage.setItem(POST_LOGIN_REDIRECT_URL_KEY, window.location.href);
+}
+
+// function redirectToSavedUrl() { //! moved to webflow header
+//   // debugger;
+
+//   const redirectUrl = localStorage.getItem(POST_LOGIN_REDIRECT_URL_KEY);
+//   if (redirectUrl) {
+//     const codeString = '?code=' + new URLSearchParams(window.location.search).get('code');
+//     localStorage.removeItem(POST_LOGIN_REDIRECT_URL_KEY); // Clear the saved URL after use
+//     window.location.href = redirectUrl + codeString;
+//     console.log('Redirecting to saved URL:', redirectUrl);
+//   }
+//   //  else {
+//   //   window.location.href = window.location.origin; // Default to home
+//   // }
+// } //! moved to webflow header
+
+async function handleLogin(client) {
+  try {
+    saveRedirectUrl();
+    await client.loginWithRedirect();
+  } catch (error) {
+    console.error('Error during login:', error);
+    alert('An error occurred during login. Please try again.');
+  }
+}
+
+async function handleLogout(client) {
+  try {
+    await client.logout();
+    localStorage.removeItem(USER_DATA_KEY);
+    localStorage.removeItem(USER_TOKEN_KEY);
+    Cookie.remove('user');
+    afterLogoutUiSetup();
+  } catch (error) {
+    console.error('Error during logout:', error);
+    alert('An error occurred during logout. Please try again.');
+  }
+}
+
+async function checkAuthentication(client) {
+  try {
+    return await client.isAuthenticated();
+  } catch (error) {
+    console.error('Failed to check authentication status:', error);
+    return false;
+  }
+}
+
+async function fetchUserData(client) {
+  try {
+    const userData = await client.getUser();
+    const userToken = await client.getTokenSilently();
+
+    localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+    localStorage.setItem(USER_TOKEN_KEY, userToken);
+
+    await getUserData(userToken);
+    await updatePricesInLocalStorage(userToken);
+    afterLoginUiSetup(userData);
+
+    return { userData, userToken };
+  } catch (error) {
+    console.error('Failed to fetch user data:', error);
+    return null;
+  }
+}
+
+async function handleLoginCallback(client) {
+  try {
+    await client.handleRedirectCallback();
+    const { userData, userToken } = await fetchUserData(client);
+    if (userData && userToken) {
+      await syncUsersDB(userData, userToken);
+      // redirectToSavedUrl(); //! moved to webflow header
+      // remove the code from the URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete('code');
+      url.searchParams.delete('state');
+      window.history.replaceState({}, document.title, url);
+    }
+  } catch (error) {
+    console.error('Error handling login callback:', error);
+    alert('An error occurred while processing your login. Please try again.');
+  }
+}
+
 export async function initAuth() {
   console.log('****************  initAuth ****************');
-  // debugger;
-  // Check if user data exists in localStorage
-  const storedUserData = localStorage.getItem('userData');
-  const storedUserToken = localStorage.getItem('userToken');
 
-  // if the location has /user in it, then we are in the user page
-  if (window.location.pathname.includes('/user')) {
-    const token = localStorage.getItem('userToken');
-    if (!token) {
-      console.log('no token');
-      window.location.href = '/';
+  try {
+    const client = await createAuthClient();
+
+    const loginElement = document.querySelector('[data-login="login"]');
+    const logoutElement = document.querySelector('[data-login="logout"]');
+
+    if (!loginElement || !logoutElement) {
+      console.error('Login/logout elements are missing from the DOM.');
+      return;
     }
-  }
 
-  // if (storedUserData && storedUserToken) {
-  //   // If data exists in localStorage, use it
-  //   console.log('Using stored user data:', JSON.parse(storedUserData));
-  //   afterLoginUiSetup(JSON.parse(storedUserData));
-  // }
+    loginElement.addEventListener('click', () => handleLogin(client));
+    logoutElement.addEventListener('click', () => handleLogout(client));
 
-  const loginElement = document.querySelector('[data-login="login"]');
-  const logoutElement = document.querySelector('[data-login="logout"]');
+    const isAuthenticated = await checkAuthentication(client);
+    console.log('Is Authenticated:', isAuthenticated); // Debugging line
 
-  if (!loginElement || !logoutElement) {
-    console.error('no login/logout element');
-    return;
-  }
+    if (isAuthenticated) {
+      await fetchUserData(client);
+      // redirectToSavedUrl();  //! moved to webflow header
+      return;
+    }
 
-  // console.log('loginElement', loginElement);
-  loginElement.addEventListener('click', async () => {
-    await client.loginWithRedirect();
-  });
-  logoutElement.addEventListener('click', async () => {
-    await client.logout();
+    const url = new URL(window.location.href);
+    const shouldHandleCallback = url.searchParams.has('code');
+    console.log('Should Handle Callback:', shouldHandleCallback); // Debugging line
 
-    // Clear user data from localStorage on logout
-    localStorage.removeItem('userData');
-    localStorage.removeItem('userToken');
-    Cookie.remove('user');
-
-    // Optional: You can also trigger any UI updates needed after logout
-    // afterLogoutUiSetup();
-  });
-
-  // Create the Auth0 client
-  const client = await createAuth0Client({
-    domain: 'best-renders.us.auth0.com',
-    clientId: 'KcqCRysHkhaeEb4wQAUkqsRTOAEJneVW',
-    authorizationParams: {
-      redirect_uri: 'https://preview.renderstudio24.de/',
-      audience: 'https://www.bestrenders24.com/api',
-    },
-  });
-
-  // Check if the user is already authenticated
-  const isAuthenticated = await client.isAuthenticated();
-
-  if (!isAuthenticated && window.location.pathname.includes('/user')) {
-    client.logout();
-    window.location.href = '/';
-    afterLogoutUiSetup();
-  }
-
-  if (isAuthenticated) {
-    // User is already logged in, fetch fresh data
-    const userData = await client.getUser();
-    const userToken = await client.getTokenSilently();
-    console.log('user data', userData);
-    console.log('user token', userToken);
-    // console.log(token expiratoire date)
-
-    // Save fresh user data and token in localStorage
-    localStorage.setItem('userData', JSON.stringify(userData));
-    localStorage.setItem('userToken', userToken);
-    // Get user data from cookies or fetch from the API
-    await getUserData(userToken);
-    await updatePricesInLocalStorage(userToken);
-    console.log('User is already logged in:', userData);
-    // console.log('User token:', userToken);
-
-    // Change UI based on user data
-    afterLoginUiSetup(userData);
-    return;
-  }
-
-  // Handle the callback if there's a "code" parameter in the URL
-  const url = new URL(window.location.href);
-  const shouldHandleCallback = url.searchParams.has('code');
-  if (shouldHandleCallback) {
-    await client.handleRedirectCallback();
-
-    // Fetch the user data and token after handling the callback
-    const userData = await client.getUser();
-    const userToken = await client.getTokenSilently();
-
-    // Get user data from cookies or fetch from the API
-    await getUserData(userToken);
-    await updatePricesInLocalStorage(userToken);
-
-    // check if the user exists in the DB or add the user to the database
-    const userExists = await syncUsersDB(userData, userToken);
-    console.log('syncing user :::: ', userExists);
-
-    // Save fresh user data and token in localStorage
-    localStorage.setItem('userData', JSON.stringify(userData));
-    localStorage.setItem('userToken', userToken);
-
-    console.log('User data updated after redirect:', userData);
-    console.log('User token updated after redirect:', userToken);
-
-    // Update UI
-    afterLoginUiSetup(userData);
-
-    //! might be problematic , investigate
-    // window.location.href = window.location.origin;
-    return;
+    if (shouldHandleCallback) {
+      await handleLoginCallback(client);
+    }
+  } catch (error) {
+    console.error('Error in initAuth:', error); // Improved error handling
   }
 }
