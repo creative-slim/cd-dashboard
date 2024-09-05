@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.5.5
+
+### Patch Changes
+
+- 1bfb041: logging fix
+
 ## 3.5.4
 
 ### Patch Changes
