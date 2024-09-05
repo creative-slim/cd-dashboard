@@ -1,3 +1,4 @@
+import gsap from 'gsap';
 import Cookie from 'js-cookie';
 
 let api;
@@ -24,6 +25,8 @@ async function userPreferForm() {
 
   submitBtn.addEventListener('click', async (e) => {
     e.preventDefault();
+    // check btn text to waiting
+    submitBtn.value = 'Bitte warten...';
     const formData = new FormData(form);
     const user = {};
     console.log('🙉  -- formData ', formData);
@@ -46,6 +49,12 @@ async function userPreferForm() {
     if (resp.ok) {
       //!problematic because it changes the json keys
       Cookie.set('user', JSON.stringify(reverseMapUserData(user)), { expires: 1 });
+      submitBtn?.classList.add('success');
+      submitBtn.value = 'SENDEN';
+
+      setTimeout(() => {
+        submitBtn?.classList.remove('success');
+      }, 2000);
     }
 
     const data = await resp.json();

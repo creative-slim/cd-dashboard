@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 export const uploadInvoice = async (pdfFile, fullPath) => {
   console.log('uploadInvoice', pdfFile, fullPath);
   const formData = new FormData();
@@ -163,4 +165,12 @@ export const reloadPage = () => {
       location.reload();
     });
   });
+};
+
+export const getInvoiceDataForCurrentOrder = () => {
+  const data = JSON.parse(Cookies.get('user'));
+  if (data) {
+    return data;
+  }
+  return null;
 };

@@ -21,6 +21,8 @@ function fillInvoiceAddress() {
     const lastName = document.querySelectorAll("[data-order='last-name']");
     const phone = document.querySelectorAll("[data-order='phone']");
     const email = document.querySelectorAll("[data-order='mail']");
+    const company = document.querySelectorAll("[data-order='company']");
+    const ust_idnr = document.querySelectorAll("[data-order='idnr']");
 
     const userData = Cookies.get('user');
 
@@ -37,43 +39,51 @@ function fillInvoiceAddress() {
     }
 
     firstName.forEach((e) => {
-      e.innerHTML = user.first_name || 'No available';
+      e.innerHTML = user.first_name || '-';
     });
 
     lastName.forEach((e) => {
-      e.innerHTML = user.last_name || 'No available';
+      e.innerHTML = user.last_name || '-';
     });
 
     phone.forEach((e) => {
-      e.innerHTML = user.phone || 'No available';
+      e.innerHTML = user.phone || '-';
     });
 
     email.forEach((e) => {
-      e.innerHTML = user.email || 'No available';
+      e.innerHTML = user.email || '-';
     });
 
     street.forEach((e) => {
-      e.innerHTML = user.street || 'No available';
+      e.innerHTML = user.street || '-';
     });
 
     city.forEach((e) => {
-      e.innerHTML = user.city || 'No available';
+      e.innerHTML = user.city || '-';
     });
 
     zip.forEach((e) => {
-      e.innerHTML = user.zip || 'No available';
+      e.innerHTML = user.zip || '-';
     });
 
     country.forEach((e) => {
-      e.innerHTML = user.country || 'No available';
+      e.innerHTML = user.country || '-';
     });
 
     additinonal.forEach((e) => {
-      e.innerHTML = user['additional_address'] || 'No available';
+      e.innerHTML = user['additional_address'] || '-';
     });
 
     houseNumber.forEach((e) => {
-      e.innerHTML = user.housenumber || 'No available';
+      e.innerHTML = user.housenumber || '-';
+    });
+
+    company.forEach((e) => {
+      e.innerHTML = user.company || '-';
+    });
+
+    ust_idnr.forEach((e) => {
+      e.innerHTML = user.ust_idnr || '-';
     });
   } catch (error) {
     console.error('An error occurred while filling the invoice address:', error);

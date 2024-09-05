@@ -5,6 +5,7 @@ import { generateInvoice } from '$utils/invoiceGenerator';
 import { initializePaypal } from '$utils/paypal.js';
 import cleanData from '$utils/renderDataCleaner.js';
 import {
+  getInvoiceDataForCurrentOrder,
   hideSubmitLogger,
   loggerUpdate,
   sendInvoice,
@@ -22,6 +23,7 @@ import {
 
 import { initAuth } from './auth/userAuth';
 import testInvoice from './extras/testInvoice';
+import initOrderAccessChecker from './orders/orderAccessChecker';
 import { initOrderHistory } from './user/orderHistory';
 import initUserRelatedFunctions from './user/userMainExport';
 
@@ -29,6 +31,7 @@ window.Webflow ||= [];
 window.Webflow.push(async () => {
   // init instances
   initAuth();
+  initOrderAccessChecker();
   initInstances();
   orderAppFunctions();
   initWebflowFunctions();
@@ -246,6 +249,15 @@ window.Webflow.push(async () => {
             const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
             // Uncomment if needed
             // submitLoading.style.pointerEvents = 'none';
+            //? new adding user invoice address to the combinedArrays
+            const userAddress = getInvoiceDataForCurrentOrder();
+            if (userAddress) {
+              combinedArrays.push({ userAddress });
+            } else {
+              alert('Please fill in your address details');
+              console.error('No user address found');
+              return;
+            }
 
             //add total price to the combinedArrays
             combinedArrays.push({ paymentDetails });
@@ -318,13 +330,6 @@ window.Webflow.push(async () => {
         // goToHistory();
         // checkGoToHistory();
       });
-  }
-
-  function goToHistory() {
-    // Set a flag in local storage
-    localStorage.setItem('goToHistory', 'true');
-    // Reload the page
-    window.location.reload();
   }
 
   function cleanLoggerUI() {
