@@ -93,7 +93,13 @@ export function fillUserInformationInPreferencesUI() {
     console.log('+++++++++++ -- key ', key, adaptedData[key]);
     if (adaptedData[key]) {
       form.querySelector(`[name="${key}"]`).value = adaptedData[key];
-      // console.log('+++++++++++ -- key ', key, adaptedData[key]);
+      console.log('+++++++++++ -- key ', key, adaptedData[key]);
+    }
+    if (adaptedData['feature_update_alerts'] === 'on') {
+      form.querySelector(`[name="feature_update_alerts"]`).checked = true;
+    }
+    if (adaptedData['promotion_alerts'] === 'on') {
+      form.querySelector(`[name="promotion_alerts"]`).checked = true;
     }
   });
   return;

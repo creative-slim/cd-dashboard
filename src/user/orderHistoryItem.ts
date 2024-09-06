@@ -6,7 +6,7 @@ class OrderItem {
     this.orderDetails = orderDetails;
     this.itemDomElement = itemDomElement;
 
-    this.menuButtonHandler();
+    this.handleInvoiceDownload();
     // this.modalHandler();
     this.goToOrderDetails();
   }
@@ -27,27 +27,39 @@ class OrderItem {
     this.itemDomElement = itemDomElement;
   }
 
-  private menuButtonHandler(): void {
-    const menuButton = this.itemDomElement.querySelector('[data-order-item="ph-dropbown-btn"]');
-    const menuNav = menuButton.nextElementSibling;
+  // private menuButtonHandler(): void {
+  //   const menuButton = this.itemDomElement.querySelector('[data-order-item="ph-dropbown-btn"]');
+  //   if (!menuButton) return;
+  //   const menuNav = menuButton.nextElementSibling;
 
-    menuButton.addEventListener('click', () => {
-      menuButton.classList.toggle('w--open');
-      //   menuButton.setAttribute('aria-expanded', menuButton.classList.contains('w--open').toString());
-      //toggle z index of the parrent to 9999 to make sure it is on top of everything
-      menuButton.parentElement.style.zIndex =
-        menuButton.parentElement.style.zIndex === '9999' ? '1' : '9999';
-      menuNav.classList.toggle('w--open');
-    });
+  //   menuButton.addEventListener('click', () => {
+  //     menuButton.classList.toggle('w--open');
+  //     //   menuButton.setAttribute('aria-expanded', menuButton.classList.contains('w--open').toString());
+  //     //toggle z index of the parrent to 9999 to make sure it is on top of everything
+  //     menuButton.parentElement.style.zIndex =
+  //       menuButton.parentElement.style.zIndex === '9999' ? '1' : '9999';
+  //     menuNav.classList.toggle('w--open');
+  //   });
 
-    // click outside the dropdown to close it
-    document.addEventListener('click', (event) => {
-      if (menuNav.classList.contains('w--open') && !menuButton.contains(event.target as Node)) {
-        menuButton.classList.remove('w--open');
-        menuNav.classList.remove('w--open');
-        menuButton.parentElement.style.zIndex = '1';
-      }
-    });
+  //   // click outside the dropdown to close it
+  //   document.addEventListener('click', (event) => {
+  //     if (menuNav.classList.contains('w--open') && !menuButton.contains(event.target as Node)) {
+  //       menuButton.classList.remove('w--open');
+  //       menuNav.classList.remove('w--open');
+  //       menuButton.parentElement.style.zIndex = '1';
+  //     }
+  //   });
+  // }
+
+  private handleInvoiceDownload(): void {
+    debugger;
+    const invoiceButton = this.itemDomElement.querySelector(
+      '[order-history-item="invoice-download"]'
+    );
+    if (!invoiceButton) return;
+
+    invoiceButton.href = this.orderDetails.fieldData['invoice-link'].url;
+    invoiceButton.target = '_blank';
   }
 
   private goToOrderDetails(): void {
