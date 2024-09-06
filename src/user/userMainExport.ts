@@ -1,6 +1,6 @@
 import { editInvoiceAddress } from './editInvoiceAddress';
 import initInvoiceAddress from './userInvoiceAddress';
-import { checkUserDetails, userAddressModal } from './userModals';
+import { checkUserDetails, fillAddressFields, userAddressModal } from './userModals';
 import handleUserPreferences, {
   fillUserInformationInPreferencesUI,
 } from './userPreferencesHandler';
@@ -12,4 +12,5 @@ export default function initUserRelatedFunctions() {
   initInvoiceAddress();
   fillUserInformationInPreferencesUI();
   editInvoiceAddress();
+  fillAddressFields();
 }

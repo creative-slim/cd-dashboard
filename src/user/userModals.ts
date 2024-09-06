@@ -1,5 +1,7 @@
 // check if the user is already authenticated
 import Cookie from 'js-cookie';
+
+import initInvoiceAddress from './userInvoiceAddress';
 // check if local storage has the user data ( address )
 // prompt the user to login if not authenticated
 // promt the user to input their address if they are authenticated but no address
@@ -58,12 +60,13 @@ async function downloadUserDetails() {
 }
 
 export function checkRequiredFields(user) {
-  const reqArray = ['fisrt_name', 'last_name', 'street', 'city', 'housenumber', 'country', 'zip'];
+  const reqArray = ['first_name', 'last_name', 'street', 'city', 'housenumber', 'country', 'zip'];
 
   let missingFields = false;
   reqArray.forEach((field) => {
     console.log('🙉  -- field ', field);
     if (!user[field]) {
+      console.error('🙉  -- missingField ', field);
       missingFields = true;
     }
   });
@@ -118,6 +121,11 @@ async function addressModalSubmitHandler() {
     if (resp.status === 200) {
       console.log('🙉  -- resp ', resp);
       const successMessage = modal.querySelector('.w-form-done');
+      Cookie.set('user', JSON.stringify(transformUpdateModalFormatToUserData(user)), {
+        expires: 1,
+      });
+      initInvoiceAddress();
+
       // change display to block
       successMessage.style.display = 'block';
       await downloadUserDetails();
@@ -141,4 +149,56 @@ async function addressModalSubmitHandler() {
     modal.classList.remove('show');
     return false;
   });
+}
+
+// fill the address fields with the modal data
+export function fillAddressFields() {
+  const userData = Cookie.get('user');
+  if (!userData) return;
+  const user = JSON.parse(userData);
+
+  const adaptedData = transformUserDataToUpdateModalFormat(user);
+
+  const form = document.querySelector('[data-modal="address"] form');
+  if (!form) return;
+
+  for (const key in adaptedData) {
+    const input = form.querySelector(`[name="${key}"]`);
+    if (!input) continue;
+    input.value = adaptedData[key];
+  }
+}
+
+function transformUserDataToUpdateModalFormat(userData) {
+  return {
+    'update-first-name': userData.first_name || '',
+    'update-last-name': userData.last_name || '',
+    'update-phone': userData.phone || '',
+    'update-contactperson': userData.contactperson || '',
+    'update-idnr': userData.ust_idnr || '',
+    'update-company': userData.company || '',
+    'update-street': userData.street || '',
+    'update-house-number': userData.housenumber || '',
+    'update-additional': userData.additional_address || '',
+    'update-zip': userData.zip || '',
+    'update-city': userData.city || '',
+    'update-country': userData.country || '',
+  };
+}
+
+function transformUpdateModalFormatToUserData(modalData) {
+  return {
+    first_name: modalData['update-first-name'] || '',
+    last_name: modalData['update-last-name'] || '',
+    phone: modalData['update-phone'] || '',
+    contactperson: modalData['update-contactperson'] || '',
+    ust_idnr: modalData['update-idnr'] || '',
+    company: modalData['update-company'] || '',
+    street: modalData['update-street'] || '',
+    housenumber: modalData['update-house-number'] || '',
+    additional_address: modalData['update-additional'] || '',
+    zip: modalData['update-zip'] || '',
+    city: modalData['update-city'] || '',
+    country: modalData['update-country'] || '',
+  };
 }
