@@ -56,9 +56,12 @@ function setupNewCard(card) {
       }
     }
     // makeCheckBoxCollapsable
-    if (elem.dataset.collapseCheckbox === 'toggle') {
+    if (elem.dataset.collapseCheckbox === 'open') {
       // console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
-      makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"');
+      makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"', true);
+    }
+    if (elem.dataset.collapseCheckbox === 'close') {
+      makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"', false);
     }
 
     elem.addEventListener('change', () => {

@@ -108,7 +108,7 @@ export function initializePaypal(
           // check if all fields are filled
           if (!areRequiredFieldsPopulated()) {
             actions.reject();
-            errorModal('Please fill in all required fields');
+            errorModal('Bitte füllen Sie alle erforderlichen Felder aus.');
             // alert('Please fill in all required fields');
             return actions.reject();
           }
@@ -200,6 +200,10 @@ export function initializePaypal(
         },
         onCancel: function () {
           alerts.innerHTML = `<div class="ms-alert ms-action2 ms-small"><span class="ms-close"></span><p>Order cancelled!</p></div>`;
+
+          setTimeout(() => {
+            alerts.innerHTML = '';
+          }, 1500);
         },
         onError: function (err) {
           console.error('PayPal Error:', err);

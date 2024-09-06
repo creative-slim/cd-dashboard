@@ -43,31 +43,41 @@ export function makeSmallCardCollapsable(button, targetAttribute) {
   });
 }
 
-export function makeCheckBoxCollapsable(checkbox, targetAttribute) {
-  // console.log('collapser', checkbox, targetAttribute);
-  if (!checkbox) {
+export function makeCheckBoxCollapsable(radio, targetAttribute, toOpen) {
+  if (!radio || radio.type !== 'radio') {
     return;
   }
   if (!targetAttribute) {
     return;
   }
-  const targetElement = checkbox.closest(`[${targetAttribute}]`);
+
+  // Find the closest target element based on the provided attribute
+  const targetElement = radio.closest(`[${targetAttribute}]`);
   if (!targetElement) {
     return;
   }
+
+  // Select the content element to be collapsed/expanded
   const content = targetElement.querySelector('[data-collapse-checkbox="target"]');
   if (!content) {
     return;
   }
-  let isOpen;
-  if (content.clientHeight <= 10) {
-    isOpen = false;
-  } else {
-    isOpen = true;
+
+  // make the input field inside the content element required
+  const input = content.querySelectorAll('input');
+  if (!input) {
+    return;
   }
 
-  checkbox.addEventListener('change', () => {
-    if (isOpen) {
+  // Add event listener to handle radio button changes
+  radio.addEventListener('change', () => {
+    input.forEach((input) => {
+      logger.log(toOpen, 'input', input);
+
+      toOpen ? input.setAttribute('required', 'required') : input.removeAttribute('required');
+    });
+    // Only proceed if the radio button is checked
+    if (!toOpen) {
       gsap.to(content, { height: 0, duration: 0.5 });
     } else {
       gsap.to(content, {
@@ -81,6 +91,5 @@ export function makeCheckBoxCollapsable(checkbox, targetAttribute) {
         },
       });
     }
-    isOpen = !isOpen;
   });
 }

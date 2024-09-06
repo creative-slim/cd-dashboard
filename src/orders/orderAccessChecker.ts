@@ -14,6 +14,8 @@ export default async function initOrderAccessChecker() {
   }
   console.log('initOrderAccessChecker');
   await addInvoiceDataToOrderPage();
+  revisionActionHandler();
+  cancelOrderHandler();
 }
 
 async function addInvoiceDataToOrderPage() {
@@ -58,4 +60,59 @@ async function getPaymentDataIfUserIsAuthorized() {
   const data = await resp.json();
 
   return data;
+}
+
+function revisionActionHandler() {
+  const orderSlug = window.location.href.split('/').pop();
+
+  const modal = document.querySelector('[data-modal="revision"]');
+
+  const revisionButton = document.querySelector('[data-action="revision"]');
+  revisionButton.addEventListener('click', async () => {
+    modal.classList.add('show');
+  });
+
+  const closeButton = modal.querySelector('.modal-close');
+  closeButton.addEventListener('click', async () => {
+    modal.classList.remove('show');
+  });
+
+  const submitButton = modal.querySelector('input[type="submit"]');
+  // close the modal after submitting the revision
+  submitButton.addEventListener('click', async () => {
+    setTimeout(() => {
+      modal.classList.remove('show');
+    }, 2000);
+  });
+  // data-modal="order-id"
+  const orderIdElement = modal.querySelector('[data-modal="order-id"]');
+  orderIdElement.textContent = orderSlug;
+}
+
+function cancelOrderHandler() {
+  const orderSlug = window.location.href.split('/').pop();
+
+  const modal = document.querySelector('[data-modal="cancel"]');
+
+  const cancelButton = document.querySelector('[data-action="cancel"]');
+  cancelButton.addEventListener('click', async () => {
+    modal.classList.add('show');
+  });
+
+  const closeButton = modal.querySelector('.modal-close');
+  closeButton.addEventListener('click', async () => {
+    modal.classList.remove('show');
+  });
+
+  const submitButton = modal.querySelector('input[type="submit"]');
+  // close the modal after submitting the cancelation
+  submitButton.addEventListener('click', async () => {
+    setTimeout(() => {
+      modal.classList.remove('show');
+    }, 2000);
+  });
+
+  // data-modal="order-id"
+  const orderIdElement = modal.querySelector('[data-modal="order-id"]');
+  orderIdElement.textContent = orderSlug;
 }

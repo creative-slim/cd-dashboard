@@ -17,14 +17,10 @@ const POST_LOGIN_REDIRECT_URL_KEY = 'postLoginRedirectUrl';
 async function createAuthClient() {
   try {
     return await createAuth0Client({
-      // domain: 'best-renders.us.auth0.com',
       domain: 'renderstudio24.eu.auth0.com',
-      // clientId: 'KcqCRysHkhaeEb4wQAUkqsRTOAEJneVW',
       clientId: 'HtRGeGXBxMx53TBVTX7GhHbDZfhfHRX6',
       authorizationParams: {
-        // redirect_uri: 'https://preview.renderstudio24.de/',
         redirect_uri: 'https://preview.renderstudio24.de/',
-        // audience: 'https://www.bestrenders24.com/api',
         audience: 'https://auth0api.renderstudio24.de',
       },
     });
@@ -37,21 +33,6 @@ async function createAuthClient() {
 function saveRedirectUrl() {
   localStorage.setItem(POST_LOGIN_REDIRECT_URL_KEY, window.location.href);
 }
-
-// function redirectToSavedUrl() { //! moved to webflow header
-//   // debugger;
-
-//   const redirectUrl = localStorage.getItem(POST_LOGIN_REDIRECT_URL_KEY);
-//   if (redirectUrl) {
-//     const codeString = '?code=' + new URLSearchParams(window.location.search).get('code');
-//     localStorage.removeItem(POST_LOGIN_REDIRECT_URL_KEY); // Clear the saved URL after use
-//     window.location.href = redirectUrl + codeString;
-//     console.log('Redirecting to saved URL:', redirectUrl);
-//   }
-//   //  else {
-//   //   window.location.href = window.location.origin; // Default to home
-//   // }
-// } //! moved to webflow header
 
 async function handleLogin(client) {
   try {
@@ -110,8 +91,6 @@ async function handleLoginCallback(client) {
     const { userData, userToken } = await fetchUserData(client);
     if (userData && userToken) {
       await syncUsersDB(userData, userToken);
-      // redirectToSavedUrl(); //! moved to webflow header
-      // remove the code from the URL
       const url = new URL(window.location.href);
       url.searchParams.delete('code');
       url.searchParams.delete('state');
@@ -123,10 +102,30 @@ async function handleLoginCallback(client) {
   }
 }
 
+// **New function to redirect to login if not authenticated and under `/user` path**
+async function redirectToLoginIfUnauthenticated(client) {
+  const isAuthenticated = await checkAuthentication(client);
+  const currentPath = window.location.pathname;
+
+  if (!isAuthenticated && currentPath.startsWith('/user')) {
+    console.log('User is not authenticated and on /user path, redirecting to login...');
+    await handleLogin(client);
+  }
+}
+
+function checkUrlErrors() {
+  //check if the url is valid, if the url has null in it then go back to home page
+  const url = new URL(window.location.href);
+  if (url.searchParams.get('code') === 'null') {
+    window.location.href = '/';
+  }
+}
 export async function initAuth() {
   console.log('****************  initAuth ****************');
 
   try {
+    checkUrlErrors();
+
     const client = await createAuthClient();
 
     const loginElement = document.querySelector('[data-login="login"]');
@@ -145,7 +144,6 @@ export async function initAuth() {
 
     if (isAuthenticated) {
       await fetchUserData(client);
-      // redirectToSavedUrl();  //! moved to webflow header
       return;
     }
 
@@ -155,6 +153,9 @@ export async function initAuth() {
 
     if (shouldHandleCallback) {
       await handleLoginCallback(client);
+    } else {
+      // **Redirect to login if the user is not authenticated and is under /user path**
+      await redirectToLoginIfUnauthenticated(client);
     }
   } catch (error) {
     console.error('Error in initAuth:', error); // Improved error handling

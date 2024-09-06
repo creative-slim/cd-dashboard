@@ -29,6 +29,12 @@ export async function displayRecentOrders() {
 
   const container = template.parentElement;
   container.innerHTML = '';
+  if (data.length === 0) {
+    const noOrders = document.createElement('div');
+    noOrders.textContent = 'Sie haben keine Bestellungen.';
+    container.appendChild(noOrders);
+    return;
+  }
 
   data.forEach((order) => {
     const item = template.cloneNode(true);
@@ -48,10 +54,8 @@ export async function displayRecentOrders() {
 
     item.querySelector('[data-order="name"]').textContent = renderList[0].render['item-name'];
     item.querySelector('[data-order="status"]').textContent = 'paid';
-    item.querySelector('[data-order="price"]').textContent = `${renderList.reduce(
-      (total, item) => total + (item.render.price || 0),
-      0
-    )} EUR`;
+    const totalPrice = renderList.reduce((total, item) => total + (item.render.price || 0), 0);
+    item.querySelector('[data-order="price"]').textContent = `${totalPrice.toFixed(2)} €`;
 
     container.appendChild(item);
   });

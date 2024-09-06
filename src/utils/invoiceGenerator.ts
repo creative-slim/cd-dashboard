@@ -10,7 +10,7 @@ const PRESPECTIVE_PRICE_CONSTANT = 85;
 export async function generateInvoice(finalData) {
   const invoice = document.querySelector<HTMLElement>('#pdf-wrapper');
   const pdfwrapper = invoice.cloneNode(true);
-  console.log('------------- inside generateInvoice ------------- ');
+  console.log('------------- generateInvoice ------------- ');
   console.log({ finalData });
   const newCombinedArray = mergePaymentDetails(finalData.finalData.combinedArrays);
   finalData.finalData.combinedArrays = newCombinedArray;
@@ -75,11 +75,11 @@ export async function generateInvoice(finalData) {
   const pdfFile = await getInvoicePDF(pdfwrapper, orderData['order-id']);
 
   //!testing
-  // const url = URL.createObjectURL(pdfFile);
-  // const a = document.createElement('a');
-  // a.href = url;
-  // a.download = `Invoice ${orderData['order-id']}.pdf`;
-  // a.click();
+  const url = URL.createObjectURL(pdfFile);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Invoice ${orderData['order-id']}.pdf`;
+  a.click();
   //!testing
 
   return pdfFile;
@@ -171,7 +171,7 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
 
     const housenumber = wrapperElement.querySelectorAll('[data-invoice=house-number]');
     housenumber.forEach((e) => {
-      e.innerHTML = userData.house_number;
+      e.innerHTML = userData.housenumber;
     });
 
     const zip = wrapperElement.querySelectorAll('[data-invoice=zip]');
@@ -179,14 +179,17 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
       e.innerHTML = userData.zip;
     });
 
-    const ust_idnr = wrapperElement.querySelectorAll('[data-invoice=idnr]');
-    ust_idnr.forEach((e) => {
-      e.innerHTML = userData.ust_idnr;
-    });
+    const ust_idnr = wrapperElement.querySelectorAll('[data-invoice="idnr"]');
+    if (userData.ust_idnr) {
+      ust_idnr.forEach((e) => {
+        e.innerHTML = userData.ust_idnr;
+      });
+    }
 
-    const ref = wrapperElement.querySelectorAll('[data-invoice=ref]');
+    const last8Digits = userData.auth0_id.slice(-10);
+    const ref = wrapperElement.querySelectorAll('[data-invoice=client-refrence]');
     ref.forEach((e) => {
-      e.innerHTML = userData.id;
+      e.innerHTML = last8Digits;
     });
 
     const country = wrapperElement.querySelectorAll('[data-invoice=country]');
@@ -203,7 +206,7 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
 
     const dateElement = wrapperElement.querySelectorAll('[data-invoice=date]');
     dateElement.forEach((e) => {
-      e.innerHTML = currentDate.toLocaleDateString();
+      e.innerHTML = getCurrentFormattedDate(currentDate);
     });
 
     const invoiceElement = wrapperElement.querySelectorAll('[data-invoice=invoice-number]');
@@ -333,4 +336,35 @@ function formatDate(date) {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
   return `${day}.${month}.${year}`;
+}
+
+function getCurrentFormattedDate() {
+  const date = new Date();
+
+  // Get the day with leading zero
+  const day = String(date.getDate()).padStart(2, '0');
+
+  // Get the month as an uppercase abbreviation
+  const months = [
+    'JAN',
+    'FEB',
+    'MÄR',
+    'APR',
+    'MAI',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OKT',
+    'NOV',
+    'DEZ',
+  ];
+
+  const month = months[date.getMonth()];
+
+  // Get the year
+  const year = date.getFullYear();
+
+  // Combine the parts into the desired format
+  return `${day} ${month} ${year}`;
 }
