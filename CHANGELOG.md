@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.2
+
+### Patch Changes
+
+- 13dd300: invoice modal fix
+
 ## 3.6.1
 
 ### Patch Changes
