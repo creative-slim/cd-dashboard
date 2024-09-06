@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.3
+
+### Patch Changes
+
+- 2b070e9: fix stuff
+
 ## 3.6.2
 
 ### Patch Changes
