@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.1
+
+### Patch Changes
+
+- c322145: auth fixes
+
 ## 3.6.0
 
 ### Minor Changes
