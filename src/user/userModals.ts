@@ -13,7 +13,6 @@ const api = process.env.NODE_ENV === 'development' ? local : server;
 export async function userAddressModal() {
   const modal = document.querySelector('[data-modal="address"]');
   if (!modal) return;
-  console.log('🙉  -- modal ', modal);
   // modal?.removeAttribute('style');
   modal?.classList.add('show');
   await addressModalSubmitHandler();
@@ -59,7 +58,7 @@ async function downloadUserDetails() {
 }
 
 export function checkRequiredFields(user) {
-  const reqArray = ['street', 'city', 'housenumber', 'country', 'zip'];
+  const reqArray = ['fisrt_name', 'last_name', 'street', 'city', 'housenumber', 'country', 'zip'];
 
   let missingFields = false;
   reqArray.forEach((field) => {
