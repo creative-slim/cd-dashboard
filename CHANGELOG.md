@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.6
+
+### Patch Changes
+
+- a09ede2: auth0 www
+
 ## 3.6.5
 
 ### Patch Changes
