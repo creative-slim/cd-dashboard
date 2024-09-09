@@ -53,7 +53,7 @@ export async function displayRecentOrders() {
     console.log(order);
 
     item.querySelector('[data-order="name"]').textContent = renderList[0].render['item-name'];
-    item.querySelector('[data-order="status"]').textContent = 'paid';
+    item.querySelector('[data-order="status"]').textContent = 'bezahlt';
     const totalPrice = renderList.reduce((total, item) => total + (item.render.price || 0), 0);
     item.querySelector('[data-order="price"]').textContent = `${totalPrice.toFixed(2)} €`;
 

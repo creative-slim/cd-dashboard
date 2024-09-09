@@ -199,7 +199,7 @@ export function initializePaypal(
           // });
         },
         onCancel: function () {
-          alerts.innerHTML = `<div class="ms-alert ms-action2 ms-small"><span class="ms-close"></span><p>Order cancelled!</p></div>`;
+          alerts.innerHTML = `<div class="ms-alert ms-action2 ms-small"><span class="ms-close"></span><p>Zahlungsvorgang abgebrochen!</p></div>`;
 
           setTimeout(() => {
             alerts.innerHTML = '';

@@ -1,5 +1,9 @@
 import FileUploader from '../../extras/uploaderClass';
-import { makeCheckBoxCollapsable, makeSmallCardCollapsable } from './collapser';
+import {
+  makeCheckBoxCollapsable,
+  makeRadioCollapsable,
+  makeSmallCardCollapsable,
+} from './collapser';
 import { removeObjectByElementIdFromLocalStorage, saveAllData, saveData } from './saveInput';
 
 function orderAppFunctions() {
@@ -58,10 +62,10 @@ function setupNewCard(card) {
     // makeCheckBoxCollapsable
     if (elem.dataset.collapseCheckbox === 'open') {
       // console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
-      makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"', true);
+      makeRadioCollapsable(elem, 'data-collapse-checkbox="wrapper"', true);
     }
     if (elem.dataset.collapseCheckbox === 'close') {
-      makeCheckBoxCollapsable(elem, 'data-collapse-checkbox="wrapper"', false);
+      makeRadioCollapsable(elem, 'data-collapse-checkbox="wrapper"', false);
     }
 
     elem.addEventListener('change', () => {
@@ -165,17 +169,22 @@ function addNewRequestItem(card) {
     //!Disabled for now
     // const collapseBtn = newItem.querySelector('[data-collapse="toggle"]');
     // const collapseWrapper = newItem.closest('[data-collapse="wrapper"]');
-    /*
-    makeSmallCardCollapsable(collapseBtn, 'data-collapse="wrapper"');
+
+    // makeSmallCardCollapsable(collapseBtn, 'data-collapse="wrapper"');
     makeCheckBoxCollapsable(
       newItem.querySelector('[data-collapse-checkbox="toggle"]'),
       'data-collapse-checkbox="wrapper"'
     );
-*/
+
     //!Disabled for now
 
     saveAllData();
   });
+
+  makeCheckBoxCollapsable(
+    itemTemplate.querySelector('[data-collapse-checkbox="toggle"]'),
+    'data-collapse-checkbox="wrapper"'
+  );
 }
 
 // Function to clear all input fields in the cloned item

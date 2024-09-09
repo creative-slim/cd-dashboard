@@ -52,7 +52,7 @@ class OrderItem {
   // }
 
   private handleInvoiceDownload(): void {
-    debugger;
+    // debugger;
     const invoiceButton = this.itemDomElement.querySelector(
       '[order-history-item="invoice-download"]'
     );

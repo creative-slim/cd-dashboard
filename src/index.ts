@@ -378,6 +378,7 @@ window.Webflow.push(async () => {
   testInvoice();
   init();
   showContent();
+  preSelectRadio();
   // checkRequiredFields();
 
   // function that disables all buttons and links on the page
@@ -414,6 +415,13 @@ window.Webflow.push(async () => {
     if (loader) {
       //set style to none
       loader.style.display = 'none';
+    }
+  }
+
+  function preSelectRadio() {
+    const radio = document.querySelector('[data-name="three-d-modelling"]');
+    if (radio) {
+      radio.click();
     }
   }
 

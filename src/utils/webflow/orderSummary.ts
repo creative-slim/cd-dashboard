@@ -165,18 +165,23 @@ function calculateTotal(data) {
       console.log('renderPrice woodtype', renderPrice);
     }
     if (render['render-type'] === 'scene') {
-      renderPrice = renderPrice + Prices.scene.build + Prices.scene.render * (quantity - 1);
+      if (!isNaN(Prices.scene.build) && !isNaN(Prices.scene.render)) {
+        renderPrice = renderPrice + Prices.scene.build + Prices.scene.render * (quantity - 1);
+      }
       console.log('renderPrice scene', renderPrice);
     }
     if (render['render-type'] === 'knockout') {
-      renderPrice = renderPrice + Prices.knockout.build + Prices.knockout.render * (quantity - 1);
-
+      if (!isNaN(Prices.knockout.build) && !isNaN(Prices.knockout.render)) {
+        renderPrice = renderPrice + Prices.knockout.build + Prices.knockout.render * (quantity - 1);
+      }
       console.log('renderPrice knock', renderPrice);
     }
 
     console.log({ totalPrice, renderPrice, quantity, provided3DModel });
 
-    totalPrice = totalPrice + renderPrice;
+    if (!isNaN(renderPrice)) {
+      totalPrice = totalPrice + renderPrice;
+    }
 
     render['price'] = renderPrice;
 

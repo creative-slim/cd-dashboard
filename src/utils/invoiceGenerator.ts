@@ -208,6 +208,10 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
     dateElement.forEach((e) => {
       e.innerHTML = getCurrentFormattedDate(currentDate);
     });
+    const invoiceDate = wrapperElement.querySelectorAll('[data-invoice=invoice-date]');
+    invoiceDate.forEach((e) => {
+      e.innerHTML = formatDate(currentDate);
+    });
 
     const invoiceElement = wrapperElement.querySelectorAll('[data-invoice=invoice-number]');
     invoiceElement.forEach((e) => {
