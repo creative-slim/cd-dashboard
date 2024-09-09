@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.5
+
+### Patch Changes
+
+- 52ad85c: paypal prod
+
 ## 3.6.4
 
 ### Patch Changes
