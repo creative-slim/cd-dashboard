@@ -144,7 +144,7 @@ function calculateTotal(data) {
   const provided3DModel = provided3DModeltext === 'true' ? true : false;
 
   if (!provided3DModel) {
-    totalPrice = totalPrice + 850;
+    totalPrice = totalPrice + Prices.base.build;
   }
   data['price'] = totalPrice;
 
