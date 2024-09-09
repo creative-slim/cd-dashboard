@@ -21,7 +21,7 @@ const createAuthClient = async () => {
     domain: 'renderstudio24.eu.auth0.com',
     clientId: 'HtRGeGXBxMx53TBVTX7GhHbDZfhfHRX6',
     authorizationParams: {
-      redirect_uri: 'https://preview.renderstudio24.de/',
+      redirect_uri: 'https://www.renderstudio24.de/',
       audience: 'https://auth0api.renderstudio24.de',
     },
   });
