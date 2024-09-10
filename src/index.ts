@@ -30,7 +30,6 @@ import initUserRelatedFunctions from './user/userMainExport';
 window.Webflow ||= [];
 window.Webflow.push(async () => {
   // init instances
-  console.log(process.env.API_LOCAL_URL, process.env.API_SERVER_URL);
 
   initAuth();
   initOrderAccessChecker();
@@ -51,8 +50,12 @@ window.Webflow.push(async () => {
   // const local = 'http://localhost:8787';
 
   //?change this to switch between local and server
-  const api =
-    process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
+  let api;
+  if (process.env.NODE_ENV === 'development') {
+    api = 'http://127.0.0.1:8787'; // Use local endpoint for development
+  } else {
+    api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
+  }
 
   //! END API ENDPOINTS
 

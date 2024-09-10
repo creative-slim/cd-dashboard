@@ -1,7 +1,12 @@
 import { areRequiredFieldsPopulated, errorModal } from '$extras/inputsChecker.js';
 import cleanData from '$utils/renderDataCleaner.js';
-const api =
-  process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
+let api;
+if (process.env.NODE_ENV === 'development') {
+  api = 'http://127.0.0.1:8787'; // Use local endpoint for development
+} else {
+  api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
+}
+
 export function initializePaypal(
   paymentOptionsSelector,
   alertsSelector,
