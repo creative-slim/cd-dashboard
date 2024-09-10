@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.7
+
+### Patch Changes
+
+- 7b654eb: order history fix
+
 ## 3.6.6
 
 ### Patch Changes
