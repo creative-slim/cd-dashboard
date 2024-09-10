@@ -67,12 +67,8 @@ export function afterLogoutUiSetup() {
   });
 }
 
-let api;
-if (process.env.NODE_ENV === 'development') {
-  api = 'http://127.0.0.1:8787'; // Use local endpoint for development
-} else {
-  api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
-}
+const api =
+  process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
 
 export async function syncUsersDB(userData, token) {
   console.log('syncing user FUNCTION ', userData, token);

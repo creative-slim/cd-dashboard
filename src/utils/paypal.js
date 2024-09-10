@@ -1,21 +1,13 @@
 import { areRequiredFieldsPopulated, errorModal } from '$extras/inputsChecker.js';
 import cleanData from '$utils/renderDataCleaner.js';
-
+const api =
+  process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
 export function initializePaypal(
   paymentOptionsSelector,
   alertsSelector,
   ConfirmOrderButtonSelector,
   paymentStatus
 ) {
-  let api;
-  if (process.env.NODE_ENV === 'development') {
-    api = 'http://127.0.0.1:8787'; // Use local endpoint for development
-    console.log('DEV___PAYPAL____###');
-  } else {
-    api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
-    console.log('CDN_PAYPAL_');
-  }
-
   const PAYPAL_SDK_URL = 'https://www.paypal.com/sdk/js';
   const CURRENCY = 'EUR';
   const INTENT = 'capture';

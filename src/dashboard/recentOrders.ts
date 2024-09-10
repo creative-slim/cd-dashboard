@@ -1,12 +1,8 @@
 export async function displayRecentOrders() {
   const template = document.querySelector('[data-order="template"]');
 
-  let api;
-  if (process.env.NODE_ENV === 'development') {
-    api = 'http://127.0.0.1:8787'; // Use local endpoint for development
-  } else {
-    api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
-  }
+  const api =
+    process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
 
   if (!template) {
     console.error('Template not found');
@@ -31,7 +27,7 @@ export async function displayRecentOrders() {
   container.innerHTML = '';
   if (data.length === 0) {
     const noOrders = document.createElement('div');
-    noOrders.textContent = 'Sie haben keine Bestellungen.';
+    // noOrders.textContent = 'Sie haben keine Bestellungen.';
     container.appendChild(noOrders);
     return;
   }

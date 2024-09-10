@@ -30,6 +30,8 @@ import initUserRelatedFunctions from './user/userMainExport';
 window.Webflow ||= [];
 window.Webflow.push(async () => {
   // init instances
+  console.log(process.env.API_LOCAL_URL, process.env.API_SERVER_URL);
+
   initAuth();
   initOrderAccessChecker();
   initInstances();
@@ -37,7 +39,7 @@ window.Webflow.push(async () => {
   initWebflowFunctions();
   initUserRelatedFunctions();
 
-  if (window.location.pathname.includes('/user/order-history')) {
+  if (window.location.pathname.includes('/user/bestellverlauf')) {
     console.log('order history page');
 
     const info = await initOrderHistory();
@@ -45,11 +47,12 @@ window.Webflow.push(async () => {
   }
 
   //! API ENDPOINTS
-  const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';
-  const local = 'http://localhost:8787';
+  // const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';
+  // const local = 'http://localhost:8787';
 
   //?change this to switch between local and server
-  const api = process.env.NODE_ENV === 'development' ? local : server;
+  const api =
+    process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
 
   //! END API ENDPOINTS
 
@@ -373,7 +376,9 @@ window.Webflow.push(async () => {
   }
 
   console.log('ENV ===> ', process.env.NODE_ENV);
-  console.log(process.env.NODE_ENV === 'development' ? '_____*_LOCALHOST_*____' : '***_CDN_***');
+  console.log(
+    process.env.NODE_ENV === 'development' ? '_____*_LOCALHOST_*____' : '*++**_CDN_**++*'
+  );
 
   testInvoice();
   init();

@@ -1,6 +1,10 @@
+import dotenv from 'dotenv'; // Import dotenv
 import * as esbuild from 'esbuild';
 import { readdirSync } from 'fs';
 import { join, sep } from 'path';
+
+// Load environment variables from .env file
+dotenv.config();
 
 // Config output
 const BUILD_DIRECTORY = 'dist';
@@ -14,6 +18,12 @@ const LIVE_RELOAD = !PRODUCTION;
 const SERVE_PORT = 3000;
 const SERVE_ORIGIN = `http://localhost:${SERVE_PORT}`;
 
+// Dynamically map all environment variables into esbuild's "define" object
+const envVariables = Object.keys(process.env).reduce((acc, curr) => {
+  acc[`process.env.${curr}`] = JSON.stringify(process.env[curr]);
+  return acc;
+}, {});
+
 // Create context
 const context = await esbuild.context({
   bundle: true,
@@ -25,6 +35,7 @@ const context = await esbuild.context({
   inject: LIVE_RELOAD ? ['./bin/live-reload.js'] : undefined,
   define: {
     SERVE_ORIGIN: JSON.stringify(SERVE_ORIGIN),
+    ...envVariables, // Inject all environment variables dynamically
   },
 });
 

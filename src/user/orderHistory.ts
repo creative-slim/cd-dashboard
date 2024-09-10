@@ -1,14 +1,8 @@
 import OrderItem from './orderHistoryItem';
-
+const api =
+  process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
 export const initOrderHistory = async () => {
   try {
-    let api;
-    if (process.env.NODE_ENV === 'development') {
-      api = 'http://127.0.0.1:8787'; // Use local endpoint for development
-    } else {
-      api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
-    }
-
     const token = localStorage.getItem('userToken');
 
     const userOrders = await fetch(`${api}/api/orders/order-history`, {

@@ -6,11 +6,8 @@ import initInvoiceAddress from './userInvoiceAddress';
 // prompt the user to login if not authenticated
 // promt the user to input their address if they are authenticated but no address
 //! API ENDPOINTS
-const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';
-const local = 'http://localhost:8787';
-
-//?change this to switch between local and server
-const api = process.env.NODE_ENV === 'development' ? local : server;
+const api =
+  process.env.NODE_ENV === 'development' ? process.env.API_LOCAL_URL : process.env.API_SERVER_URL;
 
 export async function userAddressModal() {
   const modal = document.querySelector('[data-modal="address"]');
@@ -82,13 +79,6 @@ export function checkRequiredFields(user) {
 }
 
 async function addressModalSubmitHandler() {
-  //! API ENDPOINTS
-  const server = 'https://creative-directors-dropbox.sa-60b.workers.dev';
-  const local = 'http://localhost:8787';
-
-  //?change this to switch between local and server
-  const api = process.env.NODE_ENV === 'development' ? local : server;
-
   const modal = document.querySelector('[data-modal="address"]');
   if (!modal) return;
   const token = localStorage.getItem('userToken');

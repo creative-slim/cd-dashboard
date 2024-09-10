@@ -11,10 +11,10 @@ import {
 
 const USER_DATA_KEY = 'userData';
 const USER_TOKEN_KEY = 'userToken';
-const POST_LOGIN_REDIRECT_URL_KEY = 'postLoginRedirectUrl';
+const POST_LOGIN_REDIRECT_URL_KEYY = 'postLoginRedirectUrl';
 
 const saveRedirectUrl = () =>
-  localStorage.setItem(POST_LOGIN_REDIRECT_URL_KEY, window.location.href);
+  localStorage.setItem(POST_LOGIN_REDIRECT_URL_KEYY, window.location.href);
 
 const createAuthClient = async () => {
   return createAuth0Client({
