@@ -30,7 +30,10 @@ const createAuthClient = async () => {
 const handleLogin = async (client) => {
   try {
     saveRedirectUrl();
-    await client.loginWithRedirect();
+    // await client.loginWithRedirect();
+    await client.loginWithPopup().then(() => {
+      window.location.reload();
+    });
   } catch {
     alert('Login failed. Try again.');
   }

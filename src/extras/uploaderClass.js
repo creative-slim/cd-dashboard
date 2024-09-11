@@ -24,7 +24,8 @@ export default class FileUploader {
       return;
     }
     // this.output = document.getElementById(output);
-    this.output = this.dropZone.parentElement.querySelector('[uploader-element="output"]') || null;
+    this.mainWrapper = this.dropZone.closest('[data-upload="wrapper"]');
+    this.output = this.mainWrapper.querySelector('[uploader-element="output"]') || null;
 
     this.submitprevention = document.getElementById('order-submit-button');
     this.uploaderID = this.dropZone.dataset.uploaderId || null;
@@ -38,7 +39,7 @@ export default class FileUploader {
     this.doneLoading = this.dropZone.querySelector('[uploader-status="done"]');
     this.defaultView = this.dropZone.querySelector('[uploader-status="default"]');
     // this.loadingError = document.getElementById(errorPopup);
-    this.loadingError = this.dropZone.parentElement.querySelector('[uploader-status="error"]');
+    this.loadingError = this.mainWrapper.querySelector('[uploader-status="error"]');
 
     // this.fileType = eventOrMember;
 
@@ -59,9 +60,9 @@ export default class FileUploader {
     this.doneLoading.style.transform = 'scale(0)';
     this.loadingError.style.display = 'none';
 
-    this.namesArray = this.dropZone.parentElement.parentElement.querySelector(
-      '[uploader-output="string"]'
-    );
+    this.namesArray = this.dropZone
+      .closest('[data-upload="wrapper"]')
+      .querySelector('[uploader-output="string"]');
 
     this.name = name;
     // this.namesArray = namesArray;
@@ -354,6 +355,18 @@ export default class FileUploader {
         this.loadingError.style.display = 'flex';
         this.activeError = true;
         this.loadingError.innerText = 'File(s) exceed maximum size of 3.9 MB';
+        setTimeout(() => {
+          this.loadingError.style.display = 'none';
+          this.activeError = false;
+        }, this.errorTimeout);
+        return;
+      }
+
+      //! 500MB for 3D files
+      if (file.size > 500 * 1024 * 1024 && this.fileType === '3D') {
+        this.loadingError.style.display = 'flex';
+        this.activeError = true;
+        this.loadingError.innerText = 'File(s) exceed maximum size of 500 MB';
         setTimeout(() => {
           this.loadingError.style.display = 'none';
           this.activeError = false;
