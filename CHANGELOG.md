@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.9
+
+### Patch Changes
+
+- 92c7c85: popup login
+
 ## 3.6.8
 
 ### Patch Changes
