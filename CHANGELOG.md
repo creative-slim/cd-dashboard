@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.8
+
+### Patch Changes
+
+- 07dea0f: fix process
+
 ## 3.6.7
 
 ### Patch Changes
