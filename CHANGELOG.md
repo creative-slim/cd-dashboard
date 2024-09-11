@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.10
+
+### Patch Changes
+
+- acd8073: paypal sandbox
+
 ## 3.6.9
 
 ### Patch Changes
