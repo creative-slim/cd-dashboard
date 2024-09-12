@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.11
+
+### Patch Changes
+
+- a07af8d: testing new user auth for mobile
+
 ## 3.6.10
 
 ### Patch Changes
