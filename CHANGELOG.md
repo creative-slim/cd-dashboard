@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.12
+
+### Patch Changes
+
+- 7c47f8d: test auth mobile 2
+
 ## 3.6.11
 
 ### Patch Changes
