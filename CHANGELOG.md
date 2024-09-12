@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.13
+
+### Patch Changes
+
+- d52a831: no invoice download
+
 ## 3.6.12
 
 ### Patch Changes
