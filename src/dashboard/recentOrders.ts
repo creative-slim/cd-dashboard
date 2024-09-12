@@ -28,11 +28,19 @@ export async function displayRecentOrders() {
   }
 
   const container = template.parentElement;
-  container.innerHTML = '';
+  // container.innerHTML = '';
+  const loader = container.querySelector("[data-history='loader']");
+  loader.style.display = 'none';
+
   if (data.length === 0) {
-    const noOrders = document.createElement('div');
+    // const noOrders = document.createElement('div');
+    const emptystate = container.querySelector('[data-orders="empty"]');
+    const allOrdersBtn = container.querySelector('[data-orders="button"]');
+    emptystate.style.display = 'flex';
+    allOrdersBtn.style.display = 'none';
+    // container.innerHTML =
     // noOrders.textContent = 'Sie haben keine Bestellungen.';
-    container.appendChild(noOrders);
+    // container.appendChild(noOrders);
     return;
   }
 
