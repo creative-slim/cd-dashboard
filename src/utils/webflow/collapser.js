@@ -1,5 +1,5 @@
 export function makeSmallCardCollapsable(button, targetAttribute) {
-  // console.log('collapser', button, targetAttribute);
+  // //console.log('collapser', button, targetAttribute);
   if (!button) {
     return;
   }

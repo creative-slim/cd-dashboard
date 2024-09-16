@@ -2,10 +2,10 @@ import Cookies from 'js-cookie';
 
 export default function initInvoiceAddress() {
   try {
-    console.log('initInvoiceAddress');
+    //console.log('initInvoiceAddress');
     fillInvoiceAddress();
   } catch (error) {
-    console.error('An error occurred while initializing the invoice address:', error);
+    //console.error('An error occurred while initializing the invoice address:', error);
   }
 }
 
@@ -27,14 +27,14 @@ function fillInvoiceAddress() {
     const userData = Cookies.get('user');
 
     if (!userData) {
-      console.error('User data not available');
+      //console.error('User data not available');
       return;
     }
 
     const user = JSON.parse(userData);
 
     if (!user) {
-      console.error('User data not available');
+      //console.error('User data not available');
       return;
     }
 
@@ -86,6 +86,6 @@ function fillInvoiceAddress() {
       e.innerHTML = user.ust_idnr || '-';
     });
   } catch (error) {
-    console.error('An error occurred while filling the invoice address:', error);
+    //console.error('An error occurred while filling the invoice address:', error);
   }
 }

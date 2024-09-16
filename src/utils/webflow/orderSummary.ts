@@ -1,29 +1,29 @@
 function getDataFromLocalStorage(key) {
   if (!key) {
-    console.error('Key is not provided.');
+    //console.error('Key is not provided.');
     return [];
   }
   const data = localStorage.getItem(key);
   try {
     return data ? JSON.parse(data) : [];
   } catch (error) {
-    console.error('Error parsing local storage data:', error);
+    //console.error('Error parsing local storage data:', error);
     return [];
   }
 }
 
 const template = document.querySelector('[data-render-info="template"]');
 if (!template) {
-  console.error('Template not found.');
+  //console.error('Template not found.');
 }
 
 function createItemHTML(item) {
   if (!item) {
-    console.error('Item or item.render is not provided.');
+    //console.error('Item or item.render is not provided.');
     return document.createElement('div'); // Return an empty div to prevent errors
   }
   if (!template) {
-    console.error('Template not found.');
+    //console.error('Template not found.');
     return document.createElement('div'); // Return an empty div to prevent errors
   }
 
@@ -142,6 +142,8 @@ function calculateTotal(data) {
 
   let invalidTotal = false;
 
+  let sceneFeeAlreadyPaid = false;
+  let knockoutFeeAlreadyPaid = false;
   data.renders.forEach((render) => {
     const renderType = render['render-type'];
     const renderCount = render['render-count'];
@@ -155,6 +157,18 @@ function calculateTotal(data) {
     const quantity = parseInt(renderCount);
     let renderPrice = 0;
 
+    let scenePrice = Prices.scene.render;
+    let knockoutPrice = Prices.knockout.render;
+    if (!sceneFeeAlreadyPaid) {
+      scenePrice = Prices.scene.build;
+      sceneFeeAlreadyPaid = true;
+    }
+
+    if (!knockoutFeeAlreadyPaid) {
+      knockoutPrice = Prices.knockout.build;
+      knockoutFeeAlreadyPaid = true;
+    }
+
     if (render['woodtype']) {
       if (!arrayOfUsedWoodTypes.includes(render['woodtype'])) {
         arrayOfUsedWoodTypes.push(render['woodtype']);
@@ -164,19 +178,19 @@ function calculateTotal(data) {
       }
     }
     if (render['render-type'] === 'scene') {
-      if (!isNaN(Prices.scene.build) && !isNaN(Prices.scene.render)) {
-        renderPrice = renderPrice + Prices.scene.build + Prices.scene.render * (quantity - 1);
+      if (!isNaN(scenePrice) && !isNaN(Prices.scene.render)) {
+        renderPrice = renderPrice + scenePrice + Prices.scene.render * (quantity - 1);
       }
-      console.log('renderPrice scene', renderPrice);
+      //console.log('renderPrice scene', renderPrice);
     }
     if (render['render-type'] === 'knockout') {
-      if (!isNaN(Prices.knockout.build) && !isNaN(Prices.knockout.render)) {
-        renderPrice = renderPrice + Prices.knockout.build + Prices.knockout.render * (quantity - 1);
+      if (!isNaN(knockoutPrice) && !isNaN(Prices.knockout.render)) {
+        renderPrice = renderPrice + knockoutPrice + Prices.knockout.render * (quantity - 1);
       }
-      console.log('renderPrice knock', renderPrice);
+      //console.log('renderPrice knock', renderPrice);
     }
 
-    console.log({ totalPrice, renderPrice, quantity, provided3DModel });
+    //console.log({ totalPrice, renderPrice, quantity, provided3DModel });
 
     if (!isNaN(renderPrice)) {
       totalPrice = totalPrice + renderPrice;
@@ -195,7 +209,7 @@ function calculateTotal(data) {
 
 function displayContent(element) {
   if (!element) {
-    console.error('Element selector is not provided.');
+    //console.error('Element selector is not provided.');
     return;
   }
 
@@ -207,7 +221,7 @@ function displayContent(element) {
 
   const content = document.querySelector(element);
   if (!content) {
-    console.error('Content element not found.');
+    //console.error('Content element not found.');
     return;
   }
 
@@ -294,13 +308,13 @@ function cleanObject(data) {
 // Assuming the localStorage is already populated with the key 'orderData'
 export default function initOrderSummary(orderSummaryAttribute) {
   if (!orderSummaryAttribute) {
-    console.error('Order summary attribute is not provided.');
+    //console.error('Order summary attribute is not provided.');
     return;
   }
 
   const appElements = document.querySelectorAll('[data-big-card-id]');
   if (!appElements) {
-    console.error('App elements not found.');
+    //console.error('App elements not found.');
     return;
   }
   appElements.forEach((element) => {

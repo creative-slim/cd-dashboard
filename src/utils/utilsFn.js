@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 
 export const uploadInvoice = async (pdfFile, fullPath) => {
-  console.log('uploadInvoice', pdfFile, fullPath);
+  //console.log('uploadInvoice', pdfFile, fullPath);
   const formData = new FormData();
   const prod = 'https://creative-directors-dropbox.sa-60b.workers.dev';
   const dev = 'http://127.0.0.1:8787';
@@ -20,7 +20,7 @@ export const uploadInvoice = async (pdfFile, fullPath) => {
     const linkarray = generateLinksArray(data.data);
     return { linkarray, data };
   } catch (err) {
-    console.error(err);
+    //console.error(err);
     return null;
   }
 };
@@ -35,7 +35,7 @@ function generateLinksArray(image_names) {
 
 // send envoice per email
 export const sendInvoice = async (linkarray, reciever) => {
-  console.log('sendInvoice', linkarray, reciever);
+  //console.log('sendInvoice', linkarray, reciever);
   const prod = 'https://mailing.sa-60b.workers.dev';
   const dev = 'http://127.0.0.1:8787';
 
@@ -54,7 +54,7 @@ export const sendInvoice = async (linkarray, reciever) => {
     });
     return await response.json();
   } catch (err) {
-    console.error(err);
+    //console.error(err);
     return null;
   }
 };
@@ -79,9 +79,9 @@ export const uploadInvoiceToCMS = async (pdfFileLink, cmsItemsArray) => {
       });
 
       const result = await response.json();
-      console.log('Response:', result);
+      //console.log('Response:', result);
     } catch (err) {
-      console.error(err);
+      //console.error(err);
     }
   }
 };
@@ -92,10 +92,10 @@ export const checkRequiredFields = () => {
   const requiredFields = form.querySelectorAll('.w--tab-active [required]');
   const nextButton = form.querySelector('[data-tab-nav="next"]');
   nextButton.setAttribute('disabled', true);
-  console.log('requiredFields', requiredFields);
+  //console.log('requiredFields', requiredFields);
 
   nextButton.addEventListener('click', () => {
-    console.log('clicked');
+    //console.log('clicked');
     if (requiredFields.length === 0) {
       return;
     }

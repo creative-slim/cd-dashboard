@@ -20,7 +20,7 @@ export default class FileUploader {
   ) {
     this.dropZone = document.getElementById(drop);
     if (!this.dropZone) {
-      console.error(' 🙈 Drop zone not found , dropzone Uploader Disabled');
+      //console.error(' 🙈 Drop zone not found , dropzone Uploader Disabled');
       return;
     }
     // this.output = document.getElementById(output);
@@ -53,7 +53,7 @@ export default class FileUploader {
     this.drop_zone_id = this.dropZone ?? this.dropZone.dataset.dropZoneId ?? 'multi';
 
     this.eventOrMember = this.fileType;
-    // console.log('this.fileType : ', this.fileType);
+    // //console.log('this.fileType : ', this.fileType);
     this.image_names = [];
     this.images_data = [];
     this.loading.style.transform = 'scale(0)';
@@ -67,7 +67,7 @@ export default class FileUploader {
     this.name = name;
     // this.namesArray = namesArray;
 
-    // console.log('this : ', this);
+    // //console.log('this : ', this);
     this.dropZone.addEventListener('dragover', this.dragOverHandler.bind(this));
     this.dropZone.addEventListener('drop', this.dropHandler.bind(this));
     this.fileInput.addEventListener('change', this.fileInputChangeHandler.bind(this));
@@ -98,7 +98,7 @@ export default class FileUploader {
       const data = await response.json();
       return data;
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       return null;
     }
   }
@@ -106,7 +106,7 @@ export default class FileUploader {
   generateLinksArray(image_names) {
     let cdBucket = 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/';
     const formattedString = image_names.map((name) => cdBucket + name).join(',');
-    //console.log(formattedString);
+    ////console.log(formattedString);
 
     return formattedString;
   }
@@ -144,10 +144,10 @@ export default class FileUploader {
     let images = '';
     let files = '';
     imageslist.forEach((image, index) => {
-      //console.log("+++++++", image.name);
+      ////console.log("+++++++", image.name);
 
       if (this.isFileTypeAllowed(image) && this.fileType === '3D') {
-        //console.log("is zip");
+        ////console.log("is zip");
         images += `<div class="upload-queue-files" style="display:flex;"><p class="filename">${
           image.name
         }</p><p class="filesize">${(image.size * 0.000001).toFixed(
@@ -156,7 +156,7 @@ export default class FileUploader {
           this.name
         }.deleteImage(${index},'${image.name}')">&times;</span></div>`;
       } else {
-        //console.log("is img");
+        ////console.log("is img");
 
         images += `<div class="upload-queue-item" style="display:flex;">
         <img class="upload-queue-image" src="${URL.createObjectURL(image)}" alt="image">
@@ -184,7 +184,7 @@ export default class FileUploader {
     this.images_data.splice(index, 1);
     this.displayImages(this.images_data);
     const linksString = this.generateLinksArray(this.images_data.map((x) => x.name));
-    // console.log('############', linksString);
+    // //console.log('############', linksString);
     this.removeFileFromArray(linksString, nameToDelete);
     this.namesArray.value = linksString;
     this.insertIntoLocalStorage({ id: this.cardID, array: linksString, name: nameToDelete });
@@ -284,13 +284,13 @@ export default class FileUploader {
         this.image_names.push(file.name.split(' ').join('_'));
         this.images_data.push(file);
         const response = await this.uploadFile(file);
-        // console.log(`... file[${i}].name = ${file.name}`);
+        // //console.log(`... file[${i}].name = ${file.name}`);
       }
 
       const fullLink = this.generateLinksArray(this.image_names);
       this.namesArray.value = fullLink;
       this.insertIntoLocalStorage({ id: this.containerID, array: fullLink });
-      // console.log({ containerID: this.containerID, cardID: this.cardID, 'full link': fullLink });
+      // //console.log({ containerID: this.containerID, cardID: this.cardID, 'full link': fullLink });
       this.displayImages(this.images_data);
       resolve('done');
     });
@@ -298,7 +298,7 @@ export default class FileUploader {
 
   dropHandler(ev) {
     ev.preventDefault();
-    //console.log("File(s) dropped");
+    ////console.log("File(s) dropped");
 
     if (ev.dataTransfer.files.length > this.number_of_files) {
       this.loadingError.style.display = 'flex';
@@ -336,7 +336,7 @@ export default class FileUploader {
   fileInputChangeHandler(ev) {
     // debugger;
     const { files } = ev.target;
-    //console.log(files, this.images_data);
+    ////console.log(files, this.images_data);
 
     if (files.length + this.images_data.length > this.number_of_files) {
       this.loadingError.style.display = 'flex';

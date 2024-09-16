@@ -18,26 +18,37 @@ export function initializePaypal(
   const INTENT = 'capture';
   const accessToken = localStorage.getItem('userToken');
   let orderDetails = [];
-  //**SANDBOX PAYPAL */
-  const PAYPAL_CLIENT_ID =
-    'AWAxiue-z2L3vnEGgR5TM72wYvA38X_Y3yf5pggqld2MyM0IXekXvqfIKC7H1VPGq7pCs_WJ-hWIJE96';
-  //**PROD PAYPAL */
+  // //**SANDBOX PAYPAL */
   // const PAYPAL_CLIENT_ID =
-  //   'AVoZD4EtMXeCRZRcUYr2hfVEfQjZ64IC2HuWi7k9g3kVNegnVazLjJIToMUcnfO3PEjKPWLxaRxz8kkG';
+  //   'AWAxiue-z2L3vnEGgR5TM72wYvA38X_Y3yf5pggqld2MyM0IXekXvqfIKC7H1VPGq7pCs_WJ-hWIJE96';
+  //**PROD PAYPAL */
+  let PAYPAL_CLIENT_ID =
+    'AVoZD4EtMXeCRZRcUYr2hfVEfQjZ64IC2HuWi7k9g3kVNegnVazLjJIToMUcnfO3PEjKPWLxaRxz8kkG';
+
+  const paypalSandboxToggle = document.querySelector("[data-sandbox='paypal-sandbox-toggle']");
+  if (paypalSandboxToggle) {
+    const toggle = paypalSandboxToggle.dataset.sandbox;
+    if (toggle === 'true') {
+      //**SANDBOX PAYPAL */
+      PAYPAL_CLIENT_ID =
+        'AWAxiue-z2L3vnEGgR5TM72wYvA38X_Y3yf5pggqld2MyM0IXekXvqfIKC7H1VPGq7pCs_WJ-hWIJE96';
+      //console.log('*** SANDBOX PAYPAL ***');
+    }
+  }
 
   if (!PAYPAL_CLIENT_ID) {
-    console.error('PayPal client ID is missing. Make sure to add it to your .env file.');
+    //console.error('PayPal client ID is missing. Make sure to add it to your .env file.');
     return;
   }
 
   // check the existence of the required elements
   if (!document.querySelector(paymentOptionsSelector)) {
-    console.error('Payment options container is missing.');
+    //console.error('Payment options container is missing.');
     return;
   }
 
   if (!document.querySelector(alertsSelector)) {
-    console.error('Alerts container is missing.');
+    //console.error('Alerts container is missing.');
     return;
   }
 
@@ -73,14 +84,14 @@ export function initializePaypal(
   // get elemt by attribute data-payment=paypal-elements-wrapper
   const paymentOptionsWrapper = document.querySelector("[data-payment='paypal-elements-wrapper']");
   if (!paymentOptionsWrapper) {
-    console.error('PayPal elements wrapper not found!');
+    //console.error('PayPal elements wrapper not found!');
     return;
   }
   const paymentMethodeConfirmationUIelement = document.querySelector(
     "[data-payment='payment-methode-confirmation']"
   );
   if (!paymentMethodeConfirmationUIelement) {
-    console.error('Payment methode confirmation UI element not found!');
+    //console.error('Payment methode confirmation UI element not found!');
     return;
   }
 
@@ -98,7 +109,7 @@ export function initializePaypal(
     .then(() => {
       const alerts = document.querySelector(alertsSelector);
       if (paymentStatus.paymentMethod.toUpperCase() === 'payLater'.toUpperCase()) {
-        console.log('Pay Later');
+        //console.log('Pay Later');
         return;
       }
       let paymentDetails;
@@ -123,13 +134,13 @@ export function initializePaypal(
           // Check if all fields are filled
 
           if (!orderDetails || orderDetails.length === 0) {
-            console.error('Please select a package : order creation failed!');
+            //console.error('Please select a package : order creation failed!');
             return;
           }
-          console.log('Creating payment order...FETCHING NOW', {
-            intent: INTENT,
-            package: orderDetails,
-          });
+          //console.log('Creating payment order...FETCHING NOW', {
+          //   intent: INTENT,
+          //   package: orderDetails,
+          // });
           const request = await fetch(`${api}/api/paypal/create_order`, {
             method: 'post',
             headers: {
@@ -141,20 +152,20 @@ export function initializePaypal(
           })
             .then((response) => response.json())
             .then((order) => {
-              console.log('Payment order CREATED', order);
+              //console.log('Payment order CREATED', order);
               localStorage.setItem('paymentDetails', JSON.stringify({ order }));
 
               return order.data.id;
             });
-          console.log('Payment order REQUEST', await request);
+          //console.log('Payment order REQUEST', await request);
           return request;
         },
         onApprove: async function (data, actions) {
           if (!orderDetails || orderDetails.length === 0) {
-            console.error('Please select a package : order creation failed!');
+            //console.error('Please select a package : order creation failed!');
             return;
           }
-          console.log('Approving payment order...++++++', data);
+          //console.log('Approving payment order...++++++', data);
           paypalOrderConfirmationUI(data);
           paypalButtons.close();
           const orderId = data.orderID;
@@ -170,18 +181,18 @@ export function initializePaypal(
               body: JSON.stringify({ intent: INTENT, order_id: orderId }),
             })
               .then((response) => {
-                console.log('Response:', response);
+                //console.log('Response:', response);
 
                 return response.json();
               })
               .then((orderDetails) => {
-                console.log('Order details:', orderDetails);
+                //console.log('Order details:', orderDetails);
                 paymentDetails = orderDetails.data.purchase_units[0].payments.captures[0].amount;
                 paypalButtons.close();
               })
               // then click on the submit button
               .catch((error) => {
-                console.error('Error processing PayPal payment:', error);
+                //console.error('Error processing PayPal payment:', error);
               });
           });
 
@@ -193,7 +204,7 @@ export function initializePaypal(
           //   paypalButtons.close();
           // })
           // .catch((error) => {
-          //   console.error('Error processing PayPal payment:', error);
+          //   //console.error('Error processing PayPal payment:', error);
           //   alerts.innerHTML = `<div class="ms-alert ms-action2 ms-small"><span class="ms-close"></span><p>An Error Occurred!</p></div>`;
           // });
         },
@@ -205,17 +216,17 @@ export function initializePaypal(
           }, 1500);
         },
         onError: function (err) {
-          console.error('PayPal Error:', err);
+          //console.error('PayPal Error:', err);
         },
       });
 
       try {
         paypalButtons.render(paymentOptionsSelector);
       } catch (error) {
-        console.error('Error rendering PayPal buttons:', error);
+        //console.error('Error rendering PayPal buttons:', error);
       }
     })
     .catch((error) => {
-      console.error('Error loading PayPal SDK:', error);
+      //console.error('Error loading PayPal SDK:', error);
     });
 }

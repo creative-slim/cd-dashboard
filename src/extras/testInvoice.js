@@ -1664,6 +1664,6 @@ export default function testInvoice() {
     const pdfFile = await generateInvoice(paymentDetails3);
     // const TEST_invoiceToCms = uploadInvoiceToCMS(pdfLink, cmsOutput);
 
-    console.log({ pdfFile });
+    //console.log({ pdfFile });
   });
 }

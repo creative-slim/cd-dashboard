@@ -16,7 +16,7 @@ export function afterLoginUiSetup(data) {
     //change data-user="false" to data-user="true"
     element.setAttribute('data-user', 'true');
   });
-  console.log('🥹🥹🥹🥹🥹 ', user_imgs, usernames, loginElements);
+  //console.log('🥹🥹🥹🥹🥹 ', user_imgs, usernames, loginElements);
 
   user_imgs.forEach((user_img) => {
     user_img.src = data.picture;
@@ -74,7 +74,7 @@ if (process.env.NODE_ENV === 'development') {
   api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
 }
 export async function syncUsersDB(userData, token) {
-  console.log('syncing user FUNCTION ', userData, token);
+  //console.log('syncing user FUNCTION ', userData, token);
   const user = {
     first_name: userData.given_name,
     email: userData.email,
@@ -92,7 +92,7 @@ export async function syncUsersDB(userData, token) {
   });
 
   const data = await response.json();
-  console.log(data);
+  //console.log(data);
 
   return data;
 }
@@ -115,7 +115,7 @@ async function getUserDataFromDB(token) {
 }
 
 export async function getUserData(token) {
-  console.log('getUserData from cookie');
+  //console.log('getUserData from cookie');
 
   //!disabled for now
   // const userData = Cookie.get('user');
@@ -124,9 +124,9 @@ export async function getUserData(token) {
   //   return JSON.parse(userData);
   // }
 
-  console.log('getUserData from DB');
+  //console.log('getUserData from DB');
   const data = await getUserDataFromDB(token);
-  console.log('getUserData from DB', data);
+  //console.log('getUserData from DB', data);
   updateUserStoredData(data);
 
   return data;

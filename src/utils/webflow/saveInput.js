@@ -24,49 +24,49 @@ const extractData = (inputElements) => {
     });
     return data;
   } catch (error) {
-    console.error('Error extracting data:', error);
+    //console.error('Error extracting data:', error);
     return [];
   }
 };
 
 // Main function
 export function saveData(currentCard, container) {
-  console.log('------- save Data -------');
-  console.log('currentCard', currentCard, 'container', container);
+  //console.log('------- save Data -------');
+  //console.log('currentCard', currentCard, 'container', container);
   // debugger;
 
   if (!currentCard || !container) {
-    console.error('Current card or container is not provided.');
+    //console.error('Current card or container is not provided.');
     return;
   }
 
   const inputs = currentCard.querySelectorAll('input, textarea, select');
-  // console.log('current Card', currentCard);
+  // //console.log('current Card', currentCard);
 
   let storedLocalDataRaw;
   try {
     storedLocalDataRaw = JSON.parse(localStorage.getItem(ORDER_DATA_KEY)) || [];
   } catch (error) {
-    console.error('Error parsing local storage data:', error);
+    //console.error('Error parsing local storage data:', error);
     storedLocalDataRaw = [];
   }
 
   const storedLocalData = filterArrayByItemName(storedLocalDataRaw);
 
-  // console.log('container', container);
+  // //console.log('container', container);
   const cardContainer = container.closest(`[${DATA_BIG_CARD_ID}]`);
   if (!cardContainer) {
-    console.error('Card container with specified DATA_BIG_CARD_ID not found.');
+    //console.error('Card container with specified DATA_BIG_CARD_ID not found.');
     return;
   }
 
   const cardId = cardContainer.getAttribute(DATA_BIG_CARD_ID);
   if (!cardId) {
-    console.error('Card ID not found.');
+    //console.error('Card ID not found.');
     return;
   }
 
-  // console.log('################################checkIfRender', getRenderNumber(currentCard));
+  // //console.log('################################checkIfRender', getRenderNumber(currentCard));
 
   const found = storedLocalData.find((element) => element.id === cardId);
   const extractedData = extractData(inputs);
@@ -87,7 +87,7 @@ export function saveData(currentCard, container) {
     storedLocalData.push(inputData);
   }
 
-  console.log('storedLocalData', storedLocalData);
+  //console.log('storedLocalData', storedLocalData);
   localStorage.setItem(ORDER_DATA_KEY, JSON.stringify(storedLocalData));
   localStorage.setItem(
     `CLEAN_${ORDER_DATA_KEY}`,
@@ -96,16 +96,16 @@ export function saveData(currentCard, container) {
 
   try {
     const rd = restructureData(cleanObject(storedLocalData));
-    console.log('++++++++++++++++   Restructured data:', rd);
+    //console.log('++++++++++++++++   Restructured data:', rd);
   } catch (error) {
-    console.error('Error restructuring data:', error);
+    //console.error('Error restructuring data:', error);
   }
 
   try {
     const x = cleanObject(storedLocalData);
-    console.log('++++++++++++++++   Cleaned object:', x);
+    //console.log('++++++++++++++++   Cleaned object:', x);
   } catch (error) {
-    console.error('Error cleaning object:', error);
+    //console.error('Error cleaning object:', error);
   }
 }
 
@@ -127,7 +127,7 @@ export function removeObjectByElementIdFromLocalStorage(element) {
   const orderData = JSON.parse(localStorage.getItem('orderData'));
 
   if (!orderData) {
-    console.error('No orderData found in local storage');
+    //console.error('No orderData found in local storage');
     return;
   }
 
@@ -148,7 +148,7 @@ export function removeObjectByElementIdFromLocalStorage(element) {
       // If the filtered data array is empty, remove the entire item
       if (item.data.length === 0) {
         orderData.splice(index, 1);
-        console.log('Item removed from orderData:', item);
+        //console.log('Item removed from orderData:', item);
       }
     }
   });
@@ -168,5 +168,5 @@ export function saveAllData() {
     saveData(card, container);
   });
 
-  console.log('All data saved.');
+  //console.log('All data saved.');
 }

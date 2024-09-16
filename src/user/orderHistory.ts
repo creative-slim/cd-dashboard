@@ -24,7 +24,7 @@ export const initOrderHistory = async () => {
 
     return data;
   } catch (error) {
-    console.error('Error fetching order history:', error);
+    //console.error('Error fetching order history:', error);
     // Handle the error here
   }
 };
@@ -33,11 +33,11 @@ function generateOrderHistoryUI(data) {
   const orderHistoryContainer = document.querySelector('[data-history="list"]');
   const orderItemTemplate = document.querySelector('[data-history="template"]');
   if (!orderHistoryContainer) {
-    console.log('orderHistory Field not found');
+    //console.log('orderHistory Field not found');
     return;
   }
   if (!orderItemTemplate) {
-    console.log('orderItemTemplate Field not found');
+    //console.log('orderItemTemplate Field not found');
     return;
   }
   removeLoader();
