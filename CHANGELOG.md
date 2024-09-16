@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.14
+
+### Patch Changes
+
+- 12cd096: price adjustement
+
 ## 3.6.13
 
 ### Patch Changes
