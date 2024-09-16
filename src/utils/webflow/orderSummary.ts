@@ -18,60 +18,53 @@ if (!template) {
 }
 
 function createItemHTML(item) {
-  console.log('🥹🥹item in create HTML ', item);
   if (!item) {
     console.error('Item or item.render is not provided.');
     return document.createElement('div'); // Return an empty div to prevent errors
   }
-  // Clone the template
   if (!template) {
     console.error('Template not found.');
     return document.createElement('div'); // Return an empty div to prevent errors
   }
 
   const clone = template.cloneNode(true);
-  clone.style.display = 'block'; // Ensure the cloned element is visible
-  clone.removeAttribute('data-render-info'); // Remove the template attribute
+  clone.style.display = 'block';
+  clone.removeAttribute('data-render-info');
 
-  // Function to strip the random suffix from the keys
   const stripSuffix = (key) => key.split('__')[0];
-
-  console.log('item.render', item);
 
   const cleanItem = cleanObject(item);
   calculateTotal(cleanItem);
   item = cleanItem;
 
-  console.log('ITEM :::::: ', item['sub-total']);
-
-  let item_TOTAL = 0;
   const totalElement = document.querySelector('[data-order-cart="total"]');
-  if (totalElement) {
-    item_TOTAL = parseInt(totalElement.textContent);
-  }
-  if (isNaN(item_TOTAL)) {
-    item_TOTAL = 0;
-  }
+  const subTotal = item['sub-total'];
 
-  //read the value and convert it to a number then add the item sub total to it
-  const total = item_TOTAL + item['sub-total'];
-  console.log('total ', total);
-  //set the total value to the total element
-  if (totalElement) {
-    totalElement.textContent = total;
+  if (subTotal === '-') {
+    if (totalElement) {
+      totalElement.textContent = '-';
+    }
+  } else {
+    let item_TOTAL = parseInt(totalElement.textContent);
+    if (isNaN(item_TOTAL)) {
+      item_TOTAL = 0;
+    }
+    const total = item_TOTAL + subTotal;
+    if (totalElement) {
+      totalElement.textContent = total;
+    }
   }
 
   // Update elements inside the clone
   Object.keys(item).forEach((key) => {
-    const strippedKey = stripSuffix(key);
     const element = clone.querySelector(`[data-order-cart="${key}"]`);
-    // console.log('🥹🥹🥹🥹🥹 ', element);
-
     if (element) {
-      const value = item[key];
+      const value = item[key] !== undefined ? item[key] : '-';
 
       if (value !== undefined) {
-        if (element.tagName === 'P') {
+        if (element.tagName === 'SPAN') {
+          element.textContent = value;
+        } else if (element.tagName === 'P') {
           element.textContent = value;
         } else if (element.tagName === 'DIV') {
           element.innerHTML = value;
@@ -89,14 +82,15 @@ function createItemHTML(item) {
       renderClone.removeAttribute('data-order-cart');
 
       Object.keys(render).forEach((key) => {
-        const strippedKey = stripSuffix(key);
         const element = renderClone.querySelector(`[data-order-cart="${key}"]`);
 
         if (element) {
-          const value = render[key];
+          const value = render[key] !== undefined ? render[key] : '-';
 
           if (value !== undefined) {
-            if (element.tagName === 'P') {
+            if (element.tagName === 'SPAN') {
+              element.textContent = value;
+            } else if (element.tagName === 'P') {
               element.textContent = value;
             } else if (element.tagName === 'DIV') {
               element.innerHTML = value;
@@ -133,9 +127,7 @@ type prices = {
 };
 
 function calculateTotal(data) {
-  // debugger;
   const Prices = JSON.parse(localStorage.getItem('prices')) as prices;
-  console.log('data ', data);
   const provided3DModeltext = data['Provided-3D-Model'];
   const woodtypePrice = Prices.woodtype.generic;
   let totalPrice = Prices.base.render;
@@ -148,21 +140,28 @@ function calculateTotal(data) {
   }
   data['price'] = totalPrice;
 
+  let invalidTotal = false;
+
   data.renders.forEach((render) => {
-    const quantity = parseInt(render['render-count']);
-    console.log('render ', render);
+    const renderType = render['render-type'];
+    const renderCount = render['render-count'];
+
+    if (!renderType || !renderCount) {
+      invalidTotal = true;
+      render['price'] = '-';
+      return;
+    }
+
+    const quantity = parseInt(renderCount);
     let renderPrice = 0;
 
     if (render['woodtype']) {
-      console.log('arrayOfUsedWoodTypes ', arrayOfUsedWoodTypes);
       if (!arrayOfUsedWoodTypes.includes(render['woodtype'])) {
-        console.log('render[woodtype] ', render['woodtype']);
         arrayOfUsedWoodTypes.push(render['woodtype']);
         renderPrice = renderPrice + woodtypePrice;
       } else {
         renderPrice = renderPrice + 0;
       }
-      console.log('renderPrice woodtype', renderPrice);
     }
     if (render['render-type'] === 'scene') {
       if (!isNaN(Prices.scene.build) && !isNaN(Prices.scene.render)) {
@@ -184,13 +183,14 @@ function calculateTotal(data) {
     }
 
     render['price'] = renderPrice;
-
-    console.log({ totalPrice, renderPrice });
   });
 
-  data['sub-total'] = totalPrice;
+  data['sub-total'] = invalidTotal ? '-' : totalPrice;
 
-  console.log('data ', data);
+  // Update global validity flag
+  if (invalidTotal) {
+    window.isOrderValid = false;
+  }
 }
 
 function displayContent(element) {
@@ -199,10 +199,11 @@ function displayContent(element) {
     return;
   }
 
+  // Reset the global validity flag
+  window.isOrderValid = true;
+
   const data = getDataFromLocalStorage('orderData');
-  console.log('🥹🥹data ', data);
   const structuredData = restructureData(data);
-  console.log('🥹🥹structuredData ', structuredData);
 
   const content = document.querySelector(element);
   if (!content) {
@@ -223,6 +224,18 @@ function displayContent(element) {
       content.appendChild(itemHTML);
     });
   });
+
+  // Enable or disable the toggle button based on order validity
+  const toggleButton = document.querySelector('[data-order-cart="toggle-btn"]');
+  if (toggleButton) {
+    if (window.isOrderValid) {
+      toggleButton.style.opacity = 1;
+      toggleButton.style.pointerEvents = 'auto';
+    } else {
+      toggleButton.style.opacity = 0.5;
+      toggleButton.style.pointerEvents = 'none';
+    }
+  }
 }
 
 function restructureData(input) {

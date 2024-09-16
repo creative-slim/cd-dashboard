@@ -356,6 +356,8 @@ window.Webflow.push(async () => {
       console.log('goin to confirmation page');
       order.classList.remove('w--tab-active');
       confirmation.classList.add('w--tab-active');
+      //scroll to the top of the page
+      window.scrollTo(0, 0);
     }
 
     const email = GetCurrentUserEmail();

@@ -1,4 +1,5 @@
 // Constants
+import { cleanObject, restructureData } from '../../extras/helperFunctions';
 const ORDER_DATA_KEY = 'orderData';
 const DATA_BIG_CARD_ID = 'data-big-card-id';
 const RENDER_NUMBER = 'render-number';
@@ -88,7 +89,26 @@ export function saveData(currentCard, container) {
 
   console.log('storedLocalData', storedLocalData);
   localStorage.setItem(ORDER_DATA_KEY, JSON.stringify(storedLocalData));
+  localStorage.setItem(
+    `CLEAN_${ORDER_DATA_KEY}`,
+    JSON.stringify(restructureData(cleanObject(storedLocalData)))
+  );
+
+  try {
+    const rd = restructureData(cleanObject(storedLocalData));
+    console.log('++++++++++++++++   Restructured data:', rd);
+  } catch (error) {
+    console.error('Error restructuring data:', error);
+  }
+
+  try {
+    const x = cleanObject(storedLocalData);
+    console.log('++++++++++++++++   Cleaned object:', x);
+  } catch (error) {
+    console.error('Error cleaning object:', error);
+  }
 }
+
 function filterArrayByItemName(array) {
   // Filter the main array to keep only objects where at least one data item has "item-name" in render keys
   return array.filter((item) => {
