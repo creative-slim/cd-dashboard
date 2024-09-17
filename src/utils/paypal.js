@@ -32,7 +32,7 @@ export function initializePaypal(
       //**SANDBOX PAYPAL */
       PAYPAL_CLIENT_ID =
         'AWAxiue-z2L3vnEGgR5TM72wYvA38X_Y3yf5pggqld2MyM0IXekXvqfIKC7H1VPGq7pCs_WJ-hWIJE96';
-      //console.log('*** SANDBOX PAYPAL ***');
+      console.log('*** SANDBOX PAYPAL ***');
     }
   }
 
@@ -109,7 +109,7 @@ export function initializePaypal(
     .then(() => {
       const alerts = document.querySelector(alertsSelector);
       if (paymentStatus.paymentMethod.toUpperCase() === 'payLater'.toUpperCase()) {
-        //console.log('Pay Later');
+        console.log('Pay Later');
         return;
       }
       let paymentDetails;
@@ -137,10 +137,10 @@ export function initializePaypal(
             //console.error('Please select a package : order creation failed!');
             return;
           }
-          //console.log('Creating payment order...FETCHING NOW', {
-          //   intent: INTENT,
-          //   package: orderDetails,
-          // });
+          console.log('Creating payment order...FETCHING NOW', {
+            intent: INTENT,
+            package: orderDetails,
+          });
           const request = await fetch(`${api}/api/paypal/create_order`, {
             method: 'post',
             headers: {
@@ -152,12 +152,12 @@ export function initializePaypal(
           })
             .then((response) => response.json())
             .then((order) => {
-              //console.log('Payment order CREATED', order);
+              console.log('Payment order CREATED', order);
               localStorage.setItem('paymentDetails', JSON.stringify({ order }));
 
               return order.data.id;
             });
-          //console.log('Payment order REQUEST', await request);
+          console.log('Payment order REQUEST', await request);
           return request;
         },
         onApprove: async function (data, actions) {
@@ -165,7 +165,7 @@ export function initializePaypal(
             //console.error('Please select a package : order creation failed!');
             return;
           }
-          //console.log('Approving payment order...++++++', data);
+          console.log('Approving payment order...++++++', data);
           paypalOrderConfirmationUI(data);
           paypalButtons.close();
           const orderId = data.orderID;
@@ -181,12 +181,12 @@ export function initializePaypal(
               body: JSON.stringify({ intent: INTENT, order_id: orderId }),
             })
               .then((response) => {
-                //console.log('Response:', response);
+                console.log('Response:', response);
 
                 return response.json();
               })
               .then((orderDetails) => {
-                //console.log('Order details:', orderDetails);
+                console.log('Order details:', orderDetails);
                 paymentDetails = orderDetails.data.purchase_units[0].payments.captures[0].amount;
                 paypalButtons.close();
               })

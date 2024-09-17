@@ -181,16 +181,16 @@ function calculateTotal(data) {
       if (!isNaN(scenePrice) && !isNaN(Prices.scene.render)) {
         renderPrice = renderPrice + scenePrice + Prices.scene.render * (quantity - 1);
       }
-      //console.log('renderPrice scene', renderPrice);
+      console.log('renderPrice scene', renderPrice);
     }
     if (render['render-type'] === 'knockout') {
       if (!isNaN(knockoutPrice) && !isNaN(Prices.knockout.render)) {
         renderPrice = renderPrice + knockoutPrice + Prices.knockout.render * (quantity - 1);
       }
-      //console.log('renderPrice knock', renderPrice);
+      console.log('renderPrice knock', renderPrice);
     }
 
-    //console.log({ totalPrice, renderPrice, quantity, provided3DModel });
+    console.log({ totalPrice, renderPrice, quantity, provided3DModel });
 
     if (!isNaN(renderPrice)) {
       totalPrice = totalPrice + renderPrice;

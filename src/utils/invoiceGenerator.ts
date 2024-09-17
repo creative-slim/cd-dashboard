@@ -10,12 +10,12 @@ const PRESPECTIVE_PRICE_CONSTANT = 85;
 export async function generateInvoice(finalData) {
   const invoice = document.querySelector<HTMLElement>('#pdf-wrapper');
   const pdfwrapper = invoice.cloneNode(true);
-  //console.log('------------- generateInvoice ------------- ');
-  //console.log({ finalData });
+  console.log('------------- generateInvoice ------------- ');
+  console.log({ finalData });
   const newCombinedArray = mergePaymentDetails(finalData.finalData.combinedArrays);
   finalData.finalData.combinedArrays = newCombinedArray;
 
-  //console.log({ finalData });
+  console.log({ finalData });
 
   // const pdfwrapper = invoice;
   pdfwrapper.style.display = 'block';
@@ -29,7 +29,7 @@ export async function generateInvoice(finalData) {
   const payment = finalData.finalData.combinedArrays.find(
     (item) => item.paymentDetails
   ).paymentDetails; //finalData.finalData.combinedArrays[4]
-  //console.log({ payment });
+  console.log({ payment });
   const paymentDetails = {
     totalAmount: payment.order.total,
   };
@@ -41,7 +41,7 @@ export async function generateInvoice(finalData) {
 
   const ordersItemsDetails = finalData.finalData.combinedArrays.filter((item) => item.id);
 
-  //console.log({ payment, paymentDetails, orderItems, orderData });
+  console.log({ payment, paymentDetails, orderItems, orderData });
 
   // still need order ID
 
@@ -68,7 +68,7 @@ export async function generateInvoice(finalData) {
       a.href = url;
       a.download = `Invoice ${orderData['order-id']}.pdf`;
       a.click();
-      //console.log('PDF downloaded');
+      console.log('PDF downloaded');
     });
   });
 
@@ -251,8 +251,8 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
   // item.removeAttribute('data-invoice');
   // item.style.display = 'grid';
   const { orderItems, ordersItemsDetails } = data;
-  // //console.log('orderItems ::: ', orderItems);
-  //console.log('new orderItems ::: ', ordersItemsDetails);
+  // console.log('orderItems ::: ', orderItems);
+  console.log('new orderItems ::: ', ordersItemsDetails);
   ordersItemsDetails.forEach((orderItem, index) => {
     const item = itemTemplate.cloneNode(true);
     item.removeAttribute('data-invoice');
@@ -288,14 +288,14 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
 }
 
 function generateAdditionalImages(itemDetails, paymentDetails, itemTemplate, siblingElement) {
-  //console.log('inside generateAdditionalImages ::: ', itemDetails);
+  console.log('inside generateAdditionalImages ::: ', itemDetails);
   itemDetails.data.forEach((imageData, index) => {
     if (!imageData.render['render-type']) {
       return;
     }
     const item = itemTemplate.cloneNode(true);
 
-    //console.log(imageData);
+    console.log(imageData);
     const thisItemTotalPrice = Object.values(imageData).reduce((acc, cur) => acc + cur, 0);
 
     const displayIndex = index + 1;

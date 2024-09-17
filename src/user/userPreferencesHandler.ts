@@ -8,15 +8,15 @@ if (process.env.NODE_ENV === 'development') {
   api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
 }
 export default async function handleUserPreferences() {
-  //console.log('🙉  -- handleUserPreferences ');
+  console.log('🙉  -- handleUserPreferences ');
   await userPreferForm();
 }
 
 async function userPreferForm() {
-  //console.log('👨🏻‍💻  -- userPreferForm ');
+  console.log('👨🏻‍💻  -- userPreferForm ');
   const form = document.querySelector('[data-user="preferences"]');
   if (!form) {
-    //console.log('👨🏻‍💻 -- form not found ');
+    console.log('👨🏻‍💻 -- form not found ');
     return;
   }
 
@@ -28,11 +28,11 @@ async function userPreferForm() {
     submitBtn.value = 'Bitte warten...';
     const formData = new FormData(form);
     const user = {};
-    //console.log('🙉  -- formData ', formData);
+    console.log('🙉  -- formData ', formData);
     formData.forEach((value, key) => {
       user[key] = value;
     });
-    //console.log(' 👨 user ', user);
+    console.log(' 👨 user ', user);
 
     const token = localStorage.getItem('userToken');
     const resp = await fetch(`${api}/api/user/updateuserdetails`, {
@@ -57,42 +57,42 @@ async function userPreferForm() {
     }
 
     const data = await resp.json();
-    //console.log('👨🏻‍💻 -- data ', data);
+    console.log('👨🏻‍💻 -- data ', data);
   });
   return;
 }
 
 // get user data from Cookies under user and fill the form
 export function fillUserInformationInPreferencesUI() {
-  //console.log(' -- fillUserInformationInPreferencesUI ');
+  console.log(' -- fillUserInformationInPreferencesUI ');
   const storedData = Cookie.get('user');
   if (!storedData) {
-    //console.log('+++++++++ -- storedData not found ');
+    console.log('+++++++++ -- storedData not found ');
     return;
   }
   const user = JSON.parse(storedData);
 
   if (!user) {
-    //console.log('+++++++++ -- user not found ');
+    console.log('+++++++++ -- user not found ');
     return;
   }
 
   const form = document.querySelector('[data-user="preferences"]');
   if (!form) {
-    //console.log('+++++++++++ -- form not found ');
+    console.log('+++++++++++ -- form not found ');
     return;
   }
 
   const adaptedData = mapUserData(user);
-  //console.log('+++++++++++ -- adaptedData ', adaptedData);
-  //console.log('+++++++++++ -- user ', user);
+  console.log('+++++++++++ -- adaptedData ', adaptedData);
+  console.log('+++++++++++ -- user ', user);
 
   const formData = new FormData(form);
   formData.forEach((value, key) => {
-    //console.log('+++++++++++ -- key ', key, adaptedData[key]);
+    console.log('+++++++++++ -- key ', key, adaptedData[key]);
     if (adaptedData[key]) {
       form.querySelector(`[name="${key}"]`).value = adaptedData[key];
-      //console.log('+++++++++++ -- key ', key, adaptedData[key]);
+      console.log('+++++++++++ -- key ', key, adaptedData[key]);
     }
     if (adaptedData['feature_update_alerts'] === 'on') {
       form.querySelector(`[name="feature_update_alerts"]`).checked = true;

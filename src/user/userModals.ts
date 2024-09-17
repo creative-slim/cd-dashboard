@@ -34,7 +34,7 @@ export function checkUserDetails() {
   }
 
   const user = JSON.parse(userData);
-  //console.log('🙉  -- user ', user);
+  console.log('🙉  -- user ', user);
   checkRequiredFields(user);
 }
 
@@ -52,7 +52,7 @@ async function downloadUserDetails() {
 
   if (resp.status === 200) {
     const data = await resp.json();
-    //console.log('🙉  -- data ', data);
+    console.log('🙉  -- data ', data);
     Cookie.set('user', JSON.stringify(data), { expires: 1 });
     return true;
   }
@@ -65,7 +65,7 @@ export function checkRequiredFields(user) {
 
   let missingFields = false;
   reqArray.forEach((field) => {
-    //console.log('🙉  -- field ', field);
+    console.log('🙉  -- field ', field);
     if (!user[field]) {
       //console.error('🙉  -- missingField ', field);
       missingFields = true;
@@ -73,11 +73,11 @@ export function checkRequiredFields(user) {
   });
 
   if (missingFields) {
-    //console.log('🙉  -- missingField ', missingFields);
+    console.log('🙉  -- missingField ', missingFields);
     userAddressModal();
   }
 
-  //console.log(' -- reqArray ', reqArray);
+  console.log(' -- reqArray ', reqArray);
 
   return;
 }
@@ -95,14 +95,14 @@ async function addressModalSubmitHandler() {
     e.preventDefault();
     const formData = new FormData(form);
     const user = {};
-    //console.log('🙉  -- formData ', formData);
+    console.log('🙉  -- formData ', formData);
     formData.forEach((value, key) => {
-      //console.log('🙉  -- key ', key);
-      //console.log('🙉  -- value ', value);
+      console.log('🙉  -- key ', key);
+      console.log('🙉  -- value ', value);
       user[key] = value;
     });
 
-    //console.log('🙉  -- user ', user);
+    console.log('🙉  -- user ', user);
     const resp = await fetch(`${api}/api/user/updateuser`, {
       method: 'PUT',
       headers: {
@@ -113,7 +113,7 @@ async function addressModalSubmitHandler() {
     });
 
     if (resp.status === 200) {
-      //console.log('🙉  -- resp ', resp);
+      console.log('🙉  -- resp ', resp);
       const successMessage = modal.querySelector('.w-form-done');
       Cookie.set('user', JSON.stringify(transformUpdateModalFormatToUserData(user)), {
         expires: 1,

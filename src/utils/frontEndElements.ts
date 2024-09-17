@@ -7,7 +7,7 @@ export function frontEndElementsJS() {
   let nextBtn = document.getElementById('request-next');
 
   nextBtn?.addEventListener('click', (e) => {
-    //console.log("nextBtn change", nextBtn?.innerHTML);
+    console.log('nextBtn change', nextBtn?.innerHTML);
     if (
       paylaterBtn &&
       paynowBtn.classList.contains('w--current') &&

@@ -73,7 +73,7 @@ export function dataChecker() {
     button.addEventListener('click', function () {
       //SA added this 1 line
       if (!checkRequiredFields()) {
-        //console.log('cannot go to next page, disabled');
+        console.log('cannot go to next page, disabled');
       } else {
         const action = this.getAttribute('data-tab-nav');
         if (action === 'next' && currentTabIndex < tabs.length - 1) {
@@ -93,9 +93,9 @@ export function dataChecker() {
       const form = document.querySelector('#wf-form-mainFormSubmission');
       const requiredFields = form.querySelectorAll('.w--tab-active [required]');
       const nextButton = form.querySelector('[data-tab-nav="next"]');
-      //console.log('requiredFields', requiredFields);
+      console.log('requiredFields', requiredFields);
 
-      //console.log('clicked');
+      console.log('clicked');
 
       const filledFields = Array.from(requiredFields).filter((field) => field.value !== '');
       if (requiredFields.length === filledFields.length) {
@@ -105,7 +105,7 @@ export function dataChecker() {
       //highlight the fields that are not filled
       requiredFields.forEach((field) => {
         if (field.value === '') {
-          //console.log('field is required', field.name, field);
+          console.log('field is required', field.name, field);
           field.style.border = '1px solid red';
         }
       });
@@ -134,7 +134,7 @@ export function clearLocalStorageOnLogout() {
   logoutButtons.forEach((button) => {
     // Check if the button's text contains "log out" (case insensitive)
     if (button.innerText.toLowerCase().includes('log out')) {
-      //console.log('Logout button found');
+      console.log('Logout button found');
     } else {
       return; // Skip this button if it doesn't contain "log out"
     }
@@ -142,7 +142,7 @@ export function clearLocalStorageOnLogout() {
     // Add click event listener to clear local storage
     button.addEventListener('click', () => {
       localStorage.clear();
-      //console.log('Local storage cleared');
+      console.log('Local storage cleared');
     });
   });
 }
@@ -161,13 +161,13 @@ export function checkUserAddressData() {
       const attributeName = attributes[i].nodeName;
       if (attributeName.startsWith('data-user')) {
         if (attributes[i].nodeValue) {
-          //console.log('User data present', element, attributes[i].nodeValue);
+          console.log('User data present', element, attributes[i].nodeValue);
         } else {
-          //console.log('User data missing', element, attributes[i].nodeValue);
+          console.log('User data missing', element, attributes[i].nodeValue);
           dataUserPresent = false;
         }
 
-        //console.log(`${attributeName}: ${attributes[i].nodeValue}`);
+        console.log(`${attributeName}: ${attributes[i].nodeValue}`);
       }
     }
     if (!dataUserPresent) {

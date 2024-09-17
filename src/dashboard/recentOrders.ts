@@ -51,14 +51,14 @@ export async function displayRecentOrders() {
 
     const renderList = JSON.parse(order.fieldData['render-list']);
 
-    //console.log('#########order###########', order);
+    console.log('#########order###########', order);
     const collectionSlug = '07abe1fd-4015-4890-8299-1da02fa50c4f';
     item.addEventListener('click', () => {
       window.location.href = `/${collectionSlug}/${order.fieldData['slug']}`;
     });
 
-    //console.log('#########renderList###########', renderList);
-    //console.log(order);
+    console.log('#########renderList###########', renderList);
+    console.log(order);
 
     item.querySelector('[data-order="name"]').textContent = renderList[0].render['item-name'];
     item.querySelector('[data-order="status"]').textContent = 'bezahlt';

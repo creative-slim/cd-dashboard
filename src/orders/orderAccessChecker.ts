@@ -8,11 +8,11 @@ if (process.env.NODE_ENV === 'development') {
 export default async function initOrderAccessChecker() {
   // run that function only on the order page
   if (!document.querySelector('[order-invoice]')) {
-    //console.log('no order page');
+    console.log('no order page');
 
     return;
   }
-  //console.log('initOrderAccessChecker');
+  console.log('initOrderAccessChecker');
   await addInvoiceDataToOrderPage();
   revisionActionHandler();
   cancelOrderHandler();
@@ -22,8 +22,8 @@ async function addInvoiceDataToOrderPage() {
   try {
     const addressElements = document.querySelectorAll('[order-invoice]');
     const orderData = await getPaymentDataIfUserIsAuthorized();
-    //console.log('orderData', orderData);
-    //console.log('addressElements', addressElements);
+    console.log('orderData', orderData);
+    console.log('addressElements', addressElements);
 
     if (!orderData) {
       //console.error('Order data not available');

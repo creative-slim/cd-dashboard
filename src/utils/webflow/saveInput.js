@@ -31,8 +31,8 @@ const extractData = (inputElements) => {
 
 // Main function
 export function saveData(currentCard, container) {
-  //console.log('------- save Data -------');
-  //console.log('currentCard', currentCard, 'container', container);
+  console.log('------- save Data -------');
+  console.log('currentCard', currentCard, 'container', container);
   // debugger;
 
   if (!currentCard || !container) {
@@ -41,7 +41,7 @@ export function saveData(currentCard, container) {
   }
 
   const inputs = currentCard.querySelectorAll('input, textarea, select');
-  // //console.log('current Card', currentCard);
+  // console.log('current Card', currentCard);
 
   let storedLocalDataRaw;
   try {
@@ -53,7 +53,7 @@ export function saveData(currentCard, container) {
 
   const storedLocalData = filterArrayByItemName(storedLocalDataRaw);
 
-  // //console.log('container', container);
+  // console.log('container', container);
   const cardContainer = container.closest(`[${DATA_BIG_CARD_ID}]`);
   if (!cardContainer) {
     //console.error('Card container with specified DATA_BIG_CARD_ID not found.');
@@ -66,7 +66,7 @@ export function saveData(currentCard, container) {
     return;
   }
 
-  // //console.log('################################checkIfRender', getRenderNumber(currentCard));
+  // console.log('################################checkIfRender', getRenderNumber(currentCard));
 
   const found = storedLocalData.find((element) => element.id === cardId);
   const extractedData = extractData(inputs);
@@ -87,7 +87,7 @@ export function saveData(currentCard, container) {
     storedLocalData.push(inputData);
   }
 
-  //console.log('storedLocalData', storedLocalData);
+  console.log('storedLocalData', storedLocalData);
   localStorage.setItem(ORDER_DATA_KEY, JSON.stringify(storedLocalData));
   localStorage.setItem(
     `CLEAN_${ORDER_DATA_KEY}`,
@@ -96,14 +96,14 @@ export function saveData(currentCard, container) {
 
   try {
     const rd = restructureData(cleanObject(storedLocalData));
-    //console.log('++++++++++++++++   Restructured data:', rd);
+    console.log('++++++++++++++++   Restructured data:', rd);
   } catch (error) {
     //console.error('Error restructuring data:', error);
   }
 
   try {
     const x = cleanObject(storedLocalData);
-    //console.log('++++++++++++++++   Cleaned object:', x);
+    console.log('++++++++++++++++   Cleaned object:', x);
   } catch (error) {
     //console.error('Error cleaning object:', error);
   }
@@ -148,7 +148,7 @@ export function removeObjectByElementIdFromLocalStorage(element) {
       // If the filtered data array is empty, remove the entire item
       if (item.data.length === 0) {
         orderData.splice(index, 1);
-        //console.log('Item removed from orderData:', item);
+        console.log('Item removed from orderData:', item);
       }
     }
   });
@@ -168,5 +168,5 @@ export function saveAllData() {
     saveData(card, container);
   });
 
-  //console.log('All data saved.');
+  console.log('All data saved.');
 }

@@ -1,5 +1,5 @@
 export function mergePaymentDetails(data) {
-  //console.log('data', data);
+  console.log('data', data);
   // Extract payment details from the input array
   const paymentDetails = data.find((item) => item.paymentDetails)?.paymentDetails;
 

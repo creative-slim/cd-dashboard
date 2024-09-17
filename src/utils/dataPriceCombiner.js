@@ -1,23 +1,23 @@
 export default function combineArrays(array1, object2) {
   let combinedArray = [];
-  //console.log('array1', array1);
-  //console.log('object2', object2);
+  console.log('array1', array1);
+  console.log('object2', object2);
 
   array1.forEach((element) => {
     const thisIdImages = object2.images.filter((el) => {
       if (el.id === element.id) {
-        //console.log('el image', el);
+        console.log('el image', el);
         return el.array;
       }
     });
     const thisIdFiles = object2.files.filter((el) => {
       if (el.id === element.id) {
-        //console.log('el file', el);
+        console.log('el file', el);
         return el.array;
       }
     });
-    //console.log('thisIdImages', thisIdImages);
-    //console.log('thisIdFiles', thisIdFiles);
+    console.log('thisIdImages', thisIdImages);
+    console.log('thisIdFiles', thisIdFiles);
     combinedArray.push({
       id: element.id,
       data: element.data || [],

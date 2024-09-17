@@ -3,24 +3,24 @@
 export function saveInputToLocalHost() {
   // check if local storage is available
   if (typeof window === 'undefined') {
-    //console.log("no window");
+    console.log('no window');
     return;
   }
 
   if (!window.localStorage) {
-    //console.log("no local storage");
+    console.log('no local storage');
     return;
   }
 
   let FormContent = {};
-  //console.log("saveInputToLocalHost");
+  console.log('saveInputToLocalHost');
 
   if (!localStorage.getItem('FormInputHolder')) {
-    //console.log("key not found");
+    console.log('key not found');
     window.localStorage.setItem('FormInputHolder', JSON.stringify(FormContent));
     localStorageUpdater();
   } else {
-    //console.log("key found");
+    console.log('key found');
     FormContent = JSON.parse(localStorage.getItem('FormInputHolder'));
     formUpdater(FormContent);
     localStorageUpdater();
@@ -28,11 +28,11 @@ export function saveInputToLocalHost() {
 
   //   updateLocalStorage("name", "slumy");
   //   localStorageUpdater();
-  //   //console.log("fromLocalStorage", FormContent);
+  //   console.log("fromLocalStorage", FormContent);
 }
 
 function updateLocalStorage(newKey, newValue) {
-  //console.log("updateLocalStorage", newKey, newValue);
+  console.log('updateLocalStorage', newKey, newValue);
   let FormContent = JSON.parse(localStorage.getItem('FormInputHolder'));
   FormContent[newKey] = newValue;
   window.localStorage.setItem('FormInputHolder', JSON.stringify(FormContent));
@@ -107,10 +107,10 @@ function localStorageUpdater() {
 
   // Get all checkboxes inside the container
   var checkboxes = container.querySelectorAll("input[type='checkbox']");
-  //console.log("%ccheckboxes", "color:green", checkboxes);
+  console.log('%ccheckboxes', 'color:green', checkboxes);
 
   container?.addEventListener('change', (e) => {
-    //console.log("checkboxes", checkboxes);
+    console.log('checkboxes', checkboxes);
     // Check each checkbox and collect them into an array
     var checkedCheckboxes = [];
     checkboxes.forEach((checkbox) => {
@@ -119,7 +119,7 @@ function localStorageUpdater() {
       }
     });
 
-    //console.log("%cThis is a green text", "color:green", checkedCheckboxes);
+    console.log('%cThis is a green text', 'color:green', checkedCheckboxes);
 
     updateLocalStorage('materials', checkedCheckboxes);
   });
@@ -127,7 +127,7 @@ function localStorageUpdater() {
   var materialComments = container.querySelectorAll("input[type='text']");
   materialComments.forEach((comment) => {
     comment.addEventListener('change', (e) => {
-      //console.log("comment", e.target.value);
+      console.log('comment', e.target.value);
       updateLocalStorage(`comment-toggle-${e.target.name}`, e.target.value);
     });
   });
@@ -140,10 +140,10 @@ function formUpdater(FormContent) {
 
   // furniture-type
   document.querySelectorAll("[data-name='furniture-type']").forEach((radioButton) => {
-    //   //console.log(radioButton.value, FormContent["furniture-type"]);
+    //   console.log(radioButton.value, FormContent["furniture-type"]);
 
     if (radioButton.value == FormContent['furniture-type']) {
-      // //console.log("match");
+      // console.log("match");
 
       radioButton.checked = true;
       //find the sibling label and add the checked class
@@ -200,7 +200,7 @@ function formUpdater(FormContent) {
 
   if (FormContent['materials']) {
     checkboxes.forEach((checkbox) => {
-      //console.log(checkbox.name, FormContent["materials"]);
+      console.log(checkbox.name, FormContent['materials']);
       if (FormContent['materials'].includes(checkbox.name)) {
         checkbox.checked = true;
 
@@ -214,7 +214,7 @@ function formUpdater(FormContent) {
         if (subCategoryWrapper) subCategoryWrapper.style.display = 'flex';
 
         if (checkbox.name.split('-')[0] == 'comment') {
-          //console.log("comment", checkbox.name.split("-toggle-")[1]);
+          console.log('comment', checkbox.name.split('-toggle-')[1]);
           const commentWrapper = document.getElementById(
             `comment-${checkbox.name.split('-toggle-')[1]}`
           );

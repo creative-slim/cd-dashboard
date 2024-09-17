@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 export default function initInvoiceAddress() {
   try {
-    //console.log('initInvoiceAddress');
+    console.log('initInvoiceAddress');
     fillInvoiceAddress();
   } catch (error) {
     //console.error('An error occurred while initializing the invoice address:', error);

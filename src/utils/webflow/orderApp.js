@@ -61,7 +61,7 @@ function setupNewCard(card) {
     }
     // makeCheckBoxCollapsable
     if (elem.dataset.collapseCheckbox === 'open') {
-      // //console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
+      // console.log('########### collapser', elem, 'data-collapse-checkbox="wrapper"');
       makeRadioCollapsable(elem, 'data-collapse-checkbox="wrapper"', true);
     }
     if (elem.dataset.collapseCheckbox === 'close') {
@@ -92,7 +92,7 @@ function updateUploadersIDs(card) {
     // initialize the uploader
 
     const fileUploader = new FileUploader(id, `fileUploader${uuid}`);
-    // //console.log(fileUploader);
+    // console.log(fileUploader);
     window[`fileUploader${uuid}`] = fileUploader;
 
     localCurrentItem++;
@@ -143,7 +143,7 @@ function addNewRequestItem(card) {
     const renderNumber = card
       .closest('[main-render-item]')
       .querySelectorAll('[render-item="container"]').length;
-    // //console.log('this render number is : ', { renderNumber }, card.closest('[main-render-item]'));
+    // console.log('this render number is : ', { renderNumber }, card.closest('[main-render-item]'));
 
     // add id to the new item
     newItem.id = `request-${Date.now()}`;

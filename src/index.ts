@@ -39,10 +39,10 @@ window.Webflow.push(async () => {
   initUserRelatedFunctions();
 
   if (window.location.pathname.includes('/user/bestellverlauf')) {
-    //console.log('order history page');
+    console.log('order history page');
 
     const info = await initOrderHistory();
-    //console.log('initOrderHistory results : ', info);
+    console.log('initOrderHistory results : ', info);
   }
 
   //! API ENDPOINTS
@@ -80,7 +80,7 @@ window.Webflow.push(async () => {
   };
 
   async function init() {
-    //console.log('init');
+    console.log('init');
 
     // old form ID
     const form = document.getElementById('wf-form-mainFormSubmission');
@@ -108,7 +108,7 @@ window.Webflow.push(async () => {
         paymentStatus.paymentMethod = 'PayLater';
         // add dropshadow to the button
         payLater.style.boxShadow = '0px 0px 10px 0px #000000';
-        //console.log('paymentStatus', paymentStatus);
+        console.log('paymentStatus', paymentStatus);
       });
     }
 
@@ -125,9 +125,9 @@ window.Webflow.push(async () => {
       const placeOrderBtn = document.querySelector('[mirror-click="tab-place-order"]');
       if (!placeOrderBtn) return;
       placeOrderBtn.addEventListener('click', async () => {
-        //console.log('form submitted', checkUserAddressData());
+        console.log('form submitted', checkUserAddressData());
         if (!checkUserAddressData()) {
-          //console.log('Please fill in your address details');
+          console.log('Please fill in your address details');
           // create a tag and add this attribute to it : <a mirror-click="address-modal-bg" href="#">Edit</a>
           // then click on it to open the address modal
           const editAddress = document.querySelector('[mirror-click="address-modal-bg"]');
@@ -147,7 +147,7 @@ window.Webflow.push(async () => {
         // checkUserAddressData
 
         document.querySelector("[order-submit='approved']").addEventListener('click', () => {
-          //console.log('clicked', this);
+          console.log('clicked', this);
         });
 
         if (paymentStatus.paymentMethod === '') {
@@ -165,20 +165,20 @@ window.Webflow.push(async () => {
           const cleanArray = cleanData(JSON.parse(renderData));
           return cleanArray;
         }
-        //console.log('clean DATA ::##:: ', fetchDataFromLocalStorage());
+        console.log('clean DATA ::##:: ', fetchDataFromLocalStorage());
 
         function fetchFilesFromLocalStorage() {
           const extraImgs = localStorage.getItem('orderFiles');
           const cleanArray = JSON.parse(extraImgs);
           return cleanArray;
         }
-        //console.log('clean FILES ::##:: ', fetchFilesFromLocalStorage());
+        console.log('clean FILES ::##:: ', fetchFilesFromLocalStorage());
 
         const localstorageData = fetchDataFromLocalStorage();
         const localstorageFiles = fetchFilesFromLocalStorage();
 
         const combinedArrays = combineArrays(localstorageData, localstorageFiles);
-        //console.log('combined files  :::--:: ', combinedArrays);
+        console.log('combined files  :::--:: ', combinedArrays);
 
         const d = new Date();
         const DateID = `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}--${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
@@ -188,7 +188,7 @@ window.Webflow.push(async () => {
         combinedArrays.push({ user: CurrentUserEmail });
         combinedArrays.push({ dateID: DateID });
 
-        //console.log(' 🔥 🔥 - Final combinedArrays', combinedArrays);
+        console.log(' 🔥 🔥 - Final combinedArrays', combinedArrays);
         localStorage.setItem('combinedArrays', JSON.stringify(combinedArrays));
 
         async function uploadmetadata(combinedArrays) {
@@ -211,7 +211,7 @@ window.Webflow.push(async () => {
             const uploadData = await fetch(api + '/api/submit-order', requestOptions)
               .then((response) => response.json())
               .then(async (result) => {
-                //console.log('result from uploadmetadata .: ', result);
+                console.log('result from uploadmetadata .: ', result);
                 //await uploadToDropbox(jsonString, pathWithExtension, accesskey);
                 return result;
               })
@@ -223,9 +223,9 @@ window.Webflow.push(async () => {
         // the submit button
         const submitLoading = form.querySelector("[order-submit='approved']");
         const loadingSVG = form.querySelector('[data-form="loading"]');
-        //console.log('**********************+');
-        //console.log({ submitLoading, loadingSVG });
-        //console.log('**********************+');
+        console.log('**********************+');
+        console.log({ submitLoading, loadingSVG });
+        console.log('**********************+');
 
         function initLoading() {
           if (!submitLoading || !loadingSVG) return;
@@ -268,16 +268,16 @@ window.Webflow.push(async () => {
             //add total price to the combinedArrays
             combinedArrays.push({ paymentDetails });
 
-            //console.log('🔥combinedArrays', combinedArrays);
-            //console.log('paymentDetails', paymentDetails);
+            console.log('🔥combinedArrays', combinedArrays);
+            console.log('paymentDetails', paymentDetails);
 
             const Final = await uploadmetadata(combinedArrays);
-            //console.log('All images processed.');
+            console.log('All images processed.');
 
             cleanLoggerUI();
 
             loggerUpdate(2);
-            //console.log('Final', Final);
+            console.log('Final', Final);
 
             // Uncomment if needed
 
@@ -293,7 +293,7 @@ window.Webflow.push(async () => {
             const userEmail = GetCurrentUserEmail();
             const send = await sendInvoice(pdfLink.linkarray, userEmail);
             await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
-            // //console.log({ pdfFile });
+            // console.log({ pdfFile });
 
             // Example function call, comment out if not needed
             uploadInvoice();
@@ -350,10 +350,10 @@ window.Webflow.push(async () => {
     const confirmation = document.querySelector('[data-order="confirmation-tab"]');
     const order = document.querySelector('[data-order="order-tab"]');
 
-    //console.log('confirmation', confirmation);
-    //console.log('order', order);
+    console.log('confirmation', confirmation);
+    console.log('order', order);
     if (confirmation && order) {
-      //console.log('goin to confirmation page');
+      console.log('goin to confirmation page');
       order.classList.remove('w--tab-active');
       confirmation.classList.add('w--tab-active');
       //scroll to the top of the page
@@ -380,10 +380,10 @@ window.Webflow.push(async () => {
     }
   }
 
-  //console.log('ENV ===> ', process.env.NODE_ENV);
-  //console.log(
-  //   process.env.NODE_ENV === 'development' ? '_____*_LOCALHOST_*____' : '*++**_CDN_**++*'
-  // );
+  console.log('ENV ===> ', process.env.NODE_ENV);
+  console.log(
+    process.env.NODE_ENV === 'development' ? '_____*_LOCALHOST_*____' : '*++**_CDN_**++*'
+  );
 
   testInvoice();
   init();
