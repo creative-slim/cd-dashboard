@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.6.15
+
+### Patch Changes
+
+- f8a81b3: fix login
+
 ## 3.6.14
 
 ### Patch Changes
