@@ -166,17 +166,10 @@ function addNewRequestItem(card) {
 
     clearInputFields(newItem);
 
-    //!Disabled for now
-    // const collapseBtn = newItem.querySelector('[data-collapse="toggle"]');
-    // const collapseWrapper = newItem.closest('[data-collapse="wrapper"]');
-
-    // makeSmallCardCollapsable(collapseBtn, 'data-collapse="wrapper"');
     makeCheckBoxCollapsable(
       newItem.querySelector('[data-collapse-checkbox="toggle"]'),
       'data-collapse-checkbox="wrapper"'
     );
-
-    //!Disabled for now
 
     saveAllData();
   });

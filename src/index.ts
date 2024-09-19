@@ -24,6 +24,7 @@ import {
 import { initAuth } from './auth/userAuth';
 import testInvoice from './extras/testInvoice';
 import initOrderAccessChecker from './orders/orderAccessChecker';
+import App from './place_order/orderApp';
 import { initOrderHistory } from './user/orderHistory';
 import initUserRelatedFunctions from './user/userMainExport';
 
@@ -34,7 +35,8 @@ window.Webflow.push(async () => {
   initAuth();
   initOrderAccessChecker();
   initInstances();
-  orderAppFunctions();
+  // orderAppFunctions(); //! FUNCTION >> switching to class based approach
+  new App(); //? CLASS >>  switching to class based approach
   initWebflowFunctions();
   initUserRelatedFunctions();
 
@@ -114,8 +116,8 @@ window.Webflow.push(async () => {
 
     //! //! ///! paas through paypal
     //! //! //! MUST DELETE THIS
-    // paymentStatus.payed = false;
-    // paymentStatus.paymentMethod = 'PayLater';
+    paymentStatus.payed = false; //! to be removed
+    paymentStatus.paymentMethod = 'PayLater'; //! to be removed
 
     /**
      * form submit handler
@@ -162,8 +164,7 @@ window.Webflow.push(async () => {
         // }
         function fetchDataFromLocalStorage() {
           const renderData = localStorage.getItem('orderData');
-          const cleanArray = cleanData(JSON.parse(renderData));
-          return cleanArray;
+          return JSON.parse(renderData);
         }
         console.log('clean DATA ::##:: ', fetchDataFromLocalStorage());
 
@@ -177,7 +178,13 @@ window.Webflow.push(async () => {
         const localstorageData = fetchDataFromLocalStorage();
         const localstorageFiles = fetchFilesFromLocalStorage();
 
-        const combinedArrays = combineArrays(localstorageData, localstorageFiles);
+        // const combinedArrays = combineArrays(localstorageData, localstorageFiles);
+        const combinedArrays: {
+          order: any;
+          localstorageFiles: any;
+          dateID?: string;
+          user?: string;
+        } = { order: localstorageData, localstorageFiles }; //! to be removed
         console.log('combined files  :::--:: ', combinedArrays);
 
         const d = new Date();
@@ -185,12 +192,12 @@ window.Webflow.push(async () => {
 
         //! change to get user email from localstorage (loged in user)
 
-        combinedArrays.push({ user: CurrentUserEmail });
-        combinedArrays.push({ dateID: DateID });
+        combinedArrays.user = CurrentUserEmail;
+        combinedArrays.dateID = DateID;
 
         console.log(' 🔥 🔥 - Final combinedArrays', combinedArrays);
-        localStorage.setItem('combinedArrays', JSON.stringify(combinedArrays));
-
+        localStorage.setItem('combinedArrays', combinedArrays);
+        return; //! to be removed
         async function uploadmetadata(combinedArrays) {
           const token = localStorage.getItem('userToken');
           if (!token) {

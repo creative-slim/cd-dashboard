@@ -21,32 +21,16 @@ export function restructureData(input) {
   });
 }
 
-export function cleanObject(data) {
-  // Helper function to clean key names
-  const cleanKey = (key) => key.split('__')[0];
-
-  // Recursive function to clean the object
-  const cleanData = (obj) => {
-    // Check if it's an array
-    if (Array.isArray(obj)) {
-      return obj.map((item) => cleanData(item));
-    }
-
-    // Check if it's an object
-    if (typeof obj === 'object' && obj !== null) {
-      return Object.entries(obj).reduce((acc, [key, value]) => {
-        // Clean the key
-        const newKey = cleanKey(key);
-        // Recursively clean the value
-        acc[newKey] = cleanData(value);
-        return acc;
-      }, {});
-    }
-
-    // Return the value if it's not an object or array
-    return obj;
-  };
-
-  // Start cleaning the root object
-  return cleanData(data);
+export function cleanObject(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => cleanObject(item));
+  }
+  if (typeof obj === 'object' && obj !== null) {
+    return Object.keys(obj).reduce((acc, key) => {
+      const cleanedKey = key.split('_')[0];
+      acc[cleanedKey] = cleanObject(obj[key]);
+      return acc;
+    }, {});
+  }
+  return obj;
 }
