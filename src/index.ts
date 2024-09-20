@@ -24,6 +24,7 @@ import {
 import { initAuth } from './auth/userAuth';
 import testInvoice from './extras/testInvoice';
 import initOrderAccessChecker from './orders/orderAccessChecker';
+import CartUI from './place_order/cart';
 import App from './place_order/orderApp';
 import { initOrderHistory } from './user/orderHistory';
 import initUserRelatedFunctions from './user/userMainExport';
@@ -37,6 +38,7 @@ window.Webflow.push(async () => {
   initInstances();
   // orderAppFunctions(); //! FUNCTION >> switching to class based approach
   new App(); //? CLASS >>  switching to class based approach
+  // cart
   initWebflowFunctions();
   initUserRelatedFunctions();
 
@@ -116,8 +118,8 @@ window.Webflow.push(async () => {
 
     //! //! ///! paas through paypal
     //! //! //! MUST DELETE THIS
-    paymentStatus.payed = false; //! to be removed
-    paymentStatus.paymentMethod = 'PayLater'; //! to be removed
+    // paymentStatus.payed = false; //! to be removed
+    // paymentStatus.paymentMethod = 'PayLater'; //! to be removed
 
     /**
      * form submit handler

@@ -88,66 +88,60 @@ export function saveData() {
 export function removeObjectByElementIdFromLocalStorage(element: HTMLElement) {
   const orderData = JSON.parse(localStorage.getItem('orderData') || '[]');
 
-  if (!orderData) {
-    return;
-  }
-
-  const elementId = element.id;
-
-  if (element.matches(`[${DATA_BIG_CARD_ID}]`)) {
-    // It's an OrderCard
-    const cardId = element.getAttribute(DATA_BIG_CARD_ID);
-
-    const index = orderData.findIndex((item: any) => item.id === cardId);
-
-    if (index !== -1) {
-      orderData.splice(index, 1);
-    }
-  } else if (element.matches('[render-item="container"]')) {
-    // It's an OrderRender
-    const cardElement = element.closest(`[${DATA_BIG_CARD_ID}]`) as HTMLElement;
-    const cardId = cardElement.getAttribute(DATA_BIG_CARD_ID);
-
-    const cardData = orderData.find((item: any) => item.id === cardId);
-
-    if (cardData) {
-      const renderElements = Array.from(cardElement.querySelectorAll('[render-item="container"]'));
-      const renderIndex = renderElements.indexOf(element);
-
-      if (renderIndex !== -1) {
-        cardData.data.splice(renderIndex, 1);
-      }
-    }
-  } else if (element.matches('[render-item="order-detail"]')) {
-    // It's an OrderRenderDetail
-    const renderElement = element.closest('[render-item="container"]') as HTMLElement;
-    const cardElement = renderElement.closest(`[${DATA_BIG_CARD_ID}]`) as HTMLElement;
-    const cardId = cardElement.getAttribute(DATA_BIG_CARD_ID);
-
-    const cardData = orderData.find((item: any) => item.id === cardId);
-
-    if (cardData) {
-      const renderElements = Array.from(cardElement.querySelectorAll('[render-item="container"]'));
-      const renderIndex = renderElements.indexOf(renderElement);
-
-      if (renderIndex !== -1) {
-        const renderData = cardData.data[renderIndex];
-
-        if (renderData && renderData.orderRenderDetails) {
-          const detailElements = Array.from(
-            renderElement.querySelectorAll('[render-item="order-detail"]')
-          );
-          const detailIndex = detailElements.indexOf(element);
-
-          if (detailIndex !== -1) {
-            renderData.orderRenderDetails.splice(detailIndex, 1);
-          }
-        }
-      }
-    }
-  }
-
   localStorage.setItem('orderData', JSON.stringify(orderData));
+}
+
+/**
+ * Removes all objects with the specified id from the 'orderData' array stored in localStorage.
+ *
+ * @param {string} idToRemove - The id of the object to remove.
+ * @returns {Array} - A new array with the specified objects removed.
+ */
+export function removeObjectById(idToRemove) {
+  console.log('Removing object with id:', idToRemove);
+  // Retrieve the array from localStorage and parse it
+  const arr = JSON.parse(localStorage.getItem('orderData')) || [];
+
+  /**
+   * Recursively filters out objects with the specified id.
+   *
+   * @param {Array} items - The array of objects to filter.
+   * @returns {Array} - The filtered array.
+   */
+  const recursiveFilter = (items) => {
+    return (
+      items
+        // Remove objects with the matching id
+        .filter((item) => item.id !== idToRemove)
+        // Traverse each object to handle nested arrays
+        .map((item) => {
+          // Create a shallow copy to avoid mutating the original object
+          const newItem = { ...item };
+
+          // Iterate over each key in the object
+          Object.keys(newItem).forEach((key) => {
+            const value = newItem[key];
+
+            // If the value is an array, apply the recursive filter
+            if (Array.isArray(value)) {
+              newItem[key] = recursiveFilter(value);
+            }
+          });
+
+          return newItem;
+        })
+    );
+  };
+
+  // Apply the recursive filter to the array
+  const filteredArr = recursiveFilter(arr);
+
+  console.log('Filtered array:', filteredArr);
+
+  // Optionally, update the localStorage with the filtered array
+  localStorage.setItem('orderData', JSON.stringify(filteredArr));
+
+  return filteredArr;
 }
 
 //!old code

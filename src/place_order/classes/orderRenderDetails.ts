@@ -7,6 +7,7 @@ import {
 } from '../../utils/webflow/collapser';
 import {
   removeObjectByElementIdFromLocalStorage,
+  removeObjectById,
   saveAllData,
   // saveData,
 } from '../../utils/webflow/saveInput';
@@ -53,8 +54,7 @@ class OrderRenderDetail {
     const deleteBtn = this.element.querySelector('[render-item="delete"]') as HTMLElement;
     deleteBtn.addEventListener('click', () => {
       this.element.remove();
-      removeObjectByElementIdFromLocalStorage(this.element);
-      saveAllData();
+      removeObjectById(this.id);
     });
   }
 
