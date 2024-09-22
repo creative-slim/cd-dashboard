@@ -24,6 +24,7 @@ import {
 import { initAuth } from './auth/userAuth';
 import testInvoice from './extras/testInvoice';
 import initOrderAccessChecker from './orders/orderAccessChecker';
+import { fillOrderDetails } from './orders/orderDetailsPage';
 import CartUI from './place_order/cart';
 import App from './place_order/orderApp';
 import { initOrderHistory } from './user/orderHistory';
@@ -41,6 +42,8 @@ window.Webflow.push(async () => {
   // cart
   initWebflowFunctions();
   initUserRelatedFunctions();
+
+  fillOrderDetails();
 
   if (window.location.pathname.includes('/user/bestellverlauf')) {
     console.log('order history page');
@@ -196,17 +199,15 @@ window.Webflow.push(async () => {
 
         combinedArrays.user = CurrentUserEmail;
         combinedArrays.dateID = DateID;
-
         console.log(' 🔥 🔥 - Final combinedArrays', combinedArrays);
         localStorage.setItem('combinedArrays', combinedArrays);
-        return; //! to be removed
         async function uploadmetadata(combinedArrays) {
           const token = localStorage.getItem('userToken');
           if (!token) {
-            //console.error('No token found in local storage');
+            console.error('No token found in local storage');
             return;
           }
-          return new Promise(async (resolve) => {
+          return new Promise(async (resolve, reject) => {
             const requestOptions = {
               method: 'POST',
               body: JSON.stringify(combinedArrays),
@@ -240,7 +241,7 @@ window.Webflow.push(async () => {
           if (!submitLoading || !loadingSVG) return;
           submitLoading.style.opacity = '80%';
           submitLoading.value = '';
-          submitLoading.style.pointerEvents = 'none';
+          // submitLoading.style.pointerEvents = 'none'; //! Uncomment if needed
           loadingSVG.style.display = 'block';
         }
 
@@ -248,7 +249,7 @@ window.Webflow.push(async () => {
           if (!submitLoading || !loadingSVG) return;
           submitLoading.style.opacity = '100%';
           submitLoading.value = 'DONE';
-          submitLoading.style.pointerEvents = 'none';
+          // submitLoading.style.pointerEvents = 'none'; //! Uncomment if needed
           loadingSVG.style.display = 'none';
         }
 
@@ -267,7 +268,7 @@ window.Webflow.push(async () => {
             //? new adding user invoice address to the combinedArrays
             const userAddress = getInvoiceDataForCurrentOrder();
             if (userAddress) {
-              combinedArrays.push({ userAddress });
+              combinedArrays.userAddress = userAddress;
             } else {
               alert('Please fill in your address details');
               //console.error('No user address found');
@@ -275,12 +276,14 @@ window.Webflow.push(async () => {
             }
 
             //add total price to the combinedArrays
-            combinedArrays.push({ paymentDetails });
+            combinedArrays.paymentDetails = paymentDetails;
 
             console.log('🔥combinedArrays', combinedArrays);
             console.log('paymentDetails', paymentDetails);
 
             const Final = await uploadmetadata(combinedArrays);
+
+            console.log('Final', Final);
             console.log('All images processed.');
 
             cleanLoggerUI();
@@ -292,10 +295,12 @@ window.Webflow.push(async () => {
 
             // debugger;
             const pdfFile = await generateInvoice({
-              finalData: {
-                combinedArrays,
-                finalCMSresponse: Final,
-              },
+              combinedArrays,
+              finalCMSresponse: Final,
+            });
+            console.log('pdfFile', {
+              combinedArrays,
+              finalCMSresponse: Final,
             });
 
             const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);

@@ -24,7 +24,7 @@ export const initOrderHistory = async () => {
 
     return data;
   } catch (error) {
-    //console.error('Error fetching order history:', error);
+    console.error('Error fetching order history:', error);
     // Handle the error here
   }
 };

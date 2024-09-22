@@ -12,8 +12,8 @@ export async function generateInvoice(finalData) {
   const pdfwrapper = invoice.cloneNode(true);
   console.log('------------- generateInvoice ------------- ');
   console.log({ finalData });
-  const newCombinedArray = mergePaymentDetails(finalData.finalData.combinedArrays);
-  finalData.finalData.combinedArrays = newCombinedArray;
+  // const newCombinedArray = mergePaymentDetails(finalData.combinedArrays);
+  // finalData.finalData.combinedArrays = newCombinedArray;
 
   console.log({ finalData });
 
@@ -26,9 +26,7 @@ export async function generateInvoice(finalData) {
   const client = {};
 
   // find payment details inside finalData
-  const payment = finalData.finalData.combinedArrays.find(
-    (item) => item.paymentDetails
-  ).paymentDetails; //finalData.finalData.combinedArrays[4]
+  const payment = finalData.combinedArrays.paymentDetails;
   console.log({ payment });
   const paymentDetails = {
     totalAmount: payment.order.total,
@@ -36,10 +34,14 @@ export async function generateInvoice(finalData) {
   const { orderItems } = payment.order;
 
   const orderData = {
-    'order-id': finalData.finalData.finalCMSresponse.response[0].fieldData['order-id'], //finalData.finalData.finalCMSresponse.response[0].fieldData["order-id"]
+    'order-id': finalData.finalCMSresponse.response[0].fieldData['order-id'], //finalData.finalData.finalCMSresponse.response[0].fieldData["order-id"]
   };
 
-  const ordersItemsDetails = finalData.finalData.combinedArrays.filter((item) => item.id);
+  const ordersItemsDetailsWithPricing = payment.order.orderItemsListWithPricing;
+
+  console.log('orderItems ::: ', orderItems);
+  console.log('ordersItemsDetailsWithPricing ::: ', ordersItemsDetailsWithPricing); // new orderItems
+  console.log('orderData ::: ', orderData);
 
   console.log({ payment, paymentDetails, orderItems, orderData });
 
@@ -54,7 +56,7 @@ export async function generateInvoice(finalData) {
     paymentDetails,
     itemTemplate,
     pdfwrapper,
-    { payment, paymentDetails, orderItems, orderData, ordersItemsDetails },
+    { payment, paymentDetails, orderItems, orderData, ordersItemsDetailsWithPricing },
     table
   );
 
@@ -75,11 +77,11 @@ export async function generateInvoice(finalData) {
   const pdfFile = await getInvoicePDF(pdfwrapper, orderData['order-id']);
 
   //!testing
-  // const url = URL.createObjectURL(pdfFile);
-  // const a = document.createElement('a');
-  // a.href = url;
-  // a.download = `Invoice ${orderData['order-id']}.pdf`;
-  // a.click();
+  const url = URL.createObjectURL(pdfFile);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Invoice ${orderData['order-id']}.pdf`;
+  a.click();
   //!testing
 
   return pdfFile;
@@ -134,15 +136,14 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
   try {
     const currentDate = new Date();
     if (!wrapperElement) {
-      //console.error('Wrapper element not found');
+      console.error('Wrapper element not found');
       return; // Skip to the next part without throwing an error
     }
     generateInvoiceItem(paymentDetails, itemTemplate, data, table);
-
     const user = Cookie.get('user');
     const userData = user ? JSON.parse(user) : null;
     if (!userData) {
-      //console.error('User data not found');
+      console.error('User data not found');
     }
 
     const userName = wrapperElement.querySelectorAll('[data-invoice=first-name]');
@@ -240,7 +241,7 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
       e.innerHTML = formatDate(currentDate);
     });
   } catch (error) {
-    //console.error('Error in fillInvoiceData:', error);
+    console.error('Error in fillInvoiceData:', error);
     // Log the error but proceed to the next part
   }
 }
@@ -250,37 +251,37 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
   // const item = itemTemplate.cloneNode(true);
   // item.removeAttribute('data-invoice');
   // item.style.display = 'grid';
-  const { orderItems, ordersItemsDetails } = data;
-  // console.log('orderItems ::: ', orderItems);
-  console.log('new orderItems ::: ', ordersItemsDetails);
-  ordersItemsDetails.forEach((orderItem, index) => {
+  const { orderItems, ordersItemsDetailsWithPricing } = data;
+  console.log('orderItems ::: ', orderItems);
+  console.log('new orderItems ::: ', ordersItemsDetailsWithPricing);
+  ordersItemsDetailsWithPricing.forEach((orderItem, index) => {
     const item = itemTemplate.cloneNode(true);
     item.removeAttribute('data-invoice');
     item.style.display = 'grid';
     item.style.fontWeight = 'bold';
-
+    console.log('orderItem ::: inside new order ITem', orderItem);
     item.querySelector("[invoice-item-template='index']").innerHTML = index + 1;
     item.querySelector("[invoice-item-template='title']").innerHTML =
-      `${orderItem.data[0].render['item-name']} `;
+      `${orderItem.data.inputs['item-name']} `;
     item.querySelector("[invoice-item-template='details']").style.fontSize = '10px !important';
 
     item.querySelector("[invoice-item-template='details']").innerHTML =
-      `WxHxL :  ${orderItem.data[0].render['item-width']}mm x ${orderItem.data[0].render['item-height']}mm x 
-      ${orderItem.data[0].render['item-length']}mm <br>
-      Details : ${orderItem.data[0].render['item-details']} <br>
-      ${orderItem.data[0].render['Provided-3D-Model'] === 'true' ? 'Provided 3D Model' : 'No 3D Model Provided'}
+      `WxHxL :  ${orderItem.data.inputs['item-width']}mm x ${orderItem.data.inputs['item-height']}mm x 
+      ${orderItem.data.inputs['item-length']}mm <br>
+      Details : ${orderItem.data.inputs['item-details']} <br>
+      ${orderItem.data.inputs['three-d-modelling'] === 'provide' ? 'Provided 3D Model' : 'No 3D Model Provided'}
       <br>
       `;
 
     item.querySelector("[invoice-item-template='quantity']").innerHTML = 1;
     item.querySelector("[invoice-item-template='price']").innerHTML =
-      '€ ' + orderItem.data[0].render['price'];
+      '€ ' + orderItem.renderWithPrice[0].initialFee; //! FIX THIS PRICE
     item.querySelector("[invoice-item-template='total']").innerHTML =
       // reduce all prices in the array to get the total price
-      '€ ' +
-      orderItem.data.reduce((acc, cur) => {
-        return acc + cur.render['price'];
-      }, 0);
+      '€ ' + sumRenderPricingAndPrespectives(orderItem.renderWithPrice);
+    // orderItem.data.renderWithPrice.renders.reduce((acc, cur) => {
+    //   return acc + cur.prices['price'];
+    // }, 0);
     wrapper.appendChild(item);
 
     generateAdditionalImages(orderItem, paymentDetails, itemTemplate, item);
@@ -289,44 +290,76 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
 
 function generateAdditionalImages(itemDetails, paymentDetails, itemTemplate, siblingElement) {
   console.log('inside generateAdditionalImages ::: ', itemDetails);
-  itemDetails.data.forEach((imageData, index) => {
-    if (!imageData.render['render-type']) {
-      return;
-    }
-    const item = itemTemplate.cloneNode(true);
-
-    console.log(imageData);
-    const thisItemTotalPrice = Object.values(imageData).reduce((acc, cur) => acc + cur, 0);
-
+  itemDetails.renderWithPrice.forEach((renderDetails, index) => {
     const displayIndex = index + 1;
+    const renderType = 'render ' + displayIndex + ' : ' + renderDetails.renderCategory;
+    renderDetails.renders.forEach((imageData, index) => {
+      const item = itemTemplate.cloneNode(true);
 
-    item.querySelector("[invoice-item-template='title']").innerHTML =
-      `${displayIndex - 1}  -  ${imageData.render['render-type']}  -  ${imageData.render['woodtype']}`;
-    item.querySelector("[invoice-item-template='quantity']").innerHTML =
-      imageData.render['render-count'];
-    item.querySelector("[invoice-item-template='price']").innerHTML =
-      `€ ${imageData.render['price']}`;
-    // item.querySelector("[invoice-item-template='total']").innerHTML = `€ ${thisItemTotalPrice}`;
-    item.querySelector("[invoice-item-template='total']").innerHTML = ``;
-    item.querySelector("[invoice-item-template='details']").style.fontSize = '10px !important';
+      console.log(imageData);
+      // const thisItemTotalPrice = Object.values(imageData).reduce((acc, cur) => acc + cur, 0);
 
-    item.querySelector("[invoice-item-template='details']").innerHTML =
-      `${imageData.render['square'] === 'true' ? ' square ' : ''}  ${imageData.render[' portrait '] === 'true' ? 'portrait' : ''}  ${imageData.render['Landscape'] === 'true' ? ' Landscape ' : ''} <br> 
-      ${imageData.render['upholstery'] === 'true' ? ' Upholstery' : 'No Upholstery'} <br>
-      ${imageData.render['request-comment']}
+      item.querySelector("[invoice-item-template='title']").innerHTML =
+        // ${displayIndex - 1}  -
+        ` ${renderType}  -  ${imageData.details.inputs.woodtype}`;
+      item.querySelector("[invoice-item-template='quantity']").innerHTML =
+        imageData.details.inputs['render-count'];
+      item.querySelector("[invoice-item-template='price']").innerHTML =
+        `€ ${((imageData.prices.prespectives + imageData.prices.renderPricing) / parseInt(imageData.details.inputs['render-count'])).toFixed(2)}`; //! - reduce woodtype price if needed . currentprespectives =  prices[renderType].render * detail.inputs["render-count"] + detailsPricing.prices.woodtype;
+      // item.querySelector("[invoice-item-template='total']").innerHTML = `€ ${thisItemTotalPrice}`;
+      item.querySelector("[invoice-item-template='total']").innerHTML = ``;
+      item.querySelector("[invoice-item-template='details']").style.fontSize = '10px !important';
+
+      item.querySelector("[invoice-item-template='details']").innerHTML =
+        ` ${imageData.prices.renderPricing > 0 ? 'Render fee included <br>' : ''} 
+        ${imageData.prices.woodtype > 0 ? 'Woodtype fee included <br>' : ''} 
+         ${imageData.details.inputs['aspect-ratio']} /
+      ${imageData.details.inputs['upholstery'] === 'true' ? imageData.details.inputs['upholstry-material'] : 'No Upholstery'} /
+      ${imageData.details.inputs['render-details-comment']}
       `;
 
-    item.style.display = 'grid';
-    item.style.fontSize = '12px'; // reduce item font size
-    item.style.marginBottom = '5px'; // reduce space between items
-    item.style.paddingTop = '2px'; // reduce padding
-    item.style.paddingBottom = '2px'; // reduce padding
+      item.style.display = 'grid';
+      item.style.fontSize = '12px'; // reduce item font size
+      item.style.marginBottom = '5px'; // reduce space between items
+      item.style.paddingTop = '2px'; // reduce padding
+      item.style.paddingBottom = '2px'; // reduce padding
 
-    //invoice-item-template="index"
-    item.querySelector("[invoice-item-template='index']").innerHTML = '';
+      //invoice-item-template="index"
+      item.querySelector("[invoice-item-template='index']").innerHTML = '';
 
-    siblingElement.parentNode.appendChild(item);
+      siblingElement.parentNode.appendChild(item);
+    });
   });
+}
+//!unsed
+function sumRenderPrices(data) {
+  return data.reduce(
+    (acc, category) => {
+      category.renders.forEach((render) => {
+        acc.prespectives += render.prices.prespectives;
+        acc.renderPricing += render.prices.renderPricing;
+        acc.rendersCountPrice += render.prices.rendersCountPrice;
+        acc.initialFee += render.prices.initialFee;
+      });
+      return acc;
+    },
+    {
+      prespectives: 0,
+      renderPricing: 0,
+      rendersCountPrice: 0,
+      initialFee: 0,
+    }
+  );
+}
+//!unsed
+
+function sumRenderPricingAndPrespectives(data) {
+  return data.reduce((acc, category) => {
+    category.renders.forEach((render) => {
+      acc += render.prices.prespectives + render.prices.renderPricing;
+    });
+    return acc;
+  }, 0);
 }
 
 function addDays(date, days) {

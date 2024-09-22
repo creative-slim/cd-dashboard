@@ -447,7 +447,7 @@ class RenderDetails {
   }
 
   getWoodPrice(): number {
-    debugger;
+    // debugger;
     const rawWoodType = this.detailData.inputs['woodtype'];
     const normalizedWoodType = rawWoodType.trim().toLowerCase(); // Normalize the wood type
 

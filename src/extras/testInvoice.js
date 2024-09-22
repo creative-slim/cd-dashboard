@@ -940,723 +940,1377 @@ export default function testInvoice() {
     ];
 
     const paymentDetails3 = {
-      finalData: {
-        combinedArrays: [
+      combinedArrays: {
+        order: [
           {
-            id: '1',
-            data: [
+            id: 'order-card-1727031465646',
+            inputs: {
+              'item-name': 'model_ggiy2u',
+              'item-width': '35',
+              'item-height': '56',
+              'item-length': '51',
+              'item-details': 'This is a test detail for model ri1ay',
+              photos: 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png',
+              'uploader-file-input-0.g3esi0h4aim': 'C:\\fakepath\\web-maintenance.png',
+              'three-d-modelling': 'build',
+              threed: '',
+              'uploader-file-input-0.jrr4w0xx31h': '',
+            },
+            orderRenders: [
               {
-                render: {
-                  'item-name': 'model_z4w8xa',
-                  'item-width': '72',
-                  'item-height': '79',
-                  'item-length': '71',
-                  'item-details': 'This is a test detail for model nzje6',
-                  photos_output_string: '',
-                  'uploader-file-input-0.g538w7g7zoj': 'C:\\fakepath\\4.jpg',
-                  'Provided-3D-Model': 'false',
-                  threed_output_string: '',
-                  'uploader-file-input-0.tpis5z8asvo': '',
+                id: 'order-render-1727031465647',
+                inputs: {
+                  'render-type': 'scene',
                 },
+                orderRenderDetails: [
+                  {
+                    id: 'order-render-detail-1727031465647',
+                    inputs: {
+                      woodtype: 'beech',
+                      'render-count': '4',
+                      'aspect-ratio': 'square',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                  {
+                    id: 'order-render-detail-1727031468747',
+                    inputs: {
+                      woodtype: 'oak',
+                      'render-count': '4',
+                      'aspect-ratio': 'square',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                ],
               },
               {
-                render: {
+                id: 'order-render-1727031469864',
+                inputs: {
                   'render-type': 'knockout',
-                  woodtype: 'beech',
-                  'render-count': '1',
-                  upholstery: 'false',
-                  'other-material': '',
-                  square: 'false',
-                  portrait: 'false',
-                  Landscape: 'false',
-                  'request-comment': 'Some details about the item 4eyrfa',
                 },
-              },
-              {
-                render: {
-                  'render-type': 'knockout',
-                  woodtype: 'walnut',
-                  'render-count': '1',
-                  upholstery: 'false',
-                  'other-material': '',
-                  square: 'false',
-                  portrait: 'false',
-                  Landscape: 'false',
-                  'request-comment': 'Some details about the item ggkzg',
-                },
+                orderRenderDetails: [
+                  {
+                    id: 'order-render-detail-1727031469865',
+                    inputs: {
+                      woodtype: 'beech',
+                      'render-count': '3',
+                      'aspect-ratio': 'square',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                ],
               },
             ],
-            files: {
-              images: [
+          },
+        ],
+        localstorageFiles: {
+          images: [
+            {
+              id: '1',
+              array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png'],
+            },
+          ],
+          files: [],
+        },
+        user: 'slim.abbadi@gmail.com',
+        dateID: '22-8-2024--20:58:24',
+        userAddress: {
+          id: null,
+          auth0_id: 'google-oauth2|108072257804188316677',
+          first_name: 'slim',
+          last_name: 'abbadi',
+          email: 'slim.abbadi@gmail.com',
+          phone: null,
+          street: 'Mossburger Str',
+          housenumber: '12',
+          additional_address: null,
+          zip: '30452',
+          city: 'PAFPAF',
+          country: 'GERMNA',
+          contactperson: null,
+          ust_idnr: null,
+          company: null,
+          amount_spent: 0,
+          number_of_orders: 0,
+          preferred_language: 'en',
+          order_updates: 0,
+          support_alerts: 0,
+          promotion_alerts: 0,
+          feature_update_alerts: 0,
+        },
+        paymentDetails: {
+          order: {
+            result: 'success',
+            data: {
+              id: '06Y83424PU3439346',
+              status: 'CREATED',
+              links: [
                 {
-                  id: '1',
-                  array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg'],
+                  href: 'https://api.sandbox.paypal.com/v2/checkout/orders/06Y83424PU3439346',
+                  rel: 'self',
+                  method: 'GET',
+                },
+                {
+                  href: 'https://www.sandbox.paypal.com/checkoutnow?token=06Y83424PU3439346',
+                  rel: 'approve',
+                  method: 'GET',
+                },
+                {
+                  href: 'https://api.sandbox.paypal.com/v2/checkout/orders/06Y83424PU3439346',
+                  rel: 'update',
+                  method: 'PATCH',
+                },
+                {
+                  href: 'https://api.sandbox.paypal.com/v2/checkout/orders/06Y83424PU3439346/capture',
+                  rel: 'capture',
+                  method: 'POST',
                 },
               ],
-              files: [],
             },
-          },
-          {
-            id: '2',
-            data: [
-              {
-                render: {
-                  'item-name': 'model_peb5',
-                  'item-width': '49',
-                  'item-height': '27',
-                  'item-length': '31',
-                  'item-details': 'This is a test detail for model 1n42qp',
-                  photos_output_string: '',
-                  'uploader-file-input-0.47sxn5ipdj4': 'C:\\fakepath\\3.jpg',
-                  'Provided-3D-Model': 'false',
-                  threed_output_string: '',
-                  'uploader-file-input-0.l5chur4scaq': '',
-                },
-              },
-              {
-                render: {
-                  'render-type': 'knockout',
-                  woodtype: 'beech',
-                  'render-count': '5',
-                  upholstery: 'false',
-                  'other-material': '',
-                  square: 'false',
-                  portrait: 'false',
-                  Landscape: 'false',
-                  'request-comment': 'Some details about the item z6vjpl',
-                },
-              },
-            ],
-            files: {
-              images: [
+            order_data_json: {
+              intent: 'CAPTURE',
+              purchase_units: [
                 {
-                  id: '2',
-                  array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg'],
-                },
-              ],
-              files: [],
-            },
-          },
-          {
-            user: 'slim.abbadi@gmail.com',
-          },
-          {
-            dateID: '29-7-2024--13:41:45',
-          },
-          {
-            paymentDetails: {
-              order: {
-                result: 'success',
-                data: {
-                  id: '18E671709L6562422',
-                  status: 'CREATED',
-                  links: [
-                    {
-                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
-                      rel: 'self',
-                      method: 'GET',
-                    },
-                    {
-                      href: 'https://www.sandbox.paypal.com/checkoutnow?token=18E671709L6562422',
-                      rel: 'approve',
-                      method: 'GET',
-                    },
-                    {
-                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
-                      rel: 'update',
-                      method: 'PATCH',
-                    },
-                    {
-                      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422/capture',
-                      rel: 'capture',
-                      method: 'POST',
-                    },
-                  ],
-                },
-                order_data_json: {
-                  intent: 'CAPTURE',
-                  purchase_units: [
-                    {
-                      amount: {
+                  amount: {
+                    currency_code: 'EUR',
+                    value: '3555',
+                    breakdown: {
+                      item_total: {
                         currency_code: 'EUR',
-                        value: '3990',
+                        value: '3555',
+                      },
+                    },
+                  },
+                  items: [
+                    {
+                      name: 'model_ggiy2u',
+                      quantity: '1',
+                      description: 'model_ggiy2u',
+                      category: 'DIGITAL_GOODS',
+                      allRenderPricing: [
+                        {
+                          initialFee: 850,
+                        },
+                        {
+                          prices: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 500,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'beech',
+                              'render-count': '4',
+                              'aspect-ratio': 'square',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'scene',
+                            pricing: {
+                              woodtype: 300,
+                              prespectives: 900,
+                              renderPricing: 500,
+                              initialFee: 850,
+                              rendersCountPrice: 600,
+                            },
+                          },
+                        },
+                        {
+                          prices: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 0,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'oak',
+                              'render-count': '4',
+                              'aspect-ratio': 'square',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'scene',
+                            pricing: {
+                              woodtype: 300,
+                              prespectives: 900,
+                              renderPricing: 0,
+                              initialFee: 850,
+                              rendersCountPrice: 600,
+                            },
+                          },
+                        },
+                        {
+                          prices: {
+                            woodtype: 0,
+                            prespectives: 255,
+                            renderPricing: 150,
+                            initialFee: 850,
+                            rendersCountPrice: 255,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'beech',
+                              'render-count': '3',
+                              'aspect-ratio': 'square',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'knockout',
+                            pricing: {
+                              woodtype: 0,
+                              prespectives: 255,
+                              renderPricing: 150,
+                              initialFee: 850,
+                              rendersCountPrice: 255,
+                            },
+                          },
+                        },
+                      ],
+                      unit_amount: {
+                        currency_code: 'EUR',
+                        value: '3555',
                         breakdown: {
                           item_total: {
                             currency_code: 'EUR',
-                            value: '3990',
+                            value: '3555',
                           },
                         },
                       },
-                      items: [
+                    },
+                  ],
+                },
+              ],
+            },
+            total: 3555,
+            orderItems: [
+              {
+                name: 'model_ggiy2u',
+                quantity: '1',
+                description: 'model_ggiy2u',
+                category: 'DIGITAL_GOODS',
+                allRenderPricing: [
+                  {
+                    initialFee: 850,
+                  },
+                  {
+                    prices: {
+                      woodtype: 300,
+                      prespectives: 900,
+                      renderPricing: 500,
+                      initialFee: 850,
+                      rendersCountPrice: 600,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'beech',
+                        'render-count': '4',
+                        'aspect-ratio': 'square',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'scene',
+                      pricing: {
+                        woodtype: 300,
+                        prespectives: 900,
+                        renderPricing: 500,
+                        initialFee: 850,
+                        rendersCountPrice: 600,
+                      },
+                    },
+                  },
+                  {
+                    prices: {
+                      woodtype: 300,
+                      prespectives: 900,
+                      renderPricing: 0,
+                      initialFee: 850,
+                      rendersCountPrice: 600,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'oak',
+                        'render-count': '4',
+                        'aspect-ratio': 'square',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'scene',
+                      pricing: {
+                        woodtype: 300,
+                        prespectives: 900,
+                        renderPricing: 0,
+                        initialFee: 850,
+                        rendersCountPrice: 600,
+                      },
+                    },
+                  },
+                  {
+                    prices: {
+                      woodtype: 0,
+                      prespectives: 255,
+                      renderPricing: 150,
+                      initialFee: 850,
+                      rendersCountPrice: 255,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'beech',
+                        'render-count': '3',
+                        'aspect-ratio': 'square',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'knockout',
+                      pricing: {
+                        woodtype: 0,
+                        prespectives: 255,
+                        renderPricing: 150,
+                        initialFee: 850,
+                        rendersCountPrice: 255,
+                      },
+                    },
+                  },
+                ],
+                unit_amount: {
+                  currency_code: 'EUR',
+                  value: '3555',
+                  breakdown: {
+                    item_total: {
+                      currency_code: 'EUR',
+                      value: '3555',
+                    },
+                  },
+                },
+              },
+            ],
+            orderItemsListWithPricing: [
+              {
+                data: {
+                  id: 'order-card-1727031465646',
+                  inputs: {
+                    'item-name': 'model_ggiy2u',
+                    'item-width': '35',
+                    'item-height': '56',
+                    'item-length': '51',
+                    'item-details': 'This is a test detail for model ri1ay',
+                    photos:
+                      'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png',
+                    'uploader-file-input-0.g3esi0h4aim': 'C:\\fakepath\\web-maintenance.png',
+                    'three-d-modelling': 'build',
+                    threed: '',
+                    'uploader-file-input-0.jrr4w0xx31h': '',
+                  },
+                  orderRenders: [
+                    {
+                      id: 'order-render-1727031465647',
+                      inputs: {
+                        'render-type': 'scene',
+                      },
+                      orderRenderDetails: [
                         {
-                          name: 'model_z4w8xa',
-                          quantity: '1',
-                          description: 'model_z4w8xa',
-                          category: 'DIGITAL_GOODS',
-                          allRenderPricing: [
-                            {
-                              initialFee: 1150,
-                            },
-                            {
-                              render: 150,
-                              prespectives: 0,
-                              woodtype: 300,
-                            },
-                            {
-                              render: 150,
-                              prespectives: 0,
-                              woodtype: 300,
-                            },
-                          ],
-                          unit_amount: {
-                            currency_code: 'EUR',
-                            value: '2050',
-                            breakdown: {
-                              item_total: {
-                                currency_code: 'EUR',
-                                value: '2050',
-                              },
-                            },
+                          id: 'order-render-detail-1727031465647',
+                          inputs: {
+                            woodtype: 'beech',
+                            'render-count': '4',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
                           },
                         },
                         {
-                          name: 'model_peb5',
-                          quantity: '1',
-                          description: 'model_peb5',
-                          category: 'DIGITAL_GOODS',
-                          allRenderPricing: [
-                            {
-                              initialFee: 1150,
-                            },
-                            {
-                              render: 150,
-                              prespectives: 340,
-                              woodtype: 300,
-                            },
-                          ],
-                          unit_amount: {
-                            currency_code: 'EUR',
-                            value: '1940',
-                            breakdown: {
-                              item_total: {
-                                currency_code: 'EUR',
-                                value: '1940',
-                              },
-                            },
+                          id: 'order-render-detail-1727031468747',
+                          inputs: {
+                            woodtype: 'oak',
+                            'render-count': '4',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      id: 'order-render-1727031469864',
+                      inputs: {
+                        'render-type': 'knockout',
+                      },
+                      orderRenderDetails: [
+                        {
+                          id: 'order-render-detail-1727031469865',
+                          inputs: {
+                            woodtype: 'beech',
+                            'render-count': '3',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
                           },
                         },
                       ],
                     },
                   ],
                 },
-                total: 3990,
-                orderItems: [
+                renderWithPrice: [
                   {
-                    name: 'model_z4w8xa',
-                    quantity: '1',
-                    description: 'model_z4w8xa',
-                    category: 'DIGITAL_GOODS',
-                    allRenderPricing: [
+                    renders: [
                       {
-                        initialFee: 1150,
-                      },
-                      {
-                        render: 150,
-                        prespectives: 0,
-                        woodtype: 300,
-                      },
-                      {
-                        render: 150,
-                        prespectives: 0,
-                        woodtype: 300,
-                      },
-                    ],
-                    unit_amount: {
-                      currency_code: 'EUR',
-                      value: '2050',
-                      breakdown: {
-                        item_total: {
-                          currency_code: 'EUR',
-                          value: '2050',
+                        prices: {
+                          woodtype: 300,
+                          prespectives: 900,
+                          renderPricing: 500,
+                          initialFee: 850,
+                          rendersCountPrice: 600,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'beech',
+                            'render-count': '4',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'scene',
+                          pricing: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 500,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
                         },
                       },
-                    },
+                      {
+                        prices: {
+                          woodtype: 300,
+                          prespectives: 900,
+                          renderPricing: 0,
+                          initialFee: 850,
+                          rendersCountPrice: 600,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'oak',
+                            'render-count': '4',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'scene',
+                          pricing: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 0,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
+                        },
+                      },
+                    ],
+                    renderCategory: 'scene',
+                    initialFee: 850,
                   },
                   {
-                    name: 'model_peb5',
-                    quantity: '1',
-                    description: 'model_peb5',
-                    category: 'DIGITAL_GOODS',
-                    allRenderPricing: [
+                    renders: [
                       {
-                        initialFee: 1150,
-                      },
-                      {
-                        render: 150,
-                        prespectives: 340,
-                        woodtype: 300,
-                      },
-                    ],
-                    unit_amount: {
-                      currency_code: 'EUR',
-                      value: '1940',
-                      breakdown: {
-                        item_total: {
-                          currency_code: 'EUR',
-                          value: '1940',
+                        prices: {
+                          woodtype: 0,
+                          prespectives: 255,
+                          renderPricing: 150,
+                          initialFee: 850,
+                          rendersCountPrice: 255,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'beech',
+                            'render-count': '3',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'knockout',
+                          pricing: {
+                            woodtype: 0,
+                            prespectives: 255,
+                            renderPricing: 150,
+                            initialFee: 850,
+                            rendersCountPrice: 255,
+                          },
                         },
                       },
-                    },
+                    ],
+                    renderCategory: 'knockout',
+                    initialFee: 850,
                   },
                 ],
               },
+            ],
+          },
+        },
+      },
+      finalCMSresponse: {
+        result: 'success',
+        response: [
+          {
+            id: '66f068da5134047301eae4c8',
+            cmsLocaleId: '66b48864d6ba7c12593a041d',
+            lastPublished: '2024-09-22T18:58:34.492Z',
+            lastUpdated: '2024-09-22T18:58:34.492Z',
+            createdOn: '2024-09-22T18:58:34.492Z',
+            isArchived: false,
+            isDraft: false,
+            fieldData: {
+              'special-function': false,
+              'furniture-dimension-h': 56,
+              'furniture-dimension-l': 51,
+              'furniture-dimension-w': 35,
+              slug: '7226a4be-ff71-4415-8902-045427ac6228',
+              payment: 'PayPal',
+              'order-status': 'bezahlt',
+              'furniture-name': 'model_ggiy2u',
+              name: 'model_ggiy2u',
+              woodtype: 'filler woodtype text',
+              'general-render-details': 'This is a test detail for model ri1ay',
+              comment: 'This is a test detail for model ri1ay',
+              'user-mail': 'slim.abbadi@gmail.com',
+              'order-id': 'REND-20240922-0011',
+              'order-date': 'Sun Sep 22 2024 20:58:33 GMT+0200 (Central European Summer Time)',
+              'render-list':
+                '{"id":"order-card-1727031465646","inputs":{"item-name":"model_ggiy2u","item-width":"35","item-height":"56","item-length":"51","item-details":"This is a test detail for model ri1ay","photos":"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png","uploader-file-input-0.g3esi0h4aim":"C:\\\\fakepath\\\\web-maintenance.png","three-d-modelling":"build","threed":"","uploader-file-input-0.jrr4w0xx31h":""},"orderRenders":[{"id":"order-render-1727031465647","inputs":{"render-type":"scene"},"orderRenderDetails":[{"id":"order-render-detail-1727031465647","inputs":{"woodtype":"beech","render-count":"4","aspect-ratio":"square","Upholstery":"false","upholstry-material":"","render-details-comment":""}},{"id":"order-render-detail-1727031468747","inputs":{"woodtype":"oak","render-count":"4","aspect-ratio":"square","Upholstery":"false","upholstry-material":"","render-details-comment":""}}]},{"id":"order-render-1727031469864","inputs":{"render-type":"knockout"},"orderRenderDetails":[{"id":"order-render-detail-1727031469865","inputs":{"woodtype":"beech","render-count":"3","aspect-ratio":"square","Upholstery":"false","upholstry-material":"","render-details-comment":""}}]}]}',
+              'payment-info': '"filler text"',
+              'uploaded-images': [
+                {
+                  fileId: '66efe95ffcfd1a37d64be6f2',
+                  url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66efe95ffcfd1a37d64be6f2_web-maintenance.png',
+                  alt: null,
+                },
+              ],
             },
           },
         ],
-        finalCMSresponse: {
-          result: 'success',
-          response: [
-            {
-              id: '66d05e850d7887c406ad6920',
-              cmsLocaleId: '66b48864d6ba7c12593a041d',
-              lastPublished: '2024-08-29T11:41:57.617Z',
-              lastUpdated: '2024-08-29T11:41:57.617Z',
-              createdOn: '2024-08-29T11:41:57.617Z',
-              isArchived: false,
-              isDraft: false,
-              fieldData: {
-                'special-function': false,
-                'furniture-dimension-h': 79,
-                'furniture-dimension-l': 71,
-                'furniture-dimension-w': 72,
-                payment: 'PayPal Services',
-                'order-status': 'Paid',
-                'furniture-name': 'model_z4w8xa',
-                name: 'model_z4w8xa',
-                woodtype: 'beech / walnut',
-                'dimensions-comment': 'This is a test detail for model nzje6',
-                comment: 'This is a test detail for model nzje6',
-                'user-mail': 'slim.abbadi@gmail.com',
-                'order-id': 'REND-20240829-0009',
-                'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
-                'additional-images-data':
-                  '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
-                'render-list':
-                  '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
-                'uploaded-images': [
-                  {
-                    fileId: '66b5ccba92ffc8dbb064ccf3',
-                    url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66b5ccba92ffc8dbb064ccf3_667ad6bfc986465f627a72b7_4_copy.jpeg',
-                    alt: null,
-                  },
-                ],
-                slug: 'model_z4w8xa',
-              },
-            },
-            {
-              id: '66d05e86723c4fab62eb59fa',
-              cmsLocaleId: '66b48864d6ba7c12593a041d',
-              lastPublished: '2024-08-29T11:41:58.185Z',
-              lastUpdated: '2024-08-29T11:41:58.185Z',
-              createdOn: '2024-08-29T11:41:58.185Z',
-              isArchived: false,
-              isDraft: false,
-              fieldData: {
-                'special-function': false,
-                'furniture-dimension-h': 27,
-                'furniture-dimension-l': 31,
-                'furniture-dimension-w': 49,
-                payment: 'PayPal Services',
-                'order-status': 'Paid',
-                'furniture-name': 'model_peb5',
-                name: 'model_peb5',
-                woodtype: 'beech',
-                'dimensions-comment': 'This is a test detail for model 1n42qp',
-                comment: 'This is a test detail for model 1n42qp',
-                'user-mail': 'slim.abbadi@gmail.com',
-                'order-id': 'REND-20240829-0009',
-                'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
-                'additional-images-data':
-                  '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
-                'render-list':
-                  '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
-                'uploaded-images': [
-                  {
-                    fileId: '66cd891469d39109e2a6ee25',
-                    url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66cd891469d39109e2a6ee25_3.jpeg',
-                    alt: null,
-                  },
-                ],
-                slug: 'model_peb5',
-              },
-            },
-          ],
-        },
       },
     };
 
-    const paymentDetails4 = {
-      finalData: {
-        finalData: {
-          combinedArrays: [
+    const paymentDetailsNew = {
+      combinedArrays: {
+        order: [
+          {
+            id: 'order-card-1727027277295',
+            inputs: {
+              'item-name': 'TESTBIG',
+              'item-width': '74',
+              'item-height': '17',
+              'item-length': '72',
+              'item-details': 'This is a test detail for model paqet',
+              photos: 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png',
+              'uploader-file-input-0.od8mioivtom': 'C:\\fakepath\\web-maintenance.png',
+              'three-d-modelling': 'build',
+              threed: '',
+              'uploader-file-input-0.a866az9mu0u': '',
+            },
+            orderRenders: [
+              {
+                id: 'order-render-1727027277296',
+                inputs: {
+                  'render-type': 'knockout',
+                },
+                orderRenderDetails: [
+                  {
+                    id: 'order-render-detail-1727027277296',
+                    inputs: {
+                      woodtype: 'walnut',
+                      'render-count': '34',
+                      'aspect-ratio': 'landscape',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                  {
+                    id: 'order-render-detail-1727027588068',
+                    inputs: {
+                      woodtype: 'walnut',
+                      'render-count': '43',
+                      'aspect-ratio': 'square',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                ],
+              },
+              {
+                id: 'order-render-1727027588960',
+                inputs: {
+                  'render-type': 'scene',
+                },
+                orderRenderDetails: [
+                  {
+                    id: 'order-render-detail-1727027588960',
+                    inputs: {
+                      woodtype: 'beech',
+                      'render-count': '4',
+                      'aspect-ratio': 'square',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                  {
+                    id: 'order-render-detail-1727027590338',
+                    inputs: {
+                      woodtype: 'oak',
+                      'render-count': '4',
+                      'aspect-ratio': 'landscape',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                ],
+              },
+              {
+                id: 'order-render-1727027594174',
+                inputs: {
+                  'render-type': 'knockout',
+                },
+                orderRenderDetails: [
+                  {
+                    id: 'order-render-detail-1727027594174',
+                    inputs: {
+                      woodtype: 'walnut',
+                      'render-count': '7',
+                      'aspect-ratio': 'portrait',
+                      Upholstery: 'false',
+                      'upholstry-material': '',
+                      'render-details-comment': '',
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        localstorageFiles: {
+          images: [
             {
               id: '1',
-              data: [
-                {
-                  render: {
-                    'item-name': 'model_z4w8xa',
-                    'item-width': '72',
-                    'item-height': '79',
-                    'item-length': '71',
-                    'item-details': 'This is a test detail for model nzje6',
-                    photos_output_string: '',
-                    'uploader-file-input-0.g538w7g7zoj': 'C:\\fakepath\\4.jpg',
-                    'Provided-3D-Model': 'false',
-                    threed_output_string: '',
-                    'uploader-file-input-0.tpis5z8asvo': '',
-                    price: 1150,
-                  },
-                },
-                {
-                  render: {
-                    'render-type': 'knockout',
-                    woodtype: 'beech',
-                    'render-count': '1',
-                    upholstery: 'false',
-                    'other-material': '',
-                    square: 'false',
-                    portrait: 'false',
-                    Landscape: 'false',
-                    'request-comment': 'Some details about the item 4eyrfa',
-                    price: 450,
-                  },
-                },
-                {
-                  render: {
-                    'render-type': 'knockout',
-                    woodtype: 'walnut',
-                    'render-count': '1',
-                    upholstery: 'false',
-                    'other-material': '',
-                    square: 'false',
-                    portrait: 'false',
-                    Landscape: 'false',
-                    'request-comment': 'Some details about the item ggkzg',
-                    price: 450,
-                  },
-                },
-              ],
-              files: {
-                images: [
-                  {
-                    id: '1',
-                    array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/4.jpg'],
-                  },
-                ],
-                files: [],
-              },
-            },
-            {
-              id: '2',
-              data: [
-                {
-                  render: {
-                    'item-name': 'model_peb5',
-                    'item-width': '49',
-                    'item-height': '27',
-                    'item-length': '31',
-                    'item-details': 'This is a test detail for model 1n42qp',
-                    photos_output_string: '',
-                    'uploader-file-input-0.47sxn5ipdj4': 'C:\\fakepath\\3.jpg',
-                    'Provided-3D-Model': 'false',
-                    threed_output_string: '',
-                    'uploader-file-input-0.l5chur4scaq': '',
-                    price: 1150,
-                  },
-                },
-                {
-                  render: {
-                    'render-type': 'knockout',
-                    woodtype: 'beech',
-                    'render-count': '5',
-                    upholstery: 'false',
-                    'other-material': '',
-                    square: 'false',
-                    portrait: 'false',
-                    Landscape: 'false',
-                    'request-comment': 'Some details about the item z6vjpl',
-                    price: 790,
-                  },
-                },
-              ],
-              files: {
-                images: [
-                  {
-                    id: '2',
-                    array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.jpg'],
-                  },
-                ],
-                files: [],
-              },
-            },
-            {
-              user: 'slim.abbadi@gmail.com',
-            },
-            {
-              dateID: '29-7-2024--13:41:45',
-            },
-            {
-              paymentDetails: {
-                order: {
-                  result: 'success',
-                  data: {
-                    id: '18E671709L6562422',
-                    status: 'CREATED',
-                    links: [
-                      {
-                        href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
-                        rel: 'self',
-                        method: 'GET',
-                      },
-                      {
-                        href: 'https://www.sandbox.paypal.com/checkoutnow?token=18E671709L6562422',
-                        rel: 'approve',
-                        method: 'GET',
-                      },
-                      {
-                        href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422',
-                        rel: 'update',
-                        method: 'PATCH',
-                      },
-                      {
-                        href: 'https://api.sandbox.paypal.com/v2/checkout/orders/18E671709L6562422/capture',
-                        rel: 'capture',
-                        method: 'POST',
-                      },
-                    ],
-                  },
-                  order_data_json: {
-                    intent: 'CAPTURE',
-                    purchase_units: [
-                      {
-                        amount: {
-                          currency_code: 'EUR',
-                          value: '3990',
-                          breakdown: {
-                            item_total: {
-                              currency_code: 'EUR',
-                              value: '3990',
-                            },
-                          },
-                        },
-                        items: [
-                          {
-                            name: 'model_z4w8xa',
-                            quantity: '1',
-                            description: 'model_z4w8xa',
-                            category: 'DIGITAL_GOODS',
-                            allRenderPricing: [
-                              {
-                                initialFee: 1150,
-                              },
-                              {
-                                render: 150,
-                                prespectives: 0,
-                                woodtype: 300,
-                              },
-                              {
-                                render: 150,
-                                prespectives: 0,
-                                woodtype: 300,
-                              },
-                            ],
-                            unit_amount: {
-                              currency_code: 'EUR',
-                              value: '2050',
-                              breakdown: {
-                                item_total: {
-                                  currency_code: 'EUR',
-                                  value: '2050',
-                                },
-                              },
-                            },
-                          },
-                          {
-                            name: 'model_peb5',
-                            quantity: '1',
-                            description: 'model_peb5',
-                            category: 'DIGITAL_GOODS',
-                            allRenderPricing: [
-                              {
-                                initialFee: 1150,
-                              },
-                              {
-                                render: 150,
-                                prespectives: 340,
-                                woodtype: 300,
-                              },
-                            ],
-                            unit_amount: {
-                              currency_code: 'EUR',
-                              value: '1940',
-                              breakdown: {
-                                item_total: {
-                                  currency_code: 'EUR',
-                                  value: '1940',
-                                },
-                              },
-                            },
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  total: 3990,
-                  orderItems: [
-                    {
-                      name: 'model_z4w8xa',
-                      quantity: '1',
-                      description: 'model_z4w8xa',
-                      category: 'DIGITAL_GOODS',
-                      allRenderPricing: [
-                        {
-                          initialFee: 1150,
-                        },
-                        {
-                          render: 150,
-                          prespectives: 0,
-                          woodtype: 300,
-                        },
-                        {
-                          render: 150,
-                          prespectives: 0,
-                          woodtype: 300,
-                        },
-                      ],
-                      unit_amount: {
-                        currency_code: 'EUR',
-                        value: '2050',
-                        breakdown: {
-                          item_total: {
-                            currency_code: 'EUR',
-                            value: '2050',
-                          },
-                        },
-                      },
-                    },
-                    {
-                      name: 'model_peb5',
-                      quantity: '1',
-                      description: 'model_peb5',
-                      category: 'DIGITAL_GOODS',
-                      allRenderPricing: [
-                        {
-                          initialFee: 1150,
-                        },
-                        {
-                          render: 150,
-                          prespectives: 340,
-                          woodtype: 300,
-                        },
-                      ],
-                      unit_amount: {
-                        currency_code: 'EUR',
-                        value: '1940',
-                        breakdown: {
-                          item_total: {
-                            currency_code: 'EUR',
-                            value: '1940',
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
+              array: ['https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png'],
             },
           ],
-          finalCMSresponse: {
+          files: [],
+        },
+        user: 'slim.abbadi@gmail.com',
+        dateID: '22-8-2024--19:54:18',
+        userAddress: {
+          id: null,
+          auth0_id: 'google-oauth2|108072257804188316677',
+          first_name: 'slim',
+          last_name: 'abbadi',
+          email: 'slim.abbadi@gmail.com',
+          phone: null,
+          street: 'Mossburger Str',
+          housenumber: '12',
+          additional_address: null,
+          zip: '30452',
+          city: 'PAFPAF',
+          country: 'GERMNA',
+          contactperson: null,
+          ust_idnr: null,
+          company: null,
+          amount_spent: 0,
+          number_of_orders: 0,
+          preferred_language: 'en',
+          order_updates: 0,
+          support_alerts: 0,
+          promotion_alerts: 0,
+          feature_update_alerts: 0,
+        },
+        paymentDetails: {
+          order: {
             result: 'success',
-            response: [
-              {
-                id: '66d05e850d7887c406ad6920',
-                cmsLocaleId: '66b48864d6ba7c12593a041d',
-                lastPublished: '2024-08-29T11:41:57.617Z',
-                lastUpdated: '2024-08-29T11:41:57.617Z',
-                createdOn: '2024-08-29T11:41:57.617Z',
-                isArchived: false,
-                isDraft: false,
-                fieldData: {
-                  'special-function': false,
-                  'furniture-dimension-h': 79,
-                  'furniture-dimension-l': 71,
-                  'furniture-dimension-w': 72,
-                  payment: 'PayPal Services',
-                  'order-status': 'Paid',
-                  'furniture-name': 'model_z4w8xa',
-                  name: 'model_z4w8xa',
-                  woodtype: 'beech / walnut',
-                  'dimensions-comment': 'This is a test detail for model nzje6',
-                  comment: 'This is a test detail for model nzje6',
-                  'user-mail': 'slim.abbadi@gmail.com',
-                  'order-id': 'REND-20240829-0009',
-                  'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
-                  'additional-images-data':
-                    '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
-                  'render-list':
-                    '[{"render":{"item-name":"model_z4w8xa","item-width":"72","item-height":"79","item-length":"71","item-details":"This is a test detail for model nzje6","photos_output_string":"","uploader-file-input-0.g538w7g7zoj":"C:\\\\fakepath\\\\4.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.tpis5z8asvo":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item 4eyrfa","price":450}},{"render":{"render-type":"knockout","woodtype":"walnut","render-count":"1","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item ggkzg","price":450}}]',
-                  'uploaded-images': [
+            data: {
+              id: '4C100889N73943436',
+              status: 'CREATED',
+              links: [
+                {
+                  href: 'https://api.sandbox.paypal.com/v2/checkout/orders/4C100889N73943436',
+                  rel: 'self',
+                  method: 'GET',
+                },
+                {
+                  href: 'https://www.sandbox.paypal.com/checkoutnow?token=4C100889N73943436',
+                  rel: 'approve',
+                  method: 'GET',
+                },
+                {
+                  href: 'https://api.sandbox.paypal.com/v2/checkout/orders/4C100889N73943436',
+                  rel: 'update',
+                  method: 'PATCH',
+                },
+                {
+                  href: 'https://api.sandbox.paypal.com/v2/checkout/orders/4C100889N73943436/capture',
+                  rel: 'capture',
+                  method: 'POST',
+                },
+              ],
+            },
+            order_data_json: {
+              intent: 'CAPTURE',
+              purchase_units: [
+                {
+                  amount: {
+                    currency_code: 'EUR',
+                    value: '10890',
+                    breakdown: {
+                      item_total: {
+                        currency_code: 'EUR',
+                        value: '10890',
+                      },
+                    },
+                  },
+                  items: [
                     {
-                      fileId: '66b5ccba92ffc8dbb064ccf3',
-                      url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66b5ccba92ffc8dbb064ccf3_667ad6bfc986465f627a72b7_4_copy.jpeg',
-                      alt: null,
+                      name: 'TESTBIG',
+                      quantity: '1',
+                      description: 'TESTBIG',
+                      category: 'DIGITAL_GOODS',
+                      allRenderPricing: [
+                        {
+                          initialFee: 850,
+                        },
+                        {
+                          prices: {
+                            woodtype: 300,
+                            prespectives: 3190,
+                            renderPricing: 150,
+                            initialFee: 850,
+                            rendersCountPrice: 2890,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'walnut',
+                              'render-count': '34',
+                              'aspect-ratio': 'landscape',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'knockout',
+                            pricing: {
+                              woodtype: 300,
+                              prespectives: 3190,
+                              renderPricing: 150,
+                              initialFee: 850,
+                              rendersCountPrice: 2890,
+                            },
+                          },
+                        },
+                        {
+                          prices: {
+                            woodtype: 0,
+                            prespectives: 3655,
+                            renderPricing: 0,
+                            initialFee: 850,
+                            rendersCountPrice: 3655,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'walnut',
+                              'render-count': '43',
+                              'aspect-ratio': 'square',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'knockout',
+                            pricing: {
+                              woodtype: 0,
+                              prespectives: 3655,
+                              renderPricing: 0,
+                              initialFee: 850,
+                              rendersCountPrice: 3655,
+                            },
+                          },
+                        },
+                        {
+                          prices: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 500,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'beech',
+                              'render-count': '4',
+                              'aspect-ratio': 'square',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'scene',
+                            pricing: {
+                              woodtype: 300,
+                              prespectives: 900,
+                              renderPricing: 500,
+                              initialFee: 850,
+                              rendersCountPrice: 600,
+                            },
+                          },
+                        },
+                        {
+                          prices: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 0,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'oak',
+                              'render-count': '4',
+                              'aspect-ratio': 'landscape',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'scene',
+                            pricing: {
+                              woodtype: 300,
+                              prespectives: 900,
+                              renderPricing: 0,
+                              initialFee: 850,
+                              rendersCountPrice: 600,
+                            },
+                          },
+                        },
+                        {
+                          prices: {
+                            woodtype: 0,
+                            prespectives: 595,
+                            renderPricing: 150,
+                            initialFee: 850,
+                            rendersCountPrice: 595,
+                          },
+                          details: {
+                            inputs: {
+                              woodtype: 'walnut',
+                              'render-count': '7',
+                              'aspect-ratio': 'portrait',
+                              Upholstery: 'false',
+                              'upholstry-material': '',
+                              'render-details-comment': '',
+                            },
+                            renderType: 'knockout',
+                            pricing: {
+                              woodtype: 0,
+                              prespectives: 595,
+                              renderPricing: 150,
+                              initialFee: 850,
+                              rendersCountPrice: 595,
+                            },
+                          },
+                        },
+                      ],
+                      unit_amount: {
+                        currency_code: 'EUR',
+                        value: '10890',
+                        breakdown: {
+                          item_total: {
+                            currency_code: 'EUR',
+                            value: '10890',
+                          },
+                        },
+                      },
                     },
                   ],
-                  slug: 'model_z4w8xa',
+                },
+              ],
+            },
+            total: 10890,
+            orderItems: [
+              {
+                name: 'TESTBIG',
+                quantity: '1',
+                description: 'TESTBIG',
+                category: 'DIGITAL_GOODS',
+                allRenderPricing: [
+                  {
+                    initialFee: 850,
+                  },
+                  {
+                    prices: {
+                      woodtype: 300,
+                      prespectives: 3190,
+                      renderPricing: 150,
+                      initialFee: 850,
+                      rendersCountPrice: 2890,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'walnut',
+                        'render-count': '34',
+                        'aspect-ratio': 'landscape',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'knockout',
+                      pricing: {
+                        woodtype: 300,
+                        prespectives: 3190,
+                        renderPricing: 150,
+                        initialFee: 850,
+                        rendersCountPrice: 2890,
+                      },
+                    },
+                  },
+                  {
+                    prices: {
+                      woodtype: 0,
+                      prespectives: 3655,
+                      renderPricing: 0,
+                      initialFee: 850,
+                      rendersCountPrice: 3655,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'walnut',
+                        'render-count': '43',
+                        'aspect-ratio': 'square',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'knockout',
+                      pricing: {
+                        woodtype: 0,
+                        prespectives: 3655,
+                        renderPricing: 0,
+                        initialFee: 850,
+                        rendersCountPrice: 3655,
+                      },
+                    },
+                  },
+                  {
+                    prices: {
+                      woodtype: 300,
+                      prespectives: 900,
+                      renderPricing: 500,
+                      initialFee: 850,
+                      rendersCountPrice: 600,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'beech',
+                        'render-count': '4',
+                        'aspect-ratio': 'square',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'scene',
+                      pricing: {
+                        woodtype: 300,
+                        prespectives: 900,
+                        renderPricing: 500,
+                        initialFee: 850,
+                        rendersCountPrice: 600,
+                      },
+                    },
+                  },
+                  {
+                    prices: {
+                      woodtype: 300,
+                      prespectives: 900,
+                      renderPricing: 0,
+                      initialFee: 850,
+                      rendersCountPrice: 600,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'oak',
+                        'render-count': '4',
+                        'aspect-ratio': 'landscape',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'scene',
+                      pricing: {
+                        woodtype: 300,
+                        prespectives: 900,
+                        renderPricing: 0,
+                        initialFee: 850,
+                        rendersCountPrice: 600,
+                      },
+                    },
+                  },
+                  {
+                    prices: {
+                      woodtype: 0,
+                      prespectives: 595,
+                      renderPricing: 150,
+                      initialFee: 850,
+                      rendersCountPrice: 595,
+                    },
+                    details: {
+                      inputs: {
+                        woodtype: 'walnut',
+                        'render-count': '7',
+                        'aspect-ratio': 'portrait',
+                        Upholstery: 'false',
+                        'upholstry-material': '',
+                        'render-details-comment': '',
+                      },
+                      renderType: 'knockout',
+                      pricing: {
+                        woodtype: 0,
+                        prespectives: 595,
+                        renderPricing: 150,
+                        initialFee: 850,
+                        rendersCountPrice: 595,
+                      },
+                    },
+                  },
+                ],
+                unit_amount: {
+                  currency_code: 'EUR',
+                  value: '10890',
+                  breakdown: {
+                    item_total: {
+                      currency_code: 'EUR',
+                      value: '10890',
+                    },
+                  },
                 },
               },
+            ],
+            orderItemsListWithPricing: [
               {
-                id: '66d05e86723c4fab62eb59fa',
-                cmsLocaleId: '66b48864d6ba7c12593a041d',
-                lastPublished: '2024-08-29T11:41:58.185Z',
-                lastUpdated: '2024-08-29T11:41:58.185Z',
-                createdOn: '2024-08-29T11:41:58.185Z',
-                isArchived: false,
-                isDraft: false,
-                fieldData: {
-                  'special-function': false,
-                  'furniture-dimension-h': 27,
-                  'furniture-dimension-l': 31,
-                  'furniture-dimension-w': 49,
-                  payment: 'PayPal Services',
-                  'order-status': 'Paid',
-                  'furniture-name': 'model_peb5',
-                  name: 'model_peb5',
-                  woodtype: 'beech',
-                  'dimensions-comment': 'This is a test detail for model 1n42qp',
-                  comment: 'This is a test detail for model 1n42qp',
-                  'user-mail': 'slim.abbadi@gmail.com',
-                  'order-id': 'REND-20240829-0009',
-                  'order-date': 'Thu Aug 29 2024 13:41:56 GMT+0200 (Central European Summer Time)',
-                  'additional-images-data':
-                    '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
-                  'render-list':
-                    '[{"render":{"item-name":"model_peb5","item-width":"49","item-height":"27","item-length":"31","item-details":"This is a test detail for model 1n42qp","photos_output_string":"","uploader-file-input-0.47sxn5ipdj4":"C:\\\\fakepath\\\\3.jpg","Provided-3D-Model":"false","threed_output_string":"","uploader-file-input-0.l5chur4scaq":"","price":1150}},{"render":{"render-type":"knockout","woodtype":"beech","render-count":"5","upholstery":"false","other-material":"","square":"false","portrait":"false","Landscape":"false","request-comment":"Some details about the item z6vjpl","price":790}}]',
-                  'uploaded-images': [
+                data: {
+                  id: 'order-card-1727027277295',
+                  inputs: {
+                    'item-name': 'TESTBIG',
+                    'item-width': '74',
+                    'item-height': '17',
+                    'item-length': '72',
+                    'item-details': 'This is a test detail for model paqet',
+                    photos:
+                      'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png',
+                    'uploader-file-input-0.od8mioivtom': 'C:\\fakepath\\web-maintenance.png',
+                    'three-d-modelling': 'build',
+                    threed: '',
+                    'uploader-file-input-0.a866az9mu0u': '',
+                  },
+                  orderRenders: [
                     {
-                      fileId: '66cd891469d39109e2a6ee25',
-                      url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66cd891469d39109e2a6ee25_3.jpeg',
-                      alt: null,
+                      id: 'order-render-1727027277296',
+                      inputs: {
+                        'render-type': 'knockout',
+                      },
+                      orderRenderDetails: [
+                        {
+                          id: 'order-render-detail-1727027277296',
+                          inputs: {
+                            woodtype: 'walnut',
+                            'render-count': '34',
+                            'aspect-ratio': 'landscape',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                        },
+                        {
+                          id: 'order-render-detail-1727027588068',
+                          inputs: {
+                            woodtype: 'walnut',
+                            'render-count': '43',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      id: 'order-render-1727027588960',
+                      inputs: {
+                        'render-type': 'scene',
+                      },
+                      orderRenderDetails: [
+                        {
+                          id: 'order-render-detail-1727027588960',
+                          inputs: {
+                            woodtype: 'beech',
+                            'render-count': '4',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                        },
+                        {
+                          id: 'order-render-detail-1727027590338',
+                          inputs: {
+                            woodtype: 'oak',
+                            'render-count': '4',
+                            'aspect-ratio': 'landscape',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      id: 'order-render-1727027594174',
+                      inputs: {
+                        'render-type': 'knockout',
+                      },
+                      orderRenderDetails: [
+                        {
+                          id: 'order-render-detail-1727027594174',
+                          inputs: {
+                            woodtype: 'walnut',
+                            'render-count': '7',
+                            'aspect-ratio': 'portrait',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                        },
+                      ],
                     },
                   ],
-                  slug: 'model_peb5',
                 },
+                renderWithPrice: [
+                  {
+                    renders: [
+                      {
+                        prices: {
+                          woodtype: 300,
+                          prespectives: 3190,
+                          renderPricing: 150,
+                          initialFee: 850,
+                          rendersCountPrice: 2890,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'walnut',
+                            'render-count': '34',
+                            'aspect-ratio': 'landscape',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'knockout',
+                          pricing: {
+                            woodtype: 300,
+                            prespectives: 3190,
+                            renderPricing: 150,
+                            initialFee: 850,
+                            rendersCountPrice: 2890,
+                          },
+                        },
+                      },
+                      {
+                        prices: {
+                          woodtype: 0,
+                          prespectives: 3655,
+                          renderPricing: 0,
+                          initialFee: 850,
+                          rendersCountPrice: 3655,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'walnut',
+                            'render-count': '43',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'knockout',
+                          pricing: {
+                            woodtype: 0,
+                            prespectives: 3655,
+                            renderPricing: 0,
+                            initialFee: 850,
+                            rendersCountPrice: 3655,
+                          },
+                        },
+                      },
+                    ],
+                    renderCategory: 'knockout',
+                    initialFee: 850,
+                  },
+                  {
+                    renders: [
+                      {
+                        prices: {
+                          woodtype: 300,
+                          prespectives: 900,
+                          renderPricing: 500,
+                          initialFee: 850,
+                          rendersCountPrice: 600,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'beech',
+                            'render-count': '4',
+                            'aspect-ratio': 'square',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'scene',
+                          pricing: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 500,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
+                        },
+                      },
+                      {
+                        prices: {
+                          woodtype: 300,
+                          prespectives: 900,
+                          renderPricing: 0,
+                          initialFee: 850,
+                          rendersCountPrice: 600,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'oak',
+                            'render-count': '4',
+                            'aspect-ratio': 'landscape',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'scene',
+                          pricing: {
+                            woodtype: 300,
+                            prespectives: 900,
+                            renderPricing: 0,
+                            initialFee: 850,
+                            rendersCountPrice: 600,
+                          },
+                        },
+                      },
+                    ],
+                    renderCategory: 'scene',
+                    initialFee: 850,
+                  },
+                  {
+                    renders: [
+                      {
+                        prices: {
+                          woodtype: 0,
+                          prespectives: 595,
+                          renderPricing: 150,
+                          initialFee: 850,
+                          rendersCountPrice: 595,
+                        },
+                        details: {
+                          inputs: {
+                            woodtype: 'walnut',
+                            'render-count': '7',
+                            'aspect-ratio': 'portrait',
+                            Upholstery: 'false',
+                            'upholstry-material': '',
+                            'render-details-comment': '',
+                          },
+                          renderType: 'knockout',
+                          pricing: {
+                            woodtype: 0,
+                            prespectives: 595,
+                            renderPricing: 150,
+                            initialFee: 850,
+                            rendersCountPrice: 595,
+                          },
+                        },
+                      },
+                    ],
+                    renderCategory: 'knockout',
+                    initialFee: 850,
+                  },
+                ],
               },
             ],
           },
         },
       },
+      finalCMSresponse: {
+        result: 'success',
+        response: [
+          {
+            id: '66f059d20ec75ae2655cd0b4',
+            cmsLocaleId: '66b48864d6ba7c12593a041d',
+            lastPublished: '2024-09-22T17:54:26.559Z',
+            lastUpdated: '2024-09-22T17:54:26.559Z',
+            createdOn: '2024-09-22T17:54:26.559Z',
+            isArchived: false,
+            isDraft: false,
+            fieldData: {
+              'special-function': false,
+              'furniture-dimension-h': 17,
+              'furniture-dimension-l': 72,
+              'furniture-dimension-w': 74,
+              slug: '9cb54a67-f98d-4ecd-b9d6-b9a5d54501e9',
+              payment: 'PayPal',
+              'order-status': 'bezahlt',
+              'furniture-name': 'TESTBIG',
+              name: 'TESTBIG',
+              woodtype: 'filler woodtype text',
+              'general-render-details': 'This is a test detail for model paqet',
+              comment: 'This is a test detail for model paqet',
+              'user-mail': 'slim.abbadi@gmail.com',
+              'order-id': 'REND-20240922-0010',
+              'order-date': 'Sun Sep 22 2024 19:54:25 GMT+0200 (Central European Summer Time)',
+              'render-list':
+                '{"id":"order-card-1727027277295","inputs":{"item-name":"TESTBIG","item-width":"74","item-height":"17","item-length":"72","item-details":"This is a test detail for model paqet","photos":"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png","uploader-file-input-0.od8mioivtom":"C:\\\\fakepath\\\\web-maintenance.png","three-d-modelling":"build","threed":"","uploader-file-input-0.a866az9mu0u":""},"orderRenders":[{"id":"order-render-1727027277296","inputs":{"render-type":"knockout"},"orderRenderDetails":[{"id":"order-render-detail-1727027277296","inputs":{"woodtype":"walnut","render-count":"34","aspect-ratio":"landscape","Upholstery":"false","upholstry-material":"","render-details-comment":""}},{"id":"order-render-detail-1727027588068","inputs":{"woodtype":"walnut","render-count":"43","aspect-ratio":"square","Upholstery":"false","upholstry-material":"","render-details-comment":""}}]},{"id":"order-render-1727027588960","inputs":{"render-type":"scene"},"orderRenderDetails":[{"id":"order-render-detail-1727027588960","inputs":{"woodtype":"beech","render-count":"4","aspect-ratio":"square","Upholstery":"false","upholstry-material":"","render-details-comment":""}},{"id":"order-render-detail-1727027590338","inputs":{"woodtype":"oak","render-count":"4","aspect-ratio":"landscape","Upholstery":"false","upholstry-material":"","render-details-comment":""}}]},{"id":"order-render-1727027594174","inputs":{"render-type":"knockout"},"orderRenderDetails":[{"id":"order-render-detail-1727027594174","inputs":{"woodtype":"walnut","render-count":"7","aspect-ratio":"portrait","Upholstery":"false","upholstry-material":"","render-details-comment":""}}]}]}',
+              'payment-info': '"filler text"',
+              'uploaded-images': [
+                {
+                  fileId: '66efe95ffcfd1a37d64be6f2',
+                  url: 'https://cdn.prod.website-files.com/66b48864d6ba7c12593a0445/66efe95ffcfd1a37d64be6f2_web-maintenance.png',
+                  alt: null,
+                },
+              ],
+            },
+          },
+        ],
+      },
     };
+
     const pdfLink =
       'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Invoice_REND-20240614-0010';
 
