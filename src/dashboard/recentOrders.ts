@@ -44,25 +44,33 @@ export async function displayRecentOrders() {
     return;
   }
 
+  console.log('#########data###########', data);
   data.forEach((order) => {
     const item = template.cloneNode(true);
     item.classList.remove('template');
     item.style.display = 'flex';
 
-    const renderList = JSON.parse(order.fieldData['render-list']);
+    const renderList = JSON.parse(order.fieldData['payment-info']);
 
     console.log('#########order###########', order);
     const collectionSlug = '07abe1fd-4015-4890-8299-1da02fa50c4f';
     item.addEventListener('click', () => {
       window.location.href = `/${collectionSlug}/${order.fieldData['slug']}`;
     });
+    const paymentDetailsWithOrderDetails = renderList.paymentDetails.order;
+    if (!paymentDetailsWithOrderDetails) {
+      //console.error('No payment details found');
+      return;
+    }
+    const currentItem = paymentDetailsWithOrderDetails.orderItemsListWithPricing.filter((item) => {
+      return item.data.inputs['item-name'] === order.fieldData.name;
+    });
+    console.log('#########paymentDetailsWithOrderDetails###########', currentItem[0]);
+    const itemToDisplay = currentItem[0];
 
-    console.log('#########renderList###########', renderList);
-    console.log(order);
-
-    item.querySelector('[data-order="name"]').textContent = renderList[0].render['item-name'];
+    item.querySelector('[data-order="name"]').textContent = itemToDisplay.data.inputs['item-name'];
     item.querySelector('[data-order="status"]').textContent = 'bezahlt';
-    const totalPrice = renderList.reduce((total, item) => total + (item.render.price || 0), 0);
+    const totalPrice = sumRenderPricingAndPrespectives(itemToDisplay.renderWithPrice);
     item.querySelector('[data-order="price"]').textContent = `${totalPrice.toFixed(2)} €`;
 
     container.appendChild(item);
@@ -70,4 +78,13 @@ export async function displayRecentOrders() {
 
   template.remove();
   return data;
+}
+
+function sumRenderPricingAndPrespectives(data) {
+  return data.reduce((acc, category) => {
+    category.renders.forEach((render) => {
+      acc += render.prices.prespectives + render.prices.renderPricing;
+    });
+    return acc;
+  }, 0);
 }
