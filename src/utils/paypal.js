@@ -25,16 +25,20 @@ export function initializePaypal(
   let PAYPAL_CLIENT_ID =
     'AVoZD4EtMXeCRZRcUYr2hfVEfQjZ64IC2HuWi7k9g3kVNegnVazLjJIToMUcnfO3PEjKPWLxaRxz8kkG';
 
-  const paypalSandboxToggle = document.querySelector("[data-sandbox='paypal-sandbox-toggle']");
-  if (paypalSandboxToggle) {
-    const toggle = paypalSandboxToggle.dataset.sandbox;
-    if (toggle === 'true') {
-      //**SANDBOX PAYPAL */
-      PAYPAL_CLIENT_ID =
-        'AWAxiue-z2L3vnEGgR5TM72wYvA38X_Y3yf5pggqld2MyM0IXekXvqfIKC7H1VPGq7pCs_WJ-hWIJE96';
-      console.log('*** SANDBOX PAYPAL ***');
-    }
-  }
+  // //! sa dev sandbox paypal
+  // let PAYPAL_CLIENT_ID =
+  //   'AevfJAscX9MKaFWcK--S7rgLBotKliHnYIc94ShGUS3yNpc_Vt7z92LLmH4Tfwl49uRWpesdR6VBbtVx';
+
+  // const paypalSandboxToggle = document.querySelector("[data-sandbox='paypal-sandbox-toggle']");
+  // if (paypalSandboxToggle) {
+  //   const toggle = paypalSandboxToggle.dataset.sandbox;
+  //   if (toggle === 'true') {
+  //     //**SANDBOX PAYPAL */
+  //     PAYPAL_CLIENT_ID =
+  //       'AWAxiue-z2L3vnEGgR5TM72wYvA38X_Y3yf5pggqld2MyM0IXekXvqfIKC7H1VPGq7pCs_WJ-hWIJE96';
+  //     console.log('*** SANDBOX PAYPAL ***');
+  //   }
+  // }
 
   if (!PAYPAL_CLIENT_ID) {
     //console.error('PayPal client ID is missing. Make sure to add it to your .env file.');
@@ -122,7 +126,8 @@ export function initializePaypal(
             // alert('Please fill in all required fields');
             return actions.reject();
           }
-          orderDetails = fetchDataFromLocalStorage();
+          // orderDetails = fetchDataFromLocalStorage();
+          orderDetails = localStorage.getItem('orderData');
         },
         style: {
           shape: 'rect',

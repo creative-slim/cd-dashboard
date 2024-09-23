@@ -1,0 +1,2725 @@
+{
+    "result": "success",
+    "data": {
+        "id": "50055847T4044345H",
+        "status": "CREATED",
+        "links": [
+            {
+                "href": "https://api.sandbox.paypal.com/v2/checkout/orders/50055847T4044345H",
+                "rel": "self",
+                "method": "GET"
+            },
+            {
+                "href": "https://www.sandbox.paypal.com/checkoutnow?token=50055847T4044345H",
+                "rel": "approve",
+                "method": "GET"
+            },
+            {
+                "href": "https://api.sandbox.paypal.com/v2/checkout/orders/50055847T4044345H",
+                "rel": "update",
+                "method": "PATCH"
+            },
+            {
+                "href": "https://api.sandbox.paypal.com/v2/checkout/orders/50055847T4044345H/capture",
+                "rel": "capture",
+                "method": "POST"
+            }
+        ]
+    },
+    "order_data_json": {
+        "intent": "CAPTURE",
+        "purchase_units": [
+            {
+                "amount": {
+                    "currency_code": "EUR",
+                    "value": "1425",
+                    "breakdown": {
+                        "item_total": {
+                            "currency_code": "EUR",
+                            "value": "1425"
+                        }
+                    }
+                },
+                "items": [
+                    {
+                        "name": "processing Fee",
+                        "quantity": "1",
+                        "description": "service",
+                        "category": "DIGITAL_GOODS",
+                        "unit_amount": {
+                            "currency_code": "EUR",
+                            "value": 300,
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": 300
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "654654",
+                        "quantity": "1",
+                        "description": "654654",
+                        "category": "DIGITAL_GOODS",
+                        "allRenderPricing": [
+                            {
+                                "render": 400,
+                                "prespectives": 425,
+                                "woodtype": 300
+                            }
+                        ],
+                        "unit_amount": {
+                            "currency_code": "EUR",
+                            "value": "1125",
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": "1125"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "total": 1425,
+    "orderItems": [
+        {
+            "name": "processing Fee",
+            "quantity": "1",
+            "description": "service",
+            "category": "DIGITAL_GOODS",
+            "unit_amount": {
+                "currency_code": "EUR",
+                "value": 300,
+                "breakdown": {
+                    "item_total": {
+                        "currency_code": "EUR",
+                        "value": 300
+                    }
+                }
+            }
+        },
+        {
+            "name": "654654",
+            "quantity": "1",
+            "description": "654654",
+            "category": "DIGITAL_GOODS",
+            "allRenderPricing": [
+                {
+                    "render": 400,
+                    "prespectives": 425,
+                    "woodtype": 300
+                }
+            ],
+            "unit_amount": {
+                "currency_code": "EUR",
+                "value": "1125",
+                "breakdown": {
+                    "item_total": {
+                        "currency_code": "EUR",
+                        "value": "1125"
+                    }
+                }
+            }
+        }
+    ]
+}
+,
+FINAL.REsponse :
+{
+    "result": "success",
+    "response": [
+        {
+            "id": "666b7927fa83316d78444825",
+            "cmsLocaleId": null,
+            "lastPublished": "2024-06-13T22:56:39.195Z",
+            "lastUpdated": "2024-06-13T22:56:39.195Z",
+            "createdOn": "2024-06-13T22:56:39.195Z",
+            "isArchived": false,
+            "isDraft": false,
+            "fieldData": {
+                "specialfunctionscene": false,
+                "furniture-dimension-h": 143,
+                "furniture-dimension-l": 543,
+                "furniture-dimension-w": 12,
+                "order-state": "3a8b108b469a23d52b620cb75b914d77",
+                "payment": "PayPal Services",
+                "furniture-name": "ITEM 1",
+                "name": "ITEM 1",
+                "color-finish": "beech / oak / beech",
+                "comment": "Details",
+                "order-id": "REND-20240613-0002",
+                "order-date": "Fri Jun 14 2024 00:56:36 GMT+0200 (Central European Summer Time)",
+                "additional-images-data": "[{\"render\":{\"item-name\":\"ITEM 1\",\"item-width\":\"12\",\"item-height\":\"143\",\"item-length\":\"543\",\"item-details\":\"Details\",\"photos_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png\",\"uploader-file-input-0.chw0rn3fmq\":\"C:\\\\fakepath\\\\2.png\",\"provided-3D-model\":\"false\",\"threed_output_string\":\"\",\"uploader-file-input-0.osd1px4rxx\":\"\"}},{\"render\":{\"render-type\":\"scene\",\"woodtype\":\"beech\",\"render-count\":\"7\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}},{\"render\":{\"render-type\":\"scene\",\"woodtype\":\"oak\",\"render-count\":\"3\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}},{\"render\":{\"render-type\":\"knockout\",\"woodtype\":\"beech\",\"render-count\":\"11\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}}]",
+                "test-image": {
+                    "fileId": "666b532975a6b137f75f43ea",
+                    "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b532975a6b137f75f43ea_2.png",
+                    "alt": null
+                },
+                "uploaded-images": [
+                    {
+                        "fileId": "666b532975a6b137f75f43ea",
+                        "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b532975a6b137f75f43ea_2.png",
+                        "alt": null
+                    }
+                ],
+                "slug": "item_1",
+                "user-id": "6620e095b1681d9809914b31"
+            }
+        },
+        {
+            "id": "666b792897d2e1789686180d",
+            "cmsLocaleId": null,
+            "lastPublished": "2024-06-13T22:56:40.093Z",
+            "lastUpdated": "2024-06-13T22:56:40.093Z",
+            "createdOn": "2024-06-13T22:56:40.093Z",
+            "isArchived": false,
+            "isDraft": false,
+            "fieldData": {
+                "specialfunctionscene": false,
+                "comment": null,
+                "furniture-dimension-h": 45,
+                "furniture-dimension-l": 234,
+                "furniture-dimension-w": 765,
+                "order-state": "3a8b108b469a23d52b620cb75b914d77",
+                "payment": "PayPal Services",
+                "furniture-name": "ITEM 2",
+                "name": "ITEM 2",
+                "color-finish": "beech / beech",
+                "order-id": "REND-20240613-0002",
+                "order-date": "Fri Jun 14 2024 00:56:36 GMT+0200 (Central European Summer Time)",
+                "additional-images-data": "[{\"render\":{\"item-name\":\"ITEM 2\",\"item-width\":\"765\",\"item-height\":\"45\",\"item-length\":\"234\",\"item-details\":\"\",\"photos_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png\",\"uploader-file-input-0.7cuulvy7m2v\":\"C:\\\\fakepath\\\\1.png\",\"provided-3D-model\":\"false\",\"threed_output_string\":\"\",\"uploader-file-input-0.3rre0fcxpn7\":\"\"}},{\"render\":{\"render-type\":\"scene\",\"woodtype\":\"beech\",\"render-count\":\"12\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}},{\"render\":{\"render-type\":\"knockout\",\"woodtype\":\"beech\",\"render-count\":\"3\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}}]",
+                "slug": "item_2",
+                "test-image": {
+                    "fileId": "666b4df96f08ff6ffc53b436",
+                    "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b4df96f08ff6ffc53b436_1.png",
+                    "alt": null
+                },
+                "uploaded-images": [
+                    {
+                        "fileId": "666b4df96f08ff6ffc53b436",
+                        "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b4df96f08ff6ffc53b436_1.png",
+                        "alt": null
+                    }
+                ],
+                "user-id": "6620e095b1681d9809914b31"
+            }
+        }
+    ]
+}
+
+COMBINED ARRAY :
+
+[
+    {
+        "id": "1",
+        "data": [
+            {
+                "render": {
+                    "item-name": "ITEM 1",
+                    "item-width": "12",
+                    "item-height": "143",
+                    "item-length": "543",
+                    "item-details": "Details",
+                    "photos_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png",
+                    "uploader-file-input-0.chw0rn3fmq": "C:\\fakepath\\2.png",
+                    "provided-3D-model": "false",
+                    "threed_output_string": "",
+                    "uploader-file-input-0.osd1px4rxx": ""
+                }
+            },
+            {
+                "render": {
+                    "render-type": "scene",
+                    "woodtype": "beech",
+                    "render-count": "7",
+                    "upholstery": "false",
+                    "other-material": "",
+                    "square": "false",
+                    "portrait": "false",
+                    "Landscape": "false",
+                    "request-comment": ""
+                }
+            },
+            {
+                "render": {
+                    "render-type": "scene",
+                    "woodtype": "oak",
+                    "render-count": "3",
+                    "upholstery": "false",
+                    "other-material": "",
+                    "square": "false",
+                    "portrait": "false",
+                    "Landscape": "false",
+                    "request-comment": ""
+                }
+            },
+            {
+                "render": {
+                    "render-type": "knockout",
+                    "woodtype": "beech",
+                    "render-count": "11",
+                    "upholstery": "false",
+                    "other-material": "",
+                    "square": "false",
+                    "portrait": "false",
+                    "Landscape": "false",
+                    "request-comment": ""
+                }
+            }
+        ],
+        "files": {
+            "images": [
+                {
+                    "id": "1",
+                    "array": [
+                        "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png"
+                    ]
+                }
+            ],
+            "files": []
+        }
+    },
+    {
+        "id": "2",
+        "data": [
+            {
+                "render": {
+                    "item-name": "ITEM 2",
+                    "item-width": "765",
+                    "item-height": "45",
+                    "item-length": "234",
+                    "item-details": "",
+                    "photos_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png",
+                    "uploader-file-input-0.7cuulvy7m2v": "C:\\fakepath\\1.png",
+                    "provided-3D-model": "false",
+                    "threed_output_string": "",
+                    "uploader-file-input-0.3rre0fcxpn7": ""
+                }
+            },
+            {
+                "render": {
+                    "render-type": "scene",
+                    "woodtype": "beech",
+                    "render-count": "12",
+                    "upholstery": "false",
+                    "other-material": "",
+                    "square": "false",
+                    "portrait": "false",
+                    "Landscape": "false",
+                    "request-comment": ""
+                }
+            },
+            {
+                "render": {
+                    "render-type": "knockout",
+                    "woodtype": "beech",
+                    "render-count": "3",
+                    "upholstery": "false",
+                    "other-material": "",
+                    "square": "false",
+                    "portrait": "false",
+                    "Landscape": "false",
+                    "request-comment": ""
+                }
+            }
+        ],
+        "files": {
+            "images": [
+                {
+                    "id": "2",
+                    "array": [
+                        "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png"
+                    ]
+                }
+            ],
+            "files": []
+        }
+    },
+    {
+        "user": "4ce7669f050042d09499b786f19d4beb"
+    },
+    {
+        "dateID": "14-5-2024--0:56:16"
+    },
+    {}
+]
+
+invoice Input DATA :
+
+{
+    "finalData": {
+        "combinedArrays": [
+            {
+                "id": "1",
+                "data": [
+                    {
+                        "render": {
+                            "item-name": "nico",
+                            "item-width": "54",
+                            "item-height": "54",
+                            "item-length": "12",
+                            "item-details": "12",
+                            "photos_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png",
+                            "uploader-file-input-0.jpv5pcjg2pf": "C:\\fakepath\\2.png",
+                            "provided-3D-model": "false",
+                            "threed_output_string": "",
+                            "uploader-file-input-0.vh7k38pz7c": ""
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "scene",
+                            "woodtype": "beech",
+                            "render-count": "5",
+                            "upholstery": "false",
+                            "other-material": "",
+                            "square": "false",
+                            "portrait": "false",
+                            "Landscape": "false",
+                            "request-comment": ""
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "knockout",
+                            "woodtype": "beech",
+                            "render-count": "10",
+                            "upholstery": "false",
+                            "other-material": "",
+                            "square": "false",
+                            "portrait": "false",
+                            "Landscape": "false",
+                            "request-comment": ""
+                        }
+                    }
+                ],
+                "files": {
+                    "images": [
+                        {
+                            "id": "1",
+                            "array": [
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png"
+                            ]
+                        }
+                    ],
+                    "files": []
+                }
+            },
+            {
+                "id": "2",
+                "data": [
+                    {
+                        "render": {
+                            "item-name": "slim",
+                            "item-width": "12",
+                            "item-height": "55",
+                            "item-length": "67",
+                            "item-details": "",
+                            "photos_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png",
+                            "uploader-file-input-0.falersl2x6o": "C:\\fakepath\\1.png",
+                            "provided-3D-model": "false",
+                            "threed_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip",
+                            "uploader-file-input-0.iyu9c1ra2k": "C:\\fakepath\\xx.zip"
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "scene",
+                            "woodtype": "wallnut",
+                            "render-count": "6",
+                            "upholstery": "false",
+                            "other-material": "",
+                            "square": "false",
+                            "portrait": "false",
+                            "Landscape": "false",
+                            "request-comment": ""
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "knockout",
+                            "woodtype": "beech",
+                            "render-count": "4",
+                            "upholstery": "true",
+                            "other-material": "lether",
+                            "square": "true",
+                            "portrait": "true",
+                            "Landscape": "false",
+                            "request-comment": ""
+                        }
+                    }
+                ],
+                "files": {
+                    "images": [
+                        {
+                            "id": "2",
+                            "array": [
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png"
+                            ]
+                        }
+                    ],
+                    "files": [
+                        {
+                            "id": "2",
+                            "array": [
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "user": "4ce7669f050042d09499b786f19d4beb"
+            },
+            {
+                "dateID": "14-5-2024--6:33:16"
+            },
+            {
+                "paymentDetails": {
+                    "order": {
+                        "result": "success",
+                        "data": {
+                            "id": "14P847251X0838603",
+                            "status": "CREATED",
+                            "links": [
+                                {
+                                    "href": "https://api.sandbox.paypal.com/v2/checkout/orders/14P847251X0838603",
+                                    "rel": "self",
+                                    "method": "GET"
+                                },
+                                {
+                                    "href": "https://www.sandbox.paypal.com/checkoutnow?token=14P847251X0838603",
+                                    "rel": "approve",
+                                    "method": "GET"
+                                },
+                                {
+                                    "href": "https://api.sandbox.paypal.com/v2/checkout/orders/14P847251X0838603",
+                                    "rel": "update",
+                                    "method": "PATCH"
+                                },
+                                {
+                                    "href": "https://api.sandbox.paypal.com/v2/checkout/orders/14P847251X0838603/capture",
+                                    "rel": "capture",
+                                    "method": "POST"
+                                }
+                            ]
+                        },
+                        "order_data_json": {
+                            "intent": "CAPTURE",
+                            "purchase_units": [
+                                {
+                                    "amount": {
+                                        "currency_code": "EUR",
+                                        "value": "4425",
+                                        "breakdown": {
+                                            "item_total": {
+                                                "currency_code": "EUR",
+                                                "value": "4425"
+                                            }
+                                        }
+                                    },
+                                    "items": [
+                                        {
+                                            "name": "processing Fee",
+                                            "quantity": "1",
+                                            "description": "service",
+                                            "category": "DIGITAL_GOODS",
+                                            "unit_amount": {
+                                                "currency_code": "EUR",
+                                                "value": 300,
+                                                "breakdown": {
+                                                    "item_total": {
+                                                        "currency_code": "EUR",
+                                                        "value": 300
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "name": "nico",
+                                            "quantity": "1",
+                                            "description": "nico",
+                                            "category": "DIGITAL_GOODS",
+                                            "allRenderPricing": [
+                                                {
+                                                    "render": 400,
+                                                    "prespectives": 425,
+                                                    "woodtype": 300
+                                                },
+                                                {
+                                                    "render": 150,
+                                                    "prespectives": 850,
+                                                    "woodtype": 0
+                                                }
+                                            ],
+                                            "unit_amount": {
+                                                "currency_code": "EUR",
+                                                "value": "2125",
+                                                "breakdown": {
+                                                    "item_total": {
+                                                        "currency_code": "EUR",
+                                                        "value": "2125"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "name": "slim",
+                                            "quantity": "1",
+                                            "description": "slim",
+                                            "category": "DIGITAL_GOODS",
+                                            "allRenderPricing": [
+                                                {
+                                                    "render": 400,
+                                                    "prespectives": 510,
+                                                    "woodtype": 300
+                                                },
+                                                {
+                                                    "render": 150,
+                                                    "prespectives": 340,
+                                                    "woodtype": 300
+                                                }
+                                            ],
+                                            "unit_amount": {
+                                                "currency_code": "EUR",
+                                                "value": "2000",
+                                                "breakdown": {
+                                                    "item_total": {
+                                                        "currency_code": "EUR",
+                                                        "value": "2000"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "total": 4425,
+                        "orderItems": [
+                            {
+                                "name": "processing Fee",
+                                "quantity": "1",
+                                "description": "service",
+                                "category": "DIGITAL_GOODS",
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": 300,
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": 300
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "nico",
+                                "quantity": "1",
+                                "description": "nico",
+                                "category": "DIGITAL_GOODS",
+                                "allRenderPricing": [
+                                    {
+                                        "render": 400,
+                                        "prespectives": 425,
+                                        "woodtype": 300
+                                    },
+                                    {
+                                        "render": 150,
+                                        "prespectives": 850,
+                                        "woodtype": 0
+                                    }
+                                ],
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": "2125",
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": "2125"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "slim",
+                                "quantity": "1",
+                                "description": "slim",
+                                "category": "DIGITAL_GOODS",
+                                "allRenderPricing": [
+                                    {
+                                        "render": 400,
+                                        "prespectives": 510,
+                                        "woodtype": 300
+                                    },
+                                    {
+                                        "render": 150,
+                                        "prespectives": 340,
+                                        "woodtype": 300
+                                    }
+                                ],
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": "2000",
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": "2000"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "finalCMSresponse": {
+            "result": "success",
+            "response": [
+                {
+                    "id": "666bc823b0fca6955614f1ac",
+                    "cmsLocaleId": null,
+                    "lastPublished": "2024-06-14T04:33:39.094Z",
+                    "lastUpdated": "2024-06-14T04:33:39.094Z",
+                    "createdOn": "2024-06-14T04:33:39.094Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                        "specialfunctionscene": false,
+                        "furniture-dimension-h": 54,
+                        "furniture-dimension-l": 12,
+                        "furniture-dimension-w": 54,
+                        "order-state": "3a8b108b469a23d52b620cb75b914d77",
+                        "payment": "PayPal Services",
+                        "furniture-name": "nico",
+                        "name": "nico",
+                        "color-finish": "beech / beech",
+                        "comment": "12",
+                        "order-id": "REND-20240614-0004",
+                        "order-date": "Fri Jun 14 2024 06:33:37 GMT+0200 (Central European Summer Time)",
+                        "additional-images-data": "[{\"render\":{\"item-name\":\"nico\",\"item-width\":\"54\",\"item-height\":\"54\",\"item-length\":\"12\",\"item-details\":\"12\",\"photos_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png\",\"uploader-file-input-0.jpv5pcjg2pf\":\"C:\\\\fakepath\\\\2.png\",\"provided-3D-model\":\"false\",\"threed_output_string\":\"\",\"uploader-file-input-0.vh7k38pz7c\":\"\"}},{\"render\":{\"render-type\":\"scene\",\"woodtype\":\"beech\",\"render-count\":\"5\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}},{\"render\":{\"render-type\":\"knockout\",\"woodtype\":\"beech\",\"render-count\":\"10\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}}]",
+                        "slug": "nico-8cd9d",
+                        "test-image": {
+                            "fileId": "666b532975a6b137f75f43ea",
+                            "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b532975a6b137f75f43ea_2.png",
+                            "alt": null
+                        },
+                        "uploaded-images": [
+                            {
+                                "fileId": "666b532975a6b137f75f43ea",
+                                "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b532975a6b137f75f43ea_2.png",
+                                "alt": null
+                            }
+                        ],
+                        "user-id": "6620e095b1681d9809914b31"
+                    }
+                },
+                {
+                    "id": "666bc8231ab1b49a4ff1bf7c",
+                    "cmsLocaleId": null,
+                    "lastPublished": "2024-06-14T04:33:39.158Z",
+                    "lastUpdated": "2024-06-14T04:33:39.158Z",
+                    "createdOn": "2024-06-14T04:33:39.158Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                        "file-link": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip",
+                        "specialfunctionscene": false,
+                        "comment": null,
+                        "furniture-dimension-h": 55,
+                        "furniture-dimension-l": 67,
+                        "furniture-dimension-w": 12,
+                        "order-state": "3a8b108b469a23d52b620cb75b914d77",
+                        "payment": "PayPal Services",
+                        "furniture-name": "slim",
+                        "name": "slim",
+                        "color-finish": "wallnut / beech",
+                        "order-id": "REND-20240614-0004",
+                        "order-date": "Fri Jun 14 2024 06:33:37 GMT+0200 (Central European Summer Time)",
+                        "additional-images-data": "[{\"render\":{\"item-name\":\"slim\",\"item-width\":\"12\",\"item-height\":\"55\",\"item-length\":\"67\",\"item-details\":\"\",\"photos_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png\",\"uploader-file-input-0.falersl2x6o\":\"C:\\\\fakepath\\\\1.png\",\"provided-3D-model\":\"false\",\"threed_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip\",\"uploader-file-input-0.iyu9c1ra2k\":\"C:\\\\fakepath\\\\xx.zip\"}},{\"render\":{\"render-type\":\"scene\",\"woodtype\":\"wallnut\",\"render-count\":\"6\",\"upholstery\":\"false\",\"other-material\":\"\",\"square\":\"false\",\"portrait\":\"false\",\"Landscape\":\"false\",\"request-comment\":\"\"}},{\"render\":{\"render-type\":\"knockout\",\"woodtype\":\"beech\",\"render-count\":\"4\",\"upholstery\":\"true\",\"other-material\":\"lether\",\"square\":\"true\",\"portrait\":\"true\",\"Landscape\":\"false\",\"request-comment\":\"\"}}]",
+                        "slug": "slim-d3a3d",
+                        "test-image": {
+                            "fileId": "666b4df96f08ff6ffc53b436",
+                            "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b4df96f08ff6ffc53b436_1.png",
+                            "alt": null
+                        },
+                        "uploaded-images": [
+                            {
+                                "fileId": "666b4df96f08ff6ffc53b436",
+                                "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b4df96f08ff6ffc53b436_1.png",
+                                "alt": null
+                            }
+                        ],
+                        "user-id": "6620e095b1681d9809914b31"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+invoice Processed Data :
+{
+    {
+        "payment": {
+            "order": {
+                "result": "success",
+                "data": {
+                    "id": "14P847251X0838603",
+                    "status": "CREATED",
+                    "links": [
+                        {
+                            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/14P847251X0838603",
+                            "rel": "self",
+                            "method": "GET"
+                        },
+                        {
+                            "href": "https://www.sandbox.paypal.com/checkoutnow?token=14P847251X0838603",
+                            "rel": "approve",
+                            "method": "GET"
+                        },
+                        {
+                            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/14P847251X0838603",
+                            "rel": "update",
+                            "method": "PATCH"
+                        },
+                        {
+                            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/14P847251X0838603/capture",
+                            "rel": "capture",
+                            "method": "POST"
+                        }
+                    ]
+                },
+                "order_data_json": {
+                    "intent": "CAPTURE",
+                    "purchase_units": [
+                        {
+                            "amount": {
+                                "currency_code": "EUR",
+                                "value": "4425",
+                                "breakdown": {
+                                    "item_total": {
+                                        "currency_code": "EUR",
+                                        "value": "4425"
+                                    }
+                                }
+                            },
+                            "items": [
+                                {
+                                    "name": "processing Fee",
+                                    "quantity": "1",
+                                    "description": "service",
+                                    "category": "DIGITAL_GOODS",
+                                    "unit_amount": {
+                                        "currency_code": "EUR",
+                                        "value": 300,
+                                        "breakdown": {
+                                            "item_total": {
+                                                "currency_code": "EUR",
+                                                "value": 300
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "nico",
+                                    "quantity": "1",
+                                    "description": "nico",
+                                    "category": "DIGITAL_GOODS",
+                                    "allRenderPricing": [
+                                        {
+                                            "render": 400,
+                                            "prespectives": 425,
+                                            "woodtype": 300
+                                        },
+                                        {
+                                            "render": 150,
+                                            "prespectives": 850,
+                                            "woodtype": 0
+                                        }
+                                    ],
+                                    "unit_amount": {
+                                        "currency_code": "EUR",
+                                        "value": "2125",
+                                        "breakdown": {
+                                            "item_total": {
+                                                "currency_code": "EUR",
+                                                "value": "2125"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "name": "slim",
+                                    "quantity": "1",
+                                    "description": "slim",
+                                    "category": "DIGITAL_GOODS",
+                                    "allRenderPricing": [
+                                        {
+                                            "render": 400,
+                                            "prespectives": 510,
+                                            "woodtype": 300
+                                        },
+                                        {
+                                            "render": 150,
+                                            "prespectives": 340,
+                                            "woodtype": 300
+                                        }
+                                    ],
+                                    "unit_amount": {
+                                        "currency_code": "EUR",
+                                        "value": "2000",
+                                        "breakdown": {
+                                            "item_total": {
+                                                "currency_code": "EUR",
+                                                "value": "2000"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "total": 4425,
+                "orderItems": [
+                    {
+                        "name": "processing Fee",
+                        "quantity": "1",
+                        "description": "service",
+                        "category": "DIGITAL_GOODS",
+                        "unit_amount": {
+                            "currency_code": "EUR",
+                            "value": 300,
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": 300
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "nico",
+                        "quantity": "1",
+                        "description": "nico",
+                        "category": "DIGITAL_GOODS",
+                        "allRenderPricing": [
+                            {
+                                "render": 400,
+                                "prespectives": 425,
+                                "woodtype": 300
+                            },
+                            {
+                                "render": 150,
+                                "prespectives": 850,
+                                "woodtype": 0
+                            }
+                        ],
+                        "unit_amount": {
+                            "currency_code": "EUR",
+                            "value": "2125",
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": "2125"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "slim",
+                        "quantity": "1",
+                        "description": "slim",
+                        "category": "DIGITAL_GOODS",
+                        "allRenderPricing": [
+                            {
+                                "render": 400,
+                                "prespectives": 510,
+                                "woodtype": 300
+                            },
+                            {
+                                "render": 150,
+                                "prespectives": 340,
+                                "woodtype": 300
+                            }
+                        ],
+                        "unit_amount": {
+                            "currency_code": "EUR",
+                            "value": "2000",
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": "2000"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "paymentDetails": {
+            "totalAmount": 4425
+        },
+        "orderItems": [
+            {
+                "name": "processing Fee",
+                "quantity": "1",
+                "description": "service",
+                "category": "DIGITAL_GOODS",
+                "unit_amount": {
+                    "currency_code": "EUR",
+                    "value": 300,
+                    "breakdown": {
+                        "item_total": {
+                            "currency_code": "EUR",
+                            "value": 300
+                        }
+                    }
+                }
+            },
+            {
+                "name": "nico",
+                "quantity": "1",
+                "description": "nico",
+                "category": "DIGITAL_GOODS",
+                "allRenderPricing": [
+                    {
+                        "render": 400,
+                        "prespectives": 425,
+                        "woodtype": 300
+                    },
+                    {
+                        "render": 150,
+                        "prespectives": 850,
+                        "woodtype": 0
+                    }
+                ],
+                "unit_amount": {
+                    "currency_code": "EUR",
+                    "value": "2125",
+                    "breakdown": {
+                        "item_total": {
+                            "currency_code": "EUR",
+                            "value": "2125"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "slim",
+                "quantity": "1",
+                "description": "slim",
+                "category": "DIGITAL_GOODS",
+                "allRenderPricing": [
+                    {
+                        "render": 400,
+                        "prespectives": 510,
+                        "woodtype": 300
+                    },
+                    {
+                        "render": 150,
+                        "prespectives": 340,
+                        "woodtype": 300
+                    }
+                ],
+                "unit_amount": {
+                    "currency_code": "EUR",
+                    "value": "2000",
+                    "breakdown": {
+                        "item_total": {
+                            "currency_code": "EUR",
+                            "value": "2000"
+                        }
+                    }
+                }
+            }
+        ],
+        "orderData": {
+            "order-id": "REND-20240614-0004"
+        }
+    }
+}
+
+22 :
+finalData.combinedArrays
+{
+    "finalData": {
+        "combinedArrays": [
+            {
+                "id": "1",
+                "data": [
+                    {
+                        "render": {
+                            "item-name": "BIGBED",
+                            "item-width": "1200",
+                            "item-height": "1700",
+                            "item-length": "3000",
+                            "item-details": "I want it big",
+                            "photos_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.png",
+                            "uploader-file-input-0.fvi5rbs8kzw": "C:\\fakepath\\1.png",
+                            "provided-3D-model": "false",
+                            "threed_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip",
+                            "uploader-file-input-0.1npr3qe67bb": "C:\\fakepath\\xx.zip"
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "scene",
+                            "woodtype": "beech",
+                            "render-count": "3",
+                            "upholstery": "true",
+                            "other-material": "lether",
+                            "square": "true",
+                            "portrait": "true",
+                            "Landscape": "true",
+                            "request-comment": ""
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "knockout",
+                            "woodtype": "beech",
+                            "render-count": "5",
+                            "upholstery": "true",
+                            "other-material": "lether",
+                            "square": "true",
+                            "portrait": "true",
+                            "Landscape": "true",
+                            "request-comment": ""
+                        }
+                    }
+                ],
+                "files": {
+                    "images": [
+                        {
+                            "id": "1",
+                            "array": [
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png",
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png",
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.png"
+                            ]
+                        }
+                    ],
+                    "files": [
+                        {
+                            "id": "1",
+                            "array": [
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "2",
+                "data": [
+                    {
+                        "render": {
+                            "item-name": "TABLE",
+                            "item-width": "1500",
+                            "item-height": "1840",
+                            "item-length": "2000",
+                            "item-details": "",
+                            "photos_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/brb.webp,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Untitled.png",
+                            "uploader-file-input-0.rjseib9fotp": "C:\\fakepath\\brb.webp",
+                            "provided-3D-model": "false",
+                            "threed_output_string": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/SerialIO-Win10_Win10_IoT_Win11-30.100.2237.26_(1).zip",
+                            "uploader-file-input-0.1jwpw1zirz6": "C:\\fakepath\\SerialIO-Win10_Win10_IoT_Win11-30.100.2237.26 (1).zip"
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "scene",
+                            "woodtype": "oak",
+                            "render-count": "12",
+                            "upholstery": "true",
+                            "other-material": "lether",
+                            "square": "true",
+                            "portrait": "true",
+                            "Landscape": "true",
+                            "request-comment": "smoooll"
+                        }
+                    },
+                    {
+                        "render": {
+                            "render-type": "knockout",
+                            "woodtype": "beech",
+                            "render-count": "5",
+                            "upholstery": "true",
+                            "other-material": "lether",
+                            "square": "true",
+                            "portrait": "true",
+                            "Landscape": "true",
+                            "request-comment": ""
+                        }
+                    }
+                ],
+                "files": {
+                    "images": [
+                        {
+                            "id": "2",
+                            "array": [
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/brb.webp",
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Untitled.png"
+                            ]
+                        }
+                    ],
+                    "files": [
+                        {
+                            "id": "2",
+                            "array": [
+                                "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/SerialIO-Win10_Win10_IoT_Win11-30.100.2237.26_(1).zip"
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "user": "4ce7669f050042d09499b786f19d4beb"
+            },
+            {
+                "dateID": "14-5-2024--7:50:32"
+            },
+            {
+                "paymentDetails": {
+                    "order": {
+                        "result": "success",
+                        "data": {
+                            "id": "04M79818KT996911V",
+                            "status": "CREATED",
+                            "links": [
+                                {
+                                    "href": "https://api.sandbox.paypal.com/v2/checkout/orders/04M79818KT996911V",
+                                    "rel": "self",
+                                    "method": "GET"
+                                },
+                                {
+                                    "href": "https://www.sandbox.paypal.com/checkoutnow?token=04M79818KT996911V",
+                                    "rel": "approve",
+                                    "method": "GET"
+                                },
+                                {
+                                    "href": "https://api.sandbox.paypal.com/v2/checkout/orders/04M79818KT996911V",
+                                    "rel": "update",
+                                    "method": "PATCH"
+                                },
+                                {
+                                    "href": "https://api.sandbox.paypal.com/v2/checkout/orders/04M79818KT996911V/capture",
+                                    "rel": "capture",
+                                    "method": "POST"
+                                }
+                            ]
+                        },
+                        "order_data_json": {
+                            "intent": "CAPTURE",
+                            "purchase_units": [
+                                {
+                                    "amount": {
+                                        "currency_code": "EUR",
+                                        "value": "4425",
+                                        "breakdown": {
+                                            "item_total": {
+                                                "currency_code": "EUR",
+                                                "value": "4425"
+                                            }
+                                        }
+                                    },
+                                    "items": [
+                                        {
+                                            "name": "processing Fee",
+                                            "quantity": "1",
+                                            "description": "service",
+                                            "category": "DIGITAL_GOODS",
+                                            "unit_amount": {
+                                                "currency_code": "EUR",
+                                                "value": 300,
+                                                "breakdown": {
+                                                    "item_total": {
+                                                        "currency_code": "EUR",
+                                                        "value": 300
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "name": "BIGBED",
+                                            "quantity": "1",
+                                            "description": "BIGBED",
+                                            "category": "DIGITAL_GOODS",
+                                            "allRenderPricing": [
+                                                {
+                                                    "render": 400,
+                                                    "prespectives": 255,
+                                                    "woodtype": 300
+                                                },
+                                                {
+                                                    "render": 150,
+                                                    "prespectives": 425,
+                                                    "woodtype": 0
+                                                }
+                                            ],
+                                            "unit_amount": {
+                                                "currency_code": "EUR",
+                                                "value": "1530",
+                                                "breakdown": {
+                                                    "item_total": {
+                                                        "currency_code": "EUR",
+                                                        "value": "1530"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "name": "TABLE",
+                                            "quantity": "1",
+                                            "description": "TABLE",
+                                            "category": "DIGITAL_GOODS",
+                                            "allRenderPricing": [
+                                                {
+                                                    "render": 400,
+                                                    "prespectives": 1020,
+                                                    "woodtype": 300
+                                                },
+                                                {
+                                                    "render": 150,
+                                                    "prespectives": 425,
+                                                    "woodtype": 300
+                                                }
+                                            ],
+                                            "unit_amount": {
+                                                "currency_code": "EUR",
+                                                "value": "2595",
+                                                "breakdown": {
+                                                    "item_total": {
+                                                        "currency_code": "EUR",
+                                                        "value": "2595"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "total": 4425,
+                        "orderItems": [
+                            {
+                                "name": "processing Fee",
+                                "quantity": "1",
+                                "description": "service",
+                                "category": "DIGITAL_GOODS",
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": 300,
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": 300
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "BIGBED",
+                                "quantity": "1",
+                                "description": "BIGBED",
+                                "category": "DIGITAL_GOODS",
+                                "allRenderPricing": [
+                                    {
+                                        "render": 400,
+                                        "prespectives": 255,
+                                        "woodtype": 300
+                                    },
+                                    {
+                                        "render": 150,
+                                        "prespectives": 425,
+                                        "woodtype": 0
+                                    }
+                                ],
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": "1530",
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": "1530"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "TABLE",
+                                "quantity": "1",
+                                "description": "TABLE",
+                                "category": "DIGITAL_GOODS",
+                                "allRenderPricing": [
+                                    {
+                                        "render": 400,
+                                        "prespectives": 1020,
+                                        "woodtype": 300
+                                    },
+                                    {
+                                        "render": 150,
+                                        "prespectives": 425,
+                                        "woodtype": 300
+                                    }
+                                ],
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": "2595",
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": "2595"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "finalCMSresponse": {
+            "result": "success",
+            "response": [
+                {
+                    "id": "666bda421ba7f1ace30d3e51",
+                    "cmsLocaleId": null,
+                    "lastPublished": "2024-06-14T05:50:58.086Z",
+                    "lastUpdated": "2024-06-14T05:50:58.086Z",
+                    "createdOn": "2024-06-14T05:50:58.086Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                        "file-link": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip",
+                        "specialfunctionscene": false,
+                        "furniture-dimension-h": 1700,
+                        "furniture-dimension-l": 3000,
+                        "furniture-dimension-w": 1200,
+                        "order-state": "3a8b108b469a23d52b620cb75b914d77",
+                        "payment": "PayPal Services",
+                        "furniture-name": "BIGBED",
+                        "name": "BIGBED",
+                        "color-finish": "beech / beech",
+                        "comment": "I want it big",
+                        "order-id": "REND-20240614-0006",
+                        "order-date": "Fri Jun 14 2024 07:50:55 GMT+0200 (Central European Summer Time)",
+                        "additional-images-data": "[{\"render\":{\"item-name\":\"BIGBED\",\"item-width\":\"1200\",\"item-height\":\"1700\",\"item-length\":\"3000\",\"item-details\":\"I want it big\",\"photos_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/1.png,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/2.png,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/3.png\",\"uploader-file-input-0.fvi5rbs8kzw\":\"C:\\\\fakepath\\\\1.png\",\"provided-3D-model\":\"false\",\"threed_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/xx.zip\",\"uploader-file-input-0.1npr3qe67bb\":\"C:\\\\fakepath\\\\xx.zip\"}},{\"render\":{\"render-type\":\"scene\",\"woodtype\":\"beech\",\"render-count\":\"3\",\"upholstery\":\"true\",\"other-material\":\"lether\",\"square\":\"true\",\"portrait\":\"true\",\"Landscape\":\"true\",\"request-comment\":\"\"}},{\"render\":{\"render-type\":\"knockout\",\"woodtype\":\"beech\",\"render-count\":\"5\",\"upholstery\":\"true\",\"other-material\":\"lether\",\"square\":\"true\",\"portrait\":\"true\",\"Landscape\":\"true\",\"request-comment\":\"\"}}]",
+                        "test-image": {
+                            "fileId": "666b4df96f08ff6ffc53b436",
+                            "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b4df96f08ff6ffc53b436_1.png",
+                            "alt": null
+                        },
+                        "slug": "bigbed",
+                        "uploaded-images": [
+                            {
+                                "fileId": "666b4df96f08ff6ffc53b436",
+                                "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b4df96f08ff6ffc53b436_1.png",
+                                "alt": null
+                            },
+                            {
+                                "fileId": "666b532975a6b137f75f43ea",
+                                "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b532975a6b137f75f43ea_2.png",
+                                "alt": null
+                            },
+                            {
+                                "fileId": "666b4df98ed0ea987ad6b06f",
+                                "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666b4df98ed0ea987ad6b06f_3.png",
+                                "alt": null
+                            }
+                        ],
+                        "user-id": "6620e095b1681d9809914b31"
+                    }
+                },
+                {
+                    "id": "666bda42062d41a9129f4e2c",
+                    "cmsLocaleId": null,
+                    "lastPublished": "2024-06-14T05:50:58.035Z",
+                    "lastUpdated": "2024-06-14T05:50:58.035Z",
+                    "createdOn": "2024-06-14T05:50:58.035Z",
+                    "isArchived": false,
+                    "isDraft": false,
+                    "fieldData": {
+                        "file-link": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/SerialIO-Win10_Win10_IoT_Win11-30.100.2237.26_(1).zip",
+                        "specialfunctionscene": false,
+                        "comment": null,
+                        "furniture-dimension-h": 1840,
+                        "furniture-dimension-l": 2000,
+                        "furniture-dimension-w": 1500,
+                        "order-state": "3a8b108b469a23d52b620cb75b914d77",
+                        "payment": "PayPal Services",
+                        "furniture-name": "TABLE",
+                        "name": "TABLE",
+                        "color-finish": "oak / beech",
+                        "order-id": "REND-20240614-0006",
+                        "order-date": "Fri Jun 14 2024 07:50:55 GMT+0200 (Central European Summer Time)",
+                        "additional-images-data": "[{\"render\":{\"item-name\":\"TABLE\",\"item-width\":\"1500\",\"item-height\":\"1840\",\"item-length\":\"2000\",\"item-details\":\"\",\"photos_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/brb.webp,https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/Untitled.png\",\"uploader-file-input-0.rjseib9fotp\":\"C:\\\\fakepath\\\\brb.webp\",\"provided-3D-model\":\"false\",\"threed_output_string\":\"https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/SerialIO-Win10_Win10_IoT_Win11-30.100.2237.26_(1).zip\",\"uploader-file-input-0.1jwpw1zirz6\":\"C:\\\\fakepath\\\\SerialIO-Win10_Win10_IoT_Win11-30.100.2237.26 (1).zip\"}},{\"render\":{\"render-type\":\"scene\",\"woodtype\":\"oak\",\"render-count\":\"12\",\"upholstery\":\"true\",\"other-material\":\"lether\",\"square\":\"true\",\"portrait\":\"true\",\"Landscape\":\"true\",\"request-comment\":\"smoooll\"}},{\"render\":{\"render-type\":\"knockout\",\"woodtype\":\"beech\",\"render-count\":\"5\",\"upholstery\":\"true\",\"other-material\":\"lether\",\"square\":\"true\",\"portrait\":\"true\",\"Landscape\":\"true\",\"request-comment\":\"\"}}]",
+                        "slug": "table",
+                        "test-image": {
+                            "fileId": "666bda41062d41a9129f4e0e",
+                            "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666bda41062d41a9129f4e0e_brb.webp",
+                            "alt": null
+                        },
+                        "uploaded-images": [
+                            {
+                                "fileId": "666bda41062d41a9129f4e0b",
+                                "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666bda41062d41a9129f4e0b_brb.webp",
+                                "alt": null
+                            },
+                            {
+                                "fileId": "666bda41062d41a9129f4e23",
+                                "url": "https://uploads-ssl.webflow.com/6344812d665184745e70e72c/666bda41062d41a9129f4e23_Untitled.png",
+                                "alt": null
+                            }
+                        ],
+                        "user-id": "6620e095b1681d9809914b31"
+                    }
+                }
+            ]
+        }
+    }
+}
+
+
+
+
+
+{
+    "order": [
+        {
+            "id": "order-card-1727031465646",
+            "inputs": {
+                "item-name": "model_ggiy2u",
+                "item-width": "35",
+                "item-height": "56",
+                "item-length": "51",
+                "item-details": "This is a test detail for model ri1ay",
+                "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png",
+                "uploader-file-input-0.g3esi0h4aim": "C:\\fakepath\\web-maintenance.png",
+                "three-d-modelling": "build",
+                "threed": "",
+                "uploader-file-input-0.jrr4w0xx31h": ""
+            },
+            "orderRenders": [
+                {
+                    "id": "order-render-1727031465647",
+                    "inputs": {
+                        "render-type": "scene"
+                    },
+                    "orderRenderDetails": [
+                        {
+                            "id": "order-render-detail-1727031465647",
+                            "inputs": {
+                                "woodtype": "beech",
+                                "render-count": "4",
+                                "aspect-ratio": "square",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": ""
+                            }
+                        },
+                        {
+                            "id": "order-render-detail-1727031468747",
+                            "inputs": {
+                                "woodtype": "oak",
+                                "render-count": "4",
+                                "aspect-ratio": "square",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": ""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "order-render-1727031469864",
+                    "inputs": {
+                        "render-type": "knockout"
+                    },
+                    "orderRenderDetails": [
+                        {
+                            "id": "order-render-detail-1727031469865",
+                            "inputs": {
+                                "woodtype": "beech",
+                                "render-count": "3",
+                                "aspect-ratio": "square",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": ""
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "localstorageFiles": {
+        "images": [
+            {
+                "id": "1",
+                "array": [
+                    "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png"
+                ]
+            }
+        ],
+        "files": []
+    },
+    "user": "slim.abbadi@gmail.com",
+    "dateID": "22-8-2024--20:58:24",
+    "userAddress": {
+        "id": null,
+        "auth0_id": "google-oauth2|108072257804188316677",
+        "first_name": "slim",
+        "last_name": "abbadi",
+        "email": "slim.abbadi@gmail.com",
+        "phone": null,
+        "street": "Mossburger Str",
+        "housenumber": "12",
+        "additional_address": null,
+        "zip": "30452",
+        "city": "PAFPAF",
+        "country": "GERMNA",
+        "contactperson": null,
+        "ust_idnr": null,
+        "company": null,
+        "amount_spent": 0,
+        "number_of_orders": 0,
+        "preferred_language": "en",
+        "order_updates": 0,
+        "support_alerts": 0,
+        "promotion_alerts": 0,
+        "feature_update_alerts": 0
+    },
+    "paymentDetails": {
+        "order": {
+            "result": "success",
+            "data": {
+                "id": "06Y83424PU3439346",
+                "status": "CREATED",
+                "links": [
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/06Y83424PU3439346",
+                        "rel": "self",
+                        "method": "GET"
+                    },
+                    {
+                        "href": "https://www.sandbox.paypal.com/checkoutnow?token=06Y83424PU3439346",
+                        "rel": "approve",
+                        "method": "GET"
+                    },
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/06Y83424PU3439346",
+                        "rel": "update",
+                        "method": "PATCH"
+                    },
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/06Y83424PU3439346/capture",
+                        "rel": "capture",
+                        "method": "POST"
+                    }
+                ]
+            },
+            "order_data_json": {
+                "intent": "CAPTURE",
+                "purchase_units": [
+                    {
+                        "amount": {
+                            "currency_code": "EUR",
+                            "value": "3555",
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": "3555"
+                                }
+                            }
+                        },
+                        "items": [
+                            {
+                                "name": "model_ggiy2u",
+                                "quantity": "1",
+                                "description": "model_ggiy2u",
+                                "category": "DIGITAL_GOODS",
+                                "allRenderPricing": [
+                                    {
+                                        "initialFee": 850
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "beech",
+                                                "render-count": "4",
+                                                "aspect-ratio": "square",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": ""
+                                            },
+                                            "renderType": "scene",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 900,
+                                                "renderPricing": 500,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 600
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "oak",
+                                                "render-count": "4",
+                                                "aspect-ratio": "square",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": ""
+                                            },
+                                            "renderType": "scene",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 900,
+                                                "renderPricing": 0,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 600
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 0,
+                                            "prespectives": 255,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 255
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "beech",
+                                                "render-count": "3",
+                                                "aspect-ratio": "square",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": ""
+                                            },
+                                            "renderType": "knockout",
+                                            "pricing": {
+                                                "woodtype": 0,
+                                                "prespectives": 255,
+                                                "renderPricing": 150,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 255
+                                            }
+                                        }
+                                    }
+                                ],
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": "3555",
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": "3555"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "total": 3555,
+            "orderItems": [
+                {
+                    "name": "model_ggiy2u",
+                    "quantity": "1",
+                    "description": "model_ggiy2u",
+                    "category": "DIGITAL_GOODS",
+                    "allRenderPricing": [
+                        {
+                            "initialFee": 850
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 900,
+                                "renderPricing": 500,
+                                "initialFee": 850,
+                                "rendersCountPrice": 600
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "beech",
+                                    "render-count": "4",
+                                    "aspect-ratio": "square",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": ""
+                                },
+                                "renderType": "scene",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 900,
+                                    "renderPricing": 500,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 600
+                                }
+                            }
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 900,
+                                "renderPricing": 0,
+                                "initialFee": 850,
+                                "rendersCountPrice": 600
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "oak",
+                                    "render-count": "4",
+                                    "aspect-ratio": "square",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": ""
+                                },
+                                "renderType": "scene",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 900,
+                                    "renderPricing": 0,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 600
+                                }
+                            }
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 0,
+                                "prespectives": 255,
+                                "renderPricing": 150,
+                                "initialFee": 850,
+                                "rendersCountPrice": 255
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "beech",
+                                    "render-count": "3",
+                                    "aspect-ratio": "square",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": ""
+                                },
+                                "renderType": "knockout",
+                                "pricing": {
+                                    "woodtype": 0,
+                                    "prespectives": 255,
+                                    "renderPricing": 150,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 255
+                                }
+                            }
+                        }
+                    ],
+                    "unit_amount": {
+                        "currency_code": "EUR",
+                        "value": "3555",
+                        "breakdown": {
+                            "item_total": {
+                                "currency_code": "EUR",
+                                "value": "3555"
+                            }
+                        }
+                    }
+                }
+            ],
+            "orderItemsListWithPricing": [
+                {
+                    "data": {
+                        "id": "order-card-1727031465646",
+                        "inputs": {
+                            "item-name": "model_ggiy2u",
+                            "item-width": "35",
+                            "item-height": "56",
+                            "item-length": "51",
+                            "item-details": "This is a test detail for model ri1ay",
+                            "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/web-maintenance.png",
+                            "uploader-file-input-0.g3esi0h4aim": "C:\\fakepath\\web-maintenance.png",
+                            "three-d-modelling": "build",
+                            "threed": "",
+                            "uploader-file-input-0.jrr4w0xx31h": ""
+                        },
+                        "orderRenders": [
+                            {
+                                "id": "order-render-1727031465647",
+                                "inputs": {
+                                    "render-type": "scene"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727031465647",
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "square",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": ""
+                                        }
+                                    },
+                                    {
+                                        "id": "order-render-detail-1727031468747",
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "4",
+                                            "aspect-ratio": "square",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": ""
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "order-render-1727031469864",
+                                "inputs": {
+                                    "render-type": "knockout"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727031469865",
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "3",
+                                            "aspect-ratio": "square",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": ""
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "renderWithPrice": [
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 900,
+                                        "renderPricing": 500,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 600
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "square",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": ""
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        }
+                                    }
+                                },
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 900,
+                                        "renderPricing": 0,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 600
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "4",
+                                            "aspect-ratio": "square",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": ""
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "scene",
+                            "initialFee": 850
+                        },
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 0,
+                                        "prespectives": 255,
+                                        "renderPricing": 150,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 255
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "3",
+                                            "aspect-ratio": "square",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": ""
+                                        },
+                                        "renderType": "knockout",
+                                        "pricing": {
+                                            "woodtype": 0,
+                                            "prespectives": 255,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 255
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "knockout",
+                            "initialFee": 850
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+################################################################
+
+
+{
+    "order": [
+        {
+            "id": "order-card-1727065472180",
+            "inputs": {
+                "item-name": "monday",
+                "item-width": "123",
+                "item-height": "123",
+                "item-length": "13423",
+                "item-details": "asödkasöld",
+                "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg",
+                "uploader-file-input-0.ol1jhsfek2g": "C:\\fakepath\\8.jpeg",
+                "three-d-modelling": "build",
+                "threed": "",
+                "uploader-file-input-0.cvkod5bubk": ""
+            },
+            "orderRenders": [
+                {
+                    "id": "order-render-1727065472181",
+                    "inputs": {
+                        "render-type": "scene"
+                    },
+                    "orderRenderDetails": [
+                        {
+                            "id": "order-render-detail-1727065472181",
+                            "inputs": {
+                                "woodtype": "beech",
+                                "render-count": "4",
+                                "aspect-ratio": "portrait",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": "details buche"
+                            }
+                        },
+                        {
+                            "id": "order-render-detail-1727065488860",
+                            "inputs": {
+                                "woodtype": "walnut",
+                                "render-count": "5",
+                                "aspect-ratio": "landscape",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": "details walnuss"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "order-render-1727065489767",
+                    "inputs": {
+                        "render-type": "knockout"
+                    },
+                    "orderRenderDetails": [
+                        {
+                            "id": "order-render-detail-1727065489767",
+                            "inputs": {
+                                "woodtype": "oak",
+                                "render-count": "1",
+                                "aspect-ratio": "landscape",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": "details eiche"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "localstorageFiles": {
+        "images": [
+            {
+                "id": "1",
+                "array": [
+                    "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg"
+                ]
+            }
+        ],
+        "files": []
+    },
+    "user": "sa@creative-directors.com",
+    "dateID": "23-8-2024--6:29:33",
+    "userAddress": {
+        "id": null,
+        "auth0_id": "google-oauth2|104805685782203882552",
+        "first_name": "Slim",
+        "last_name": "Abbadi",
+        "email": "sa@creative-directors.com",
+        "phone": "21390123909123",
+        "street": "Moss",
+        "housenumber": "21",
+        "additional_address": "etage 999",
+        "zip": "93483",
+        "city": "PAF",
+        "country": "Germany",
+        "contactperson": "",
+        "ust_idnr": "DE19230213",
+        "company": "Creative Directors",
+        "amount_spent": 0,
+        "number_of_orders": 0,
+        "preferred_language": "en",
+        "order_updates": "off",
+        "support_alerts": "off",
+        "promotion_alerts": "on",
+        "feature_update_alerts": "off"
+    },
+    "paymentDetails": {
+        "order": {
+            "result": "success",
+            "data": {
+                "id": "7FT2505847946415V",
+                "status": "CREATED",
+                "links": [
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/7FT2505847946415V",
+                        "rel": "self",
+                        "method": "GET"
+                    },
+                    {
+                        "href": "https://www.sandbox.paypal.com/checkoutnow?token=7FT2505847946415V",
+                        "rel": "approve",
+                        "method": "GET"
+                    },
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/7FT2505847946415V",
+                        "rel": "update",
+                        "method": "PATCH"
+                    },
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/7FT2505847946415V/capture",
+                        "rel": "capture",
+                        "method": "POST"
+                    }
+                ]
+            },
+            "order_data_json": {
+                "intent": "CAPTURE",
+                "purchase_units": [
+                    {
+                        "amount": {
+                            "currency_code": "EUR",
+                            "value": "3835",
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": "3835"
+                                }
+                            }
+                        },
+                        "items": [
+                            {
+                                "name": "monday",
+                                "quantity": "1",
+                                "description": "monday",
+                                "category": "DIGITAL_GOODS",
+                                "allRenderPricing": [
+                                    {
+                                        "initialFee": 850
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "beech",
+                                                "render-count": "4",
+                                                "aspect-ratio": "portrait",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": "details buche"
+                                            },
+                                            "renderType": "scene",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 900,
+                                                "renderPricing": 500,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 600
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 1050,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 750
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "walnut",
+                                                "render-count": "5",
+                                                "aspect-ratio": "landscape",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": "details walnuss"
+                                            },
+                                            "renderType": "scene",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 1050,
+                                                "renderPricing": 0,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 750
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 385,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 85
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "oak",
+                                                "render-count": "1",
+                                                "aspect-ratio": "landscape",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": "details eiche"
+                                            },
+                                            "renderType": "knockout",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 385,
+                                                "renderPricing": 150,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 85
+                                            }
+                                        }
+                                    }
+                                ],
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": "3835",
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": "3835"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "total": 3835,
+            "orderItems": [
+                {
+                    "name": "monday",
+                    "quantity": "1",
+                    "description": "monday",
+                    "category": "DIGITAL_GOODS",
+                    "allRenderPricing": [
+                        {
+                            "initialFee": 850
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 900,
+                                "renderPricing": 500,
+                                "initialFee": 850,
+                                "rendersCountPrice": 600
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "beech",
+                                    "render-count": "4",
+                                    "aspect-ratio": "portrait",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": "details buche"
+                                },
+                                "renderType": "scene",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 900,
+                                    "renderPricing": 500,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 600
+                                }
+                            }
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 1050,
+                                "renderPricing": 0,
+                                "initialFee": 850,
+                                "rendersCountPrice": 750
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "walnut",
+                                    "render-count": "5",
+                                    "aspect-ratio": "landscape",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": "details walnuss"
+                                },
+                                "renderType": "scene",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 1050,
+                                    "renderPricing": 0,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 750
+                                }
+                            }
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 385,
+                                "renderPricing": 150,
+                                "initialFee": 850,
+                                "rendersCountPrice": 85
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "oak",
+                                    "render-count": "1",
+                                    "aspect-ratio": "landscape",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": "details eiche"
+                                },
+                                "renderType": "knockout",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 385,
+                                    "renderPricing": 150,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 85
+                                }
+                            }
+                        }
+                    ],
+                    "unit_amount": {
+                        "currency_code": "EUR",
+                        "value": "3835",
+                        "breakdown": {
+                            "item_total": {
+                                "currency_code": "EUR",
+                                "value": "3835"
+                            }
+                        }
+                    }
+                }
+            ],
+            "orderItemsListWithPricing": [
+                {
+                    "data": {
+                        "id": "order-card-1727065472180",
+                        "inputs": {
+                            "item-name": "monday",
+                            "item-width": "123",
+                            "item-height": "123",
+                            "item-length": "13423",
+                            "item-details": "asödkasöld",
+                            "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg",
+                            "uploader-file-input-0.ol1jhsfek2g": "C:\\fakepath\\8.jpeg",
+                            "three-d-modelling": "build",
+                            "threed": "",
+                            "uploader-file-input-0.cvkod5bubk": ""
+                        },
+                        "orderRenders": [
+                            {
+                                "id": "order-render-1727065472181",
+                                "inputs": {
+                                    "render-type": "scene"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065472181",
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        }
+                                    },
+                                    {
+                                        "id": "order-render-detail-1727065488860",
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "order-render-1727065489767",
+                                "inputs": {
+                                    "render-type": "knockout"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065489767",
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "renderWithPrice": [
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 900,
+                                        "renderPricing": 500,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 600
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        }
+                                    }
+                                },
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 1050,
+                                        "renderPricing": 0,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 750
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 1050,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 750
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "scene",
+                            "initialFee": 850
+                        },
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 385,
+                                        "renderPricing": 150,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 85
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        },
+                                        "renderType": "knockout",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 385,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 85
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "knockout",
+                            "initialFee": 850
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+
+
+
+####################################################################################
+####################################################################################
+
+"orderItemsListWithPricing": [
+                { #orderItem
+                    "data": {
+                        "id": "order-card-1727065472180",
+                        "inputs": {
+                            "item-name": "monday",
+                            "item-width": "123",
+                            "item-height": "123",
+                            "item-length": "13423",
+                            "item-details": "asödkasöld",
+                            "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg",
+                            "uploader-file-input-0.ol1jhsfek2g": "C:\\fakepath\\8.jpeg",
+                            "three-d-modelling": "build",
+                            "threed": "",
+                            "uploader-file-input-0.cvkod5bubk": ""
+                        },
+                        "orderRenders": [
+                            {
+                                "id": "order-render-1727065472181",
+                                "inputs": {
+                                    "render-type": "scene"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065472181",
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        }
+                                    },
+                                    {
+                                        "id": "order-render-detail-1727065488860",
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "order-render-1727065489767",
+                                "inputs": {
+                                    "render-type": "knockout"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065489767",
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "renderWithPrice": [
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 900,
+                                        "renderPricing": 500,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 600
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        }
+                                    }
+                                },
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 1050,
+                                        "renderPricing": 0,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 750
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 1050,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 750
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "scene",
+                            "initialFee": 850
+                        },
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 385,
+                                        "renderPricing": 150,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 85
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        },
+                                        "renderType": "knockout",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 385,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 85
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "knockout",
+                            "initialFee": 850
+                        }
+                    ]
+                }
+            ]
