@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.7.0
+
+### Minor Changes
+
+- d7b3886: prev2
+
 ## 3.6.15
 
 ### Patch Changes
