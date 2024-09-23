@@ -2020,3 +2020,706 @@ finalData.combinedArrays
         }
     }
 }
+################################################################
+
+
+{
+    "order": [
+        {
+            "id": "order-card-1727065472180",
+            "inputs": {
+                "item-name": "monday",
+                "item-width": "123",
+                "item-height": "123",
+                "item-length": "13423",
+                "item-details": "asödkasöld",
+                "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg",
+                "uploader-file-input-0.ol1jhsfek2g": "C:\\fakepath\\8.jpeg",
+                "three-d-modelling": "build",
+                "threed": "",
+                "uploader-file-input-0.cvkod5bubk": ""
+            },
+            "orderRenders": [
+                {
+                    "id": "order-render-1727065472181",
+                    "inputs": {
+                        "render-type": "scene"
+                    },
+                    "orderRenderDetails": [
+                        {
+                            "id": "order-render-detail-1727065472181",
+                            "inputs": {
+                                "woodtype": "beech",
+                                "render-count": "4",
+                                "aspect-ratio": "portrait",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": "details buche"
+                            }
+                        },
+                        {
+                            "id": "order-render-detail-1727065488860",
+                            "inputs": {
+                                "woodtype": "walnut",
+                                "render-count": "5",
+                                "aspect-ratio": "landscape",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": "details walnuss"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "order-render-1727065489767",
+                    "inputs": {
+                        "render-type": "knockout"
+                    },
+                    "orderRenderDetails": [
+                        {
+                            "id": "order-render-detail-1727065489767",
+                            "inputs": {
+                                "woodtype": "oak",
+                                "render-count": "1",
+                                "aspect-ratio": "landscape",
+                                "Upholstery": "false",
+                                "upholstry-material": "",
+                                "render-details-comment": "details eiche"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "localstorageFiles": {
+        "images": [
+            {
+                "id": "1",
+                "array": [
+                    "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg"
+                ]
+            }
+        ],
+        "files": []
+    },
+    "user": "sa@creative-directors.com",
+    "dateID": "23-8-2024--6:29:33",
+    "userAddress": {
+        "id": null,
+        "auth0_id": "google-oauth2|104805685782203882552",
+        "first_name": "Slim",
+        "last_name": "Abbadi",
+        "email": "sa@creative-directors.com",
+        "phone": "21390123909123",
+        "street": "Moss",
+        "housenumber": "21",
+        "additional_address": "etage 999",
+        "zip": "93483",
+        "city": "PAF",
+        "country": "Germany",
+        "contactperson": "",
+        "ust_idnr": "DE19230213",
+        "company": "Creative Directors",
+        "amount_spent": 0,
+        "number_of_orders": 0,
+        "preferred_language": "en",
+        "order_updates": "off",
+        "support_alerts": "off",
+        "promotion_alerts": "on",
+        "feature_update_alerts": "off"
+    },
+    "paymentDetails": {
+        "order": {
+            "result": "success",
+            "data": {
+                "id": "7FT2505847946415V",
+                "status": "CREATED",
+                "links": [
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/7FT2505847946415V",
+                        "rel": "self",
+                        "method": "GET"
+                    },
+                    {
+                        "href": "https://www.sandbox.paypal.com/checkoutnow?token=7FT2505847946415V",
+                        "rel": "approve",
+                        "method": "GET"
+                    },
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/7FT2505847946415V",
+                        "rel": "update",
+                        "method": "PATCH"
+                    },
+                    {
+                        "href": "https://api.sandbox.paypal.com/v2/checkout/orders/7FT2505847946415V/capture",
+                        "rel": "capture",
+                        "method": "POST"
+                    }
+                ]
+            },
+            "order_data_json": {
+                "intent": "CAPTURE",
+                "purchase_units": [
+                    {
+                        "amount": {
+                            "currency_code": "EUR",
+                            "value": "3835",
+                            "breakdown": {
+                                "item_total": {
+                                    "currency_code": "EUR",
+                                    "value": "3835"
+                                }
+                            }
+                        },
+                        "items": [
+                            {
+                                "name": "monday",
+                                "quantity": "1",
+                                "description": "monday",
+                                "category": "DIGITAL_GOODS",
+                                "allRenderPricing": [
+                                    {
+                                        "initialFee": 850
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "beech",
+                                                "render-count": "4",
+                                                "aspect-ratio": "portrait",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": "details buche"
+                                            },
+                                            "renderType": "scene",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 900,
+                                                "renderPricing": 500,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 600
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 1050,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 750
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "walnut",
+                                                "render-count": "5",
+                                                "aspect-ratio": "landscape",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": "details walnuss"
+                                            },
+                                            "renderType": "scene",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 1050,
+                                                "renderPricing": 0,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 750
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "prices": {
+                                            "woodtype": 300,
+                                            "prespectives": 385,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 85
+                                        },
+                                        "details": {
+                                            "inputs": {
+                                                "woodtype": "oak",
+                                                "render-count": "1",
+                                                "aspect-ratio": "landscape",
+                                                "Upholstery": "false",
+                                                "upholstry-material": "",
+                                                "render-details-comment": "details eiche"
+                                            },
+                                            "renderType": "knockout",
+                                            "pricing": {
+                                                "woodtype": 300,
+                                                "prespectives": 385,
+                                                "renderPricing": 150,
+                                                "initialFee": 850,
+                                                "rendersCountPrice": 85
+                                            }
+                                        }
+                                    }
+                                ],
+                                "unit_amount": {
+                                    "currency_code": "EUR",
+                                    "value": "3835",
+                                    "breakdown": {
+                                        "item_total": {
+                                            "currency_code": "EUR",
+                                            "value": "3835"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "total": 3835,
+            "orderItems": [
+                {
+                    "name": "monday",
+                    "quantity": "1",
+                    "description": "monday",
+                    "category": "DIGITAL_GOODS",
+                    "allRenderPricing": [
+                        {
+                            "initialFee": 850
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 900,
+                                "renderPricing": 500,
+                                "initialFee": 850,
+                                "rendersCountPrice": 600
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "beech",
+                                    "render-count": "4",
+                                    "aspect-ratio": "portrait",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": "details buche"
+                                },
+                                "renderType": "scene",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 900,
+                                    "renderPricing": 500,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 600
+                                }
+                            }
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 1050,
+                                "renderPricing": 0,
+                                "initialFee": 850,
+                                "rendersCountPrice": 750
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "walnut",
+                                    "render-count": "5",
+                                    "aspect-ratio": "landscape",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": "details walnuss"
+                                },
+                                "renderType": "scene",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 1050,
+                                    "renderPricing": 0,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 750
+                                }
+                            }
+                        },
+                        {
+                            "prices": {
+                                "woodtype": 300,
+                                "prespectives": 385,
+                                "renderPricing": 150,
+                                "initialFee": 850,
+                                "rendersCountPrice": 85
+                            },
+                            "details": {
+                                "inputs": {
+                                    "woodtype": "oak",
+                                    "render-count": "1",
+                                    "aspect-ratio": "landscape",
+                                    "Upholstery": "false",
+                                    "upholstry-material": "",
+                                    "render-details-comment": "details eiche"
+                                },
+                                "renderType": "knockout",
+                                "pricing": {
+                                    "woodtype": 300,
+                                    "prespectives": 385,
+                                    "renderPricing": 150,
+                                    "initialFee": 850,
+                                    "rendersCountPrice": 85
+                                }
+                            }
+                        }
+                    ],
+                    "unit_amount": {
+                        "currency_code": "EUR",
+                        "value": "3835",
+                        "breakdown": {
+                            "item_total": {
+                                "currency_code": "EUR",
+                                "value": "3835"
+                            }
+                        }
+                    }
+                }
+            ],
+            "orderItemsListWithPricing": [
+                {
+                    "data": {
+                        "id": "order-card-1727065472180",
+                        "inputs": {
+                            "item-name": "monday",
+                            "item-width": "123",
+                            "item-height": "123",
+                            "item-length": "13423",
+                            "item-details": "asödkasöld",
+                            "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg",
+                            "uploader-file-input-0.ol1jhsfek2g": "C:\\fakepath\\8.jpeg",
+                            "three-d-modelling": "build",
+                            "threed": "",
+                            "uploader-file-input-0.cvkod5bubk": ""
+                        },
+                        "orderRenders": [
+                            {
+                                "id": "order-render-1727065472181",
+                                "inputs": {
+                                    "render-type": "scene"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065472181",
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        }
+                                    },
+                                    {
+                                        "id": "order-render-detail-1727065488860",
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "order-render-1727065489767",
+                                "inputs": {
+                                    "render-type": "knockout"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065489767",
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "renderWithPrice": [
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 900,
+                                        "renderPricing": 500,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 600
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        }
+                                    }
+                                },
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 1050,
+                                        "renderPricing": 0,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 750
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 1050,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 750
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "scene",
+                            "initialFee": 850
+                        },
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 385,
+                                        "renderPricing": 150,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 85
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        },
+                                        "renderType": "knockout",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 385,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 85
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "knockout",
+                            "initialFee": 850
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+
+
+
+####################################################################################
+####################################################################################
+
+"orderItemsListWithPricing": [
+                { #orderItem
+                    "data": {
+                        "id": "order-card-1727065472180",
+                        "inputs": {
+                            "item-name": "monday",
+                            "item-width": "123",
+                            "item-height": "123",
+                            "item-length": "13423",
+                            "item-details": "asödkasöld",
+                            "photos": "https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/8.jpeg",
+                            "uploader-file-input-0.ol1jhsfek2g": "C:\\fakepath\\8.jpeg",
+                            "three-d-modelling": "build",
+                            "threed": "",
+                            "uploader-file-input-0.cvkod5bubk": ""
+                        },
+                        "orderRenders": [
+                            {
+                                "id": "order-render-1727065472181",
+                                "inputs": {
+                                    "render-type": "scene"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065472181",
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        }
+                                    },
+                                    {
+                                        "id": "order-render-detail-1727065488860",
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "order-render-1727065489767",
+                                "inputs": {
+                                    "render-type": "knockout"
+                                },
+                                "orderRenderDetails": [
+                                    {
+                                        "id": "order-render-detail-1727065489767",
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "renderWithPrice": [
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 900,
+                                        "renderPricing": 500,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 600
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "beech",
+                                            "render-count": "4",
+                                            "aspect-ratio": "portrait",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details buche"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 900,
+                                            "renderPricing": 500,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 600
+                                        }
+                                    }
+                                },
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 1050,
+                                        "renderPricing": 0,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 750
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "walnut",
+                                            "render-count": "5",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details walnuss"
+                                        },
+                                        "renderType": "scene",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 1050,
+                                            "renderPricing": 0,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 750
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "scene",
+                            "initialFee": 850
+                        },
+                        {
+                            "renders": [
+                                {
+                                    "prices": {
+                                        "woodtype": 300,
+                                        "prespectives": 385,
+                                        "renderPricing": 150,
+                                        "initialFee": 850,
+                                        "rendersCountPrice": 85
+                                    },
+                                    "details": {
+                                        "inputs": {
+                                            "woodtype": "oak",
+                                            "render-count": "1",
+                                            "aspect-ratio": "landscape",
+                                            "Upholstery": "false",
+                                            "upholstry-material": "",
+                                            "render-details-comment": "details eiche"
+                                        },
+                                        "renderType": "knockout",
+                                        "pricing": {
+                                            "woodtype": 300,
+                                            "prespectives": 385,
+                                            "renderPricing": 150,
+                                            "initialFee": 850,
+                                            "rendersCountPrice": 85
+                                        }
+                                    }
+                                }
+                            ],
+                            "renderCategory": "knockout",
+                            "initialFee": 850
+                        }
+                    ]
+                }
+            ]
