@@ -68,63 +68,81 @@ class OrderCard {
   }
 
   initializeUploaders() {
-    const uploaders = this.element.querySelectorAll('.dropzone');
-    uploaders.forEach((uploader) => {
-      const uuid = this.generateUUID();
-      const id = `drop_zone_${uuid}`;
-      (uploader as HTMLElement).id = id;
-      (uploader as HTMLElement).setAttribute(
-        'data-upload-card',
-        localStorage.getItem('orders-pieces') || ''
-      );
+    try {
+      const uploaders = this.element.querySelectorAll('[data-upload="wrapper"]');
+      console.log('--------uploaders', uploaders);
+      uploaders.forEach((uploader) => {
+        console.log('uploader', uploader);
+        // const uuid = this.generateUUID();
+        // const id = `drop_zone_${uuid}`;
+        // (uploader as HTMLElement).id = id;
+        (uploader as HTMLElement).setAttribute(
+          'data-upload-card',
+          localStorage.getItem('orders-pieces') || ''
+        );
 
-      const fileUploader = new FileUploader(id, `fileUploader${uuid}`);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any)[`fileUploader${uuid}`] = fileUploader;
-    });
+        const fileUploader = new FileUploader(uploader, `fileUploader`);
+        // const fileUploader = new FileUploader();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // (window as any)[`fileUploader${uuid}`] = fileUploader;
+      });
+    } catch (error) {
+      console.error('Error initializing uploaders:', error);
+    }
   }
 
   addDeleteFunctionality() {
-    const deleteBtn = this.element.querySelector('[data-furniture="remove"]') as HTMLElement;
-    deleteBtn.addEventListener('click', () => {
-      removeObjectById(this.id);
-      this.element.remove();
-      // this.appInstance.saveAllData();  //* remove object already save data
-    });
+    try {
+      const deleteBtn = this.element.querySelector('[data-furniture="remove"]') as HTMLElement;
+      if (!deleteBtn) {
+        throw new Error('Delete button not found');
+      }
+      deleteBtn.addEventListener('click', () => {
+        debugger;
+        removeObjectById(this.id);
+        this.element.remove();
+        // this.appInstance.saveAllData(); //* remove object already save data
+      });
+    } catch (error) {
+      console.error('Error adding delete functionality:', error);
+    }
   }
 
   addNewOrderRender() {
-    const orderRenderTemplate = this.element.querySelector(
-      '[render-template="request"]'
-    ) as HTMLTemplateElement;
+    try {
+      const orderRenderTemplate = this.element.querySelector(
+        '[render-template="request"]'
+      ) as HTMLTemplateElement;
 
-    if (!orderRenderTemplate) {
-      console.error('[render-template="request" not found');
-      return;
-    }
+      if (!orderRenderTemplate) {
+        throw new Error('[render-template="request" not found');
+      }
 
-    // Clone the content of the template
-    const newOrderRenderElement = orderRenderTemplate.content.cloneNode(true) as DocumentFragment;
+      // Clone the content of the template
+      const newOrderRenderElement = orderRenderTemplate.content.cloneNode(true) as DocumentFragment;
 
-    // Convert the DocumentFragment into a proper HTMLElement by appending it to a temporary container
-    const tempDiv = document.createElement('div');
-    tempDiv.appendChild(newOrderRenderElement);
+      // Convert the DocumentFragment into a proper HTMLElement by appending it to a temporary container
+      const tempDiv = document.createElement('div');
+      tempDiv.appendChild(newOrderRenderElement);
 
-    // Select the newly added child (the actual cloned element from the template)
-    const newOrderRender = new OrderRender(
-      tempDiv.firstElementChild as HTMLElement,
-      this.appInstance
-    );
+      // Select the newly added child (the actual cloned element from the template)
+      const newOrderRender = new OrderRender(
+        tempDiv.firstElementChild as HTMLElement,
+        this.appInstance
+      );
 
-    // Push the new render to the order renders array
-    this.orderRenders.push(newOrderRender);
+      // Push the new render to the order renders array
+      this.orderRenders.push(newOrderRender);
 
-    // Append the cloned content to the main wrapper
-    const mainWrapper = this.element.querySelector('[render-item="list"]') as HTMLElement;
-    if (mainWrapper) {
-      mainWrapper.appendChild(newOrderRender.element);
-    } else {
-      console.error('Main wrapper not found');
+      // Append the cloned content to the main wrapper
+      const mainWrapper = this.element.querySelector('[render-item="list"]') as HTMLElement;
+      if (mainWrapper) {
+        mainWrapper.appendChild(newOrderRender.element);
+      } else {
+        throw new Error('Main wrapper not found');
+      }
+    } catch (error) {
+      console.error('Error adding new order render:', error);
     }
   }
 
@@ -133,28 +151,33 @@ class OrderCard {
   }
 
   getData() {
-    const cardData = {
-      id: this.id,
-      inputs: {},
-      orderRenders: this.orderRenders.map((render) => render.getData()),
-    };
+    try {
+      const cardData = {
+        id: this.id,
+        inputs: {},
+        orderRenders: this.orderRenders.map((render) => render.getData()),
+      };
 
-    const inputs = this.element.querySelectorAll(
-      'input:not([render-item="list"] input), textarea:not([render-item="list"] textarea), select:not([render-item="list"] select)'
-    );
-    inputs.forEach((input) => {
-      if (input.type === 'checkbox') {
-        cardData.inputs[input.id] = input.checked ? 'true' : 'false';
-      } else if (input.type === 'radio') {
-        if (input.checked) {
-          cardData.inputs[input.name] = input.value;
+      const inputs = this.element.querySelectorAll(
+        'input:not([render-item="list"] input), textarea:not([render-item="list"] textarea), select:not([render-item="list"] select)'
+      );
+      inputs.forEach((input) => {
+        if (input.type === 'checkbox') {
+          cardData.inputs[input.id] = input.checked ? 'true' : 'false';
+        } else if (input.type === 'radio') {
+          if (input.checked) {
+            cardData.inputs[input.name] = input.value;
+          }
+        } else {
+          cardData.inputs[input.id] = input.value;
         }
-      } else {
-        cardData.inputs[input.id] = input.value;
-      }
-    });
+      });
 
-    return cardData;
+      return cardData;
+    } catch (error) {
+      console.error('Error getting card data:', error);
+      return null;
+    }
   }
 
   generateUUID() {
