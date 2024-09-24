@@ -1,4 +1,28 @@
 export default class FileUploader {
+  mainWrapper: any;
+  dropZone: any;
+  output: any;
+  submitprevention: HTMLElement | null;
+  uploaderID: any;
+  fileInput: any;
+  cardID: any;
+  containerID: any;
+  loading: any;
+  doneLoading: any;
+  defaultView: any;
+  loadingError: any;
+  fileType: any;
+  activeError: boolean;
+  errorTimeout: any;
+  preventionClassName: string;
+  number_of_files: any;
+  files_size_limit: any;
+  drop_zone_id: any;
+  eventOrMember: any;
+  image_names: never[];
+  images_data: never[];
+  namesArray: any;
+  name: any;
   /*
    * drop: id of the drop zone
    * output: id of the output div
@@ -11,20 +35,29 @@ export default class FileUploader {
    */
 
   constructor(
-    drop,
+    wrapper,
     // output,
     name
     // namesArray,
     // eventOrMember
     // errorPopup
   ) {
-    this.dropZone = document.getElementById(drop);
-    if (!this.dropZone) {
-      //console.error(' 🙈 Drop zone not found , dropzone Uploader Disabled');
+    this.mainWrapper = wrapper || null;
+    if (!this.mainWrapper) {
+      console.error(' 🙈 Wrapper not found , Uploader Disabled');
       return;
     }
+    console.log('this.mainWrapper : ', this.mainWrapper);
+    this.dropZone = this.mainWrapper.querySelector('[data-drop-zone-id]') || null;
+    if (!this.dropZone) {
+      console.error(' 🙈 Drop zone not found , dropzone Uploader Disabled');
+      return;
+    }
+
+    console.log('this.dropZone : ', this.dropZone);
+
     // this.output = document.getElementById(output);
-    this.mainWrapper = this.dropZone.closest('[data-upload="wrapper"]');
+
     this.output = this.mainWrapper.querySelector('[uploader-element="output"]') || null;
 
     this.submitprevention = document.getElementById('order-submit-button');
@@ -83,10 +116,10 @@ export default class FileUploader {
 
   async uploadFile(file) {
     const formData = new FormData();
-    let cdProd = 'https://creative-directors-dropbox.sa-60b.workers.dev';
-    let dev = 'http://127.0.0.1:8787';
+    const cdProd = 'https://creative-directors-dropbox.sa-60b.workers.dev';
+    const dev = 'http://127.0.0.1:8787';
 
-    let cdEndpoint = '/api/cd/bucket/imagesupload';
+    const cdEndpoint = '/api/cd/bucket/imagesupload';
 
     formData.append('file', file);
 
@@ -104,7 +137,7 @@ export default class FileUploader {
   }
 
   generateLinksArray(image_names) {
-    let cdBucket = 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/';
+    const cdBucket = 'https://pub-7cf2671b894a43fe9366b6528b0ced3e.r2.dev/';
     const formattedString = image_names.map((name) => cdBucket + name).join(',');
     //console.log(formattedString);
 
@@ -140,33 +173,87 @@ export default class FileUploader {
     ev.preventDefault();
   }
 
+  // displayImages(imageslist) {
+  //   let images = '';
+  //   const files = '';
+  //   imageslist.forEach((image, index) => {
+  //     //console.log("+++++++", image.name);
+
+  //     if (this.isFileTypeAllowed(image) && this.fileType === '3D') {
+  //       //console.log("is zip");
+  //       images += `<div class="upload-queue-files" style="display:flex;"><p class="filename">${
+  //         image.name
+  //       }</p><p class="filesize">${(image.size * 0.000001).toFixed(
+  //         2
+  //       )} MB</p><span class="delete-icon" onclick="window.${
+  //         this.name
+  //       }.deleteImage(${index},'${image.name}')">&times;</span></div>`;
+  //     } else {
+  //       //console.log("is img");
+
+  //       images += `<div class="upload-queue-item" style="display:flex;">
+  //       <img class="upload-queue-image" src="${URL.createObjectURL(image)}" alt="image">
+  //       <span class="delete-icon" onclick="window.${this.name}.deleteImage(${index},'${image.name}')">&times;</span>
+  //       </div>`;
+  //     }
+  //   });
+  //   this.output.innerHTML = images;
+  // }
+
   displayImages(imageslist) {
-    let images = '';
-    let files = '';
+    // Clear the previous content
+    this.output.innerHTML = '';
+
     imageslist.forEach((image, index) => {
-      //console.log("+++++++", image.name);
+      const itemDiv = document.createElement('div');
+      itemDiv.classList.add('upload-queue-item');
+      itemDiv.style.display = 'flex';
 
       if (this.isFileTypeAllowed(image) && this.fileType === '3D') {
-        //console.log("is zip");
-        images += `<div class="upload-queue-files" style="display:flex;"><p class="filename">${
-          image.name
-        }</p><p class="filesize">${(image.size * 0.000001).toFixed(
-          2
-        )} MB</p><span class="delete-icon" onclick="window.${
-          this.name
-        }.deleteImage(${index},'${image.name}')">&times;</span></div>`;
-      } else {
-        //console.log("is img");
+        const fileDiv = document.createElement('div');
+        fileDiv.classList.add('upload-queue-files');
+        fileDiv.style.display = 'flex';
 
-        images += `<div class="upload-queue-item" style="display:flex;">
-        <img class="upload-queue-image" src="${URL.createObjectURL(image)}" alt="image">
-        <span class="delete-icon" onclick="window.${this.name}.deleteImage(${index},'${image.name}')">&times;</span>
-        </div>`;
+        const filenameP = document.createElement('p');
+        filenameP.classList.add('filename');
+        filenameP.textContent = image.name;
+
+        const filesizeP = document.createElement('p');
+        filesizeP.classList.add('filesize');
+        filesizeP.textContent = (image.size * 0.000001).toFixed(2) + ' MB';
+
+        const deleteSpan = document.createElement('span');
+        deleteSpan.classList.add('delete-icon');
+        deleteSpan.innerHTML = '&times;';
+        deleteSpan.addEventListener('click', () => {
+          this.deleteImage(index, image.name);
+        });
+
+        fileDiv.appendChild(filenameP);
+        fileDiv.appendChild(filesizeP);
+        fileDiv.appendChild(deleteSpan);
+
+        this.output.appendChild(fileDiv);
+      } else {
+        const img = document.createElement('img');
+        img.classList.add('upload-queue-image');
+        img.src = URL.createObjectURL(image);
+        img.alt = 'image';
+
+        const deleteSpan = document.createElement('span');
+        deleteSpan.classList.add('delete-icon');
+        deleteSpan.innerHTML = '&times;';
+        deleteSpan.addEventListener('click', () => {
+          this.deleteImage(index, image.name);
+        });
+
+        itemDiv.appendChild(img);
+        itemDiv.appendChild(deleteSpan);
+
+        this.output.appendChild(itemDiv);
       }
     });
-    this.output.innerHTML = images;
   }
-
   removeFileFromArray(array, fileName) {
     for (let i = 0; i < array.length; i++) {
       const url = array[i];
@@ -180,43 +267,110 @@ export default class FileUploader {
     }
   }
 
-  deleteImage(index, nameToDelete) {
-    this.images_data.splice(index, 1);
-    this.displayImages(this.images_data);
-    const linksString = this.generateLinksArray(this.images_data.map((x) => x.name));
-    // console.log('############', linksString);
-    this.removeFileFromArray(linksString, nameToDelete);
-    this.namesArray.value = linksString;
-    this.insertIntoLocalStorage({ id: this.cardID, array: linksString, name: nameToDelete });
-  }
+  // deleteImage(index, nameToDelete) {
+  //   this.images_data.splice(index, 1);
+  //   this.displayImages(this.images_data);
+  //   const linksString = this.generateLinksArray(this.images_data.map((x) => x.name));
+  //   // console.log('############', linksString);
+  //   this.removeFileFromArray(linksString, nameToDelete);
+  //   this.namesArray.value = linksString;
+  //   this.insertIntoLocalStorage({ id: this.cardID, array: linksString, name: nameToDelete });
+  // }
 
-  insertIntoLocalStorage(objectToInsert) {
-    // Determine the appropriate array name based on the file extension
-    let filenames = objectToInsert.array.split(',').map((item) => item.trim());
-    let arrayName = filenames.some((item) => item.endsWith('.zip')) ? 'files' : 'images';
-    if (objectToInsert.name) {
-      arrayName = objectToInsert.name.endsWith('.zip') ? 'files' : 'images';
+  deleteImage(index, nameToDelete) {
+    // Remove the image data from images_data
+    this.images_data.splice(index, 1);
+
+    // Remove the corresponding image name from image_names
+    const sanitizedFileName = nameToDelete.split(' ').join('_');
+    const nameIndex = this.image_names.indexOf(sanitizedFileName);
+    if (nameIndex > -1) {
+      this.image_names.splice(nameIndex, 1);
     }
 
+    // Update the display
+    this.displayImages(this.images_data);
+
+    // Generate the updated links string
+    const linksString = this.generateLinksArray(this.image_names);
+
+    // Update the hidden input value
+    this.namesArray.value = linksString;
+
+    // Update the local storage
+    this.insertIntoLocalStorage({ id: this.containerID, array: linksString }, true); // true to replace the array  instead of merging it
+  }
+
+  // insertIntoLocalStorage(objectToInsert) {
+  //   debugger;
+  //   // Determine the appropriate array name based on the file extension
+  //   const filenames = objectToInsert.array.split(',').map((item) => item.trim());
+  //   let arrayName = filenames.some((item) => item.endsWith('.zip')) ? 'files' : 'images';
+  //   if (objectToInsert.name) {
+  //     arrayName = objectToInsert.name.endsWith('.zip') ? 'files' : 'images';
+  //   }
+
+  //   // Retrieve the current 'orderFiles' object from local storage
+  //   const orderFiles = JSON.parse(localStorage.getItem('orderFiles')) || {
+  //     images: [],
+  //     files: [],
+  //   };
+
+  //   // Check if an object with the same ID already exists
+  //   const existingObjectIndex = orderFiles[arrayName].findIndex(
+  //     (obj) => obj.id === objectToInsert.id
+  //   );
+
+  //   if (existingObjectIndex !== -1) {
+  //     // Merge the arrays if the object with the same ID exists
+  //     let existingFilenames = orderFiles[arrayName][existingObjectIndex].array;
+  //     if (!Array.isArray(existingFilenames)) {
+  //       existingFilenames = existingFilenames.split(',').map((item) => item.trim());
+  //     }
+  //     const mergedFilenames = [...new Set(existingFilenames.concat(filenames))];
+  //     orderFiles[arrayName][existingObjectIndex].array = mergedFilenames;
+  //   } else {
+  //     // Insert the new object if it doesn't exist
+  //     objectToInsert.array = filenames;
+  //     orderFiles[arrayName].push(objectToInsert);
+  //   }
+
+  //   // Update the local storage with the new 'orderFiles' object
+  //   localStorage.setItem('orderFiles', JSON.stringify(orderFiles));
+  // }
+
+  insertIntoLocalStorage(objectToInsert, shouldReplace = false) {
+    // Determine the appropriate array name based on this.fileType
+    const arrayName = this.fileType === '3D' ? 'files' : 'images';
+
+    const filenames = objectToInsert.array
+      ? objectToInsert.array.split(',').map((item) => item.trim())
+      : [];
+
     // Retrieve the current 'orderFiles' object from local storage
-    let orderFiles = JSON.parse(localStorage.getItem('orderFiles')) || {
+    const orderFiles = JSON.parse(localStorage.getItem('orderFiles')) || {
       images: [],
       files: [],
     };
 
     // Check if an object with the same ID already exists
-    let existingObjectIndex = orderFiles[arrayName].findIndex(
+    const existingObjectIndex = orderFiles[arrayName].findIndex(
       (obj) => obj.id === objectToInsert.id
     );
 
     if (existingObjectIndex !== -1) {
-      // Merge the arrays if the object with the same ID exists
-      let existingFilenames = orderFiles[arrayName][existingObjectIndex].array;
-      if (!Array.isArray(existingFilenames)) {
-        existingFilenames = existingFilenames.split(',').map((item) => item.trim());
+      if (shouldReplace) {
+        // Replace the existing array with the new one
+        orderFiles[arrayName][existingObjectIndex].array = filenames;
+      } else {
+        // Merge the arrays if the object with the same ID exists
+        let existingFilenames = orderFiles[arrayName][existingObjectIndex].array;
+        if (!Array.isArray(existingFilenames)) {
+          existingFilenames = existingFilenames.split(',').map((item) => item.trim());
+        }
+        const mergedFilenames = [...new Set(existingFilenames.concat(filenames))];
+        orderFiles[arrayName][existingObjectIndex].array = mergedFilenames;
       }
-      let mergedFilenames = [...new Set(existingFilenames.concat(filenames))];
-      orderFiles[arrayName][existingObjectIndex].array = mergedFilenames;
     } else {
       // Insert the new object if it doesn't exist
       objectToInsert.array = filenames;

@@ -17,38 +17,61 @@ class App {
   }
 
   initialize() {
-    const mainOrderCardElement = document.querySelector('[main-render-item="main"]') as HTMLElement;
-    if (!mainOrderCardElement) {
-      console.error('No main order card found');
-      return;
-    }
+    // document.querySelectorAll('[main-render-item="main"]').forEach((el, index) => {
+    //   if (index > 0) el.remove();
+    // });
 
-    document.querySelectorAll('[main-render-item="main"]').forEach((el, index) => {
-      if (index > 0) el.remove();
-    });
-
-    const mainOrderCard = new OrderCard(mainOrderCardElement, this);
-    this.orderCards.push(mainOrderCard);
-
-    this.setupAddOrderCardButton(mainOrderCard);
+    this.createMainOrderCard(this.orderCards);
+    this.setupAddOrderCardButton();
 
     localStorage.setItem('orders-pieces', '1');
     localStorage.removeItem('orderFiles');
     localStorage.removeItem('orderData');
   }
 
-  setupAddOrderCardButton(orderCardTemplate: OrderCard) {
+  createMainOrderCard(orderCards: OrderCard[]) {
+    const mainOrderCardTemplateElement = document.querySelector(
+      '[main-render-item="main"]'
+    ) as HTMLTemplateElement;
+    if (!mainOrderCardTemplateElement) {
+      console.error('No main order card found');
+      return;
+    }
+
+    try {
+      const newOrderCardElement = mainOrderCardTemplateElement.content.cloneNode(
+        true
+      ) as DocumentFragment;
+
+      const clonedOrderCard = document.createElement('div');
+      clonedOrderCard.appendChild(newOrderCardElement);
+
+      const mainOrderCard = new OrderCard(clonedOrderCard.firstElementChild as HTMLElement, this);
+      orderCards.push(mainOrderCard);
+
+      mainOrderCardTemplateElement.parentNode!.insertBefore(
+        clonedOrderCard.firstElementChild!,
+        mainOrderCardTemplateElement
+      );
+    } catch (error) {
+      console.error('Error creating main order card:', error);
+    }
+  }
+
+  setupAddOrderCardButton() {
     const addOrderCardButton = document.querySelector('[render-app="add-new-item"]') as HTMLElement;
     addOrderCardButton.addEventListener('click', () => {
-      const newOrderCardElement = orderCardTemplate.element.cloneNode(true) as HTMLElement;
-      const newOrderCard = new OrderCard(newOrderCardElement, this);
-      this.orderCards.push(newOrderCard);
+      try {
+        console.log('addOrderCardButton clicked');
 
-      addOrderCardButton.parentNode!.insertBefore(newOrderCardElement, addOrderCardButton);
+        this.createMainOrderCard(this.orderCards);
 
-      this.incrementLocalStorageItem('orders-pieces');
+        this.incrementLocalStorageItem('orders-pieces');
 
-      this.saveAllData();
+        this.saveAllData();
+      } catch (error) {
+        console.error('Error adding order card:', error);
+      }
     });
   }
 

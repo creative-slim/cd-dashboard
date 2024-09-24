@@ -23,6 +23,7 @@ import {
 
 import { initAuth } from './auth/userAuth';
 import testInvoice from './extras/testInvoice';
+import getCurrentPage from './general/getCurrentPage';
 import initOrderAccessChecker from './orders/orderAccessChecker';
 import { fillOrderDetails } from './orders/orderDetailsPage';
 import CartUI from './place_order/cart';
@@ -36,20 +37,17 @@ window.Webflow.push(async () => {
 
   initAuth();
   initOrderAccessChecker();
-  initInstances();
+  // initInstances();
   // orderAppFunctions(); //! FUNCTION >> switching to class based approach
-  new App(); //? CLASS >>  switching to class based approach
+  if (getCurrentPage() === 'order-app') new App(); //? CLASS >>  switching to class based approach
+
   // cart
   initWebflowFunctions();
   initUserRelatedFunctions();
 
-  fillOrderDetails();
-
-  if (window.location.pathname.includes('/user/bestellverlauf')) {
-    console.log('order history page');
-
+  if (getCurrentPage() === 'order-history') {
+    fillOrderDetails();
     const info = await initOrderHistory();
-    console.log('initOrderHistory results : ', info);
   }
 
   //! API ENDPOINTS
