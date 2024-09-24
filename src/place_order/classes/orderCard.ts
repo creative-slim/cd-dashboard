@@ -98,7 +98,6 @@ class OrderCard {
         throw new Error('Delete button not found');
       }
       deleteBtn.addEventListener('click', () => {
-        debugger;
         removeObjectById(this.id);
         this.element.remove();
         // this.appInstance.saveAllData(); //* remove object already save data

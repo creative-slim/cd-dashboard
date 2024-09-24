@@ -109,7 +109,6 @@ class RenderDetails {
     console.log('deleteButton', deleteButton);
     if (deleteButton) {
       deleteButton.addEventListener('click', () => {
-        debugger;
         this.onDelete(this.detailData.id);
       });
     }
