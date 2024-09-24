@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.8.0
+
+### Minor Changes
+
+- 6742d65: app cloning
+
 ## 3.7.0
 
 ### Minor Changes
