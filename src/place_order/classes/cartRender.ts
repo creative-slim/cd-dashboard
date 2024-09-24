@@ -6,14 +6,20 @@ class Render {
   renderTemplate: HTMLElement | null;
   renderDetailsTemplate: HTMLElement | null;
   renderPricing: { renderType: string; price: any };
-  alreadyPayedWoodtypesSet: Set<string>; // New property
+  alreadyPayedWoodtypesSet: Set<string>;
+  onDelete: (renderId: string) => void;
+  onDataChange: () => void;
+  renderDetails: RenderDetails[];
+  renderElement: HTMLElement | null;
 
   constructor(
     renderData: any,
     prices: any,
     renderTemplate: HTMLElement | null,
     renderDetailsTemplate: HTMLElement | null,
-    alreadyPayedWoodtypesSet: Set<string> // New parameter
+    alreadyPayedWoodtypesSet: Set<string>,
+    onDelete: (renderId: string) => void,
+    onDataChange: () => void
   ) {
     console.log('########## Render class initialized ##########');
     this.renderData = renderData;
@@ -24,10 +30,55 @@ class Render {
       renderType: renderData.inputs['render-type'],
       price: prices[renderData.inputs['render-type'] || ''] || { build: 0, render: 0 },
     };
-    this.alreadyPayedWoodtypesSet = alreadyPayedWoodtypesSet; // Assign the shared Set
+    this.alreadyPayedWoodtypesSet = alreadyPayedWoodtypesSet;
+    this.onDelete = onDelete;
+    this.onDataChange = onDataChange;
+    this.renderElement = null;
+    this.renderDetails = this.initializeRenderDetails();
   }
 
-  // Method to validate the render data
+  initializeRenderDetails(): RenderDetails[] {
+    if (!Array.isArray(this.renderData.orderRenderDetails)) {
+      return [];
+    }
+
+    return this.renderData.orderRenderDetails.map(
+      (renderDetailData: any) =>
+        new RenderDetails(
+          renderDetailData,
+          this.prices,
+          this.renderDetailsTemplate,
+          this.renderPricing,
+          this.alreadyPayedWoodtypesSet,
+          (detailId: string) => this.deleteRenderDetail(detailId),
+          () => this.handleDataChange()
+        )
+    );
+  }
+
+  deleteRenderDetail(detailId: string) {
+    this.renderDetails = this.renderDetails.filter((detail) => detail.detailData.id !== detailId);
+    this.renderData.orderRenderDetails = this.renderDetails.map((detail) => detail.detailData);
+
+    // Notify Order of the data change
+    this.onDataChange();
+
+    // Re-render the render UI
+    if (this.renderElement && this.renderElement.parentElement) {
+      const newRenderElement = this.generateRenderUI();
+      this.renderElement.parentElement.replaceChild(newRenderElement, this.renderElement);
+      this.renderElement = newRenderElement;
+    }
+  }
+
+  handleDataChange() {
+    // Update renderData based on current render details
+    this.renderData.orderRenderDetails = this.renderDetails.map((detail) => detail.detailData);
+
+    // Notify parent of data change
+    this.onDataChange();
+  }
+
   isValid(): boolean {
     const requiredFields = ['render-type'];
     for (const field of requiredFields) {
@@ -45,16 +96,8 @@ class Render {
       return false;
     }
 
-    // Validate each render detail
-    for (const [detailIndex, detailData] of this.renderData.orderRenderDetails.entries()) {
-      const detail = new RenderDetails(
-        detailData,
-        this.prices,
-        this.renderDetailsTemplate,
-        this.renderPricing,
-        this.alreadyPayedWoodtypesSet // Pass the shared Set
-      );
-      if (!detail.isValid()) {
+    for (const [detailIndex, detailInstance] of this.renderDetails.entries()) {
+      if (!detailInstance.isValid()) {
         console.error(`Render detail at index ${detailIndex} is invalid.`);
         return false;
       }
@@ -63,7 +106,6 @@ class Render {
     return true;
   }
 
-  // Method to calculate the price for a render
   calculateRenderPrice(): number {
     if (!this.renderData.inputs['render-type']) {
       return 0;
@@ -74,31 +116,11 @@ class Render {
 
     let renderBuildPrice = this.renderPricing.price.build || 0;
     const renderPrice = this.renderPricing.price.render || 0;
-    console.log('Render price per unit:', renderPrice);
-    console.log('Render build price:', renderBuildPrice);
 
-    this.renderData.orderRenderDetails.forEach((renderDetailData: any, index: number) => {
-      const detail = new RenderDetails(
-        renderDetailData,
-        this.prices,
-        this.renderDetailsTemplate,
-        this.renderPricing,
-        this.alreadyPayedWoodtypesSet // Pass the shared Set
-      );
+    this.renderDetails.forEach((detailInstance) => {
+      const woodPrice = detailInstance.getWoodPrice();
 
-      const woodPrice = detail.getWoodPrice();
-      console.log(`RenderDetail ID: ${renderDetailData.id}, Wood Price: ${woodPrice}`);
-
-      // If woodPrice > 0, add the normalized wood type to the Set
-      if (woodPrice > 0) {
-        const woodtypeRaw = renderDetailData.inputs['woodtype'];
-        const woodtypeNormalized = woodtypeRaw.trim().toLowerCase();
-        this.alreadyPayedWoodtypesSet.add(woodtypeNormalized);
-      }
-
-      // Calculate the total price for this detail
-      const detailTotalPrice = detail.getDetailCount() * renderPrice + woodPrice;
-      console.log(`Detail Total Price: ${detailTotalPrice}`);
+      const detailTotalPrice = detailInstance.getDetailCount() * renderPrice + woodPrice;
 
       renderBuildPrice += detailTotalPrice;
     });
@@ -113,15 +135,13 @@ class Render {
     return this.renderPricing.price;
   }
 
-  // Method to generate the UI for the render
   generateRenderUI(): HTMLElement {
     if (!this.renderTemplate) {
       throw new Error('Render template not found.');
     }
 
-    // Clone the render template content
     const renderElement = this.renderTemplate.cloneNode(true) as HTMLElement;
-    renderElement.style.display = 'block'; // Ensure it's visible
+    renderElement.style.display = 'block';
 
     const renderTypeElement = renderElement.querySelector('[data-order-cart="render-type"]');
     if (renderTypeElement) {
@@ -132,23 +152,15 @@ class Render {
       priceElement.textContent = `${this.getRenderPricing().build || 0}`;
     }
 
-    // Handle render details
     const renderDetailsContainer = renderElement.querySelector(
       '[order-cart="render-details-wrapper"]'
     );
     if (renderDetailsContainer) {
-      renderDetailsContainer.innerHTML = ''; // Clear previous details
+      renderDetailsContainer.innerHTML = '';
 
-      this.renderData.orderRenderDetails.forEach((renderDetailData: any) => {
+      this.renderDetails.forEach((detailInstance) => {
         try {
-          const detail = new RenderDetails(
-            renderDetailData,
-            this.prices,
-            this.renderDetailsTemplate,
-            this.renderPricing,
-            this.alreadyPayedWoodtypesSet // Pass the shared Set
-          );
-          const detailElement = detail.generateDetailUI();
+          const detailElement = detailInstance.generateDetailUI();
           detailElement.style.display = 'flex';
           renderDetailsContainer.appendChild(detailElement);
         } catch (error) {
@@ -156,6 +168,15 @@ class Render {
         }
       });
     }
+
+    const deleteButton = renderElement.querySelector('[data-action="delete-render"]');
+    if (deleteButton) {
+      deleteButton.addEventListener('click', () => {
+        this.onDelete(this.renderData.id);
+      });
+    }
+
+    this.renderElement = renderElement;
 
     return renderElement;
   }

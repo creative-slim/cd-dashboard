@@ -26,7 +26,7 @@ import testInvoice from './extras/testInvoice';
 import getCurrentPage from './general/getCurrentPage';
 import initOrderAccessChecker from './orders/orderAccessChecker';
 import { fillOrderDetails } from './orders/orderDetailsPage';
-import CartUI from './place_order/cart';
+// import CartUI from './place_order/cart';
 import App from './place_order/orderApp';
 import { initOrderHistory } from './user/orderHistory';
 import initUserRelatedFunctions from './user/userMainExport';

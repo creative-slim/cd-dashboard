@@ -2,18 +2,19 @@
 
 import { cleanObject, restructureData } from '$extras/helperFunctions';
 
-import CartUI from './cart';
+import { renderCart } from './cart';
+// import CartUI from './cart';
 import OrderCard from './classes/orderCard';
 
 class App {
   orderCards: OrderCard[];
-  cart: CartUI;
+  // cart: CartUI;
 
   constructor() {
     this.orderCards = [];
     this.initialize();
     this.saveAllData();
-    this.cart = new CartUI();
+    // this.cart = new CartUI();
   }
 
   initialize() {
@@ -84,8 +85,10 @@ class App {
   saveAllData() {
     const storedLocalData = this.orderCards.map((orderCard) => orderCard.getData());
     //custom console log with orange color
-    console.log('%c--------------stored data', 'color: orange', storedLocalData);
     const cleanData = cleanObject(storedLocalData);
+    console.log('%c-------------- App data', 'color: orange', cleanData);
+    renderCart();
+
     localStorage.setItem('orderData', JSON.stringify(cleanData));
     if (this.cart) {
       this.cart.updateCart(cleanData);

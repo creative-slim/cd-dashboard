@@ -3,23 +3,28 @@ class RenderDetails {
   prices: any;
   renderDetailsTemplate: HTMLElement | null;
   renderType: { renderType: string; price: any };
-  alreadyPayedWoodtypesSet: Set<string>; // New property
+  alreadyPayedWoodtypesSet: Set<string>;
+  onDelete: (detailId: string) => void;
+  onDataChange: () => void;
 
   constructor(
     detailData: any,
     prices: any,
     renderDetailsTemplate: HTMLElement | null,
     renderType: { renderType: string; price: any },
-    alreadyPayedWoodtypesSet: Set<string> // New parameter
+    alreadyPayedWoodtypesSet: Set<string>,
+    onDelete: (detailId: string) => void,
+    onDataChange: () => void
   ) {
     this.detailData = detailData;
     this.prices = prices;
     this.renderDetailsTemplate = renderDetailsTemplate;
     this.renderType = renderType;
-    this.alreadyPayedWoodtypesSet = alreadyPayedWoodtypesSet; // Assign the shared Set
+    this.alreadyPayedWoodtypesSet = alreadyPayedWoodtypesSet;
+    this.onDelete = onDelete;
+    this.onDataChange = onDataChange;
   }
 
-  // Method to validate the render detail data
   isValid(): boolean {
     const requiredFields = ['render-count', 'woodtype'];
     for (const field of requiredFields) {
@@ -31,15 +36,13 @@ class RenderDetails {
     return true;
   }
 
-  // Get amount of render details
   getDetailCount(): number {
     return parseInt(this.detailData.inputs['render-count']) || 0;
   }
 
   getWoodPrice(): number {
-    // debugger;
     const rawWoodType = this.detailData.inputs['woodtype'];
-    const normalizedWoodType = rawWoodType.trim().toLowerCase(); // Normalize the wood type
+    const normalizedWoodType = rawWoodType.trim().toLowerCase();
 
     if (this.alreadyPayedWoodtypesSet.has(normalizedWoodType)) {
       return 0;
@@ -48,17 +51,12 @@ class RenderDetails {
     return parseInt(this.prices.woodtype.generic) || 0;
   }
 
-  // Method to calculate the price for render details (e.g., wood type)
   calculateDetailPrice(): number {
     const woodPrice = this.getWoodPrice();
     const detailCount = this.getDetailCount();
-    console.log('Wood price:', woodPrice);
-    console.log('Detail count:', detailCount);
-    console.log('Detail total price:', woodPrice + this.renderType.price.render * detailCount);
     return woodPrice + this.renderType.price.render * detailCount;
   }
 
-  // Method to generate the UI for render details
   generateDetailUI(): HTMLElement {
     if (!this.renderDetailsTemplate) {
       throw new Error('Render details template not found.');
@@ -66,17 +64,15 @@ class RenderDetails {
     const woodtypeRaw = this.detailData.inputs['woodtype'];
     const woodtypeNormalized = woodtypeRaw.trim().toLowerCase();
 
-    // Determine wood price before updating the Set
     const woodPrice = this.getWoodPrice();
 
-    // Update the Set if the wood type is being charged
     if (woodPrice > 0) {
       this.alreadyPayedWoodtypesSet.add(woodtypeNormalized);
     }
-    // Clone the render details template content
+
     const detailElement = this.renderDetailsTemplate.cloneNode(true) as HTMLElement;
     detailElement.classList.add('cart_order-render');
-    detailElement.style.display = 'flex'; // Ensure it's displayed correctly
+    detailElement.style.display = 'flex';
 
     const woodtypeElement = detailElement.querySelector('[data-order-cart="woodtype"]');
     if (woodtypeElement) {
@@ -100,7 +96,7 @@ class RenderDetails {
 
     const priceElement = detailElement.querySelector('[data-order-cart="price"]');
     if (priceElement) {
-      priceElement.textContent = `${woodPrice + this.renderType.price.render * this.getDetailCount()}`;
+      priceElement.textContent = `${this.calculateDetailPrice()}`;
     }
 
     const requestCommentElement = detailElement.querySelector(
@@ -108,6 +104,14 @@ class RenderDetails {
     );
     if (requestCommentElement) {
       requestCommentElement.textContent = this.detailData.inputs['render-details-comment'] || '--';
+    }
+    const deleteButton = document.querySelector('[data-action="delete-render-detail"]');
+    console.log('deleteButton', deleteButton);
+    if (deleteButton) {
+      deleteButton.addEventListener('click', () => {
+        debugger;
+        this.onDelete(this.detailData.id);
+      });
     }
 
     return detailElement;
