@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.8.2
+
+### Patch Changes
+
+- f88f67d: fixed the cart , added req to zip upload if needed
+
 ## 3.8.1
 
 ### Patch Changes
