@@ -297,6 +297,9 @@ export default class FileUploader {
     // Update the hidden input value
     this.namesArray.value = linksString;
 
+    // Update the input field value
+    this.fileInput.value = '';
+
     // Update the local storage
     this.insertIntoLocalStorage({ id: this.containerID, array: linksString }, true); // true to replace the array  instead of merging it
   }
@@ -488,7 +491,6 @@ export default class FileUploader {
   }
 
   fileInputChangeHandler(ev) {
-    // debugger;
     const { files } = ev.target;
     //console.log(files, this.images_data);
 
