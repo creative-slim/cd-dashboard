@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.8.1
+
+### Patch Changes
+
+- 33604db: debugger out
+
 ## 3.8.0
 
 ### Minor Changes
