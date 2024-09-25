@@ -122,7 +122,7 @@ export function initializePaypal(
           // check if all fields are filled
           if (!areRequiredFieldsPopulated()) {
             actions.reject();
-            errorModal('Bitte füllen Sie alle erforderlichen Felder aus.');
+            errorModal('PayPal : Bitte füllen Sie alle erforderlichen Felder aus.');
             // alert('Please fill in all required fields');
             return actions.reject();
           }

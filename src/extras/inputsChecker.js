@@ -17,7 +17,7 @@ export function areRequiredFieldsPopulated() {
       return false;
     }
     // check number input for postive number
-    if (field.type === 'number' && field.value <= 1) {
+    if (field.type === 'number' && field.value < 1) {
       return false;
     }
   }
