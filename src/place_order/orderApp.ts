@@ -86,7 +86,7 @@ class App {
     const storedLocalData = this.orderCards.map((orderCard) => orderCard.getData());
     //custom console log with orange color
     const cleanData = cleanObject(storedLocalData);
-    console.log('%c-------------- App data', 'color: orange', cleanData);
+    // console.log('%c-------------- App data', 'color: orange', cleanData);
     renderCart();
 
     localStorage.setItem('orderData', JSON.stringify(cleanData));

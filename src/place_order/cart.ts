@@ -9,7 +9,7 @@ function getOrderData() {
     try {
       const parsedData = JSON.parse(orderDataStr);
       const orderData = cleanObject(parsedData);
-      // console.log('%c-------------- Cart data', 'color: green', orderData);
+      console.log('%c-------------- Cart data', 'color: green', orderData);
       return orderData;
     } catch (error) {
       console.error('Error parsing orderData from localStorage:', error);
@@ -25,7 +25,7 @@ export function renderCart() {
   const cartData = getOrderData();
 
   const pricing = pricingMain(cartData);
-  // console.log('pricing--------------------- : ', pricing);
+  console.log('pricing--------------------- : ', pricing);
   const { orderPricing } = pricing;
   const { orderItemsListWithPricing } = pricing;
 
@@ -34,6 +34,11 @@ export function renderCart() {
   const orderTemplate = document.querySelector(
     '[cart-templates="order-item"]'
   ) as HTMLTemplateElement;
+
+  const totalElement = document.querySelector('[data-order-cart="total"]');
+  if (totalElement) {
+    totalElement.innerHTML = '-';
+  }
 
   if (!cartContainer || !orderTemplate) {
     console.error('One or more templates or the cart container are missing.');

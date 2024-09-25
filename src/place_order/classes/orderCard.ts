@@ -33,12 +33,13 @@ class OrderCard {
 
   setup() {
     this.updateElementAttributes();
+    this.handleRequiredUploadFields();
     this.addEventListeners();
+
     this.initializeUploaders();
     this.addDeleteFunctionality();
     this.addNewOrderRender();
     initInstances();
-    this.handleRequiredUploadFields();
 
     // saveData(this.element, this.element.closest('[main-render-item="main"]') as HTMLElement);
     this.appInstance.saveAllData();
@@ -47,7 +48,6 @@ class OrderCard {
     const radioInputs = this.element
       .querySelector('[data-collapse-checkbox="wrapper"]')
       .querySelectorAll('input[type="radio"]');
-    console.log('radioInputs', radioInputs);
 
     radioInputs.forEach((radio) => {
       radio.addEventListener('change', () => {
@@ -80,6 +80,7 @@ class OrderCard {
             }
           }
         }
+        this.appInstance.saveAllData();
       });
     });
   }
