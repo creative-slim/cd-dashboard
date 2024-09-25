@@ -30,11 +30,9 @@ import { fillOrderDetails } from './orders/orderDetailsPage';
 import App from './place_order/orderApp';
 import { initOrderHistory } from './user/orderHistory';
 import initUserRelatedFunctions from './user/userMainExport';
-
 window.Webflow ||= [];
 window.Webflow.push(async () => {
   // init instances
-
   initAuth();
   initOrderAccessChecker();
   // initInstances();
@@ -188,7 +186,7 @@ window.Webflow.push(async () => {
           dateID?: string;
           user?: string;
         } = { order: localstorageData, localstorageFiles }; //! to be removed
-        console.log('combined files  :::--:: ', combinedArrays);
+        // console.log('combined files  :::--:: ', combinedArrays);
 
         const d = new Date();
         const DateID = `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}--${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
@@ -197,7 +195,7 @@ window.Webflow.push(async () => {
 
         combinedArrays.user = CurrentUserEmail;
         combinedArrays.dateID = DateID;
-        console.log(' 🔥 🔥 - Final combinedArrays', combinedArrays);
+        // console.log(' 🔥 🔥 - Final combinedArrays', combinedArrays);
         localStorage.setItem('combinedArrays', combinedArrays);
         async function uploadmetadata(combinedArrays) {
           const token = localStorage.getItem('userToken');
@@ -231,9 +229,9 @@ window.Webflow.push(async () => {
         // the submit button
         const submitLoading = form.querySelector("[order-submit='approved']");
         const loadingSVG = form.querySelector('[data-form="loading"]');
-        console.log('**********************+');
-        console.log({ submitLoading, loadingSVG });
-        console.log('**********************+');
+        // console.log('**********************+');
+        // console.log({ submitLoading, loadingSVG });
+        // console.log('**********************+');
 
         function initLoading() {
           if (!submitLoading || !loadingSVG) return;
@@ -276,18 +274,18 @@ window.Webflow.push(async () => {
             //add total price to the combinedArrays
             combinedArrays.paymentDetails = paymentDetails;
 
-            console.log('🔥combinedArrays', combinedArrays);
-            console.log('paymentDetails', paymentDetails);
+            // console.log('🔥combinedArrays', combinedArrays);
+            // console.log('paymentDetails', paymentDetails);
 
             const Final = await uploadmetadata(combinedArrays);
 
-            console.log('Final', Final);
-            console.log('All images processed.');
+            // console.log('Final', Final);
+            // console.log('All images processed.');
 
             cleanLoggerUI();
 
             loggerUpdate(2);
-            console.log('Final', Final);
+            // console.log('Final', Final);
 
             // Uncomment if needed
 
@@ -362,10 +360,10 @@ window.Webflow.push(async () => {
     const confirmation = document.querySelector('[data-order="confirmation-tab"]');
     const order = document.querySelector('[data-order="order-tab"]');
 
-    console.log('confirmation', confirmation);
-    console.log('order', order);
+    // console.log('confirmation', confirmation);
+    // console.log('order', order);
     if (confirmation && order) {
-      console.log('goin to confirmation page');
+      // console.log('goin to confirmation page');
       order.classList.remove('w--tab-active');
       confirmation.classList.add('w--tab-active');
       //scroll to the top of the page

@@ -38,9 +38,50 @@ class OrderCard {
     this.addDeleteFunctionality();
     this.addNewOrderRender();
     initInstances();
+    this.handleRequiredUploadFields();
 
     // saveData(this.element, this.element.closest('[main-render-item="main"]') as HTMLElement);
     this.appInstance.saveAllData();
+  }
+  handleRequiredUploadFields() {
+    const radioInputs = this.element
+      .querySelector('[data-collapse-checkbox="wrapper"]')
+      .querySelectorAll('input[type="radio"]');
+    console.log('radioInputs', radioInputs);
+
+    radioInputs.forEach((radio) => {
+      radio.addEventListener('change', () => {
+        if (radio.checked) {
+          if (radio.value === 'provide') {
+            const uploader = this.element.querySelector(
+              '[data-upload-id="threed"]  input[type="text"]'
+            );
+            const uploaderNotRequired = this.element.querySelector(
+              '[data-upload-id="photo"]  input[type="text"]'
+            );
+            if (uploader) {
+              uploader.setAttribute('required', 'required');
+            }
+            if (uploaderNotRequired) {
+              uploaderNotRequired.removeAttribute('required');
+            }
+          } else if (radio.value === 'build') {
+            const uploader = this.element.querySelector(
+              '[data-upload-id="photo"] input[type="text"]'
+            );
+            const uploaderNotRequired = this.element.querySelector(
+              '[data-upload-id="threed"] input[type="text"]'
+            );
+            if (uploader) {
+              uploader.setAttribute('required', 'required');
+            }
+            if (uploaderNotRequired) {
+              uploaderNotRequired.removeAttribute('required');
+            }
+          }
+        }
+      });
+    });
   }
 
   updateElementAttributes() {

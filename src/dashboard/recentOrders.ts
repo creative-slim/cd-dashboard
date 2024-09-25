@@ -29,8 +29,12 @@ export async function displayRecentOrders() {
 
   const container = template.parentElement;
   // container.innerHTML = '';
-  const loader = container.querySelector("[data-history='loader']");
-  loader.style.display = 'none';
+  if (container) {
+    const loader = container.querySelector("[data-history='loader']");
+    if (loader) {
+      loader.style.display = 'none';
+    }
+  }
 
   if (data.length === 0) {
     // const noOrders = document.createElement('div');
@@ -68,12 +72,26 @@ export async function displayRecentOrders() {
     console.log('#########paymentDetailsWithOrderDetails###########', currentItem[0]);
     const itemToDisplay = currentItem[0];
 
-    item.querySelector('[data-order="name"]').textContent = itemToDisplay.data.inputs['item-name'];
-    item.querySelector('[data-order="status"]').textContent = 'bezahlt';
-    const totalPrice = sumRenderPricingAndPrespectives(itemToDisplay.renderWithPrice);
-    item.querySelector('[data-order="price"]').textContent = `${totalPrice.toFixed(2)} €`;
+    if (itemToDisplay) {
+      const nameElement = item.querySelector('[data-order="name"]');
+      if (nameElement) {
+        nameElement.textContent = itemToDisplay.data.inputs['item-name'];
+      }
 
-    container.appendChild(item);
+      const statusElement = item.querySelector('[data-order="status"]');
+      if (statusElement) {
+        statusElement.textContent = 'bezahlt';
+      }
+
+      const priceElement = item.querySelector('[data-order="price"]');
+      if (priceElement) {
+        const totalPrice = sumRenderPricingAndPrespectives(itemToDisplay.renderWithPrice);
+        priceElement.textContent = `${totalPrice.toFixed(2)} €`;
+      }
+    }
+    if (container) {
+      container.appendChild(item);
+    }
   });
 
   template.remove();

@@ -29,7 +29,11 @@ export function afterLoginUiSetup(data) {
       return;
     }
     if (data.name) {
-      username.textContent = data.name;
+      if (data.name.includes('@')) {
+        username.textContent = data.nickname;
+      } else {
+        username.textContent = data.name;
+      }
       return;
     }
   });
