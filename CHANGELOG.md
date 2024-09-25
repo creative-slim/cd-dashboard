@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.8.4
+
+### Patch Changes
+
+- f9c6788: fix upload the same image twice not possible
+
 ## 3.8.3
 
 ### Patch Changes
