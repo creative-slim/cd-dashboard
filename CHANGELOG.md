@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.8.3
+
+### Patch Changes
+
+- df2e61f: fix zip price
+
 ## 3.8.2
 
 ### Patch Changes
