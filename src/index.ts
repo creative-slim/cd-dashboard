@@ -38,13 +38,12 @@ window.Webflow.push(async () => {
   // initInstances();
   // orderAppFunctions(); //! FUNCTION >> switching to class based approach
   if (getCurrentPage() === 'order-app') new App(); //? CLASS >>  switching to class based approach
-
+  if (getCurrentPage() === 'order-details') fillOrderDetails();
   // cart
   initWebflowFunctions();
   initUserRelatedFunctions();
 
   if (getCurrentPage() === 'order-history') {
-    fillOrderDetails();
     const info = await initOrderHistory();
   }
 
