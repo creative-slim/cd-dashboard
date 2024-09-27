@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.8.5
+
+### Patch Changes
+
+- 06290d3: fix only one image in renders
+
 ## 3.8.4
 
 ### Patch Changes
