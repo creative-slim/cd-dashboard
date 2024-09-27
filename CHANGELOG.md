@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.8.6
+
+### Patch Changes
+
+- 27f5140: fix order details
+
 ## 3.8.5
 
 ### Patch Changes
