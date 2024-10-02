@@ -1,6 +1,8 @@
 // check if the user is already authenticated
 import Cookie from 'js-cookie';
 
+import { errorModal } from '$extras/inputsChecker.js';
+
 import initInvoiceAddress from './userInvoiceAddress';
 // check if local storage has the user data ( address )
 // prompt the user to login if not authenticated
@@ -61,7 +63,7 @@ async function downloadUserDetails() {
 }
 
 export function checkRequiredFields(user) {
-  const reqArray = ['first_name', 'last_name', 'street', 'city', 'housenumber', 'country', 'zip'];
+  const reqArray = ['first_name', 'last_name', 'street', 'city', 'housenumber', 'zip'];
 
   let missingFields = false;
   reqArray.forEach((field) => {
@@ -93,6 +95,23 @@ async function addressModalSubmitHandler() {
 
   submitBtn.addEventListener('click', async (e) => {
     e.preventDefault();
+
+    // check if the required fields are filled
+    const requiredFields = form.querySelectorAll('[required]');
+    let missingFields = false;
+    requiredFields.forEach((field) => {
+      if (!field.value) {
+        missingFields = true;
+        field.classList.add('error');
+      }
+    });
+
+    if (missingFields) {
+      // alert('Bitte füllen Sie alle erforderlichen Felder aus');
+      errorModal('Bitte füllen Sie alle erforderlichen Felder aus');
+      return;
+    }
+
     const formData = new FormData(form);
     const user = {};
     console.log('🙉  -- formData ', formData);

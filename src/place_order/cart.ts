@@ -9,7 +9,7 @@ function getOrderData() {
     try {
       const parsedData = JSON.parse(orderDataStr);
       const orderData = cleanObject(parsedData);
-      // console.log('%c-------------- Cart data', 'color: green', orderData);
+      console.log('%c-------------- Cart data', 'color: green', orderData);
       return orderData;
     } catch (error) {
       console.error('Error parsing orderData from localStorage:', error);
@@ -45,7 +45,7 @@ export function renderCart() {
     return;
   }
 
-  if (!validateRequiredFields(cartData[0])) {
+  if (!Array.isArray(cartData) || cartData.length === 0 || !validateRequiredFields(cartData[0])) {
     return;
   }
 
@@ -481,61 +481,172 @@ function areRequiredFieldsFilled(dataObject, requiredFields) {
   );
 }
 
-function validateRequiredFields(orderData) {
-  // Define the required fields for orderData.inputs
-  const orderRequiredFields = ['item-name', 'item-width', 'item-height', 'item-length'];
+// function validateRequiredFields(orderData) {
+//   console.log('orderData : ', orderData);
+//   // Define the required fields for orderData.inputs
+//   const orderRequiredFields = ['item-name', 'item-width', 'item-height', 'item-length'];
 
-  // Check if required fields are filled
-  if (orderData) {
-    if (!areRequiredFieldsFilled(orderData.inputs, orderRequiredFields)) {
-      toggleButtonState(true);
-      console.error('Required fields are missing or empty in orderData.inputs');
-      return false; // Skip rendering this order or handle the error as needed
-    }
-  }
+//   // Check if required fields are filled
+//   if (orderData) {
+//     if (!areRequiredFieldsFilled(orderData.inputs, orderRequiredFields)) {
+//       toggleButtonState(true);
+//       console.error('Required fields are missing or empty in orderData.inputs');
+//       return false; // Skip rendering this order or handle the error as needed
+//     }
+//   }
 
-  // Define the required fields for renderData.inputs
-  const renderRequiredFields = ['render-type'];
+//   // Define the required fields for renderData.inputs
+//   const renderRequiredFields = ['render-type'];
 
-  // Check if required fields are filled
-  if (orderData) {
-    if (!areRequiredFieldsFilled(orderData.orderRenders[0].inputs, renderRequiredFields)) {
-      toggleButtonState(true);
-      console.error('Required fields are missing or empty in renderData.inputs');
-      return false; // Skip rendering this render or handle the error as needed
-    }
-  }
+//   // Check if required fields are filled
+//   if (!(orderData && Array.isArray(orderData.orderRenders) && orderData.orderRenders.length > 0)) {
+//     return false;
+//   }
+//   if (!areRequiredFieldsFilled(orderData.orderRenders[0].inputs, renderRequiredFields)) {
+//     toggleButtonState(true);
+//     console.error('Required fields are missing or empty in renderData.inputs');
+//     return false; // Skip rendering this render or handle the error as needed
+//   }
 
-  const renderDetailsRequiredFields = ['woodtype', 'render-count', 'aspect-ratio'];
+//   const renderDetailsRequiredFields = ['woodtype', 'render-count', 'aspect-ratio'];
 
-  // Check if required fields are filled
-  if (orderData) {
-    if (
-      !areRequiredFieldsFilled(
-        orderData.orderRenders[0].orderRenderDetails[0].inputs,
-        renderDetailsRequiredFields
-      )
-    ) {
-      toggleButtonState(true);
-      console.error('Required fields are missing or empty in renderData.inputs');
-      return false; // Skip rendering this render or handle the error as needed
-    }
-  }
+//   // Check if required fields are filled
+//   if (orderData) {
+//     if (
+//       !areRequiredFieldsFilled(
+//         orderData.orderRenders[0].orderRenderDetails[0].inputs,
+//         renderDetailsRequiredFields
+//       )
+//     ) {
+//       toggleButtonState(true);
+//       console.error('Required fields are missing or empty in renderData.inputs');
+//       return false; // Skip rendering this render or handle the error as needed
+//     }
+//   }
 
-  toggleButtonState(false);
-  return true;
-}
+//   toggleButtonState(false);
+//   return true;
+// }
 
 // data-order-cart="toggle-btn" make this button opacity 50% and unclickable
-function toggleButtonState(disable: boolean) {
-  const button = document.querySelector('[data-order-cart="toggle-btn"]');
-  if (button) {
-    if (disable) {
-      button.style.opacity = '0.5';
-      button.style.pointerEvents = 'none';
-    } else {
-      button.style.opacity = '1';
-      button.style.pointerEvents = 'auto';
+
+//! AI enhanced
+
+function validateRequiredFields(orderData) {
+  try {
+    // Validate orderData
+    if (!orderData || typeof orderData !== 'object') {
+      toggleButtonState(true);
+      console.error('Invalid order data provided.');
+      return false;
     }
+
+    // Define the required fields for orderData.inputs
+    const orderRequiredFields = ['item-name', 'item-width', 'item-height', 'item-length'];
+
+    // Check if orderData.inputs exists and is valid
+    if (!orderData.inputs || typeof orderData.inputs !== 'object') {
+      toggleButtonState(true);
+      console.error('orderData.inputs is missing or invalid.');
+      return false;
+    }
+
+    // Check if required fields are filled in orderData.inputs
+    if (!areRequiredFieldsFilled(orderData.inputs, orderRequiredFields)) {
+      toggleButtonState(true);
+      console.error('Required fields are missing or empty in orderData.inputs.');
+      return false;
+    }
+
+    // Validate orderRenders array
+    if (!Array.isArray(orderData.orderRenders) || orderData.orderRenders.length === 0) {
+      toggleButtonState(true);
+      console.error('orderData.orderRenders is missing or empty.');
+      return false;
+    }
+
+    const renderData = orderData.orderRenders[0];
+
+    // Check if renderData.inputs exists and is valid
+    if (!renderData.inputs || typeof renderData.inputs !== 'object') {
+      toggleButtonState(true);
+      console.error('renderData.inputs is missing or invalid.');
+      return false;
+    }
+
+    // Define the required fields for renderData.inputs
+    const renderRequiredFields = ['render-type'];
+
+    // Check if required fields are filled in renderData.inputs
+    if (!areRequiredFieldsFilled(renderData.inputs, renderRequiredFields)) {
+      toggleButtonState(true);
+      console.error('Required fields are missing or empty in renderData.inputs.');
+      return false;
+    }
+
+    // Validate orderRenderDetails array
+    if (
+      !Array.isArray(renderData.orderRenderDetails) ||
+      renderData.orderRenderDetails.length === 0
+    ) {
+      toggleButtonState(true);
+      console.error('renderData.orderRenderDetails is missing or empty.');
+      return false;
+    }
+
+    const renderDetailsData = renderData.orderRenderDetails[0];
+
+    // Check if renderDetailsData.inputs exists and is valid
+    if (!renderDetailsData.inputs || typeof renderDetailsData.inputs !== 'object') {
+      toggleButtonState(true);
+      console.error('renderDetailsData.inputs is missing or invalid.');
+      return false;
+    }
+
+    const renderDetailsRequiredFields = ['woodtype', 'render-count', 'aspect-ratio'];
+
+    // Check if required fields are filled in renderDetailsData.inputs
+    if (!areRequiredFieldsFilled(renderDetailsData.inputs, renderDetailsRequiredFields)) {
+      toggleButtonState(true);
+      console.error('Required fields are missing or empty in renderDetailsData.inputs.');
+      return false;
+    }
+
+    // All validations passed
+    toggleButtonState(false);
+    return true;
+  } catch (error) {
+    toggleButtonState(true);
+    console.error('An unexpected error occurred during validation:', error);
+    return false;
+  }
+}
+//! AI enhanced
+function toggleButtonState(disable) {
+  try {
+    // Validate the 'disable' parameter
+    if (typeof disable !== 'boolean') {
+      throw new TypeError('The "disable" parameter must be a boolean.');
+    }
+
+    // Select the button element
+    const button = document.querySelector('[data-order-cart="toggle-btn"]');
+    if (!button) {
+      throw new Error('Button not found: [data-order-cart="toggle-btn"]');
+    }
+
+    // Ensure the button supports classList
+    if (!('classList' in button)) {
+      throw new Error('The selected element does not support classList manipulation.');
+    }
+
+    // Toggle the 'disabled-button' class based on the 'disable' parameter
+    if (disable) {
+      button.classList.add('disabled-button');
+    } else {
+      button.classList.remove('disabled-button');
+    }
+  } catch (error) {
+    console.error('toggleButtonState error:', error);
   }
 }

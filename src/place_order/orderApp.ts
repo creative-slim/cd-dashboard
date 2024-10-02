@@ -82,18 +82,77 @@ class App {
     localStorage.setItem(itemName, currentValue);
   }
 
-  saveAllData() {
-    const storedLocalData = this.orderCards.map((orderCard) => orderCard.getData());
-    //custom console log with orange color
-    const cleanData = cleanObject(storedLocalData);
-    // console.log('%c-------------- App data', 'color: orange', cleanData);
-    renderCart();
+  // saveAllData() {
+  //   const storedLocalData = this.orderCards.map((orderCard) => orderCard.getData());
+  //   //custom console log with orange color
+  //   const cleanData = cleanObject(storedLocalData);
+  //   console.log('%c-------------- App data', 'color: orange', cleanData);
+  //   renderCart();
 
-    localStorage.setItem('orderData', JSON.stringify(cleanData));
-    if (this.cart) {
-      this.cart.updateCart(cleanData);
+  //   localStorage.setItem('orderData', JSON.stringify(cleanData));
+  //   if (this.cart) {
+  //     this.cart.updateCart(cleanData);
+  //   }
+  //   // this.cart.updateCart(cleanData);
+  // }
+
+  //! AI enhanced
+
+  saveAllData() {
+    try {
+      // Validate that 'orderCards' is an array
+      if (!Array.isArray(this.orderCards)) {
+        throw new Error("'orderCards' is not an array or is undefined.");
+      }
+
+      // Collect data from orderCards
+      const storedLocalData = this.orderCards
+        .map((orderCard, index) => {
+          if (orderCard && typeof orderCard.getData === 'function') {
+            return orderCard.getData();
+          }
+          console.warn(
+            `orderCard at index ${index} is invalid or does not have a getData() method.`
+          );
+          return null;
+        })
+        .filter((data) => data !== null);
+
+      // Validate that 'cleanObject' is a function
+      if (typeof cleanObject !== 'function') {
+        throw new Error("'cleanObject' function is not defined.");
+      }
+
+      const cleanData = cleanObject(storedLocalData);
+
+      // Log data with custom style in non-production environments
+      if (typeof process === 'undefined' || process.env.NODE_ENV !== 'production') {
+        console.log('%c-------------- App data', 'color: orange;', cleanData);
+      }
+
+      // Call renderCart safely
+      if (typeof renderCart === 'function') {
+        renderCart();
+      } else {
+        console.warn("'renderCart' function is not defined.");
+      }
+
+      // Save data to localStorage
+      try {
+        localStorage.setItem('orderData', JSON.stringify(cleanData));
+      } catch (storageError) {
+        console.error('Failed to save data to localStorage:', storageError);
+      }
+
+      // Update cart if it exists
+      if (this.cart && typeof this.cart.updateCart === 'function') {
+        this.cart.updateCart(cleanData);
+      } else {
+        console.warn("'cart' is not defined or does not have an updateCart() method.");
+      }
+    } catch (error) {
+      console.error('An error occurred in saveAllData:', error);
     }
-    // this.cart.updateCart(cleanData);
   }
 }
 

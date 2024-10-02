@@ -1,8 +1,14 @@
 import Cookie from 'js-cookie';
 import { displayRecentOrders } from 'src/dashboard/recentOrders';
-
+import getCurrentPage from 'src/general/getCurrentPage';
+let recenetOrdersLoaded = false;
 export function afterLoginUiSetup(data) {
-  displayRecentOrders();
+  if (recenetOrdersLoaded === false) {
+    if (getCurrentPage() === 'dashboard') {
+      displayRecentOrders();
+      recenetOrdersLoaded = true;
+    }
+  }
   const user_imgs = document.querySelectorAll('[data-login="avatar"]');
   const usernames = document.querySelectorAll('[data-login="username"]');
   const loginElements = document.querySelectorAll('[data-login="login"]');

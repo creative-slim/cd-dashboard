@@ -16,12 +16,14 @@ class OrderRenderDetail {
   element: HTMLElement;
   id: string;
   appInstance: App;
+  parentOrderRender: OrderRender;
 
-  constructor(element: HTMLElement, appInstance: App) {
+  constructor(element: HTMLElement, appInstance: App, parentOrderRender: OrderRender) {
     this.element = element;
     this.id = `order-render-detail-${Date.now()}`;
     this.element.id = this.id;
     this.appInstance = appInstance;
+    this.parentOrderRender = parentOrderRender; // Assign the parent OrderRender
 
     this.setup();
   }
@@ -55,6 +57,13 @@ class OrderRenderDetail {
     deleteBtn.addEventListener('click', () => {
       this.element.remove();
       removeObjectById(this.id);
+      // Remove from orderRenderDetails array
+      console.log('this.parentOrderRender.orderRenderDetails:', this.parentOrderRender);
+      const index = this.parentOrderRender.orderRenderDetails.indexOf(this);
+      if (index > -1) {
+        this.parentOrderRender.orderRenderDetails.splice(index, 1);
+      }
+      this.appInstance.saveAllData();
     });
   }
 

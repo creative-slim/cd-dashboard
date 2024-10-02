@@ -45,44 +45,57 @@ class OrderCard {
     this.appInstance.saveAllData();
   }
   handleRequiredUploadFields() {
-    const radioInputs = this.element
-      .querySelector('[data-collapse-checkbox="wrapper"]')
-      .querySelectorAll('input[type="radio"]');
+    const wrapper = this.element.querySelector('[data-collapse-checkbox="wrapper"]');
+    if (wrapper) {
+      const radioInputs = wrapper.querySelectorAll('input[type="radio"]');
+      // generate unique uuid
+      const min = 1;
+      const max = 99999999;
+      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
-    radioInputs.forEach((radio) => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) {
-          if (radio.value === 'provide') {
-            const uploader = this.element.querySelector(
-              '[data-upload-id="threed"]  input[type="text"]'
-            );
-            const uploaderNotRequired = this.element.querySelector(
-              '[data-upload-id="photo"]  input[type="text"]'
-            );
-            if (uploader) {
-              uploader.setAttribute('required', 'required');
-            }
-            if (uploaderNotRequired) {
-              uploaderNotRequired.removeAttribute('required');
-            }
-          } else if (radio.value === 'build') {
-            const uploader = this.element.querySelector(
-              '[data-upload-id="photo"] input[type="text"]'
-            );
-            const uploaderNotRequired = this.element.querySelector(
-              '[data-upload-id="threed"] input[type="text"]'
-            );
-            if (uploader) {
-              uploader.setAttribute('required', 'required');
-            }
-            if (uploaderNotRequired) {
-              uploaderNotRequired.removeAttribute('required');
+      radioInputs.forEach((radio, index) => {
+        radio.id = `${radio.id}_${randomNumber}`;
+        //data-name
+        const radioName = radio.getAttribute('data-name');
+        radio.setAttribute('name', radioName + '_' + randomNumber);
+        if (index === 0) {
+          radio.checked = true;
+        }
+
+        radio.addEventListener('change', () => {
+          if (radio.checked) {
+            if (radio.value === 'provide') {
+              const uploader = this.element.querySelector(
+                '[data-upload-id="threed"]  input[type="text"]'
+              );
+              const uploaderNotRequired = this.element.querySelector(
+                '[data-upload-id="photo"]  input[type="text"]'
+              );
+              if (uploader) {
+                uploader.setAttribute('required', 'required');
+              }
+              if (uploaderNotRequired) {
+                uploaderNotRequired.removeAttribute('required');
+              }
+            } else if (radio.value === 'build') {
+              const uploader = this.element.querySelector(
+                '[data-upload-id="photo"] input[type="text"]'
+              );
+              const uploaderNotRequired = this.element.querySelector(
+                '[data-upload-id="threed"] input[type="text"]'
+              );
+              if (uploader) {
+                uploader.setAttribute('required', 'required');
+              }
+              if (uploaderNotRequired) {
+                uploaderNotRequired.removeAttribute('required');
+              }
             }
           }
-        }
-        this.appInstance.saveAllData();
+          this.appInstance.saveAllData();
+        });
       });
-    });
+    }
   }
 
   updateElementAttributes() {
@@ -115,18 +128,12 @@ class OrderCard {
       console.log('--------uploaders', uploaders);
       uploaders.forEach((uploader) => {
         console.log('uploader', uploader);
-        // const uuid = this.generateUUID();
-        // const id = `drop_zone_${uuid}`;
-        // (uploader as HTMLElement).id = id;
         (uploader as HTMLElement).setAttribute(
           'data-upload-card',
           localStorage.getItem('orders-pieces') || ''
         );
 
         const fileUploader = new FileUploader(uploader, `fileUploader`);
-        // const fileUploader = new FileUploader();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        // (window as any)[`fileUploader${uuid}`] = fileUploader;
       });
     } catch (error) {
       console.error('Error initializing uploaders:', error);
@@ -140,9 +147,19 @@ class OrderCard {
         throw new Error('Delete button not found');
       }
       deleteBtn.addEventListener('click', () => {
+        console.log('deleteBtn clicked');
+        console.log('this', this);
+        console.log('this', this.appInstance);
+
         removeObjectById(this.id);
         this.element.remove();
-        // this.appInstance.saveAllData(); //* remove object already save data
+        // Remove from orderCards array
+        const index = this.appInstance.orderCards.indexOf(this);
+        if (index > -1) {
+          console.log('deleteing index : ', index, this.appInstance.orderCards[index]);
+          this.appInstance.orderCards.splice(index, 1);
+        }
+        this.appInstance.saveAllData(); //* remove object already save data
       });
     } catch (error) {
       console.error('Error adding delete functionality:', error);
@@ -169,7 +186,8 @@ class OrderCard {
       // Select the newly added child (the actual cloned element from the template)
       const newOrderRender = new OrderRender(
         tempDiv.firstElementChild as HTMLElement,
-        this.appInstance
+        this.appInstance,
+        this
       );
 
       // Push the new render to the order renders array

@@ -1,5 +1,7 @@
 import { areRequiredFieldsPopulated, errorModal } from '$extras/inputsChecker.js';
 import cleanData from '$utils/renderDataCleaner.js';
+
+import { checkIfUserAddressIsFilled } from '../user/checkIfUserAddressIsFilled';
 let api;
 if (process.env.NODE_ENV === 'development') {
   api = 'http://127.0.0.1:8787'; // Use local endpoint for development
@@ -126,6 +128,11 @@ export function initializePaypal(
             // alert('Please fill in all required fields');
             return actions.reject();
           }
+          if (checkIfUserAddressIsFilled() === false) {
+            actions.reject();
+            errorModal('PayPal : Bitte füllen Sie Ihre Adresse aus.');
+            return actions.reject();
+          }
           // orderDetails = fetchDataFromLocalStorage();
           orderDetails = localStorage.getItem('orderData');
         },
@@ -139,8 +146,13 @@ export function initializePaypal(
           // Check if all fields are filled
 
           if (!orderDetails || orderDetails.length === 0) {
-            //console.error('Please select a package : order creation failed!');
+            console.error('Please select a package : order creation failed!');
             return;
+          }
+          let couponData = null;
+          const coupon = localStorage.getItem('coupon');
+          if (coupon) {
+            couponData = JSON.parse(coupon);
           }
           console.log('Creating payment order...FETCHING NOW', {
             intent: INTENT,
@@ -153,7 +165,7 @@ export function initializePaypal(
               authorization: `Bearer ${accessToken}`,
             },
             //! Send the additional data
-            body: JSON.stringify({ intent: INTENT, orderDetails }),
+            body: JSON.stringify({ intent: INTENT, orderDetails, couponData }),
           })
             .then((response) => response.json())
             .then((order) => {

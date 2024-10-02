@@ -278,7 +278,11 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
       '€ ' + orderItem.renderWithPrice[0].initialFee; //! FIX THIS PRICE
     item.querySelector("[invoice-item-template='total']").innerHTML =
       // reduce all prices in the array to get the total price
-      '€ ' + sumRenderPricingAndPrespectives(orderItem.renderWithPrice);
+      '€ ' +
+      parseFloat(
+        parseFloat(sumRenderPricingAndPrespectives(orderItem.renderWithPrice)) +
+          parseFloat(orderItem.renderWithPrice[0].initialFee)
+      ).toFixed(2);
     // orderItem.data.renderWithPrice.renders.reduce((acc, cur) => {
     //   return acc + cur.prices['price'];
     // }, 0);

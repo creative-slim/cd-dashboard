@@ -18,13 +18,15 @@ class OrderRender {
   id: string;
   orderRenderDetails: OrderRenderDetail[];
   appInstance: App;
+  parentOrderCard: OrderCard;
 
-  constructor(element: HTMLElement, appInstance: App) {
+  constructor(element: HTMLElement, appInstance: App, parentOrderCard: OrderCard) {
     this.element = element;
     this.id = `order-render-${Date.now()}`;
     this.element.id = this.id;
     this.orderRenderDetails = [];
     this.appInstance = appInstance;
+    this.parentOrderCard = parentOrderCard; // Assign the parent OrderCard
 
     this.setup();
   }
@@ -70,7 +72,12 @@ class OrderRender {
     deleteBtn.addEventListener('click', () => {
       removeObjectById(this.id);
       this.element.remove();
-      // this.appInstance.saveAllData(); //* remove object already save data
+      // Remove from orderRenders array
+      const index = this.parentOrderCard.orderRenders.indexOf(this);
+      if (index > -1) {
+        this.parentOrderCard.orderRenders.splice(index, 1);
+      }
+      this.appInstance.saveAllData();
     });
   }
 
@@ -143,7 +150,8 @@ class OrderRender {
     tempDiv.appendChild(newOrderRenderDetailElement);
     const newOrderRenderDetail = new OrderRenderDetail(
       tempDiv.firstElementChild as HTMLElement,
-      this.appInstance
+      this.appInstance,
+      this
     );
 
     this.orderRenderDetails.push(newOrderRenderDetail);
