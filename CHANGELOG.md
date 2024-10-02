@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.9.0
+
+### Minor Changes
+
+- 1d646f8: lot of fixes
+
 ## 3.8.6
 
 ### Patch Changes
