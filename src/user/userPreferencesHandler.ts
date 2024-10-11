@@ -1,4 +1,3 @@
-import gsap from 'gsap';
 import Cookie from 'js-cookie';
 
 let api;

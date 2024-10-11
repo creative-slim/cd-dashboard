@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 
-export const uploadInvoice = async (pdfFile, fullPath) => {
-  console.log('uploadInvoice', pdfFile, fullPath);
+export const uploadInvoice = async (pdfFile) => {
+  console.log('uploadInvoice', pdfFile);
   const formData = new FormData();
   const prod = 'https://creative-directors-dropbox.sa-60b.workers.dev';
   const dev = 'http://127.0.0.1:8787';
@@ -9,7 +9,6 @@ export const uploadInvoice = async (pdfFile, fullPath) => {
   const endpoint = '/api/cd/uploadinvoice';
 
   formData.append('file', pdfFile);
-  formData.append('fullPath', fullPath);
 
   try {
     const response = await fetch(prod + endpoint, {

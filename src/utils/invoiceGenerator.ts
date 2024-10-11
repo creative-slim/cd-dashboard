@@ -11,7 +11,7 @@ export async function generateInvoice(finalData) {
   const invoice = document.querySelector<HTMLElement>('#pdf-wrapper');
   const pdfwrapper = invoice.cloneNode(true);
   console.log('------------- generateInvoice ------------- ');
-  console.log({ finalData });
+  // console.log({ finalData });
   // const newCombinedArray = mergePaymentDetails(finalData.combinedArrays);
   // finalData.finalData.combinedArrays = newCombinedArray;
 
@@ -27,23 +27,23 @@ export async function generateInvoice(finalData) {
 
   // find payment details inside finalData
   const payment = finalData.combinedArrays.paymentDetails;
-  console.log({ payment });
+  // console.log({ payment });
   const paymentDetails = {
     totalAmount: payment.order.total,
   };
   const { orderItems } = payment.order;
 
   const orderData = {
-    'order-id': finalData.finalCMSresponse.response[0].fieldData['order-id'], //finalData.finalData.finalCMSresponse.response[0].fieldData["order-id"]
+    'order-id': finalData.paymentDetails.order.orderID, //finalData.finalData.finalCMSresponse.response[0].fieldData["order-id"]
   };
 
   const ordersItemsDetailsWithPricing = payment.order.orderItemsListWithPricing;
 
-  console.log('orderItems ::: ', orderItems);
-  console.log('ordersItemsDetailsWithPricing ::: ', ordersItemsDetailsWithPricing); // new orderItems
-  console.log('orderData ::: ', orderData);
+  // console.log('orderItems ::: ', orderItems);
+  // console.log('ordersItemsDetailsWithPricing ::: ', ordersItemsDetailsWithPricing); // new orderItems
+  // console.log('orderData ::: ', orderData);
 
-  console.log({ payment, paymentDetails, orderItems, orderData });
+  // console.log({ payment, paymentDetails, orderItems, orderData });
 
   // still need order ID
 
@@ -70,18 +70,18 @@ export async function generateInvoice(finalData) {
       a.href = url;
       a.download = `Invoice ${orderData['order-id']}.pdf`;
       a.click();
-      console.log('PDF downloaded');
+      // console.log('PDF downloaded');
     });
   });
 
   const pdfFile = await getInvoicePDF(pdfwrapper, orderData['order-id']);
 
   //!testing
-  const url = URL.createObjectURL(pdfFile);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Invoice ${orderData['order-id']}.pdf`;
-  a.click();
+  // const url = URL.createObjectURL(pdfFile);
+  // const a = document.createElement('a');
+  // a.href = url;
+  // a.download = `Invoice ${orderData['order-id']}.pdf`;
+  // a.click();
   //!testing
 
   return pdfFile;
@@ -252,8 +252,8 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
   // item.removeAttribute('data-invoice');
   // item.style.display = 'grid';
   const { orderItems, ordersItemsDetailsWithPricing } = data;
-  console.log('orderItems ::: ', orderItems);
-  console.log('new orderItems ::: ', ordersItemsDetailsWithPricing);
+  // console.log('orderItems ::: ', orderItems);
+  // console.log('new orderItems ::: ', ordersItemsDetailsWithPricing);
   ordersItemsDetailsWithPricing.forEach((orderItem, index) => {
     const item = itemTemplate.cloneNode(true);
     item.removeAttribute('data-invoice');
@@ -293,14 +293,14 @@ export function generateInvoiceItem(paymentDetails, itemTemplate, data, wrapper)
 }
 
 function generateAdditionalImages(itemDetails, paymentDetails, itemTemplate, siblingElement) {
-  console.log('inside generateAdditionalImages ::: ', itemDetails);
+  // console.log('inside generateAdditionalImages ::: ', itemDetails);
   itemDetails.renderWithPrice.forEach((renderDetails, index) => {
     const displayIndex = index + 1;
     const renderType = 'render ' + displayIndex + ' : ' + renderDetails.renderCategory;
     renderDetails.renders.forEach((imageData, index) => {
       const item = itemTemplate.cloneNode(true);
 
-      console.log(imageData);
+      // console.log(imageData);
       // const thisItemTotalPrice = Object.values(imageData).reduce((acc, cur) => acc + cur, 0);
 
       item.querySelector("[invoice-item-template='title']").innerHTML =
