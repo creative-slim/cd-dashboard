@@ -1,9 +1,5 @@
 import FileUploader from '../../extras/uploaderClass';
-import {
-  makeCheckBoxCollapsable,
-  makeRadioCollapsable,
-  makeSmallCardCollapsable,
-} from './collapser';
+import { makeCheckBoxCollapsable, makeRadioCollapsable } from './collapser';
 import { removeObjectByElementIdFromLocalStorage, saveAllData, saveData } from './saveInput';
 
 function orderAppFunctions() {

@@ -23,6 +23,8 @@ export default class FileUploader {
   images_data: never[];
   namesArray: any;
   name: any;
+  progressBar: any;
+
   /*
    * drop: id of the drop zone
    * output: id of the output div
@@ -74,6 +76,9 @@ export default class FileUploader {
     // this.loadingError = document.getElementById(errorPopup);
     this.loadingError = this.mainWrapper.querySelector('[uploader-status="error"]');
 
+    // Reference to the progress bar element
+    this.progressBar = this.dropZone.querySelector('[uploader-status="progress-bar"]');
+
     // this.fileType = eventOrMember;
 
     this.fileType = this.dropZone.dataset.type || 'image';
@@ -117,8 +122,6 @@ export default class FileUploader {
   async uploadFile(file) {
     const formData = new FormData();
     const cdProd = 'https://creative-directors-dropbox.sa-60b.workers.dev';
-    const dev = 'http://127.0.0.1:8787';
-
     const cdEndpoint = '/api/cd/bucket/imagesupload';
 
     formData.append('file', file);
@@ -127,13 +130,25 @@ export default class FileUploader {
       const response = await fetch(cdProd + cdEndpoint, {
         method: 'POST',
         body: formData,
+        // To track the progress, use the 'Content-Length' headers or xhr if possible
+        onUploadProgress: (event) => {
+          if (event.lengthComputable) {
+            const percentComplete = (event.loaded / event.total) * 100;
+            this.updateProgressBar(percentComplete);
+          }
+        },
       });
+
       const data = await response.json();
       return data;
     } catch (err) {
-      //console.error(err);
       return null;
     }
+  }
+
+  // Method to update progress bar
+  updateProgressBar(progress) {
+    this.progressBar.style.width = `${progress}%`;
   }
 
   generateLinksArray(image_names) {
@@ -385,72 +400,57 @@ export default class FileUploader {
   }
 
   async uploadImages(files) {
-    if (this.images_data.length + files.length > this.number_of_files) {
-      this.loadingError.style.display = 'flex';
+    this.loading.style.transform = 'scale(1)';
+    this.defaultView.style.transform = 'scale(0)';
+    this.doneLoading.style.transform = 'scale(0)';
+    this.loadingError.style.display = 'none';
 
-      this.activeError = true;
+    this.progressBar.style.width = '0%'; // Reset progress bar
+    this.progressBar.style.display = 'block'; // Show progress bar
 
-      this.loadingError.innerText = 'You may only upload ' + this.number_of_files + ' File(s)';
-      setTimeout(() => {
-        this.loadingError.style.display = 'none';
+    this.preventSubmit(true);
 
-        this.activeError = false;
-      }, this.errorTimeout);
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
 
-      return;
-    }
-
-    return new Promise(async (resolve, reject) => {
-      this.loading.style.transform = 'scale(1)';
-      this.defaultView.style.transform = 'scale(0)';
-      this.doneLoading.style.transform = 'scale(0)';
-      this.loadingError.style.display = 'none';
-
-      this.preventSubmit(true);
-
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-
-        if (!this.isFileTypeAllowed(file)) {
-          this.loadingError.style.display = 'flex';
-
-          this.activeError = true;
-
-          this.loadingError.innerText = file.name + ' has an invalid Filetype';
-          setTimeout(() => {
-            this.loadingError.style.display = 'none';
-
-            this.activeError = false;
-          }, this.errorTimeout);
-          continue;
-        }
-
-        if (file.size > this.files_size_limit) {
-          this.loadingError.style.display = 'flex';
-
-          this.activeError = true;
-
-          this.loadingError.innerText = file.name + ' was not uploaded, File is too big';
-          setTimeout(() => {
-            this.loadingError.style.display = 'none';
-            this.activeError = false;
-          }, this.errorTimeout);
-          continue;
-        }
-
-        this.image_names.push(file.name.split(' ').join('_'));
-        this.images_data.push(file);
-        const response = await this.uploadFile(file);
-        // console.log(`... file[${i}].name = ${file.name}`);
+      if (!this.isFileTypeAllowed(file)) {
+        this.showError(file.name + ' has an invalid Filetype');
+        continue;
       }
 
-      const fullLink = this.generateLinksArray(this.image_names);
-      this.namesArray.value = fullLink;
-      this.insertIntoLocalStorage({ id: this.containerID, array: fullLink });
-      // console.log({ containerID: this.containerID, cardID: this.cardID, 'full link': fullLink });
-      this.displayImages(this.images_data);
-      resolve('done');
-    });
+      if (file.size > this.files_size_limit) {
+        this.showError(file.name + ' was not uploaded, File is too big');
+        continue;
+      }
+
+      this.image_names.push(file.name.split(' ').join('_'));
+      this.images_data.push(file);
+
+      // Upload file and update progress bar
+      await this.uploadFile(file);
+      this.updateProgressBar(((i + 1) / files.length) * 100); // Progress for each file
+    }
+
+    this.progressBar.style.display = 'none'; // Hide progress bar when done
+
+    const fullLink = this.generateLinksArray(this.image_names);
+    this.namesArray.value = fullLink;
+    this.insertIntoLocalStorage({ id: this.containerID, array: fullLink });
+
+    this.displayImages(this.images_data);
+    this.loading.style.transform = 'scale(0)';
+    this.doneLoading.style.transform = 'scale(1)';
+    this.preventSubmit(false);
+  }
+
+  showError(message) {
+    this.loadingError.style.display = 'flex';
+    this.activeError = true;
+    this.loadingError.innerText = message;
+    setTimeout(() => {
+      this.loadingError.style.display = 'none';
+      this.activeError = false;
+    }, this.errorTimeout);
   }
 
   dropHandler(ev) {

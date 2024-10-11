@@ -228,6 +228,7 @@ window.Webflow.push(async () => {
         // the submit button
         const submitLoading = form.querySelector("[order-submit='approved']");
         const loadingSVG = form.querySelector('[data-form="loading"]');
+        const submitInnerText = form.querySelector('#scroll-to-pay');
         // console.log('**********************+');
         // console.log({ submitLoading, loadingSVG });
         // console.log('**********************+');
@@ -238,6 +239,7 @@ window.Webflow.push(async () => {
           submitLoading.value = '';
           // submitLoading.style.pointerEvents = 'none'; //! Uncomment if needed
           loadingSVG.style.display = 'block';
+          submitInnerText.style.color = 'transparent';
         }
 
         function doneLoading() {
@@ -246,6 +248,7 @@ window.Webflow.push(async () => {
           submitLoading.value = 'DONE';
           // submitLoading.style.pointerEvents = 'none'; //! Uncomment if needed
           loadingSVG.style.display = 'none';
+          submitInnerText.style.color = 'black';
         }
 
         // Call the function with your array of images and other parameters
@@ -272,40 +275,40 @@ window.Webflow.push(async () => {
 
             //add total price to the combinedArrays
             combinedArrays.paymentDetails = paymentDetails;
+            console.time('generateInvoice');
+            const pdfFile = await generateInvoice({
+              combinedArrays,
+              paymentDetails,
+            });
+            console.timeEnd('generateInvoice');
 
-            // console.log('🔥combinedArrays', combinedArrays);
-            // console.log('paymentDetails', paymentDetails);
+            console.time('uploadInvoice');
+            console.groupCollapsed('uploadInvoice');
+            const pdfLink = await uploadInvoice(pdfFile);
+            console.groupEnd('uploadInvoice');
+            console.timeEnd('uploadInvoice');
+            combinedArrays.pdfFile = pdfLink.linkarray;
 
+            console.time('uploadmetadata');
             const Final = await uploadmetadata(combinedArrays);
-
-            // console.log('Final', Final);
-            // console.log('All images processed.');
+            console.timeEnd('uploadmetadata');
 
             cleanLoggerUI();
 
             loggerUpdate(2);
-            // console.log('Final', Final);
 
-            // Uncomment if needed
-
-            // debugger;
-            const pdfFile = await generateInvoice({
-              combinedArrays,
-              finalCMSresponse: Final,
-            });
             console.log('pdfFile', {
               combinedArrays,
               finalCMSresponse: Final,
             });
 
-            const pdfLink = await uploadInvoice(pdfFile, Final.fullPath);
             const userEmail = GetCurrentUserEmail();
-            const send = await sendInvoice(pdfLink.linkarray, userEmail);
-            await uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
+            const send = sendInvoice(pdfLink.linkarray, userEmail);
+            // uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
             // console.log({ pdfFile });
 
             // Example function call, comment out if not needed
-            uploadInvoice();
+            // uploadInvoice();
 
             loggerUpdate(3);
             loggerUpdate(4);
@@ -320,7 +323,7 @@ window.Webflow.push(async () => {
             // clickTab(3);
             doneLoading();
 
-            goToConfirmationPage();
+            goToConfirmationPage(combinedArrays);
 
             clearLocalStorage(
               'upload_urls',
@@ -355,7 +358,7 @@ window.Webflow.push(async () => {
     });
   }
 
-  function goToConfirmationPage() {
+  function goToConfirmationPage(combinedArrays) {
     const confirmation = document.querySelector('[data-order="confirmation-tab"]');
     const order = document.querySelector('[data-order="order-tab"]');
 
@@ -369,23 +372,42 @@ window.Webflow.push(async () => {
       window.scrollTo(0, 0);
     }
 
+    populateConfirmationPage(combinedArrays);
+  }
+  function populateConfirmationPage(combinedArrays) {
+    console.log('populateConfirmationPage', combinedArrays);
     const email = GetCurrentUserEmail();
     const emailSpot = document.querySelector('[data-confirmation="mail"]');
     if (emailSpot) {
       emailSpot.textContent = email;
     }
-  }
 
-  // This function should be called on page load to check for the flag and click the tab if needed
-  function checkGoToHistory() {
-    const goToHistory = localStorage.getItem('goToHistory');
-    if (goToHistory) {
-      const tab = document.querySelector('[mirror-click="tab-history"]');
-      if (tab) {
-        tab.click();
-      }
-      // Remove the flag from local storage
-      localStorage.removeItem('goToHistory');
+    //data-confirmation="container"
+    const container = document.querySelector('[data-confirmation="container"]');
+    //data-confirmation="load"
+    const load = document.querySelector('[data-confirmation="load"]');
+    if (load) {
+      load.style.display = 'none';
+    }
+
+    if (container) {
+      container.style.display = 'flex';
+    }
+
+    // data-confirmation="order-id"
+    const orderID = document.querySelector('[data-confirmation="order-id"]');
+    if (orderID) {
+      const ID = combinedArrays.paymentDetails.order.orderID;
+      orderID.textContent = ID;
+    }
+
+    //data-confirmation="invoice-link"
+    const invoiceLink = document.querySelector(
+      '[data-confirmation="invoice-link"]'
+    ) as HTMLAnchorElement;
+    if (invoiceLink) {
+      const Link = combinedArrays.pdfFile;
+      invoiceLink.href = Link;
     }
   }
 

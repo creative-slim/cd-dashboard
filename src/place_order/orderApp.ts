@@ -127,7 +127,7 @@ class App {
 
       // Log data with custom style in non-production environments
       if (typeof process === 'undefined' || process.env.NODE_ENV !== 'production') {
-        console.log('%c-------------- App data', 'color: orange;', cleanData);
+        // console.log('%c-------------- App data', 'color: orange;', cleanData);
       }
 
       // Call renderCart safely
