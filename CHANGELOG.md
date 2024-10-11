@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.9.1
+
+### Patch Changes
+
+- db318bd: imporve submission flow
+
 ## 3.9.0
 
 ### Minor Changes
