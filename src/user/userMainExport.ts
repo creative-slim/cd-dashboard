@@ -7,10 +7,12 @@ import handleUserPreferences, {
 
 export default function initUserRelatedFunctions() {
   // userAddressModal();
+  console.groupCollapsed('initUserRelatedFunctions');
   checkUserDetails();
   handleUserPreferences();
   initInvoiceAddress();
   fillUserInformationInPreferencesUI();
   editInvoiceAddress();
   fillAddressFields();
+  console.groupEnd();
 }

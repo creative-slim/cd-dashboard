@@ -21,6 +21,7 @@ import {
   updateUserAddress,
 } from '$utils/webflowScripts.js';
 
+import initMainAdminDashboard from './admin/dashboard/main';
 import { initAuth } from './auth/userAuth';
 import testInvoice from './extras/testInvoice';
 import getCurrentPage from './general/getCurrentPage';
@@ -33,18 +34,29 @@ import initUserRelatedFunctions from './user/userMainExport';
 window.Webflow ||= [];
 window.Webflow.push(async () => {
   // init instances
+  console.groupCollapsed('initAuth');
+
   initAuth();
-  initOrderAccessChecker();
+  console.groupEnd('initAuth');
+
   // initInstances();
   // orderAppFunctions(); //! FUNCTION >> switching to class based approach
   if (getCurrentPage() === 'order-app') new App(); //? CLASS >>  switching to class based approach
-  if (getCurrentPage() === 'order-details') fillOrderDetails();
+  if (getCurrentPage() === 'order-details') {
+    fillOrderDetails();
+
+    initOrderAccessChecker();
+  }
+
   // cart
   initWebflowFunctions();
   initUserRelatedFunctions();
 
   if (getCurrentPage() === 'order-history') {
     const info = await initOrderHistory();
+  }
+  if (getCurrentPage() === 'admin-dashboard') {
+    initMainAdminDashboard();
   }
 
   //! API ENDPOINTS
