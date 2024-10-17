@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.10.0
+
+### Minor Changes
+
+- 7adb603: admin dashboard
+
 ## 3.9.1
 
 ### Patch Changes
