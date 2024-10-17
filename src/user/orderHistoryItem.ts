@@ -1,3 +1,9 @@
+let api;
+if (process.env.NODE_ENV === 'development') {
+  api = 'http://127.0.0.1:8787'; // Use local endpoint for development
+} else {
+  api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
+}
 class OrderItem {
   private orderDetails: string;
   private itemDomElement: HTMLElement;
@@ -9,6 +15,9 @@ class OrderItem {
     this.handleInvoiceDownload();
     // this.modalHandler();
     this.goToOrderDetails();
+    if (this.checkIfOrderIsFullfilled(orderDetails)) {
+      this.setupDownloadDoneOrderFilesButton();
+    }
   }
 
   public getOrderDetails(): string {
@@ -73,6 +82,56 @@ class OrderItem {
         window.location =
           window.location.origin + `/${orderID}/${this.orderDetails.fieldData.slug}`;
       });
+    });
+  }
+
+  private checkIfOrderIsFullfilled(order) {
+    return order.fieldData['order-status'] === 'Fertig';
+  }
+
+  private setupDownloadDoneOrderFilesButton() {
+    const downloadButton = this.itemDomElement.querySelector(
+      '[order-history-item="file-download"]'
+    );
+    if (!downloadButton) {
+      console.warn('Download button not found: [order-history-item="file-download"]');
+      return;
+    }
+    downloadButton.style.display = 'block';
+    console.log('orderDetails', this.orderDetails);
+    downloadButton.addEventListener('click', async () => {
+      try {
+        const token = localStorage.getItem('userToken');
+        const itemPath = `/CD-uploads/${this.orderDetails.fieldData['user-mail']}/${this.orderDetails.fieldData['order-id']}/${this.orderDetails.fieldData['name']}/final/finished_order.zip`;
+        const response = await fetch(`${api}/api/orders/download-done-orders`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ path: itemPath }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            `Error downloading done orders: ${response.status} ${response.statusText} - ${
+              errorData.message || 'No additional error message'
+            }`
+          );
+        }
+
+        const data = await response.json();
+        console.log('data', data);
+
+        const a = document.createElement('a');
+        a.href = data.data.link;
+        a.download = `${this.orderDetails.fieldData['order-id']}_${this.orderDetails.fieldData['name']}.zip`;
+        a.click();
+      } catch (error) {
+        alert('file does not exist.');
+        console.error('Error downloading done orders:', error);
+      }
     });
   }
 

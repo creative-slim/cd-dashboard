@@ -390,3 +390,47 @@ function formatDateString(dateString: string) {
 
   return `${day}.${month}.${year}`;
 }
+
+function checkIfOrderIsFullfilled(order) {
+  return order.fieldData['order-status'] === 'Fertig';
+}
+
+function setupDownloadDoneOrderFilesButton() {
+  const downloadButton = document.querySelector('[order-history-item="file-download"]');
+  if (!downloadButton) {
+    console.warn('Download button not found: [order-history-item="file-download"]');
+    return;
+  }
+  downloadButton.style.display = 'block';
+
+  downloadButton.addEventListener('click', async () => {
+    try {
+      const token = localStorage.getItem('userToken');
+      const response = await fetch(`${api}/api/orders/download-done-orders`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          `Error downloading done orders: ${response.status} ${response.statusText} - ${
+            errorData.message || 'No additional error message'
+          }`
+        );
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'done_orders.zip';
+      a.click();
+    } catch (error) {
+      console.error('Error downloading done orders:', error);
+    }
+  });
+}

@@ -84,7 +84,11 @@ const useStoredUserData = () => {
   console.log(' ----------->>>> Checking for stored user data...');
   const storedUserData = localStorage.getItem(USER_DATA_KEY);
   if (storedUserData) {
-    console.log(' ----------->>>> User data found in localStorage:', storedUserData);
+    console.log(
+      ' ----------->>>> User data found in localStorage:',
+      storedUserData.substring(0, 10),
+      '...'
+    );
     const userData = JSON.parse(storedUserData);
     afterLoginUiSetup(userData);
   } else {
@@ -104,7 +108,7 @@ const fetchAndUpdateUserData = async (client) => {
       return client.getTokenWithPopup();
     });
 
-    console.log(' ----------->>>> User token received:', userToken);
+    console.log(' ----------->>>> User token received:', userToken.substring(0, 10), '...');
 
     // Now retrieve user data
     const userData = await client.getUser();
@@ -186,6 +190,7 @@ export const initAuth = async () => {
 
     useStoredUserData(); // Trigger UI setup with stored data first
 
+    console.groupCollapsed('Auth initialization');
     const isAuthenticated = await checkAuthentication(client);
     console.log(' ----------->>>> User authenticated:', isAuthenticated);
     if (isAuthenticated) {
@@ -201,4 +206,5 @@ export const initAuth = async () => {
   } catch (error) {
     //console.error('Auth initialization failed:', error);
   }
+  console.groupEnd('Auth initialization');
 };
