@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.10.1
+
+### Patch Changes
+
+- 92ac27c: remove address modal from the initial flow
+
 ## 3.10.0
 
 ### Minor Changes
