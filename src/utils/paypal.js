@@ -128,11 +128,11 @@ export function initializePaypal(
             // alert('Please fill in all required fields');
             return actions.reject();
           }
-          if (checkIfUserAddressIsFilled() === false) {
-            actions.reject();
-            errorModal('PayPal : Bitte füllen Sie Ihre Adresse aus.');
-            return actions.reject();
-          }
+          // if (checkIfUserAddressIsFilled() === false) {
+          //   actions.reject();
+          //   errorModal('PayPal : Bitte füllen Sie Ihre Adresse aus.');
+          //   return actions.reject();
+          // } //! removed for request of address requirement removal. 2024-10-29 , 10:15 AM
           // orderDetails = fetchDataFromLocalStorage();
           orderDetails = localStorage.getItem('orderData');
         },
