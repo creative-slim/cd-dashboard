@@ -73,7 +73,7 @@ export function afterLogoutUiSetup() {
   });
 
   loginElements.forEach((loginElement) => {
-    loginElement.style.display = 'block';
+    loginElement.style.display = 'flex';
   });
 }
 
@@ -157,4 +157,30 @@ export async function updatePricesInLocalStorage(token) {
   if (!prices) return;
 
   localStorage.setItem('prices', JSON.stringify(prices));
+}
+
+//! not yet used
+export function enableLockedContentToLoggedInUsers() {
+  const lockedContent = document.querySelectorAll('[data-locked="true"]');
+  lockedContent.forEach((element) => {
+    element.setAttribute('data-locked', 'false');
+    element.classList.remove('upcoming');
+  });
+  const guestInfos = document.querySelectorAll('[data-guest="user-data"]');
+  guestInfos.forEach((element) => {
+    element.remove();
+  });
+}
+
+//! not yet used
+export function lockContentToGuestUsers() {
+  const lockedContent = document.querySelectorAll('[data-locked="false"]');
+  lockedContent.forEach((element) => {
+    element.setAttribute('data-locked', 'true');
+    element.classList.add('upcoming');
+  });
+  const guestInfos = document.querySelectorAll('[data-guest="user-data"]');
+  guestInfos.forEach((element) => {
+    element.style.display = 'block';
+  });
 }

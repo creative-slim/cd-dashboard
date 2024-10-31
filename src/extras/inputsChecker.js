@@ -104,3 +104,35 @@ export function areRequiredFieldsPopulated() {
     return false;
   }
 }
+
+export function checkIfGuestEmailIsFilled() {
+  try {
+    // Select the email input field
+    const emailField = document.querySelector('[data-pay-guest="email"]');
+    if (!emailField) {
+      throw new Error("Email field with ID 'email' not found.");
+    }
+
+    // Trim the email field value
+    const emailValue = emailField.value.trim();
+
+    // Check if the email field is empty
+    if (!emailValue) {
+      console.warn('Guest email field is empty.');
+      return false;
+    }
+
+    // Check if the email field is a valid email address
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailValue)) {
+      console.warn('Guest email field must be a valid email address.');
+      return false;
+    }
+
+    // Email field is valid
+    return true;
+  } catch (error) {
+    console.error('An error occurred in checkIfGuestEmailIsFilled:', error);
+    return false;
+  }
+}

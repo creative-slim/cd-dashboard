@@ -167,9 +167,20 @@ export const reloadPage = () => {
 };
 
 export const getInvoiceDataForCurrentOrder = () => {
-  const data = JSON.parse(Cookies.get('user'));
-  if (data) {
-    return data;
+  try {
+    const cookie = Cookies.get('user');
+    if (!cookie) {
+      console.error('User cookie not found');
+      return null;
+    }
+    const data = JSON.parse(cookie);
+    if (data) {
+      return data;
+    }
+    console.error('Parsed data is null or undefined');
+    return null;
+  } catch (err) {
+    console.error('Error parsing user cookie:', err);
+    return null;
   }
-  return null;
 };

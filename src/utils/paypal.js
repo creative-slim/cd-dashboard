@@ -1,6 +1,11 @@
-import { areRequiredFieldsPopulated, errorModal } from '$extras/inputsChecker.js';
+import {
+  areRequiredFieldsPopulated,
+  checkIfGuestEmailIsFilled,
+  errorModal,
+} from '$extras/inputsChecker.js';
 import cleanData from '$utils/renderDataCleaner.js';
 
+import { checkAuth } from '../auth/userAuth';
 import { checkIfUserAddressIsFilled } from '../user/checkIfUserAddressIsFilled';
 let api;
 if (process.env.NODE_ENV === 'development') {
@@ -120,12 +125,18 @@ export function initializePaypal(
       }
       let paymentDetails;
       const paypalButtons = paypal.Buttons({
-        onClick: (data, actions) => {
+        onClick: async (data, actions) => {
           // check if all fields are filled
           if (!areRequiredFieldsPopulated()) {
             actions.reject();
             errorModal('PayPal : Bitte füllen Sie alle erforderlichen Felder aus.');
             // alert('Please fill in all required fields');
+            return actions.reject();
+          }
+          const authBool = await checkAuth();
+          if (checkIfGuestEmailIsFilled() === false && authBool === false) {
+            actions.reject();
+            errorModal('PayPal : Bitte füllen Sie Ihre E-Mail-Adresse aus.');
             return actions.reject();
           }
           // if (checkIfUserAddressIsFilled() === false) {

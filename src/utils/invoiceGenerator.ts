@@ -145,49 +145,45 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
     if (!userData) {
       console.error('User data not found');
     }
-
     const userName = wrapperElement.querySelectorAll('[data-invoice=first-name]');
     userName.forEach((e) => {
-      e.innerHTML = userData.first_name;
+      e.innerHTML = userData?.first_name || '';
     });
     const company = wrapperElement.querySelectorAll('[data-invoice=company]');
     company.forEach((e) => {
-      e.innerHTML = userData.company;
+      e.innerHTML = userData?.company || '';
     });
 
     const userLastName = wrapperElement.querySelectorAll('[data-invoice=last-name]');
     userLastName.forEach((e) => {
-      e.innerHTML = userData.last_name;
+      e.innerHTML = userData?.last_name || '';
     });
-
     const city = wrapperElement.querySelectorAll('[data-invoice=city]');
     city.forEach((e) => {
-      e.innerHTML = userData.city;
+      e.innerHTML = userData?.city || '';
     });
 
     const street = wrapperElement.querySelectorAll('[data-invoice=street]');
     street.forEach((e) => {
-      e.innerHTML = userData.street;
+      e.innerHTML = userData?.street || '';
     });
 
     const housenumber = wrapperElement.querySelectorAll('[data-invoice=house-number]');
     housenumber.forEach((e) => {
-      e.innerHTML = userData.housenumber;
+      e.innerHTML = userData?.housenumber || '';
     });
 
     const zip = wrapperElement.querySelectorAll('[data-invoice=zip]');
     zip.forEach((e) => {
-      e.innerHTML = userData.zip;
+      e.innerHTML = userData?.zip || '';
     });
 
     const ust_idnr = wrapperElement.querySelectorAll('[data-invoice="idnr"]');
-    if (userData.ust_idnr) {
-      ust_idnr.forEach((e) => {
-        e.innerHTML = userData.ust_idnr;
-      });
-    }
+    ust_idnr.forEach((e) => {
+      e.innerHTML = userData?.ust_idnr || '';
+    });
 
-    const last8Digits = userData.auth0_id.slice(-10);
+    const last8Digits = userData?.auth0_id?.slice(-10) || '';
     const ref = wrapperElement.querySelectorAll('[data-invoice=client-refrence]');
     ref.forEach((e) => {
       e.innerHTML = last8Digits;
@@ -195,20 +191,21 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
 
     const country = wrapperElement.querySelectorAll('[data-invoice=country]');
     country.forEach((e) => {
-      e.innerHTML = userData.country;
+      e.innerHTML = userData?.country || '';
     });
 
     //---------------------
 
     const totalElement = wrapperElement.querySelectorAll('[data-invoice=total]');
     totalElement.forEach((e) => {
-      e.innerHTML = '€ ' + paymentDetails.totalAmount;
+      e.innerHTML = '€ ' + (paymentDetails?.totalAmount || 0);
     });
 
     const dateElement = wrapperElement.querySelectorAll('[data-invoice=date]');
     dateElement.forEach((e) => {
       e.innerHTML = getCurrentFormattedDate(currentDate);
     });
+
     const invoiceDate = wrapperElement.querySelectorAll('[data-invoice=invoice-date]');
     invoiceDate.forEach((e) => {
       e.innerHTML = formatDate(currentDate);
@@ -216,26 +213,24 @@ function fillInvoiceData(paymentDetails, itemTemplate, wrapperElement, data, tab
 
     const invoiceElement = wrapperElement.querySelectorAll('[data-invoice=invoice-number]');
     invoiceElement.forEach((e) => {
-      e.innerHTML = data.orderData['order-id'];
+      e.innerHTML = data?.orderData['order-id'] || '';
     });
 
     const invoiceTax = wrapperElement.querySelectorAll('[data-invoice=total-tax]');
     invoiceTax.forEach((e) => {
-      e.innerHTML = '€ ' + (paymentDetails.totalAmount * 0.19).toFixed(2);
+      e.innerHTML = '€ ' + ((paymentDetails?.totalAmount || 0) * 0.19).toFixed(2);
     });
 
     const invoiceSubtotal = wrapperElement.querySelectorAll('[data-invoice=subtotal]');
     invoiceSubtotal.forEach((e) => {
-      e.innerHTML = '€ ' + (paymentDetails.totalAmount * 0.81).toFixed(2);
+      e.innerHTML = '€ ' + ((paymentDetails?.totalAmount || 0) * 0.81).toFixed(2);
     });
 
-    // order-delivery-date
     const orderDeliveryDate = wrapperElement.querySelectorAll('[data-invoice=order-delivery-date]');
     orderDeliveryDate.forEach((e) => {
       e.innerHTML = `${formatDate(currentDate)}-${formatDate(addDays(currentDate, 7))}`;
     });
 
-    // if (data.payment === 'PayPal') {
     const paymentMethod = wrapperElement.querySelectorAll('[data-invoice=payment-date]');
     paymentMethod.forEach((e) => {
       e.innerHTML = formatDate(currentDate);
