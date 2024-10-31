@@ -76,7 +76,7 @@ export function checkRequiredFields(user) {
 
   if (missingFields) {
     console.log('🙉  -- missingField ', missingFields);
-    // userAddressModal();
+    // userAddressModal(); //! hidden on request from client : 2024-10-29 , 10:00 AM , to make user experience better.
   }
 
   console.log(' -- reqArray ', reqArray);

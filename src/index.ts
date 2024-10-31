@@ -83,6 +83,10 @@ window.Webflow.push(async () => {
     const userData = localStorage.getItem('userData');
     if (!userData) {
       //console.error('!! No user data found in local storage');
+      const emailField = document.querySelector('[data-pay-guest="email"]');
+      if (emailField && emailField.value !== '') {
+        return emailField.value;
+      }
       return;
     }
     const user = JSON.parse(userData);
@@ -204,16 +208,16 @@ window.Webflow.push(async () => {
 
         //! change to get user email from localstorage (loged in user)
 
-        combinedArrays.user = CurrentUserEmail;
+        combinedArrays.user = GetCurrentUserEmail();
         combinedArrays.dateID = DateID;
         // console.log(' 🔥 🔥 - Final combinedArrays', combinedArrays);
         localStorage.setItem('combinedArrays', combinedArrays);
         async function uploadmetadata(combinedArrays) {
-          const token = localStorage.getItem('userToken');
-          if (!token) {
-            console.error('No token found in local storage');
-            return;
-          }
+          // const token = localStorage.getItem('userToken');
+          // if (!token) {
+          //   console.error('No token found in local storage');
+          //   return;
+          // }
           return new Promise(async (resolve, reject) => {
             const requestOptions = {
               method: 'POST',
@@ -221,7 +225,7 @@ window.Webflow.push(async () => {
               redirect: 'follow',
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,
               },
             };
 
@@ -277,12 +281,14 @@ window.Webflow.push(async () => {
             // submitLoading.style.pointerEvents = 'none';
             //? new adding user invoice address to the combinedArrays
             const userAddress = getInvoiceDataForCurrentOrder();
+
             if (userAddress) {
               combinedArrays.userAddress = userAddress;
             } else {
-              alert('Please fill in your address details');
-              //console.error('No user address found');
-              return;
+              // alert('Please fill in your address details');
+              console.error('No user address found , passing empty object');
+              combinedArrays.userAddress = {};
+              // return;
             }
 
             //add total price to the combinedArrays
@@ -315,14 +321,16 @@ window.Webflow.push(async () => {
             });
 
             const userEmail = GetCurrentUserEmail();
-            const send = sendInvoice(pdfLink.linkarray, userEmail);
+            loggerUpdate(3);
+
+            sendInvoice(pdfLink.linkarray, userEmail);
+
             // uploadInvoiceToCMS(pdfLink.linkarray, Final.response);
             // console.log({ pdfFile });
 
             // Example function call, comment out if not needed
             // uploadInvoice();
 
-            loggerUpdate(3);
             loggerUpdate(4);
             // updateOrderConfirmationID(Final);
             loggerUpdate(5);
@@ -404,6 +412,7 @@ window.Webflow.push(async () => {
 
     if (container) {
       container.style.display = 'flex';
+      container.parentElement.style.opacity = '1';
     }
 
     // data-confirmation="order-id"

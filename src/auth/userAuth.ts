@@ -4,7 +4,9 @@ import Cookie from 'js-cookie';
 import {
   afterLoginUiSetup,
   afterLogoutUiSetup,
+  enableLockedContentToLoggedInUsers,
   getUserData,
+  lockContentToGuestUsers,
   syncUsersDB,
   updatePricesInLocalStorage,
 } from './AuthHandlers';
@@ -190,21 +192,34 @@ export const initAuth = async () => {
 
     useStoredUserData(); // Trigger UI setup with stored data first
 
-    console.groupCollapsed('Auth initialization');
     const isAuthenticated = await checkAuthentication(client);
     console.log(' ----------->>>> User authenticated:', isAuthenticated);
     if (isAuthenticated) {
       console.log(' ----------->>>> User is authenticated, fetching and updating user data...');
       await fetchAndUpdateUserData(client); // Fetch and update the local storage with new data
+      enableLockedContentToLoggedInUsers();
     } else if (new URL(window.location.href).searchParams.has('code')) {
       console.log(' ----------->>>> Login code found in URL, handling login callback...');
       await handleLoginCallback(client);
     } else {
       console.log(' ----------->>>> User is not authenticated, checking redirect...');
+      // check if meta data has <meta name="render-studio-guest" content="enabled">
+      // if so, do not redirect to login
+      const meta = document.querySelector('meta[name="render-studio-guest"]');
+      if (meta && meta.getAttribute('content') === 'enabled') {
+        console.log(' ----------->>>> Guest mode enabled, skipping login redirect');
+        lockContentToGuestUsers();
+        return;
+      }
       await redirectToLoginIfUnauthenticated(client);
     }
   } catch (error) {
     //console.error('Auth initialization failed:', error);
   }
-  console.groupEnd('Auth initialization');
+};
+
+// export function that can be used in other modules to check if user is authenticated by returning a boolean
+export const checkAuth = async () => {
+  const client = await createAuthClient();
+  return checkAuthentication(client);
 };
