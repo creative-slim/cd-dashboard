@@ -1,5 +1,11 @@
 # @creative-directors/client-dashboard
 
+## 3.11.0
+
+### Minor Changes
+
+- e1bbafd: new version
+
 ## 3.10.1
 
 ### Patch Changes
