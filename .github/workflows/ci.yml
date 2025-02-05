@@ -7,6 +7,25 @@ jobs:
   Lint:
     uses: finsweet/workflow-ci-lint/.github/workflows/lint.yml@main
 
+  Install-Dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensure all files are fetched
+
+      - name: Setup Node.js and PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.2.0 # Adjust to match your project's PNPM version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify lockfile existence
+        run: ls -lah pnpm-lock.yaml
+
   # Comment this job out if your project doesn't have any tests.
-  #Tests:
-  # uses: finsweet/workflow-ci-test/.github/workflows/test.yml@main
+  # Tests:
+  #   uses: finsweet/workflow-ci-test/.github/workflows/test.yml@main
