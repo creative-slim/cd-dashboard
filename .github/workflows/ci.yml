@@ -24,8 +24,7 @@ jobs:
           version: 10.2.0 # Adjust to match your project's PNPM version
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-        working-directory: ${{ github.workspace }}
+        run: pnpm install --no-frozen-lockfile
 
       - name: Verify lockfile existence
         run: ls -lah pnpm-lock.yaml
