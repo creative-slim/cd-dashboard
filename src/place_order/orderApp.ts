@@ -1,5 +1,7 @@
 // src/place_order/classes/orderApp.ts
 
+import { updatePricesInLocalStorage } from 'src/auth/AuthHandlers';
+
 import { cleanObject, restructureData } from '$extras/helperFunctions';
 
 import { renderCart } from './cart';
@@ -26,6 +28,7 @@ class App {
     this.setupAddOrderCardButton();
 
     localStorage.setItem('orders-pieces', '1');
+    updatePricesInLocalStorage('x');
     localStorage.removeItem('orderFiles');
     localStorage.removeItem('orderData');
   }

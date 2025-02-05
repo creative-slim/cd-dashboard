@@ -25,8 +25,10 @@ import initMainAdminDashboard from './admin/dashboard/main';
 import { initAuth } from './auth/userAuth';
 import testInvoice from './extras/testInvoice';
 import getCurrentPage from './general/getCurrentPage';
+import getEndpoint from './general/getEndpoint';
 import initOrderAccessChecker from './orders/orderAccessChecker';
 import { fillOrderDetails } from './orders/orderDetailsPage';
+import { couponHandler } from './place_order/couponHandler';
 // import CartUI from './place_order/cart';
 import App from './place_order/orderApp';
 import { initOrderHistory } from './user/orderHistory';
@@ -64,12 +66,7 @@ window.Webflow.push(async () => {
   // const local = 'http://localhost:8787';
 
   //?change this to switch between local and server
-  let api;
-  if (process.env.NODE_ENV === 'development') {
-    api = 'http://127.0.0.1:8787'; // Use local endpoint for development
-  } else {
-    api = 'https://creative-directors-dropbox.sa-60b.workers.dev'; // Use production endpoint
-  }
+  const api = getEndpoint();
 
   //! END API ENDPOINTS
 
@@ -250,7 +247,10 @@ window.Webflow.push(async () => {
         // console.log('**********************+');
 
         function initLoading() {
-          if (!submitLoading || !loadingSVG) return;
+          if (!submitLoading || !loadingSVG) {
+            console.error('No submit button or loading SVG found');
+            return null;
+          }
           submitLoading.style.opacity = '80%';
           submitLoading.value = '';
           // submitLoading.style.pointerEvents = 'none'; //! Uncomment if needed
@@ -272,11 +272,13 @@ window.Webflow.push(async () => {
         loggerUpdate(1);
         async function process() {
           try {
-            disableAllButtons();
-            initLoading();
-
-            // get paymentDetails from localStorage
-            const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
+            // disableAllButtons();
+            try {
+              initLoading();
+            } catch (error) {
+              console.error('Error in initLoading:', error);
+            } // get paymentDetails from localStorage
+            const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails') || '{}');
             // Uncomment if needed
             // submitLoading.style.pointerEvents = 'none';
             //? new adding user invoice address to the combinedArrays
@@ -343,7 +345,11 @@ window.Webflow.push(async () => {
             // clickTab(3);
             doneLoading();
 
-            goToConfirmationPage(combinedArrays);
+            try {
+              goToConfirmationPage(combinedArrays);
+            } catch (error) {
+              console.error('Error going to confirmation page:', error);
+            }
 
             clearLocalStorage(
               'upload_urls',
@@ -379,6 +385,8 @@ window.Webflow.push(async () => {
   }
 
   function goToConfirmationPage(combinedArrays) {
+    console.log('goToConfirmationPage', combinedArrays);
+
     const confirmation = document.querySelector('[data-order="confirmation-tab"]');
     const order = document.querySelector('[data-order="order-tab"]');
 
@@ -392,7 +400,11 @@ window.Webflow.push(async () => {
       window.scrollTo(0, 0);
     }
 
-    populateConfirmationPage(combinedArrays);
+    try {
+      populateConfirmationPage(combinedArrays);
+    } catch (error) {
+      console.error('Error populating confirmation page:', error);
+    }
   }
   function populateConfirmationPage(combinedArrays) {
     console.log('populateConfirmationPage', combinedArrays);
@@ -429,6 +441,7 @@ window.Webflow.push(async () => {
     if (invoiceLink) {
       const Link = combinedArrays.pdfFile;
       invoiceLink.href = Link;
+      invoiceLink.target = '_blank';
     }
   }
 
@@ -497,6 +510,7 @@ window.Webflow.push(async () => {
   //update user address through the add/update user address form popout
   updateUserAddress();
   clearLocalStorageOnLogout();
+  couponHandler();
 
   // dataChecker();
 });

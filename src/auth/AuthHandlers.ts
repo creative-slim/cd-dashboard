@@ -178,9 +178,16 @@ export function lockContentToGuestUsers() {
   lockedContent.forEach((element) => {
     element.setAttribute('data-locked', 'true');
     element.classList.add('upcoming');
+    element.href = '#';
   });
   const guestInfos = document.querySelectorAll('[data-guest="user-data"]');
   guestInfos.forEach((element) => {
     element.style.display = 'block';
   });
+
+  const invoiceDataWrapper = document.querySelector('[data-order="invoice-address-wrapper"]');
+  if (invoiceDataWrapper) {
+    invoiceDataWrapper.style.opacity = '0';
+    invoiceDataWrapper.style.pointerEvents = 'none';
+  }
 }
