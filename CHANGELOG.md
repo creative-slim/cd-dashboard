@@ -1,5 +1,27 @@
 # @creative-directors/client-dashboard
 
+## 3.12.0
+
+### Minor Changes
+
+- 61a9ab4: f1
+
+### Patch Changes
+
+- d6ae277: fixed prices initial load
+- f3f904e: no lock
+- 4f4ca72: new CI
+- d3b22bb: f9
+- c1d9035: f8
+- 5d9081d: f5
+- 1139dc5: fix2
+- c5cfe49: fix4
+- 5f888b6: f2
+- b3d2a0d: f7
+- ec45413: y
+- 3d76bd5: fix
+- 30e92ae: lock file fix
+
 ## 3.11.0
 
 ### Minor Changes
