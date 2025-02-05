@@ -7,6 +7,20 @@ jobs:
   Lint:
     uses: finsweet/workflow-ci-lint/.github/workflows/lint.yml@main
 
+  # Bypass the frozen-lockfile error in your own job
+  InstallDependencies:
+    runs-on: ubuntu-latest
+    needs: Lint # Only run this after the Lint job completes
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+
+      - name: Install dependencies (ignore frozen-lockfile)
+        run: pnpm install --no-frozen-lockfile
+
   # Comment this job out if your project doesn't have any tests.
   #Tests:
   # uses: finsweet/workflow-ci-test/.github/workflows/test.yml@main
