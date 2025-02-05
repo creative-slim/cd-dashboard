@@ -15,6 +15,9 @@ jobs:
         with:
           fetch-depth: 0 # Ensure all files are fetched
 
+      - name: Check working directory
+        run: pwd && ls -lah
+
       - name: Setup Node.js and PNPM
         uses: pnpm/action-setup@v2
         with:
@@ -22,6 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        working-directory: ${{ github.workspace }}
 
       - name: Verify lockfile existence
         run: ls -lah pnpm-lock.yaml
